@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS revert-layer Works in Cascade Layers - css</title>
+    <meta name="description" content="The CSS revert-layer keyword allows developers to step backward through the cascade hierarchy, rolling a property's value back to the declaration set in the previous cascade layer. This article explains the evaluation order of cascade layers, how revert-">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-revert-layer-works-in-cascade-layers">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS revert-layer Works in Cascade Layers - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-revert-layer-works-in-cascade-layers" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS revert-layer keyword allows developers to step backward through the cascade hierarchy, rolling a property's value back to the declaration set in the previous cascade layer. This article explains the evaluation order of cascade layers, how revert-" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-revert-layer-works-in-cascade-layers">How CSS
+revert-layer Works in Cascade Layers</h1>
+<p>The CSS <code>revert-layer</code> keyword allows developers to step
+backward through the cascade hierarchy, rolling a property's value back
+to the declaration set in the previous cascade layer. This article
+explains the evaluation order of cascade layers, how
+<code>revert-layer</code> determines which value to apply next, and how
+its behavior distinctively differs from other reset keywords like
+<code>revert</code> and <code>unset</code>.</p>
+<h3 id="the-role-of-cascade-layers">The Role of Cascade Layers</h3>
+<p>CSS Cascade Layers (<code>@layer</code>) establish an explicit
+priority order for author styles, independent of selector specificity.
+Layers defined later in the stylesheet take precedence over layers
+defined earlier. Outside of these, unlayered author styles maintain the
+highest priority over all layered author styles.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> base<span class="op">,</span> theme<span class="op">,</span> components<span class="op">;</span></span></code></pre></div>
+<p>In this order, rules inside <code>components</code> override matching
+rules inside <code>theme</code>, which in turn override
+<code>base</code>.</p>
+<h3 id="how-revert-layer-evaluates-values">How <code>revert-layer</code>
+Evaluates Values</h3>
+<p>When <code>revert-layer</code> is assigned to a CSS property, the
+browser ignores the current layer's declaration for that property and
+searches for the next winning value as if the current layer does not
+declare it.</p>
+<p>The evaluation follows this precise path:</p>
+<ol type="1">
+<li><strong>Previous Author Layers:</strong> The browser inspects the
+layer immediately preceding the current one in the layer order. If a
+matching rule exists there, that value is applied.</li>
+<li><strong>Next Preceding Layers:</strong> If no match exists in the
+immediate predecessor, the browser continues moving backward through
+earlier author layers until a match is found.</li>
+<li><strong>Implicit Layer / Other Origins:</strong> If the keyword is
+invoked in the lowest-priority author layer (or if no previous author
+layer matches the selector), the property rolls back to matching
+declarations in subsequent origins:
+<ul>
+<li>The user style sheet (if present).</li>
+<li>The user-agent style sheet (browser default styles).</li>
+</ul></li>
+<li><strong>Unlayered Styles:</strong> If <code>revert-layer</code> is
+used inside an unlayered author rule, it rolls back the property to the
+highest-priority declared <code>@layer</code>.</li>
+</ol>
+<h3 id="practical-example">Practical Example</h3>
+<p>Consider the following cascade configuration:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> base {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  p {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">red</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> theme {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  p {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> components {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  p<span class="fu">.alert</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="bu">revert-layer</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When evaluating a <code>&lt;p class="alert"&gt;</code>:</p>
+<ol type="1">
+<li>The browser checks <code>components</code>. It sees
+<code>color: revert-layer</code>.</li>
+<li>It steps back to the <code>theme</code> layer and finds
+<code>p { color: blue; }</code>.</li>
+<li>The computed color becomes <code>blue</code>.</li>
+<li>If <code>theme</code> had no declaration for <code>p</code>, the
+browser would continue back to <code>base</code> and resolve to
+<code>red</code>.</li>
+</ol>
+<h3 id="revert-layer-vs-revert"><code>revert-layer</code> vs.
+<code>revert</code></h3>
+<p>While both keywords roll back values, their scopes are different:</p>
+<ul>
+<li><strong><code>revert</code></strong> discards all author-level
+styles entirely for that declaration, rolling back directly to the user
+or user-agent style sheet regardless of any other cascade layers defined
+by the author.</li>
+<li><strong><code>revert-layer</code></strong> only steps out of the
+current layer. It preserves matching declarations from lower-priority
+layers within the same author origin before falling back to user or
+user-agent defaults.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

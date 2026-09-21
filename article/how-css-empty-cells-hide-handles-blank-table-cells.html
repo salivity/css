@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS empty-cells: hide Handles Blank Table Cells - css</title>
+    <meta name="description" content="The CSS empty-cells: hide property allows developers to control the presentation of empty HTML table cells by suppressing their borders and backgrounds. This article covers how the property determines what qualifies as an "empty" cell, the mandatory layo">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-empty-cells-hide-handles-blank-table-cells">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS empty-cells: hide Handles Blank Table Cells - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-empty-cells-hide-handles-blank-table-cells" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS empty-cells: hide property allows developers to control the presentation of empty HTML table cells by suppressing their borders and backgrounds. This article covers how the property determines what qualifies as an "empty" cell, the mandatory layo" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-empty-cells-hide-handles-blank-table-cells">How CSS
+empty-cells: hide Handles Blank Table Cells</h1>
+<p>The CSS <code>empty-cells: hide</code> property allows developers to
+control the presentation of empty HTML table cells by suppressing their
+borders and backgrounds. This article covers how the property determines
+what qualifies as an "empty" cell, the mandatory layout mode required
+for it to work, how it affects table geometry, and common implementation
+pitfalls.</p>
+<h2 id="how-empty-cells-hide-operates">How
+<code>empty-cells: hide</code> Operates</h2>
+<p>When applied to an HTML table or individual table cells
+(<code>&lt;td&gt;</code>, <code>&lt;th&gt;</code>),
+<code>empty-cells: hide</code> instructs the browser to render
+completely blank cells without their defined borders or background
+colors.</p>
+<p>Instead of displaying an outlined empty box, the space allocated for
+that cell becomes fully transparent, revealing the underlying background
+of the table row or table itself. Crucially, the cell still occupies its
+normal geometric footprint within the table grid, ensuring that adjacent
+columns and rows maintain alignment without collapsing the table
+structure.</p>
+<h2 id="the-border-collapse-requirement">The
+<code>border-collapse</code> Requirement</h2>
+<p>The most critical factor in using <code>empty-cells: hide</code> is
+the table's border model. <strong>The property only works when
+<code>border-collapse</code> is set to <code>separate</code></strong>
+(the default value for HTML tables).</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>table {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-collapse</span><span class="ch">:</span> <span class="dv">separate</span><span class="op">;</span> <span class="co">/* Required for empty-cells to work */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">empty-cells</span><span class="ch">:</span> <span class="dv">hide</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If a table is styled with <code>border-collapse: collapse;</code>,
+browsers ignore the <code>empty-cells</code> property entirely. Under
+the collapsing border model, borders are shared across adjoining cells,
+making it impossible to suppress a single cell's borders without
+breaking the shared grid lines.</p>
+<h2 id="what-qualifies-as-an-empty-cell">What Qualifies as an "Empty"
+Cell?</h2>
+<p>The browser evaluates cell contents strictly to decide whether the
+<code>hide</code> rule applies. A cell is considered empty if it
+contains:</p>
+<ul>
+<li>Completely nothing (e.g., <code>&lt;td&gt;&lt;/td&gt;</code>).</li>
+<li>Collapsible whitespace characters (spaces, tabs, newlines), provided
+the <code>white-space</code> property is set to a normal, collapsible
+value.</li>
+</ul>
+<p>A cell is <strong>not</strong> considered empty if it contains:</p>
+<ul>
+<li><strong>Non-breaking spaces (<code>&amp;nbsp;</code>):</strong>
+Because <code>&amp;nbsp;</code> generates an actual inline text
+character, the browser treats the cell as populated, rendering its
+borders and background.</li>
+<li><strong>Empty child elements:</strong> Elements like
+<code>&lt;td&gt;&lt;span&gt;&lt;/span&gt;&lt;/td&gt;</code> or
+self-closing tags like <code>&lt;br&gt;</code> cause the cell to be
+treated as populated, even if the elements occupy no visible space.</li>
+<li><strong>Replaced elements:</strong> Images, form inputs, or
+iframes.</li>
+</ul>
+<h2
+id="difference-between-empty-cells-hide-and-visibility-hidden">Difference
+Between <code>empty-cells: hide</code> and
+<code>visibility: hidden</code></h2>
+<p>While both properties preserve layout space, they behave
+differently:</p>
+<ul>
+<li><code>empty-cells: hide</code> specifically targets borders and
+backgrounds of empty cells without requiring inline styles, classes, or
+DOM manipulation. Populated cells in the same table remain
+unaffected.</li>
+<li><code>visibility: hidden</code> must be applied directly to a target
+cell or element. It hides all content, borders, and backgrounds, whether
+the cell contains content or not.</li>
+</ul>
+<h2 id="summary-checklist">Summary Checklist</h2>
+<p>To ensure <code>empty-cells: hide</code> renders correctly:</p>
+<ol type="1">
+<li>Ensure the table uses <code>border-collapse: separate</code>.</li>
+<li>Verify that designated empty cells contain no text, child elements,
+or non-breaking spaces (<code>&amp;nbsp;</code>).</li>
+<li>Apply the rule either globally to the <code>table</code> element or
+directly to <code>td</code>/<code>th</code> elements.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

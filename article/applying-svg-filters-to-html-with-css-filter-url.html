@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applying SVG Filters to HTML with CSS Filter URL - css</title>
+    <meta name="description" content="The CSS filter: url(#svg-filter) property allows standard HTML elements to leverage advanced, multi-stage graphic effects by routing their rendered output through SVG filter pipelines. This article explains the technical mechanics behind this bridge, det">
+    <link rel="canonical" href="https://salivity.github.io/css/article/applying-svg-filters-to-html-with-css-filter-url">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Applying SVG Filters to HTML with CSS Filter URL - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/applying-svg-filters-to-html-with-css-filter-url" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS filter: url(#svg-filter) property allows standard HTML elements to leverage advanced, multi-stage graphic effects by routing their rendered output through SVG filter pipelines. This article explains the technical mechanics behind this bridge, det" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="applying-svg-filters-to-html-with-css-filter-url">Applying SVG
+Filters to HTML with CSS Filter URL</h1>
+<p>The CSS <code>filter: url(#svg-filter)</code> property allows
+standard HTML elements to leverage advanced, multi-stage graphic effects
+by routing their rendered output through SVG filter pipelines. This
+article explains the technical mechanics behind this bridge, detailing
+how the browser rasterizes HTML DOM elements into pixel buffers, routes
+them through SVG filter primitive graphs via inputs like
+<code>SourceGraphic</code>, executes pixel-level operations, and
+composites the final result back into the document layout.</p>
+<h3 id="the-reference-mechanism">The Reference Mechanism</h3>
+<p>Standard CSS filter functions—such as <code>blur()</code>,
+<code>contrast()</code>, or <code>grayscale()</code>—are predefined,
+single-operation shorthands implemented natively within the browser's
+graphics engine. When the <code>filter: url(#filter-id)</code> syntax is
+applied to an HTML element, the browser delegates visual rendering to an
+SVG <code>&lt;filter&gt;</code> element defined elsewhere in the
+document or in an external SVG file.</p>
+<p>The fragment identifier (<code>#filter-id</code>) resolves to a
+specific <code>&lt;filter&gt;</code> tag containing an arbitrary
+sequence of SVG filter primitives. This syntax bridges the HTML DOM and
+the SVG graphics pipeline, treating the HTML element as a visual asset
+within the SVG specification.</p>
+<h3 id="rasterization-into-sourcegraphic-and-sourcealpha">Rasterization
+into SourceGraphic and SourceAlpha</h3>
+<p>To process an HTML element using an SVG filter, the browser must
+first convert that element from a tree of layout boxes, text nodes, and
+styling rules into a rasterized image:</p>
+<ol type="1">
+<li><strong>Offscreen Rendering:</strong> The browser renders the target
+HTML element—including its background, borders, text, CSS effects, and
+any child elements—into an offscreen bitmap buffer.</li>
+<li><strong>Buffer Injection:</strong> This rendered bitmap is passed
+directly into the SVG filter context as the special keyword
+<code>SourceGraphic</code>.</li>
+<li><strong>Alpha Extraction:</strong> The browser simultaneously
+generates a grayscale mask representing only the opacity channel of that
+rendered bitmap, exposing it as <code>SourceAlpha</code>.</li>
+</ol>
+<p>These two keywords act as the entry points for the SVG filter
+graph.</p>
+<h3 id="processing-the-directed-acyclic-graph-dag">Processing the
+Directed Acyclic Graph (DAG)</h3>
+<p>Unlike CSS filter chains, which operate strictly linearly, SVG
+filters operate as a Directed Acyclic Graph (DAG). An SVG filter
+contains one or more filter primitives (elements prefixed with
+<code>fe</code>, such as <code>&lt;feGaussianBlur&gt;</code>,
+<code>&lt;feColorMatrix&gt;</code>,
+<code>&lt;feDisplacementMap&gt;</code>, or
+<code>&lt;feTurbulence&gt;</code>).</p>
+<p>The graph processes the HTML element through the following
+pipeline:</p>
+<ul>
+<li><strong>Inputs (<code>in</code> and <code>in2</code>):</strong> Each
+primitive can declare one or two inputs. The root primitives typically
+read from <code>SourceGraphic</code> or <code>SourceAlpha</code>.
+Subsequent primitives can read either from the original sources or from
+the intermediate outputs of preceding primitives.</li>
+<li><strong>Intermediates (<code>result</code>):</strong> Primitives
+assign their processed bitmap to a named buffer using the
+<code>result</code> attribute (e.g.,
+<code>result="blurred-layer"</code>).</li>
+<li><strong>Independent Nodes:</strong> Some primitives, such as
+<code>&lt;feTurbulence&gt;</code>, generate procedural visual data (like
+Perlin noise) independently without taking any input buffer. These can
+be combined with <code>SourceGraphic</code> using compositing primitives
+like <code>&lt;feDisplacementMap&gt;</code> to warp the HTML element, or
+<code>&lt;feComposite&gt;</code> to mask it.</li>
+<li><strong>Terminal Node:</strong> The output of the final primitive in
+the graph (or the last primitive without a named <code>result</code>
+being consumed elsewhere) serves as the ultimate visual output of the
+entire filter graph.</li>
+</ul>
+<h3 id="compositing-and-hardware-execution">Compositing and Hardware
+Execution</h3>
+<p>Once the filter graph resolves, the browser's compositing engine
+replaces the original rendering of the HTML element with the terminal
+bitmap produced by the SVG pipeline:</p>
+<ul>
+<li><strong>Layout Decoupling:</strong> The filtering operation occurs
+strictly during the painting and compositing stages of the rendering
+pipeline. The element's geometry in the DOM, its box model calculations
+(margins, padding, dimensions), and surrounding document flow remain
+unchanged.</li>
+<li><strong>Hit Testing:</strong> Pointer events and text selection
+still operate according to the original geometric bounds of the HTML
+element rather than the visually distorted pixels created by the filter,
+unless pointer-events are modified or the element is clipped.</li>
+<li><strong>Hardware Acceleration:</strong> Modern rendering engines
+(such as Blink and Gecko) compile many common SVG filter primitives into
+GPU shader routines. However, complex graphs—especially those involving
+dynamic coordinates, displacement maps, or large kernel convolutions—may
+trigger software rasterization fallbacks, incurring a performance cost
+during animations or scrolling.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

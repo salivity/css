@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS Pointer Coarse Detects Touchscreens - css</title>
+    <meta name="description" content="The pointer: coarse CSS media query detects touch-screen devices by querying the precision of the user's primary pointing device. Part of the CSS Media Queries Level 4 specification, this feature allows developers to serve larger touch targets and optimi">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-pointer-coarse-detects-touchscreens">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS Pointer Coarse Detects Touchscreens - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-pointer-coarse-detects-touchscreens" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The pointer: coarse CSS media query detects touch-screen devices by querying the precision of the user's primary pointing device. Part of the CSS Media Queries Level 4 specification, this feature allows developers to serve larger touch targets and optimi" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-pointer-coarse-detects-touchscreens">How CSS Pointer
+Coarse Detects Touchscreens</h1>
+<p>The <code>pointer: coarse</code> CSS media query detects touch-screen
+devices by querying the precision of the user's primary pointing device.
+Part of the CSS Media Queries Level 4 specification, this feature allows
+developers to serve larger touch targets and optimized layouts
+specifically for lower-precision inputs like fingers. Rather than
+relying on unreliable browser user-agent sniffing or screen width
+breakpoints, <code>pointer: coarse</code> relies on hardware
+capabilities reported directly by the operating system to determine how
+the user interacts with the screen.</p>
+<h3 id="the-mechanism-behind-pointer-precision">The Mechanism Behind
+Pointer Precision</h3>
+<p>Web browsers interface directly with the host operating system's
+input APIs to inspect connected hardware. The CSS <code>pointer</code>
+feature evaluates the primary pointing mechanism using three possible
+states:</p>
+<ul>
+<li><strong><code>none</code></strong>: The device has no pointing
+device at all (such as a basic smart TV or non-touch feature
+phone).</li>
+<li><strong><code>fine</code></strong>: The primary pointing device is
+highly accurate, such as a traditional mouse, trackpad, or
+high-precision stylus.</li>
+<li><strong><code>coarse</code></strong>: The primary pointing device
+has limited precision, such as a finger used on a touchscreen or a
+motion-tracking game controller.</li>
+</ul>
+<p>When a device like a smartphone or tablet loads a webpage, the
+operating system identifies the capacitive touchscreen as the default
+input device. Because human fingertips cover a relatively large physical
+area and lack pixel-level precision, the browser classifies this input
+as <code>coarse</code>.</p>
+<h3 id="primary-input-vs-any-input">Primary Input vs. Any Input</h3>
+<p>The standard <code>pointer</code> media query only checks the
+device's <em>primary</em> input mechanism.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Styles applied when the primary input is inaccurate (e.g., smartphones, tablets) */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">pointer</span><span class="ch">:</span> <span class="dv">coarse</span><span class="fu">)</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  button {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">min-height</span><span class="ch">:</span> <span class="dv">48</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">px</span> <span class="dv">24</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>On a smartphone, the touchscreen is primary, so
+<code>@media (pointer: coarse)</code> resolves to true. On a desktop
+computer with a mouse, the primary input is accurate, so the query
+resolves to false, even if a user has a secondary touchscreen monitor
+plugged in.</p>
+<p>To account for hybrid devices, such as touchscreen laptops or tablets
+with connected trackpads, CSS provides the <code>any-pointer</code>
+media query.</p>
+<ul>
+<li><code>pointer: coarse</code> evaluates <strong>only the
+primary</strong> input mechanism.</li>
+<li><code>any-pointer: coarse</code> evaluates <strong>all currently
+available</strong> input mechanisms.</li>
+</ul>
+<p>If a user attaches a mouse to an iPad, the iPad's
+<code>pointer</code> value may shift to <code>fine</code> depending on
+the operating system's behavior, but <code>any-pointer: coarse</code>
+will remain true because the touchscreen is still present.</p>
+<h3 id="precision-detection-vs-touch-detection">Precision Detection vs.
+Touch Detection</h3>
+<p>While <code>pointer: coarse</code> is the modern standard for touch
+adaptation, it technically measures input accuracy rather than touch
+capability itself. A device using a Nintendo Wii remote, a Kinect-style
+sensor, or an Apple TV remote will also evaluate as <code>coarse</code>
+due to low pointing accuracy. Conversely, a dedicated graphics tablet
+with a high-precision stylus might evaluate as <code>fine</code>, even
+though it uses a touch-sensitive surface.</p>
+<p>By designing around accuracy rather than the physical hardware type,
+<code>pointer: coarse</code> ensures interfaces adapt dynamically to how
+comfortably and accurately a user can click or tap an interface
+element.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

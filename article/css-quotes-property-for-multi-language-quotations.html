@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Quotes Property for Multi-Language Quotations - css</title>
+    <meta name="description" content="The CSS quotes property defines the specific typographic quotation marks used by the browser when rendering quotation-based elements like <q> or pseudo-elements using open-quote and close-quote. In internationalization and multi-language styling, this pr">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-quotes-property-for-multi-language-quotations">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Quotes Property for Multi-Language Quotations - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-quotes-property-for-multi-language-quotations" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS quotes property defines the specific typographic quotation marks used by the browser when rendering quotation-based elements like <q> or pseudo-elements using open-quote and close-quote. In internationalization and multi-language styling, this pr" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-quotes-property-for-multi-language-quotations">CSS Quotes
+Property for Multi-Language Quotations</h1>
+<p>The CSS <code>quotes</code> property defines the specific typographic
+quotation marks used by the browser when rendering quotation-based
+elements like <code>&lt;q&gt;</code> or pseudo-elements using
+<code>open-quote</code> and <code>close-quote</code>. In
+internationalization and multi-language styling, this property ensures
+that web content automatically adheres to the distinct typographic and
+cultural conventions of different languages, replacing generic quotation
+marks with localized alternatives based on the language attribute of the
+document or element.</p>
+<h2 id="how-the-quotes-property-works">How the <code>quotes</code>
+Property Works</h2>
+<p>Quotation conventions vary significantly across regions. While
+English uses curved marks like “ and ”, French uses guillemets (« and
+»), German positions the opening mark at the baseline („ and “), and
+East Asian languages such as Japanese use bracket-style quotes (「 and
+」).</p>
+<p>The <code>quotes</code> property accepts pairs of strings
+representing opening and closing quotes. You can define multiple pairs
+to handle nested quotations:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>selector {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">quotes</span><span class="ch">:</span> <span class="st">&quot;“&quot;</span> <span class="st">&quot;”&quot;</span> <span class="st">&quot;‘&quot;</span> <span class="st">&quot;’&quot;</span><span class="op">;</span> <span class="co">/* Primary and secondary (nested) pairs */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When HTML <code>&lt;q&gt;</code> tags are used, browsers insert
+quotation marks using the <code>::before</code> and <code>::after</code>
+pseudo-elements set to <code>content: open-quote</code> and
+<code>content: close-quote</code>. The <code>quotes</code> property
+dictates what characters are generated by those values.</p>
+<h2 id="implementing-multi-language-quotations">Implementing
+Multi-Language Quotations</h2>
+<p>To adapt quotation marks to the language of the content, pair the
+<code>quotes</code> property with the <code>:lang()</code> pseudo-class.
+This allows you to style quotes dynamically based on the HTML
+<code>lang</code> attribute.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* English */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">:lang(</span><span class="st">en</span><span class="in">)</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">quotes</span><span class="ch">:</span> <span class="st">&quot;“&quot;</span> <span class="st">&quot;”&quot;</span> <span class="st">&quot;‘&quot;</span> <span class="st">&quot;’&quot;</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* French */</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">:lang(</span><span class="st">fr</span><span class="in">)</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">quotes</span><span class="ch">:</span> <span class="st">&quot;«</span><span class="sc">\A0</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="sc">\A0</span><span class="st">»&quot;</span> <span class="st">&quot;‹</span><span class="sc">\A0</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="sc">\A0</span><span class="st">›&quot;</span><span class="op">;</span> <span class="co">/* \A0 inserts a non-breaking space */</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">/* German */</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">:lang(</span><span class="st">de</span><span class="in">)</span> {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">quotes</span><span class="ch">:</span> <span class="st">&quot;„&quot;</span> <span class="st">&quot;“&quot;</span> <span class="st">&quot;‚&quot;</span> <span class="st">&quot;‘&quot;</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">/* Japanese */</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="in">:lang(</span><span class="st">ja</span><span class="in">)</span> {</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">quotes</span><span class="ch">:</span> <span class="st">&quot;「&quot;</span> <span class="st">&quot;」&quot;</span> <span class="st">&quot;『&quot;</span> <span class="st">&quot;』&quot;</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In the corresponding HTML, you simply assign the appropriate language
+attribute:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="dt">&gt;</span>He said, <span class="dt">&lt;</span><span class="kw">q</span><span class="dt">&gt;</span>Hello <span class="dt">&lt;</span><span class="kw">q</span><span class="dt">&gt;</span>world<span class="dt">&lt;/</span><span class="kw">q</span><span class="dt">&gt;&lt;/</span><span class="kw">q</span><span class="dt">&gt;</span>.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;fr&quot;</span><span class="dt">&gt;</span>Il a dit, <span class="dt">&lt;</span><span class="kw">q</span><span class="dt">&gt;</span>Bonjour <span class="dt">&lt;</span><span class="kw">q</span><span class="dt">&gt;</span>monde<span class="dt">&lt;/</span><span class="kw">q</span><span class="dt">&gt;&lt;/</span><span class="kw">q</span><span class="dt">&gt;</span>.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;de&quot;</span><span class="dt">&gt;</span>Er sagte, <span class="dt">&lt;</span><span class="kw">q</span><span class="dt">&gt;</span>Hallo <span class="dt">&lt;</span><span class="kw">q</span><span class="dt">&gt;</span>Welt<span class="dt">&lt;/</span><span class="kw">q</span><span class="dt">&gt;&lt;/</span><span class="kw">q</span><span class="dt">&gt;</span>.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="the-auto-value">The <code>auto</code> Value</h2>
+<p>Modern CSS supports the <code>auto</code> keyword
+(<code>quotes: auto</code>). When set to <code>auto</code>, the browser
+determines the correct typographic quotation marks automatically based
+on the language set via the <code>lang</code> attribute on the element
+or its parent. While convenient, explicitly defining quote pairs via
+<code>:lang()</code> remains useful when custom spacing (such as thin
+spaces for French guillemets) or specific stylistic preferences are
+required.</p>
+<h2 id="key-advantages-for-localization">Key Advantages for
+Localization</h2>
+<ul>
+<li><strong>Content Separation:</strong> Translators and content authors
+can use semantic <code>&lt;q&gt;</code> elements without manually typing
+language-specific symbols or HTML entities into text fields.</li>
+<li><strong>Nested Consistency:</strong> Browsers automatically
+alternate between primary and secondary quote levels as defined by the
+property, preventing nesting errors common in translated text.</li>
+<li><strong>Typography Control:</strong> Designers can maintain
+typographic accuracy across multilingual websites without introducing
+separate template structures for each locale.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

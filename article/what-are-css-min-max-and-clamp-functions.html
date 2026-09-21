@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Are CSS min, max, and clamp Functions? - css</title>
+    <meta name="description" content="CSS comparison functions—min(), max(), and clamp()—allow developers to create fluid, dynamic, and responsive designs without relying heavily on media queries. While min() selects the smallest value from a list of arguments and max() selects the large">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-are-css-min-max-and-clamp-functions">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Are CSS min, max, and clamp Functions? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-are-css-min-max-and-clamp-functions" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS comparison functions—min(), max(), and clamp()—allow developers to create fluid, dynamic, and responsive designs without relying heavily on media queries. While min() selects the smallest value from a list of arguments and max() selects the large" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-are-css-min-max-and-clamp-functions">What Are CSS min, max,
+and clamp Functions?</h1>
+<p>CSS comparison functions—<code>min()</code>, <code>max()</code>, and
+<code>clamp()</code>—allow developers to create fluid, dynamic, and
+responsive designs without relying heavily on media queries. While
+<code>min()</code> selects the smallest value from a list of arguments
+and <code>max()</code> selects the largest, <code>clamp()</code>
+combines both behaviors by locking a value between an explicit minimum
+and maximum boundary. Together, these mathematical functions streamline
+responsive typography, flexible spacing, and adaptive layout sizing.</p>
+<h2 id="the-css-min-function">The CSS min() Function</h2>
+<p>The <code>min()</code> function accepts one or more comma-separated
+expressions and applies the smallest value among them. Despite its name,
+<code>min()</code> acts as a maximum threshold (an upper cap) for a
+given property because the computed value will never exceed the smallest
+option provided.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="fu">min(</span><span class="dv">100</span><span class="dt">%</span><span class="op">,</span> <span class="dv">800</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this example, the container will scale to <code>100%</code> of the
+parent's width on small screens, but it will never grow larger than
+<code>800px</code> on wider screens. It replaces the traditional pattern
+of writing <code>width: 100%; max-width: 800px;</code>.</p>
+<h2 id="the-css-max-function">The CSS max() Function</h2>
+<p>The <code>max()</code> function selects the largest value from a set
+of comma-separated expressions. Counterintuitively, it functions as a
+minimum threshold (a lower floor), ensuring that a property never
+shrinks below the specified minimum limit.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.hero-text</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="fu">max(</span><span class="dv">2</span><span class="dt">rem</span><span class="op">,</span> <span class="dv">5</span><span class="dt">vh</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this scenario, the top margin will adjust dynamically to
+<code>5vh</code> on tall screens, but it will never drop below
+<code>2rem</code> on shorter viewports. This replaces the need for a
+separate <code>min-height</code> or media query override.</p>
+<h2 id="the-css-clamp-function">The CSS clamp() Function</h2>
+<p>The <code>clamp()</code> function takes three arguments in a defined
+order: a minimum value, a preferred (ideal) value, and a maximum value.
+The syntax follows this structure:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>clamp<span class="in">(</span>MIN<span class="op">,</span> PREFERRED<span class="op">,</span> MAX<span class="in">)</span></span></code></pre></div>
+<p>The browser prioritizes the preferred value as long as it stays
+between the defined limits. If the preferred value evaluates to less
+than the minimum, the minimum is applied; if it grows larger than the
+maximum, the maximum is applied. Functionally,
+<code>clamp(MIN, VAL, MAX)</code> is equivalent to writing
+<code>max(MIN, min(VAL, MAX))</code>.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.responsive-heading</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span><span class="ch">:</span> <span class="fu">clamp(</span><span class="dv">1.5</span><span class="dt">rem</span><span class="op">,</span> <span class="dv">4</span><span class="dt">vw</span><span class="op">,</span> <span class="dv">3</span><span class="dt">rem</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this example, the heading text scales dynamically with the
+viewport width at <code>4vw</code>, but it will never shrink below
+<code>1.5rem</code> on mobile devices or expand beyond <code>3rem</code>
+on large desktop displays.</p>
+<h2 id="key-differences-and-comparison">Key Differences and
+Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Primary Purpose</th>
+<th>How It Behaves</th>
+<th>Common Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>min()</code></td>
+<td>Sets an upper limit (maximum ceiling)</td>
+<td>Selects the smallest value</td>
+<td>Responsive container widths</td>
+</tr>
+<tr>
+<td><code>max()</code></td>
+<td>Sets a lower limit (minimum floor)</td>
+<td>Selects the largest value</td>
+<td>Preserving minimum padding or margins</td>
+</tr>
+<tr>
+<td><code>clamp()</code></td>
+<td>Sets a bounded range (floor + ceiling)</td>
+<td>Clamps a dynamic value between two bounds</td>
+<td>Fluid typography and dynamic spacing</td>
+</tr>
+</tbody>
+</table>
+<p>Understanding these distinctions makes modern CSS layouts
+significantly more concise, reducing code duplication and keeping styles
+maintainable.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

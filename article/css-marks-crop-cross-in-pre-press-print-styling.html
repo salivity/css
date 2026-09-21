@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Marks Crop Cross in Pre-Press Print Styling - css</title>
+    <meta name="description" content="The CSS marks: crop cross declaration is a specialized paged media rule used to generate physical trim guidelines and alignment targets outside the document's page area during commercial printing. In professional pre-press workflows, this property automa">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-marks-crop-cross-in-pre-press-print-styling">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Marks Crop Cross in Pre-Press Print Styling - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-marks-crop-cross-in-pre-press-print-styling" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS marks: crop cross declaration is a specialized paged media rule used to generate physical trim guidelines and alignment targets outside the document's page area during commercial printing. In professional pre-press workflows, this property automa" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-marks-crop-cross-in-pre-press-print-styling">CSS Marks Crop
+Cross in Pre-Press Print Styling</h1>
+<p>The CSS <code>marks: crop cross</code> declaration is a specialized
+paged media rule used to generate physical trim guidelines and alignment
+targets outside the document's page area during commercial printing. In
+professional pre-press workflows, this property automates the creation
+of standard printer marks, ensuring that high-volume print engines,
+paper cutters, and multi-color press systems can accurately align,
+print, and trim full-bleed designs without manual drafting.</p>
+<h3 id="understanding-the-rule">Understanding the Rule</h3>
+<p>Defined in the CSS Paged Media Module, the <code>marks</code>
+property is declared inside the <code>@page</code> at-rule. It accepts
+either <code>crop</code>, <code>cross</code>, or both keywords
+simultaneously:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">size</span><span class="ch">:</span> <span class="dv">8.5</span><span class="dt">in</span> <span class="dv">11</span><span class="dt">in</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">in</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  bleed<span class="ch">:</span> <span class="dv">0.125</span><span class="dt">in</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  marks<span class="ch">:</span> <span class="dv">crop cross</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When applied, the rendering engine expands the canvas beyond the trim
+box into the bleed area to draw two specific types of pre-press
+markers:</p>
+<h4 id="1-crop-marks-crop">1. Crop Marks (<code>crop</code>)</h4>
+<p>Crop marks—also known as trim marks or cut marks—are thin lines
+printed at the corners of a document. They dictate exactly where the
+industrial guillotine cutter should slice the paper to achieve the final
+intended page dimensions.</p>
+<p>When printing artwork that extends all the way to the edge of the
+sheet (full bleed), pages must be printed larger than their final size.
+Crop marks show the finishing technicians where to trim away the bleed
+area without cutting into critical text or leaving an accidental white
+border.</p>
+<h4 id="2-cross-marks-cross">2. Cross Marks (<code>cross</code>)</h4>
+<p>Cross marks—commonly referred to as registration marks—appear as fine
+crosshairs or target symbols centered outside each edge of the page. In
+commercial multi-pass or multi-plate printing (such as CMYK offset
+printing), separate plates apply cyan, magenta, yellow, and black inks
+independently.</p>
+<p>Registration marks provide press operators with high-precision
+optical targets. If the crosshairs from all four plates overlap
+perfectly, the colors are properly registered. If a plate shifts even a
+fraction of a millimeter, the misalignment becomes immediately apparent
+on the cross marks, allowing operators to adjust the equipment before a
+print run is ruined.</p>
+<h3 id="pre-press-context-and-engine-support">Pre-Press Context and
+Engine Support</h3>
+<p>Standard desktop web browsers generally ignore the <code>marks</code>
+property when a user selects the standard "Print to PDF" option. Because
+standard consumer printers do not require bleeds or color registration
+plates, consumer browsers strip or omit this data.</p>
+<p>Consequently, <code>marks: crop cross</code> is almost exclusively
+utilized in programmatic PDF generation and automated publishing
+software. Pre-press tools and conversion engines such as PrinceXML,
+WeasyPrint, Antenna House Formatter, and the polyfill Paged.js recognize
+the declaration. These tools parse the CSS to output press-ready,
+high-resolution PDFs that meet commercial prepress standards (such as
+PDF/X), bridging the gap between web technologies and professional print
+manufacturing.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

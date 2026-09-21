@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Fixed Inside a CSS Transform - css</title>
+    <meta name="description" content="In CSS, applying a transform property to an ancestor element fundamentally alters how child elements with position: fixed behave. Instead of anchoring to the browser viewport as expected, the fixed element becomes trapped within the transformed ancestor,">
+    <link rel="canonical" href="https://salivity.github.io/css/article/position-fixed-inside-a-css-transform">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Position Fixed Inside a CSS Transform - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/position-fixed-inside-a-css-transform" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In CSS, applying a transform property to an ancestor element fundamentally alters how child elements with position: fixed behave. Instead of anchoring to the browser viewport as expected, the fixed element becomes trapped within the transformed ancestor," />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="position-fixed-inside-a-css-transform">Position Fixed Inside a
+CSS Transform</h1>
+<p>In CSS, applying a <code>transform</code> property to an ancestor
+element fundamentally alters how child elements with
+<code>position: fixed</code> behave. Instead of anchoring to the browser
+viewport as expected, the fixed element becomes trapped within the
+transformed ancestor, effectively behaving like an absolutely positioned
+element. This article explains the technical reason behind this behavior
+according to CSS specifications, identifies related properties that
+trigger the same effect, and provides practical solutions to resolve the
+issue.</p>
+<h3 id="the-mechanism">The Mechanism</h3>
+<p>Under standard rendering rules, a <code>position: fixed</code>
+element uses the viewport (the initial containing block) as its
+reference frame. It remains stationary on the screen regardless of how
+far a user scrolls.</p>
+<p>However, according to the CSS Transforms Module Level 1
+specification, any value other than <code>none</code> on a
+<code>transform</code> property causes that element to become the
+containing block for all of its descendants, including those with
+<code>position: fixed</code> or <code>position: absolute</code>.</p>
+<p>When an ancestor has a transform (such as
+<code>transform: translateY(0)</code> or
+<code>transform: scale(1)</code>), the browser establishes a local
+coordinate system for that ancestor. Because the child element must
+render within this transformed coordinate space, the viewport can no
+longer act as its containing block. As a result:</p>
+<ul>
+<li>The fixed element calculates its coordinates (<code>top</code>,
+<code>right</code>, <code>bottom</code>, <code>left</code>) relative to
+the transformed ancestor’s padding box.</li>
+<li>If the page scrolls and the transformed ancestor moves off-screen,
+the "fixed" element scrolls away with it.</li>
+</ul>
+<h3 id="other-properties-that-trigger-this-behavior">Other Properties
+That Trigger This Behavior</h3>
+<p>The <code>transform</code> property is not the only CSS declaration
+that creates a new containing block for fixed elements. The same
+behavior occurs when an ancestor uses:</p>
+<ul>
+<li><code>perspective</code> (values other than <code>none</code>)</li>
+<li><code>filter</code> (values other than <code>none</code>)</li>
+<li><code>backdrop-filter</code> (values other than
+<code>none</code>)</li>
+<li><code>contain</code> (with values such as <code>paint</code>,
+<code>layout</code>, <code>strict</code>, or <code>content</code>)</li>
+<li><code>will-change</code> (specifying any property that would create
+a containing block when defined, such as
+<code>will-change: transform</code>)</li>
+</ul>
+<h3 id="how-to-fix-the-issue">How to Fix the Issue</h3>
+<p>To restore the standard viewport-relative behavior of a
+<code>position: fixed</code> element, use one of the following
+approaches:</p>
+<h4 id="1-move-the-fixed-element-outside-the-transformed-container">1.
+Move the Fixed Element Outside the Transformed Container</h4>
+<p>The most reliable solution is to place the fixed element outside the
+DOM hierarchy of the transformed ancestor. Moving overlays, modals, and
+sticky navigation bars directly under the <code>&lt;body&gt;</code>
+element ensures their containing block remains the viewport. In
+component-based frameworks like React, Vue, or Angular, this is commonly
+handled using Portals or Teleports.</p>
+<h4 id="2-remove-the-transform-from-the-ancestor">2. Remove the
+Transform from the Ancestor</h4>
+<p>If the transform is not essential, replace it with alternative layout
+properties. For example, if
+<code>transform: translate(-50%, -50%)</code> is used strictly for
+centering, you can switch the parent layout to CSS Grid or Flexbox:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Replace transform centering */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.parent</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">justify-content</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="3-animate-inner-elements-instead">3. Animate Inner Elements
+Instead</h4>
+<p>If transforms are used for animations, apply the
+<code>transform</code> property to a sibling or an inner wrapper rather
+than an ancestor that encapsulates fixed-position children. Isolating
+transformed elements prevents unintended changes to the containing
+blocks of parent or sibling elements.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

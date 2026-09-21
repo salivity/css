@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS descent-override: Aligning Fallback Font Baselines - css</title>
+    <meta name="description" content="The CSS descent-override descriptor allows developers to manually define the descent metric of a font face within an @font-face rule. This article explores what descent-override does, the typographic problems it solves, and how it aligns baseline heights">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-descent-override-aligning-fallback-font-baselines">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS descent-override: Aligning Fallback Font Baselines - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-descent-override-aligning-fallback-font-baselines" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS descent-override descriptor allows developers to manually define the descent metric of a font face within an @font-face rule. This article explores what descent-override does, the typographic problems it solves, and how it aligns baseline heights" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-descent-override-aligning-fallback-font-baselines">CSS
+descent-override: Aligning Fallback Font Baselines</h1>
+<p>The CSS <code>descent-override</code> descriptor allows developers to
+manually define the descent metric of a font face within an
+<code>@font-face</code> rule. This article explores what
+<code>descent-override</code> does, the typographic problems it solves,
+and how it aligns baseline heights between custom web fonts and system
+fallback fonts to eliminate Cumulative Layout Shift (CLS) during page
+loading.</p>
+<h3 id="what-is-the-descent-override-descriptor">What is the
+<code>descent-override</code> Descriptor?</h3>
+<p>The <code>descent-override</code> property is a CSS descriptor used
+inside an <code>@font-face</code> block. It overrides the font’s
+built-in descent metric—the space reserved below the typographic
+baseline for characters with descending elements, such as the lowercase
+letters "g", "y", "p", and "q".</p>
+<p>By default, every font file contains embedded metadata defining its
+descent, ascent, and line gaps. Different typefaces have different
+default descent values even when assigned the exact same
+<code>font-size</code>. The <code>descent-override</code> descriptor
+lets you bypass the font file's internal metrics using either a
+percentage value or the <code>normal</code> keyword:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;CustomFont&#39;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;custom-font.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">descent-override</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The percentage value is calculated relative to the font's 1em sizing
+unit. A value of <code>20%</code> instructs the browser to allocate
+exactly 0.2em below the baseline for glyph descenders.</p>
+<h3 id="the-problem-baseline-shifts-and-layout-instability">The Problem:
+Baseline Shifts and Layout Instability</h3>
+<p>When a browser renders text using a remote web font, it typically
+displays a local fallback font (such as Arial, Times New Roman, or
+system-ui) while downloading the custom font file.</p>
+<p>Because the fallback font and the web font almost always possess
+different internal vertical metrics, the position of the baseline shifts
+when the web font swaps into place. Even if the text's overall line box
+remains identical, text lines can jump up or down vertically. This
+visual movement creates layout instability and negatively impacts
+Cumulative Layout Shift (CLS) scores, a Core Web Vital metric.</p>
+<h3 id="how-descent-override-aligns-fallback-baselines">How
+<code>descent-override</code> Aligns Fallback Baselines</h3>
+<p>To eliminate baseline jumping, developers create a dedicated
+<code>@font-face</code> rule for the system fallback font using
+<code>local()</code>, applying metric overrides to force the fallback
+font to mimic the dimensions of the primary web font.</p>
+<p>The baseline of an inline box is calculated from the top of the line
+box down to the bottom, dictated heavily by the ascent and descent
+metrics. When you alter the descent:</p>
+<ol type="1">
+<li><strong>Recalibrating Below-Baseline Space:</strong> Applying
+<code>descent-override</code> to the fallback font forces its baseline
+to sit at the exact vertical position that the incoming web font
+requires.</li>
+<li><strong>Preventing Line-Height Discrepancies:</strong> Paired with
+<code>ascent-override</code>, modifying the descent balances the total
+content area height of the fallback glyphs, keeping multi-line text
+blocks from expanding or contracting during the font swap.</li>
+</ol>
+<h3 id="implementation-example">Implementation Example</h3>
+<p>To align a local fallback font with a custom web font, measure the
+target font's metrics and declare a modified fallback font face:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Primary Web Font */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;BrandWebFont&#39;</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;/fonts/brand-font.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-display</span><span class="ch">:</span> <span class="dv">swap</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">/* Adjusted Fallback Font */</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;BrandFallback&#39;</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">local(</span><span class="st">&#39;Arial&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ascent-override</span><span class="ch">:</span> <span class="dv">95</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">descent-override</span><span class="ch">:</span> <span class="dv">25</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">line-gap-override</span><span class="ch">:</span> <span class="dv">0</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">/* Applying the Fonts */</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;BrandWebFont&#39;</span><span class="op">,</span> <span class="st">&#39;BrandFallback&#39;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this implementation, the browser loads the text initially using
+the local Arial glyphs, but forces Arial's descent to 25% of the font
+size. When <code>BrandWebFont</code> finishes downloading and replaces
+Arial, the baseline and the space reserved beneath it remain virtually
+motionless, creating a seamless visual transition with zero layout
+shift.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

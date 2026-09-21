@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS perspective-origin Adjusts 3D Vanishing Points - css</title>
+    <meta name="description" content="The CSS perspective-origin property defines the exact position from which a viewer looks at a 3D-transformed scene, effectively establishing the visual vanishing point. While the perspective property sets the distance between the viewer and the z=0 plane">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-perspective-origin-adjusts-3-d-vanishing-points">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS perspective-origin Adjusts 3D Vanishing Points - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-perspective-origin-adjusts-3-d-vanishing-points" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS perspective-origin property defines the exact position from which a viewer looks at a 3D-transformed scene, effectively establishing the visual vanishing point. While the perspective property sets the distance between the viewer and the z=0 plane" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-perspective-origin-adjusts-3d-vanishing-points">How CSS
+perspective-origin Adjusts 3D Vanishing Points</h1>
+<p>The CSS <code>perspective-origin</code> property defines the exact
+position from which a viewer looks at a 3D-transformed scene,
+effectively establishing the visual vanishing point. While the
+<code>perspective</code> property sets the distance between the viewer
+and the <code>z=0</code> plane to create depth,
+<code>perspective-origin</code> determines the horizontal and vertical
+coordinates of the virtual camera. By manipulating this point of
+convergence, web developers can change the apparent angle of an entire
+3D space, producing dramatic bird's-eye views, worm's-eye views, or
+dynamic parallax effects across nested 3D elements.</p>
+<h3 id="the-role-of-the-vanishing-point-in-css-3d">The Role of the
+Vanishing Point in CSS 3D</h3>
+<p>In visual arts and perspective geometry, the vanishing point is the
+spot on the horizon where parallel lines receding into the distance
+appear to converge. In CSS 3D spaces, whenever child elements are
+rotated, translated along the Z-axis, or otherwise transformed, their
+edges project toward a central vanishing point.</p>
+<p>By default, the vanishing point is placed directly in the center of
+the element possessing the <code>perspective</code> property. When
+elements move deeper into the screen (negative <code>translateZ</code>),
+they shrink toward this center point. Adjusting
+<code>perspective-origin</code> shifts this convergence coordinate,
+altering how geometry is skewed and projected onto the two-dimensional
+screen.</p>
+<h3 id="syntax-and-coordinate-system">Syntax and Coordinate System</h3>
+<p>The <code>perspective-origin</code> property is applied to the parent
+container that establishes the 3D context via <code>perspective</code>.
+It accepts one or two values representing the X (horizontal) and Y
+(vertical) axes:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.scene</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">perspective</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">perspective-origin</span><span class="ch">:</span> <span class="dv">50</span><span class="dt">%</span> <span class="dv">50</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* Default: Center */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The values can be specified using keywords, percentages, or absolute
+lengths:</p>
+<ul>
+<li><strong>Keywords:</strong> Values like <code>left</code>,
+<code>right</code>, and <code>center</code> for the X-axis, and
+<code>top</code>, <code>bottom</code>, and <code>center</code> for the
+Y-axis.</li>
+<li><strong>Percentages:</strong> Relative to the width and height of
+the container (<code>0% 0%</code> represents top-left;
+<code>100% 100%</code> represents bottom-right).</li>
+<li><strong>Lengths:</strong> Fixed units such as <code>px</code>,
+<code>rem</code>, or <code>vw</code>, which can position the vanishing
+point relative to the container's top-left corner.</li>
+<li><strong>Out-of-bounds Values:</strong> Values less than
+<code>0%</code> (or negative lengths) and greater than <code>100%</code>
+are valid, placing the vanishing point entirely outside the container
+boundaries for extreme viewing angles.</li>
+</ul>
+<h3 id="how-different-positions-alter-the-scene">How Different Positions
+Alter the Scene</h3>
+<p>Changing the values of <code>perspective-origin</code> shifts the
+viewer's apparent position relative to the stage:</p>
+<ul>
+<li><strong>Top View (<code>perspective-origin: 50% 0%</code>):</strong>
+The viewer is placed level with the top edge of the container looking
+downward. Receding elements tilt upward toward the top edge, revealing
+their top faces more prominently (a high-angle or bird's-eye view).</li>
+<li><strong>Bottom View
+(<code>perspective-origin: 50% 100%</code>):</strong> The viewer is
+placed at the bottom looking upward. Elements receding into the Z-axis
+angle downward toward the base, exposing their underbellies (a low-angle
+or worm's-eye view).</li>
+<li><strong>Left View
+(<code>perspective-origin: 0% 50%</code>):</strong> The vanishing point
+shifts to the left boundary. Objects receding in depth shift leftward,
+exposing their right sides to the viewer.</li>
+<li><strong>Right View
+(<code>perspective-origin: 100% 50%</code>):</strong> The vanishing
+point moves to the right boundary, exposing the left sides of receding
+objects.</li>
+</ul>
+<h3
+id="perspective-origin-vs-transform-origin"><code>perspective-origin</code>
+vs. <code>transform-origin</code></h3>
+<p>It is essential to distinguish <code>perspective-origin</code> from
+<code>transform-origin</code>:</p>
+<ul>
+<li><strong><code>perspective-origin</code></strong> belongs to the
+parent (the viewport or stage). It defines the single, shared camera
+angle and vanishing point for all child elements within that 3D
+context.</li>
+<li><strong><code>transform-origin</code></strong> belongs to individual
+child elements. It sets the local anchor point around which an
+individual element rotates, scales, or skews.</li>
+</ul>
+<p>Changing an element's <code>transform-origin</code> changes how that
+specific object spins or tilts around its own axes, whereas changing
+<code>perspective-origin</code> alters the perspective framework through
+which all child elements are observed.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

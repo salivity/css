@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Span Keyword: Column and Row Placement - css</title>
+    <meta name="description" content="In CSS Grid layouts, the span keyword allows you to specify how many tracks—columns or rows—a grid item should expand across, rather than manually calculating absolute start and end grid lines. This article provides a concise guide to how the span ke">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-grid-span-keyword-column-and-row-placement">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Grid Span Keyword: Column and Row Placement - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-grid-span-keyword-column-and-row-placement" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In CSS Grid layouts, the span keyword allows you to specify how many tracks—columns or rows—a grid item should expand across, rather than manually calculating absolute start and end grid lines. This article provides a concise guide to how the span ke" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-grid-span-keyword-column-and-row-placement">CSS Grid Span
+Keyword: Column and Row Placement</h1>
+<p>In CSS Grid layouts, the <code>span</code> keyword allows you to
+specify how many tracks—columns or rows—a grid item should expand
+across, rather than manually calculating absolute start and end grid
+lines. This article provides a concise guide to how the
+<code>span</code> keyword works with <code>grid-column</code> and
+<code>grid-row</code>, demonstrates its syntax, and explains how it
+simplifies dynamic responsive designs.</p>
+<h3 id="what-the-span-keyword-does">What the <code>span</code> Keyword
+Does</h3>
+<p>By default, CSS Grid items occupy a single cell bounded by grid
+lines. Placing items using line numbers often requires specifying both a
+starting line and an ending line (for example,
+<code>grid-column: 1 / 3;</code>). The <code>span</code> keyword changes
+this paradigm by introducing relative sizing. When you use
+<code>span</code>, you tell the browser: <em>"Make this item <span
+class="math inline">\(N\)</span> tracks wide or tall from its starting
+point."</em></p>
+<h3 id="using-span-with-grid-column">Using <code>span</code> with
+<code>grid-column</code></h3>
+<p>The <code>span</code> keyword is most commonly used within the
+<code>grid-column</code> shorthand property
+(<code>grid-column-start / grid-column-end</code>).</p>
+<ol type="1">
+<li><p><strong>Relative Span from Auto-Placement:</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.item</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-column</span><span class="ch">:</span> <span class="dv">span 2</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The item will place itself according to the grid auto-placement
+algorithm and stretch across two columns.</p></li>
+<li><p><strong>Starting Line with a Span:</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.item</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-column</span><span class="ch">:</span> <span class="dv">2</span> / <span class="dv">span 3</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The item explicitly starts at vertical grid line 2 and spans across 3
+columns, automatically ending at grid line 5.</p></li>
+<li><p><strong>Span Ending at a Specific Line:</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.item</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-column</span><span class="ch">:</span> <span class="dv">span 2</span> / <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The item ends at grid line 5 and spans backward across 2 columns,
+starting at line 3.</p></li>
+</ol>
+<h3 id="using-span-with-grid-row">Using <code>span</code> with
+<code>grid-row</code></h3>
+<p>The <code>span</code> keyword behaves identically on the vertical
+axis when applied to <code>grid-row</code>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card-featured</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-row</span><span class="ch">:</span> <span class="dv">1</span> / <span class="dv">span 2</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this case, the element begins at horizontal grid line 1 and spans
+downward across two rows, terminating at grid line 3.</p>
+<h3 id="spanning-to-named-lines">Spanning to Named Lines</h3>
+<p>Beyond spanning a specific integer count of tracks, <code>span</code>
+can also target named grid lines. When combined with named lines, the
+syntax looks like:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.item</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-column</span><span class="ch">:</span> <span class="dv">span main-end</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This instructs the item to expand from its placement position until
+it reaches the next line labeled <code>main-end</code>.</p>
+<h3 id="why-use-the-span-keyword">Why Use the <code>span</code>
+Keyword?</h3>
+<ul>
+<li><strong>Maintainability:</strong> If your grid layout changes (such
+as adding or removing columns), items configured with <code>span</code>
+adapt automatically without needing updated end-line calculations.</li>
+<li><strong>Component Reusability:</strong> Items styled with
+<code>grid-column: span 2</code> can be moved anywhere inside the grid
+without breaking explicit line-based alignments.</li>
+<li><strong>Readability:</strong> Expressing intent as "span 3 columns"
+is often clearer and faster to interpret than calculating line
+coordinates like <code>4 / 7</code>.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

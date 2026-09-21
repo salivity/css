@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @property: Understanding the inherits Descriptor - css</title>
+    <meta name="description" content="The inherits descriptor inside a CSS @property rule specifies whether a registered custom property cascades down the DOM tree to child elements. Part of the CSS Properties and Values API, this descriptor accepts a boolean value—true or false—allowing">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-property-understanding-the-inherits-descriptor">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS @property: Understanding the inherits Descriptor - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-property-understanding-the-inherits-descriptor" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The inherits descriptor inside a CSS @property rule specifies whether a registered custom property cascades down the DOM tree to child elements. Part of the CSS Properties and Values API, this descriptor accepts a boolean value—true or false—allowing" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-property-understanding-the-inherits-descriptor">CSS
+@property: Understanding the inherits Descriptor</h1>
+<p>The <code>inherits</code> descriptor inside a CSS
+<code>@property</code> rule specifies whether a registered custom
+property cascades down the DOM tree to child elements. Part of the CSS
+Properties and Values API, this descriptor accepts a boolean
+value—<code>true</code> or <code>false</code>—allowing developers to
+define whether custom properties inherit values like standard CSS
+variables or remain contained to the element on which they are
+declared.</p>
+<h2 id="how-the-inherits-descriptor-works">How the inherits Descriptor
+Works</h2>
+<p>Standard CSS custom properties (variables declared with
+<code>--*</code>) always inherit their computed values down the document
+tree by default. When you register a custom property using the
+<code>@property</code> at-rule, the <code>inherits</code> descriptor
+becomes a mandatory field that dictates this inheritance behavior.</p>
+<p>The syntax requires a boolean:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@property</span> --custom-color {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">syntax</span><span class="ch">:</span> <span class="st">&#39;&lt;color&gt;&#39;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inherits</span><span class="ch">:</span> <span class="dv">true</span><span class="op">;</span> <span class="co">/* or false */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">initial-value</span><span class="ch">:</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="inherits-true"><code>inherits: true</code></h3>
+<p>Setting <code>inherits: true</code> preserves the traditional
+behavior of CSS variables. When a parent element defines or modifies the
+property, every descendant element automatically inherits that computed
+value unless a child explicitly overrides it.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@property</span> --theme-spacing {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">syntax</span><span class="ch">:</span> <span class="st">&#39;&lt;length&gt;&#39;</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inherits</span><span class="ch">:</span> <span class="dv">true</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">initial-value</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.parent</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="va">--theme-spacing</span><span class="ch">:</span> <span class="dv">32</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">.child</span> {</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Reads 32px because the property cascades */</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--theme-spacing</span><span class="fu">)</span><span class="op">;</span> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="inherits-false"><code>inherits: false</code></h3>
+<p>Setting <code>inherits: false</code> makes the custom property behave
+like a non-inherited standard CSS property, such as
+<code>background-color</code>, <code>border</code>, or
+<code>transform</code>. The custom property's value applies exclusively
+to the element where it is set.</p>
+<p>When a descendant attempts to access that property, it does not read
+the parent's value. Instead, it resolves to the property's registered
+<code>initial-value</code>.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">@property</span> --badge-color {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">syntax</span><span class="ch">:</span> <span class="st">&#39;&lt;color&gt;&#39;</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inherits</span><span class="ch">:</span> <span class="dv">false</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">initial-value</span><span class="ch">:</span> <span class="cn">gray</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="va">--badge-color</span><span class="ch">:</span> <span class="cn">royalblue</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> <span class="fu">.badge</span> {</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Resolves to &#39;gray&#39; (initial-value), NOT &#39;royalblue&#39; */</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--badge-color</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>To use <code>--badge-color: royalblue</code> on the
+<code>.badge</code>, it must be declared directly on <code>.badge</code>
+or explicitly set to inherit (<code>--badge-color: inherit;</code>).</p>
+<h2 id="why-the-inherits-descriptor-matters">Why the inherits Descriptor
+Matters</h2>
+<p>The <code>inherits</code> descriptor solves several architectural and
+performance challenges in CSS:</p>
+<ol type="1">
+<li><strong>Style Encapsulation:</strong> It prevents styles from
+unintentionally bleeding into nested components. This makes it safer to
+build reusable design tokens that only affect targeted containers.</li>
+<li><strong>Animation and Performance:</strong> Animating non-inheriting
+properties is more performant. When an animated custom property has
+<code>inherits: false</code>, the browser only needs to recalculate
+styles for the element undergoing the animation, rather than
+invalidating styles across the entire subtree of child nodes.</li>
+<li><strong>Intentional Overrides:</strong> It gives component authors
+explicit control over their design API, requiring child components to
+opt in to inheritance when needed.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

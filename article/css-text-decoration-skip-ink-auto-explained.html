@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS text-decoration-skip-ink: auto Explained - css</title>
+    <meta name="description" content="The CSS property text-decoration-skip-ink: auto controls how underlines and overlines interact with text glyphs, specifically preventing lines from cutting directly through descending letters. By dynamically creating small, clean breaks in the underline">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-text-decoration-skip-ink-auto-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS text-decoration-skip-ink: auto Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-text-decoration-skip-ink-auto-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS property text-decoration-skip-ink: auto controls how underlines and overlines interact with text glyphs, specifically preventing lines from cutting directly through descending letters. By dynamically creating small, clean breaks in the underline" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-text-decoration-skip-ink-auto-explained">CSS
+text-decoration-skip-ink: auto Explained</h1>
+<p>The CSS property <code>text-decoration-skip-ink: auto</code> controls
+how underlines and overlines interact with text glyphs, specifically
+preventing lines from cutting directly through descending letters. By
+dynamically creating small, clean breaks in the underline around
+descenders like "g", "j", "p", "q", and "y", this property enhances
+typography, maintains letterform integrity, and significantly improves
+readability across web pages.</p>
+<h3 id="understanding-descenders-and-the-problem">Understanding
+Descenders and the Problem</h3>
+<p>In typography, the baseline is the invisible line upon which most
+letters sit. Characters such as "g", "j", "p", "q", and "y" have strokes
+called descenders that extend downward past this baseline.</p>
+<p>Historically, default browser behavior drew continuous underlines
+directly across the baseline. When an unbroken underline strikes through
+a descender, it creates visual noise, distorts the character's shape,
+and makes text harder to read—especially at smaller font sizes.</p>
+<h3 id="how-text-decoration-skip-ink-auto-works">How
+<code>text-decoration-skip-ink: auto</code> Works</h3>
+<p>When <code>text-decoration-skip-ink</code> is set to
+<code>auto</code>, the browser examines the font glyphs and
+automatically introduces an intentional gap in the underline wherever it
+encounters a descender or any stroke that crosses the decoration
+path.</p>
+<p>Key behaviors include:</p>
+<ul>
+<li><strong>Symmetrical Clipping:</strong> The browser calculates a
+small margin around the character's stroke, clearing the line smoothly
+without disconnecting the underline too far from the word.</li>
+<li><strong>Smart Detection:</strong> It applies to Roman letters,
+accents, and symbols that hang below the baseline, preventing the line
+from colliding with commas, semicolons, or diacritics.</li>
+<li><strong>Context Awareness:</strong> The underline only skips when an
+actual stroke intersects the line; letters resting entirely on or above
+the baseline remain continuously underlined.</li>
+</ul>
+<h3 id="default-browser-behavior">Default Browser Behavior</h3>
+<p>In modern web browsers, <code>text-decoration-skip-ink: auto</code>
+is the default value for the <code>text-decoration-skip-ink</code>
+property. This means underlines created using
+<code>text-decoration: underline</code> naturally skip descenders
+without requiring manual CSS intervention.</p>
+<h3 id="syntax-and-values">Syntax and Values</h3>
+<p>The property accepts three primary values:</p>
+<ul>
+<li><code>auto</code>: The default setting. The browser automatically
+skips descenders and character strokes to optimize legibility.</li>
+<li><code>none</code>: Disables ink skipping entirely. The underline
+passes directly through all descenders as a continuous line, which is
+useful for specialized designs, mathematical notations, or scripts where
+gaps might cause confusion.</li>
+<li><code>all</code>: Forces the underline to skip across the entire
+glyph bounding box or any glyph with descenders, often creating wider
+breaks (support varies by browser).</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Enable ink skipping (default behavior in modern browsers) */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>a {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">underline</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-skip-ink</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Disable ink skipping for a continuous strike-through line */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.continuous-underline</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">underline</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-skip-ink</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="typographic-benefits">Typographic Benefits</h3>
+<p>Using <code>text-decoration-skip-ink: auto</code> mimics traditional
+print typography, where typesetters avoided running rules through
+characters to keep text distinct. By allowing the letterforms to remain
+whole, web typography appears more polished, refined, and legible across
+all screen resolutions.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

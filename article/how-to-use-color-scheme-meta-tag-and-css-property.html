@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use color-scheme Meta Tag and CSS Property - css</title>
+    <meta name="description" content="Modern browsers support both the HTML color-scheme meta tag and the CSS color-scheme property to adapt default user-interface elements to light and dark themes. While both mechanisms communicate whether a page supports light, dark, or both color modes, t">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-color-scheme-meta-tag-and-css-property">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use color-scheme Meta Tag and CSS Property - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-color-scheme-meta-tag-and-css-property" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modern browsers support both the HTML color-scheme meta tag and the CSS color-scheme property to adapt default user-interface elements to light and dark themes. While both mechanisms communicate whether a page supports light, dark, or both color modes, t" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-color-scheme-meta-tag-and-css-property">How to Use
+color-scheme Meta Tag and CSS Property</h1>
+<p>Modern browsers support both the HTML <code>color-scheme</code> meta
+tag and the CSS <code>color-scheme</code> property to adapt default
+user-interface elements to light and dark themes. While both mechanisms
+communicate whether a page supports light, dark, or both color modes,
+they operate at different stages of page rendering. Understanding how
+they coordinate ensures that elements like scrollbars, form controls,
+and page backgrounds render consistently without visual flashes during
+page load.</p>
+<h3 id="the-role-of-the-html-meta-tag">The Role of the HTML Meta
+Tag</h3>
+<p>The HTML meta tag is placed inside the document
+<code>&lt;head&gt;</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;color-scheme&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;light dark&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Because browsers encounter HTML tags before fetching and parsing
+external stylesheets, the meta tag acts as an early signal. It informs
+the browser's rendering engine about supported themes immediately,
+allowing the browser to:</p>
+<ul>
+<li>Render default backgrounds and canvas colors in the appropriate
+theme before CSS finishes loading.</li>
+<li>Prevent a "flash of white" (or light mode) when a user with an
+active dark mode preference loads the page.</li>
+<li>Immediately adapt initial user-agent styles, including
+browser-rendered scrollbars and native loading state controls.</li>
+</ul>
+<h3 id="the-role-of-the-css-property">The Role of the CSS Property</h3>
+<p>The CSS <code>color-scheme</code> property is declared directly
+within a stylesheet, commonly on the root element:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">light</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>While it achieves the same visual results for form controls, system
+colors, and scrollbars, it offers granular control that HTML cannot:</p>
+<ul>
+<li><strong>Scoped Application:</strong> Unlike the document-wide meta
+tag, CSS rules can be applied to specific sections or components. An
+individual element can be forced into dark mode
+(<code>color-scheme: dark;</code>) inside a predominantly light
+layout.</li>
+<li><strong>Dynamic Theming:</strong> It integrates with CSS media
+queries and user preference toggles, adjusting dynamically via classes
+or runtime property updates.</li>
+</ul>
+<h3 id="how-they-coordinate-and-precedence-rules">How They Coordinate
+and Precedence Rules</h3>
+<p>The interaction between the meta tag and CSS follows a predictable
+hierarchy based on rendering order and cascade priority:</p>
+<ol type="1">
+<li><strong>Initial Paint (Meta Tag Dominance):</strong> Before external
+CSS is parsed, the HTML meta tag dictates the theme for native UI
+elements. If omitted, the browser assumes default light styling.</li>
+<li><strong>Cascading Override (CSS Dominance):</strong> Once CSS is
+downloaded and evaluated, the CSS <code>color-scheme</code> property
+applied to <code>:root</code> supersedes the meta tag value for the
+document.</li>
+<li><strong>Element-Level Specificity:</strong> Any nested CSS
+declaration overrides the root setting for that element and its
+descendants. For example, a container with
+<code>color-scheme: light;</code> will force native inputs within it to
+use light controls, even if the meta tag and <code>:root</code> specify
+<code>dark</code>.</li>
+</ol>
+<h3 id="best-practices-for-implementation">Best Practices for
+Implementation</h3>
+<p>To achieve seamless theme integration:</p>
+<ul>
+<li><strong>Declare the Meta Tag in <code>&lt;head&gt;</code>:</strong>
+Always include
+<code>&lt;meta name="color-scheme" content="light dark"&gt;</code> (or
+your supported values) to optimize early paints and prevent layout
+flashes.</li>
+<li><strong>Mirror the Value in CSS:</strong> Define
+<code>color-scheme</code> on <code>:root</code> to match your meta tag.
+This guarantees continuity if the page uses CSS-in-JS or dynamic
+stylesheet injection.</li>
+<li><strong>Use CSS for Local Overrides:</strong> Reserve CSS
+declarations on specific selectors to isolate components that require
+fixed color themes independent of system preferences.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

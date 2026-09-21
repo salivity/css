@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Bleed Property for Print Trim Margins - css</title>
+    <meta name="description" content="The CSS bleed property defines the distance that content extends beyond the cut line of a physical page box to accommodate mechanical variations during commercial printing. When paired with the @page at-rule and crop marks, it ensures that background col">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-bleed-property-for-print-trim-margins">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Bleed Property for Print Trim Margins - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-bleed-property-for-print-trim-margins" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS bleed property defines the distance that content extends beyond the cut line of a physical page box to accommodate mechanical variations during commercial printing. When paired with the @page at-rule and crop marks, it ensures that background col" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-bleed-property-for-print-trim-margins">CSS Bleed Property
+for Print Trim Margins</h1>
+<p>The CSS <code>bleed</code> property defines the distance that content
+extends beyond the cut line of a physical page box to accommodate
+mechanical variations during commercial printing. When paired with the
+<code>@page</code> at-rule and crop marks, it ensures that background
+colors, images, and full-bleed graphics run seamlessly to the very edge
+of the trimmed sheet without leaving unsightly white borders. This
+article explains how the <code>bleed</code> property operates within the
+CSS Paged Media specification, its interaction with page geometry and
+crop marks, and how to implement it correctly for commercial print
+workflows.</p>
+<h3 id="the-role-of-bleed-in-commercial-printing">The Role of Bleed in
+Commercial Printing</h3>
+<p>In commercial print production, documents are printed on paper larger
+than the intended final dimensions and trimmed down using mechanical
+guillotines. Because cutting blades can shift fractions of a millimeter
+during high-speed runs, any artwork intended to touch the edge of the
+finished sheet must physically extend past the trim line. This extra
+margin is the bleed. Without a configured bleed area, minor alignment
+inaccuracies expose the unprinted white paper beneath.</p>
+<h3 id="syntax-and-values">Syntax and Values</h3>
+<p>The <code>bleed</code> property is defined within the CSS Paged Media
+Module Level 3 specification and is valid only within the
+<code>@page</code> at-rule context.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  bleed<span class="ch">:</span> <span class="bu">auto</span> | &lt;<span class="dv">length</span>&gt;<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong><code>&lt;length&gt;</code></strong>: A specific measurement
+defining how far the bleed box extends outward from the page box (trim
+edge). Common units include millimeters (<code>mm</code>), inches
+(<code>in</code>), or points (<code>pt</code>). The commercial printing
+industry standard is typically <code>3mm</code> or <code>0.125in</code>
+(1/8 inch).</li>
+<li><strong><code>auto</code></strong>: The user agent determines the
+bleed distance. If crop marks are enabled (<code>marks: crop</code>),
+the default value typically resolves to <code>6pt</code> (approximately
+<code>2.12mm</code>). If no crop marks are enabled, it resolves to
+zero.</li>
+</ul>
+<h3 id="interaction-with-the-marks-property">Interaction with the
+<code>marks</code> Property</h3>
+<p>The <code>bleed</code> property is designed to function alongside the
+<code>marks</code> property. When generating a press-ready PDF, print
+engines need both the trim indicator and the extra bleed area:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">size</span><span class="ch">:</span> <span class="dv">8.5</span><span class="dt">in</span> <span class="dv">11</span><span class="dt">in</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0.5</span><span class="dt">in</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  marks<span class="ch">:</span> <span class="dv">crop cross</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  bleed<span class="ch">:</span> <span class="dv">0.125</span><span class="dt">in</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup:</p>
+<ol type="1">
+<li>The <strong>Page Box</strong> (trim box) is sized to 8.5 by 11
+inches.</li>
+<li>The <strong>Bleed Box</strong> expands outward by
+<code>0.125in</code> on all four edges, making the physical rendered
+canvas 8.75 by 11.25 inches.</li>
+<li>The <strong>Crop Marks</strong> (<code>marks: crop</code>) are drawn
+outside the trim edge to instruct the bindery where to cut.</li>
+<li>The <strong>Cross Marks</strong> (<code>marks: cross</code>) assist
+with multi-plate color registration.</li>
+</ol>
+<h3 id="the-paged-media-box-model">The Paged Media Box Model</h3>
+<p>The CSS print box model nests areas from inside to outside as
+follows:</p>
+<ol type="1">
+<li><strong>Page Area</strong>: Contains the content and adheres to
+standard element layout rules.</li>
+<li><strong>Margin Area</strong>: Surrounds the page area and handles
+running headers, footers, and margins.</li>
+<li><strong>Trim Box (Page Box)</strong>: Represents the intended
+dimensions of the final cut paper.</li>
+<li><strong>Bleed Box</strong>: Surrounds the trim box by the distance
+declared in <code>bleed</code>.</li>
+<li><strong>Sheet (Canvas)</strong>: Accommodates the bleed area, crop
+marks, color bars, and printer job metadata.</li>
+</ol>
+<p>Elements assigned to bleed off the page—such as full-bleed hero
+covers or colored chapter dividers—must extend past the page margin to
+the boundary of the bleed box.</p>
+<h3 id="implementation-example">Implementation Example</h3>
+<p>Below is a complete implementation defining a standard A4 commercial
+document with background elements styled for full bleed:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">size</span><span class="ch">:</span> <span class="dv">A4</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  bleed<span class="ch">:</span> <span class="dv">3</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  marks<span class="ch">:</span> <span class="dv">crop</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:left</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="im">@bottom-left</span> {</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    content<span class="in">:</span> counter<span class="in">(</span>page<span class="in">)</span>;</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:right</span> {</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="im">@bottom-right</span> {</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    content<span class="in">:</span> counter<span class="in">(</span>page<span class="in">)</span>;</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">/* Full-bleed cover page */</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:first</span> {</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#1a1a1a</span><span class="op">;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">.cover-image</span> {</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">object-fit</span><span class="ch">:</span> <span class="dv">cover</span><span class="op">;</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When applied to the first page, setting <code>margin: 0</code> allows
+the background to fill the trim box completely, while the defined
+<code>3mm</code> bleed ensures the renderer pushes background fills into
+the bleed boundary.</p>
+<h3 id="engine-support-and-compatibility">Engine Support and
+Compatibility</h3>
+<p>Standard consumer web browsers (such as Google Chrome, Mozilla
+Firefox, and Apple Safari) offer limited native support for advanced
+print properties like <code>bleed</code> and <code>marks</code>. They
+typically crop print output directly to the chosen page size within
+standard system print dialogs.</p>
+<p>The <code>bleed</code> property is fully supported by dedicated
+HTML-to-PDF print engines and paged media polyfills designed for
+automated publishing, including:</p>
+<ul>
+<li><strong>Paged.js</strong>: An open-source polyfill that renders
+paged media directly in the browser for print previewing.</li>
+<li><strong>PrinceXML</strong>: A commercial engine specialized in
+converting HTML/CSS into press-ready PDFs.</li>
+<li><strong>WeasyPrint</strong>: A Python-based rendering engine
+supporting CSS Paged Media standards.</li>
+<li><strong>Antenna House Formatter</strong>: An enterprise print
+formatting engine supporting advanced layout specifications.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

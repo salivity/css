@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Protect Brand Logos with forced-color-adjust - css</title>
+    <meta name="description" content="This article explains how the CSS forced-color-adjust: none property safeguards brand identity in accessibility modes such as Windows High Contrast Mode. You will learn why operating system color overrides can break the visual presentation of logos, how">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-protect-brand-logos-with-forced-color-adjust">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Protect Brand Logos with forced-color-adjust - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-protect-brand-logos-with-forced-color-adjust" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how the CSS forced-color-adjust: none property safeguards brand identity in accessibility modes such as Windows High Contrast Mode. You will learn why operating system color overrides can break the visual presentation of logos, how" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-protect-brand-logos-with-forced-color-adjust">How to
+Protect Brand Logos with forced-color-adjust</h1>
+<p>This article explains how the CSS
+<code>forced-color-adjust: none</code> property safeguards brand
+identity in accessibility modes such as Windows High Contrast Mode. You
+will learn why operating system color overrides can break the visual
+presentation of logos, how the <code>forced-color-adjust</code> property
+functions, and how to implement it responsibly without compromising user
+accessibility.</p>
+<hr />
+<h3 id="what-is-forced-colors-mode">What Is Forced Colors Mode?</h3>
+<p>Operating systems, notably Windows via Contrast Themes, offer a High
+Contrast Mode (referred to on the web platform as Forced Colors Mode) to
+aid users with low vision, light sensitivity, or color vision
+deficiencies. When activated, the browser overrides web author styles
+with a restricted, user-selected system color palette. Text, background
+colors, borders, and certain SVG fills are converted to standard system
+tokens (such as <code>Canvas</code>, <code>CanvasText</code>, and
+<code>Highlight</code>) to maximize legibility.</p>
+<h3 id="the-problem-with-brand-logos">The Problem with Brand Logos</h3>
+<p>While forced colors significantly improve readability for body text
+and navigation, they can distort brand assets:</p>
+<ol type="1">
+<li><strong>Multi-Color Merging:</strong> When an inline SVG or
+CSS-rendered logo uses multiple colors to create depth, shading, or
+distinct shapes, the browser flattens all fills and strokes into a
+single system text color (typically <code>CanvasText</code>). This
+causes details to disappear, rendering the logo unrecognizable.</li>
+<li><strong>Loss of Trademark Integrity:</strong> Brand guidelines often
+require strict color adherence. While accessibility takes precedence,
+logos are identity markers rather than critical reading text, and
+altering them can hinder brand recognition for users who rely on
+familiar shapes and colors.</li>
+<li><strong>Background Conflicts:</strong> An SVG logo with transparent
+elements may partially blend into the forced background color, creating
+an unintended silhouette or rendering parts of the graphic
+invisible.</li>
+</ol>
+<h3 id="the-purpose-of-forced-color-adjust-none">The Purpose of
+<code>forced-color-adjust: none</code></h3>
+<p>The <code>forced-color-adjust</code> property is part of the W3C CSS
+Color Adjustment Module Level 1. It provides an explicit opt-out
+mechanism, telling the browser engine not to impose its forced color
+palette on a specific element and its descendants.</p>
+<p>Setting <code>forced-color-adjust: none</code> on a logo element
+preserves:</p>
+<ul>
+<li>Original <code>color</code> values</li>
+<li>SVG <code>fill</code> and <code>stroke</code> attributes</li>
+<li><code>background-color</code> values</li>
+<li><code>box-shadow</code> and <code>border-color</code>
+declarations</li>
+</ul>
+<p>This ensures that multi-colored brand marks retain their original
+visual hierarchy and recognizable aesthetics.</p>
+<h3 id="how-to-implement-it">How to Implement It</h3>
+<p>To apply the property directly to a logo container or an inline SVG,
+declare the rule in your stylesheet:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.brand-logo</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">forced-color-adjust</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>You can also scope this behavior strictly within the
+<code>forced-colors</code> media query:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">forced-colors</span><span class="ch">:</span> <span class="dv">active</span><span class="fu">)</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.brand-logo</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">forced-color-adjust</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="accessibility-responsibilities">Accessibility
+Responsibilities</h3>
+<p>Exempting an element from high contrast mode transfers accessibility
+responsibility to the developer:</p>
+<ul>
+<li><strong>Legibility:</strong> If a user selects a dark contrast theme
+with a black background, a dark navy or black logo will become
+completely invisible.</li>
+<li><strong>Fallback Accommodations:</strong> When applying
+<code>forced-color-adjust: none</code>, inspect how the logo appears
+against both pure black and pure white forced backgrounds. If necessary,
+use <code>@media (forced-colors: active)</code> to apply a protective
+background plate, an outline, or switch to an alternate monochrome asset
+that guarantees adequate contrast against the user's active theme.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

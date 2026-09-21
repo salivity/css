@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS font-optical-sizing: auto Explained - css</title>
+    <meta name="description" content="This article explores the CSS font-optical-sizing: auto property, explaining how it works with variable fonts and how it dynamically adjusts glyph weights, stroke contrast, and proportions across different screen sizes. You will learn the mechanics behin">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-font-optical-sizing-auto-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS font-optical-sizing: auto Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-font-optical-sizing-auto-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the CSS font-optical-sizing: auto property, explaining how it works with variable fonts and how it dynamically adjusts glyph weights, stroke contrast, and proportions across different screen sizes. You will learn the mechanics behin" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-font-optical-sizing-auto-explained">CSS font-optical-sizing:
+auto Explained</h1>
+<p>This article explores the CSS <code>font-optical-sizing: auto</code>
+property, explaining how it works with variable fonts and how it
+dynamically adjusts glyph weights, stroke contrast, and proportions
+across different screen sizes. You will learn the mechanics behind the
+optical sizing axis (<code>opsz</code>), how browsers interpret the
+<code>auto</code> value, and why it enhances typography for both small
+text and large display headings.</p>
+<h2 id="what-is-font-optical-sizing-auto">What is
+<code>font-optical-sizing: auto</code>?</h2>
+<p>The <code>font-optical-sizing</code> property controls whether a
+browser adjusts the rendering of letterforms to optimize them for their
+displayed size. When set to <code>auto</code>, the browser checks if the
+current font supports an optical size variation axis
+(<code>opsz</code>). If supported, the browser automatically configures
+the glyph shapes to suit the computed <code>font-size</code>.</p>
+<p>Historically, physical metal type was cut differently for distinct
+point sizes; a 6-point metal font had thicker strokes and wider
+proportions than a 72-point headline cut of the same typeface. The
+<code>font-optical-sizing: auto</code> property restores this
+typographic tradition in modern web design via OpenType variable
+fonts.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>p {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;Inter&quot;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">14</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-optical-sizing</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span> <span class="co">/* Default in most modern browsers */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-it-scales-glyph-weights-and-proportions">How It Scales Glyph
+Weights and Proportions</h2>
+<p>Rather than changing the actual <code>font-weight</code> value (such
+as shifting from <code>400</code> to <code>700</code>),
+<code>font-optical-sizing: auto</code> fine-tunes the physical geometry
+and internal stroke contrast of glyphs based on size:</p>
+<h3 id="1-small-font-sizes-text-and-captions">1. Small Font Sizes (Text
+and Captions)</h3>
+<p>When text is set at small dimensions (typically below 16px):</p>
+<ul>
+<li><strong>Stroke Thickening:</strong> Delicate strokes, serifs, and
+hairlines are reinforced so they do not blur or disappear under lower
+pixel densities.</li>
+<li><strong>Reduced Contrast:</strong> The ratio between thick stems and
+thin horizontal strokes decreases, providing more uniform, sturdy
+letterforms.</li>
+<li><strong>Wider Counters and Spacing:</strong> Internal counter forms
+(the hollow areas inside letters like "e", "a", and "o") open up, and
+letter spacing increases slightly to prevent glyphs from running
+together.</li>
+<li><strong>Increased x-Height:</strong> Lowercase letters are rendered
+slightly taller relative to uppercase letters to improve readability at
+a glance.</li>
+</ul>
+<h3 id="2-large-font-sizes-headings-and-display">2. Large Font Sizes
+(Headings and Display)</h3>
+<p>When text is scaled up to display sizes (such as 36px and above):</p>
+<ul>
+<li><strong>Increased Contrast:</strong> The difference between thick
+and thin strokes becomes sharper and more pronounced, creating elegance
+and visual drama.</li>
+<li><strong>Delicate Details:</strong> Serifs, terminals, and decorative
+features become thinner and sharper because there are enough pixels to
+render them accurately without breaking apart.</li>
+<li><strong>Tighter Proportions:</strong> Letter spacing and character
+widths contract slightly to keep large words compact and cohesive.</li>
+</ul>
+<h2 id="browser-implementation-details">Browser Implementation
+Details</h2>
+<p>When <code>font-optical-sizing: auto</code> is active, the browser
+converts the computed <code>font-size</code> (expressed in CSS pixels)
+into points (where 1px is approximately 0.75pt) and passes this value
+directly to the font's internal <code>opsz</code> axis.</p>
+<p>If a font provides an <code>opsz</code> range from 8 to 72:</p>
+<ul>
+<li>A <code>font-size: 12px</code> (9pt) instructs the font engine to
+load glyph variations near the 9pt mark on the <code>opsz</code>
+axis.</li>
+<li>A <code>font-size: 64px</code> (48pt) maps directly to the 48pt
+coordinates on the <code>opsz</code> axis.</li>
+</ul>
+<p>If <code>font-optical-sizing: none</code> is set instead, the browser
+freezes the optical axis at a default design coordinate (typically
+around 12pt or 14pt), causing large headings to look overly heavy or
+small text to appear faint and illegible.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

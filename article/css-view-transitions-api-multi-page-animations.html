@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS View Transitions API: Multi-Page Animations - css</title>
+    <meta name="description" content="The CSS View Transitions API enables native, seamless animated transitions between different HTML documents in multi-page applications (MPAs) without requiring complex client-side JavaScript routing. This article explains how the API bridges navigation s">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-view-transitions-api-multi-page-animations">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS View Transitions API: Multi-Page Animations - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-view-transitions-api-multi-page-animations" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS View Transitions API enables native, seamless animated transitions between different HTML documents in multi-page applications (MPAs) without requiring complex client-side JavaScript routing. This article explains how the API bridges navigation s" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-view-transitions-api-multi-page-animations">CSS View
+Transitions API: Multi-Page Animations</h1>
+<p>The CSS View Transitions API enables native, seamless animated
+transitions between different HTML documents in multi-page applications
+(MPAs) without requiring complex client-side JavaScript routing. This
+article explains how the API bridges navigation states, how browsers
+capture and animate page snapshots, and how developers can implement and
+customize cross-document transitions using modern CSS properties.</p>
+<h3 id="the-mechanism-of-cross-document-transitions">The Mechanism of
+Cross-Document Transitions</h3>
+<p>Traditionally, navigating between separate HTML pages resulted in a
+visible flash of white or an abrupt content replacement as the browser
+unloaded the current document and parsed the next. The View Transitions
+API solves this by capturing visual representations of both states and
+smoothly morphing between them.</p>
+<p>During a cross-document navigation, the browser coordinates the
+transition through several distinct steps:</p>
+<ol type="1">
+<li><strong>Triggering Navigation:</strong> When a user clicks a link to
+a same-origin URL, the browser checks if both the current page and the
+destination page support view transitions.</li>
+<li><strong>Snapshotting the Old State:</strong> Before discarding the
+current page, the browser takes a visual snapshot of the DOM elements
+participating in the transition.</li>
+<li><strong>Fetching and Rendering the New State:</strong> The browser
+fetches the destination page and builds its DOM. Before painting it to
+the screen, the browser freezes the rendering pipeline and takes a
+snapshot of the new state.</li>
+<li><strong>Generating Pseudo-Elements:</strong> The browser creates a
+temporary tree of pseudo-elements on the new document containing the old
+and new snapshots.</li>
+<li><strong>Running the Animation:</strong> A default cross-fade
+animation runs using CSS keyframes, seamlessly transitioning from the
+old snapshot to the live new document.</li>
+</ol>
+<h3 id="enabling-multi-page-transitions">Enabling Multi-Page
+Transitions</h3>
+<p>To activate cross-document view transitions, both the outgoing and
+incoming documents must explicitly opt in. This is achieved using the
+<code>@view-transition</code> at-rule in your stylesheet:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@view-transition</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  navigation<span class="in">:</span> auto;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Both pages must belong to the same origin (protocol, domain, and
+port). If either page omits this rule or if the navigation is
+cross-origin, the browser falls back to standard page load behavior.</p>
+<h3 id="the-pseudo-element-tree">The Pseudo-Element Tree</h3>
+<p>Once activated, the browser constructs an ephemeral pseudo-element
+tree rooted at the document root:</p>
+<ul>
+<li><code>::view-transition</code>: The root container that overlays the
+entire viewport.</li>
+<li><code>::view-transition-group(root)</code>: Controls the size and
+position of a specific transition group.</li>
+<li><code>::view-transition-image-pair(root)</code>: Houses both the
+outgoing and incoming visual states.</li>
+<li><code>::view-transition-old(root)</code>: A static snapshot of the
+previous page.</li>
+<li><code>::view-transition-new(root)</code>: A live representation of
+the incoming page.</li>
+</ul>
+<p>By default, the browser interpolates the <code>opacity</code> of the
+old and new snapshots to create a smooth cross-fade, while adjusting
+dimensions and position if elements change size or location.</p>
+<h3 id="animating-specific-elements-with-view-transition-name">Animating
+Specific Elements with <code>view-transition-name</code></h3>
+<p>While the default transition applies to the entire page
+(<code>root</code>), you can animate individual persistent elements—such
+as headers, hero images, or cards—by assigning them a unique
+<code>view-transition-name</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.product-card-image</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  view-transition-name<span class="ch">:</span> <span class="dv">product-image</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If an element on the destination page shares the same
+<code>view-transition-name</code>, the browser isolates those elements
+into their own dedicated
+<code>::view-transition-group(product-image)</code> branch. The browser
+then automatically animates the element’s geometry, position, and visual
+properties across pages, creating an app-like shared element
+transition.</p>
+<h3 id="customizing-the-animation">Customizing the Animation</h3>
+<p>Because view transitions are driven by standard CSS animations, you
+can override default timing functions, durations, or keyframes by
+targeting the transition pseudo-elements:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">::view-transition-old(</span>root<span class="in">)</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">ms</span> <span class="dv">ease-out</span> <span class="dv">both</span> <span class="dv">slide-out-left</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in">::view-transition-new(</span>root<span class="in">)</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">ms</span> <span class="dv">ease-in</span> <span class="dv">both</span> <span class="dv">slide-in-right</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> slide-out-left {</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">to</span> { <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateX(</span><span class="dv">-100</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span> }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> slide-in-right {</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">from</span> { <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateX(</span><span class="dv">100</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span> }</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By leveraging hardware-accelerated snapshot interpolation through
+pure CSS, the View Transitions API removes the need to convert
+multi-page architectures into single-page applications solely for
+polished navigation experiences.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

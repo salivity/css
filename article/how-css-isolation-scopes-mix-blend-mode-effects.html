@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS Isolation Scopes Mix-Blend-Mode Effects - css</title>
+    <meta name="description" content="The CSS isolation property controls how elements create a new stacking context, serving as a boundary that prevents mix-blend-mode calculations from leaking into surrounding page elements. When developing modular UI components, applying mix-blend-mode ca">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-isolation-scopes-mix-blend-mode-effects">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS Isolation Scopes Mix-Blend-Mode Effects - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-isolation-scopes-mix-blend-mode-effects" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS isolation property controls how elements create a new stacking context, serving as a boundary that prevents mix-blend-mode calculations from leaking into surrounding page elements. When developing modular UI components, applying mix-blend-mode ca" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-isolation-scopes-mix-blend-mode-effects">How CSS
+Isolation Scopes Mix-Blend-Mode Effects</h1>
+<p>The CSS <code>isolation</code> property controls how elements create
+a new stacking context, serving as a boundary that prevents
+<code>mix-blend-mode</code> calculations from leaking into surrounding
+page elements. When developing modular UI components, applying
+<code>mix-blend-mode</code> can unintentionally blend an element's
+colors with parent containers or background elements across the entire
+page. This article explains the mechanics of blending, why unintended
+bleed occurs, and how setting <code>isolation: isolate</code>
+establishes a clean visual scope for component-level blend modes.</p>
+<h3 id="the-problem-with-unscoped-blending">The Problem with Unscoped
+Blending</h3>
+<p>By default, the <code>mix-blend-mode</code> property dictates how an
+element’s content blends with the colors of the backdrop behind it.
+However, the "backdrop" is not restricted to the immediate parent
+element. In a standard rendering context, an element using
+<code>mix-blend-mode</code> blends with every layer visible beneath it
+all the way down to the root <code>&lt;html&gt;</code> element.</p>
+<p>In modern component-driven architectures, this behavior causes severe
+encapsulation issues. For instance, if a card component features text
+blending against an internal image, moving that card over a dark section
+of the webpage or an off-canvas navigation menu will cause the text
+inside the card to unexpectedly react to those external backgrounds.</p>
+<h3 id="how-isolation-isolate-works">How <code>isolation: isolate</code>
+Works</h3>
+<p>The CSS specification defines the <code>isolation</code> property
+specifically to manage this behavior. It accepts two values:
+<code>auto</code> (the default) and <code>isolate</code>.</p>
+<p>When you set <code>isolation: isolate</code> on a parent element, it
+forces that element to create a new stacking context. Within the context
+of color composition:</p>
+<ol type="1">
+<li>The isolated element creates an independent rendering surface for
+its descendants.</li>
+<li>Descendant elements using <code>mix-blend-mode</code> only blend
+with layers inside this specific stacking context.</li>
+<li>The resulting composite is flattened and rendered onto the page as a
+single, isolated image, preventing any internal blend modes from
+sampling background colors that exist outside the container.</li>
+</ol>
+<h3 id="implementation-example">Implementation Example</h3>
+<p>Consider a UI card where an overlay needs to blend with an image
+without interacting with the page background behind the card:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Establishes the boundary for all internal blend modes */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">isolation</span><span class="ch">:</span> <span class="dv">isolate</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">relative</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">.card__image</span> {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">object-fit</span><span class="ch">:</span> <span class="dv">cover</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">.card__overlay</span> {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#ff3366</span><span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Blends only with .card__image, not with elements outside .card */</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">mix-blend-mode</span><span class="ch">:</span> <span class="dv">multiply</span><span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Without <code>isolation: isolate</code> on <code>.card</code>, the
+<code>.card__overlay</code> would blend with whatever container or
+section sits behind <code>.card</code> in the DOM.</p>
+<h3 id="why-isolation-is-preferable-to-stacking-context-hacks">Why
+<code>isolation</code> is Preferable to Stacking Context Hacks</h3>
+<p>Historically, developers triggered stacking contexts using unintended
+side effects of other properties, such as setting
+<code>transform: translateZ(0)</code>, <code>opacity: 0.99</code>, or
+<code>filter: blur(0)</code>. While these methods stop blend-mode
+leakage, they introduce unwanted side effects:</p>
+<ul>
+<li>Altered coordinate systems for absolute and fixed child
+positioning.</li>
+<li>Performance penalties associated with unnecessary GPU layer
+creation.</li>
+<li>Unintended visual changes, such as font subpixel rendering
+degradation.</li>
+</ul>
+<p>The <code>isolation</code> property does not alter element geometry,
+visual styles, or coordinate systems. It communicates the explicit
+intent to fence blending and stacking behaviors, making it the most
+robust and semantically correct solution for scoping
+<code>mix-blend-mode</code> inside reusable components.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

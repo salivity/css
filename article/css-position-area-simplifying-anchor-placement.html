@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS position-area: Simplifying Anchor Placement - css</title>
+    <meta name="description" content="The CSS position-area property revolutionizes CSS Anchor Positioning by replacing verbose inset mathematics and alignment declarations with an intuitive, 3x3 directional grid model. This article explores how position-area functions, breaks down its direc">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-position-area-simplifying-anchor-placement">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS position-area: Simplifying Anchor Placement - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-position-area-simplifying-anchor-placement" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS position-area property revolutionizes CSS Anchor Positioning by replacing verbose inset mathematics and alignment declarations with an intuitive, 3x3 directional grid model. This article explores how position-area functions, breaks down its direc" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-position-area-simplifying-anchor-placement">CSS
+position-area: Simplifying Anchor Placement</h1>
+<p>The CSS <code>position-area</code> property revolutionizes CSS Anchor
+Positioning by replacing verbose inset mathematics and alignment
+declarations with an intuitive, 3x3 directional grid model. This article
+explores how <code>position-area</code> functions, breaks down its
+directional grid concepts, and demonstrates how it drastically reduces
+the code needed to align anchored elements such as tooltips, popovers,
+and dropdown menus.</p>
+<h3 id="the-3x3-anchor-grid-model">The 3x3 Anchor Grid Model</h3>
+<p>At the core of <code>position-area</code> (formerly developed under
+the working name <code>inset-area</code>) is an implicit 3x3 grid drawn
+around the anchor element:</p>
+<ul>
+<li><strong>Rows:</strong> Defined as <code>top</code>,
+<code>center</code>, and <code>bottom</code> (or logically as
+<code>block-start</code>, <code>center</code>, and
+<code>block-end</code>).</li>
+<li><strong>Columns:</strong> Defined as <code>left</code>,
+<code>center</code>, and <code>right</code> (or logically as
+<code>inline-start</code>, <code>center</code>, and
+<code>inline-end</code>).</li>
+</ul>
+<p>The anchor element itself occupies the center cell of this grid. The
+remaining eight surrounding cells correspond to the areas immediately
+adjacent to the anchor. By referencing these cells using directional
+keywords, the browser automatically handles dimensions, positioning, and
+alignment without requiring explicit <code>top</code>,
+<code>bottom</code>, <code>left</code>, <code>right</code>, or
+<code>anchor()</code> functions.</p>
+<h3 id="directional-syntax-and-common-values">Directional Syntax and
+Common Values</h3>
+<p>The <code>position-area</code> property accepts one or two values
+indicating the target area on the grid.</p>
+<ol type="1">
+<li><p><strong>Single Keyword Values:</strong></p>
+<ul>
+<li><code>position-area: top;</code> positions the element directly
+above the anchor, centered horizontally.</li>
+<li><code>position-area: bottom;</code> positions the element directly
+below the anchor, centered horizontally.</li>
+<li><code>position-area: left;</code> positions the element to the left,
+centered vertically.</li>
+<li><code>position-area: right;</code> positions the element to the
+right, centered vertically.</li>
+</ul></li>
+<li><p><strong>Two-Keyword Combinations:</strong></p>
+<ul>
+<li><code>position-area: top left;</code> places the element in the
+top-left cell.</li>
+<li><code>position-area: bottom right;</code> places the element in the
+bottom-right cell.</li>
+<li><code>position-area: center right;</code> matches the behavior of
+<code>right</code>.</li>
+</ul></li>
+<li><p><strong>Spanning Multi-Cell Areas:</strong> To make an anchored
+element stretch or occupy multiple grid tracks, you can use the
+<code>span-</code> keyword prefix:</p>
+<ul>
+<li><code>position-area: top span-right;</code> places the element in
+the top row, spanning from the anchor's horizontal center through to the
+right edge.</li>
+<li><code>position-area: bottom span-all;</code> places the element
+below the anchor across all three horizontal columns (<code>left</code>,
+<code>center</code>, and <code>right</code>).</li>
+</ul></li>
+</ol>
+<h3 id="practical-code-comparison">Practical Code Comparison</h3>
+<p>Before <code>position-area</code>, centering a tooltip above a button
+using the Anchor Positioning API required coordinating inset properties
+and self-alignment:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Traditional Anchor Positioning */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.tooltip</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  position-anchor<span class="ch">:</span> <span class="dv">--my-anchor</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">bottom</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">top</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">justify-self</span><span class="ch">:</span> <span class="dv">anchor-center</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>With <code>position-area</code>, the browser implicitly sets both the
+placement and the corresponding alignment defaults:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Modern Approach with position-area */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.tooltip</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  position-anchor<span class="ch">:</span> <span class="dv">--my-anchor</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  position-area<span class="ch">:</span> <span class="dv">top</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="logical-property-support">Logical Property Support</h3>
+<p><code>position-area</code> fully supports CSS logical values,
+ensuring seamless adaptability for right-to-left (RTL) and vertical
+writing modes. You can substitute physical directions with their logical
+counterparts:</p>
+<ul>
+<li><code>block-start</code> instead of <code>top</code></li>
+<li><code>block-end</code> instead of <code>bottom</code></li>
+<li><code>inline-start</code> instead of <code>left</code> (in standard
+LTR)</li>
+<li><code>inline-end</code> instead of <code>right</code> (in standard
+LTR)</li>
+</ul>
+<p>Using <code>position-area: block-start inline-end;</code> guarantees
+that the anchored element appears at the start of the block axis and the
+end of the inline axis regardless of the document's language
+direction.</p>
+<h3 id="automatic-alignment-handling">Automatic Alignment Handling</h3>
+<p>A major benefit of <code>position-area</code> is that it alters the
+default alignment behavior. When assigning an element to an area like
+<code>top left</code>, the element automatically aligns its bottom edge
+against the anchor's top edge and its right edge against the anchor's
+left edge. This eliminates the need for manual <code>translate()</code>
+transforms or separate <code>align-self</code> and
+<code>justify-self</code> declarations, making layout definitions
+significantly more concise and maintainable.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

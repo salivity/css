@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS flex-direction Define Layout Axes? - css</title>
+    <meta name="description" content="The CSS flex-direction property establishes the main axis along which flex items are placed inside a flex container, directly determining whether content flows horizontally or vertically, forwards or backwards. By setting the primary direction of layout">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-flex-direction-define-layout-axes">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS flex-direction Define Layout Axes? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-flex-direction-define-layout-axes" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS flex-direction property establishes the main axis along which flex items are placed inside a flex container, directly determining whether content flows horizontally or vertically, forwards or backwards. By setting the primary direction of layout" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-flex-direction-define-layout-axes">How Does CSS
+flex-direction Define Layout Axes?</h1>
+<p>The CSS <code>flex-direction</code> property establishes the main
+axis along which flex items are placed inside a flex container, directly
+determining whether content flows horizontally or vertically, forwards
+or backwards. By setting the primary direction of layout flow,
+<code>flex-direction</code> simultaneously defines the perpendicular
+cross axis, governing how alignment properties like
+<code>justify-content</code> and <code>align-items</code> position
+elements on the screen.</p>
+<h2 id="understanding-the-two-axes-of-flexbox">Understanding the Two
+Axes of Flexbox</h2>
+<p>CSS Flexible Box Layout operates entirely on a two-dimensional
+coordinate system made up of two axes: the <strong>main axis</strong>
+and the <strong>cross axis</strong>.</p>
+<ul>
+<li><strong>Main Axis:</strong> The primary axis along which flex items
+are laid out sequentially.</li>
+<li><strong>Cross Axis:</strong> The axis running perpendicular to the
+main axis, used primarily to align items across the container.</li>
+</ul>
+<p>Unlike standard block and inline layout models, where horizontal and
+vertical directions are fixed, Flexbox abstracts these directions. The
+physical orientation of these axes is not static; it changes dynamically
+depending on the value assigned to <code>flex-direction</code>.</p>
+<h2 id="values-of-the-flex-direction-property">Values of the
+flex-direction Property</h2>
+<p>The <code>flex-direction</code> property accepts four values, each
+modifying the starting point, orientation, and order of flex items.</p>
+<h3 id="1-row-default">1. <code>row</code> (Default)</h3>
+<p>Sets the main axis to run horizontally along the inline direction
+(left-to-right in standard Western writing modes). The cross axis runs
+vertically from top to bottom. Items are placed from
+<code>main-start</code> (left) to <code>main-end</code> (right).</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">row</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="2-row-reverse">2. <code>row-reverse</code></h3>
+<p>Keeps the main axis horizontal, but swaps the starting and ending
+points. Items are placed from right to left, while the cross axis
+remains top-to-bottom.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">row-reverse</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="3-column">3. <code>column</code></h3>
+<p>Rotates the main axis 90 degrees so that it runs vertically from top
+to bottom along the block axis. Consequently, the cross axis becomes
+horizontal, running from left to right.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="4-column-reverse">4. <code>column-reverse</code></h3>
+<p>Sets the main axis vertically, but lays out items from bottom to top.
+The cross axis remains horizontal (left-to-right).</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">column-reverse</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-flex-direction-affects-alignment-properties">How
+flex-direction Affects Alignment Properties</h2>
+<p>Because CSS Flexbox alignment properties target axes rather than
+absolute directions (like top, bottom, left, or right), changing
+<code>flex-direction</code> changes how these properties behave:</p>
+<ul>
+<li><strong><code>justify-content</code></strong> always distributes
+space along the <strong>main axis</strong>. When
+<code>flex-direction</code> is <code>row</code>, it controls horizontal
+spacing. When changed to <code>column</code>,
+<code>justify-content</code> controls vertical spacing.</li>
+<li>**<code>align-items</code> and <code>align-self**</code> always
+align items along the <strong>cross axis</strong>. In a <code>row</code>
+container, they manage vertical alignment. In a <code>column</code>
+container, they manage horizontal alignment.</li>
+</ul>
+<h2 id="summary-of-axis-orientations">Summary of Axis Orientations</h2>
+<table>
+<thead>
+<tr>
+<th><code>flex-direction</code> Value</th>
+<th>Main Axis Direction</th>
+<th>Cross Axis Direction</th>
+<th>Item Flow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>row</code></td>
+<td>Horizontal</td>
+<td>Vertical</td>
+<td>Left to Right</td>
+</tr>
+<tr>
+<td><code>row-reverse</code></td>
+<td>Horizontal</td>
+<td>Vertical</td>
+<td>Right to Left</td>
+</tr>
+<tr>
+<td><code>column</code></td>
+<td>Vertical</td>
+<td>Horizontal</td>
+<td>Top to Bottom</td>
+</tr>
+<tr>
+<td><code>column-reverse</code></td>
+<td>Vertical</td>
+<td>Horizontal</td>
+<td>Bottom to Top</td>
+</tr>
+</tbody>
+</table>
+<p>Mastering <code>flex-direction</code> is the foundational step in
+understanding Flexbox, enabling responsive transitions from multi-column
+desktop layouts to stacked mobile views with a single property
+change.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

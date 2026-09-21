@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS container-type: inline-size Explained - css</title>
+    <meta name="description" content="The CSS declaration container-type: inline-size is a foundational property of CSS Container Queries that establishes an element as a query container scoped specifically to its inline dimension. This article explains what the declaration does, how it work">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-container-type-inline-size-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS container-type: inline-size Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-container-type-inline-size-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS declaration container-type: inline-size is a foundational property of CSS Container Queries that establishes an element as a query container scoped specifically to its inline dimension. This article explains what the declaration does, how it work" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-container-type-inline-size-explained">CSS container-type:
+inline-size Explained</h1>
+<p>The CSS declaration <code>container-type: inline-size</code> is a
+foundational property of CSS Container Queries that establishes an
+element as a query container scoped specifically to its inline
+dimension. This article explains what the declaration does, how it works
+in modern responsive layouts, and why it is necessary to prevent
+circular layout loops while enabling component-driven styling.</p>
+<h2 id="what-is-container-type-inline-size">What is
+<code>container-type: inline-size</code>?</h2>
+<p>The <code>container-type</code> property defines an element's role as
+a query container, allowing descendant elements to adapt their styles
+based on the container's dimensions rather than the viewport size.</p>
+<p>When you set <code>container-type: inline-size</code>, you instruct
+the browser to monitor changes only along the container's inline axis.
+In standard horizontal writing modes (such as English), the inline axis
+corresponds to the width of the element.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card-wrapper</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">container-type</span><span class="ch">:</span> <span class="dv">inline-size</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">container-name</span><span class="ch">:</span> <span class="dv">card</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">@container</span> card <span class="fu">(</span><span class="kw">min-width</span><span class="ch">:</span> <span class="dv">400</span><span class="dt">px</span><span class="fu">)</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.card</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">flex-direction</span><span class="ch">:</span> <span class="dv">row</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup, <code>.card</code> styles update automatically
+depending on the width of <code>.card-wrapper</code>, regardless of
+whether <code>.card-wrapper</code> sits in a narrow sidebar or a
+full-width main content area.</p>
+<h2 id="why-is-container-type-inline-size-necessary">Why is
+<code>container-type: inline-size</code> Necessary?</h2>
+<p>Before container queries, responsive designs relied exclusively on
+<code>@media</code> queries, which measure the entire browser viewport.
+While useful, viewport queries fail modular component architectures,
+where a component must adapt to the space provided by its parent
+container.</p>
+<p>The <code>inline-size</code> value solves this problem while
+addressing critical technical challenges:</p>
+<h3 id="1-preventing-infinite-layout-loops">1. Preventing Infinite
+Layout Loops</h3>
+<p>The primary reason <code>inline-size</code> exists—rather than
+browsers defaulting to observing all dimensions—is the risk of circular
+dependencies.</p>
+<p>In web layout engines, changing the styles of child elements (such as
+increasing font sizes, margins, or switching to stacked layouts)
+frequently alters the height (block size) of the parent container. If a
+container query were dependent on the container's height, adjusting
+child styling would alter the parent height, which would re-evaluate the
+container query, triggering another layout change. This creates an
+infinite layout loop and crashes the rendering engine.</p>
+<p>By restricting size containment to the <code>inline-size</code>,
+child elements can expand or contract vertically without changing the
+container's inline width, preventing recursive layout
+recalculations.</p>
+<h3 id="2-matching-natural-web-content-flow">2. Matching Natural Web
+Content Flow</h3>
+<p>Web documents default to a flow layout where content fills available
+horizontal space and extends vertically as needed. Because height is
+usually dynamic and determined by content volume, measuring container
+width is almost always the metric developers need to build adaptive
+components.</p>
+<h3 id="3-contrast-with-container-type-size">3. Contrast with
+<code>container-type: size</code></h3>
+<p>CSS provides another value: <code>container-type: size</code>. This
+value measures both the inline (width) and block (height) axes.</p>
+<p>However, using <code>container-type: size</code> requires setting
+explicit dimensions on the container or ensuring its height does not
+rely on its content. If you do not specify a height, an element with
+<code>container-type: size</code> collapses to a height of zero.
+<code>container-type: inline-size</code> eliminates this limitation,
+allowing the element to determine its height based on its content while
+still providing a reliable horizontal reference for query
+evaluation.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

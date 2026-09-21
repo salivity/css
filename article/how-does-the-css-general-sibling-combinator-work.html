@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does the CSS General Sibling Combinator Work? - css</title>
+    <meta name="description" content="The CSS general sibling combinator (~) targets elements that share the same parent and appear anywhere after a specified reference element in the HTML structure. Unlike the adjacent sibling combinator (+), which requires elements to sit directly next to">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-the-css-general-sibling-combinator-work">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does the CSS General Sibling Combinator Work? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-the-css-general-sibling-combinator-work" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS general sibling combinator (~) targets elements that share the same parent and appear anywhere after a specified reference element in the HTML structure. Unlike the adjacent sibling combinator (+), which requires elements to sit directly next to" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-the-css-general-sibling-combinator-work">How Does the
+CSS General Sibling Combinator Work?</h1>
+<p>The CSS general sibling combinator (<code>~</code>) targets elements
+that share the same parent and appear anywhere after a specified
+reference element in the HTML structure. Unlike the adjacent sibling
+combinator (<code>+</code>), which requires elements to sit directly
+next to one another, the general sibling combinator selects all matching
+siblings that follow the initial element, regardless of intervening
+elements. Understanding this combinator allows developers to create
+dynamic, state-driven styling across multiple components without relying
+on JavaScript.</p>
+<h2 id="syntax-and-basic-mechanics">Syntax and Basic Mechanics</h2>
+<p>The general sibling combinator is written by placing a tilde
+(<code>~</code>) between two selectors:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>selectorA <span class="op">~</span> selectorB {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* styles applied to selectorB */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When the browser evaluates this rule, it searches for every element
+matching <code>selectorB</code> that satisfies three specific
+conditions:</p>
+<ol type="1">
+<li><strong>Shared Parent:</strong> Both <code>selectorA</code> and
+<code>selectorB</code> must reside within the exact same parent
+container.</li>
+<li><strong>Document Order:</strong> Elements matching
+<code>selectorB</code> must appear <em>after</em> the element matching
+<code>selectorA</code> in the DOM tree.</li>
+<li><strong>No Direct Adjacency Required:</strong> Other unrelated HTML
+tags may sit between <code>selectorA</code> and <code>selectorB</code>
+without breaking the selection.</li>
+</ol>
+<h2 id="general-sibling--vs-adjacent-sibling-">General Sibling
+(<code>~</code>) vs. Adjacent Sibling (<code>+</code>)</h2>
+<p>The primary difference between the two sibling combinators lies in
+strictness regarding proximity:</p>
+<ul>
+<li><strong>Adjacent Sibling Combinator (<code>+</code>):</strong>
+Selects only the single element matching the second selector that
+immediately follows the first selector.</li>
+<li><strong>General Sibling Combinator (<code>~</code>):</strong>
+Selects every matching sibling element located downstream in the
+document flow.</li>
+</ul>
+<p>Consider this markup structure:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;container&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Heading<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>First paragraph<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span>An unrelated block<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Second paragraph<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Applying <code>h2 + p</code> styles only the "First paragraph"
+because it is the immediate neighbor of the heading. In contrast,
+applying <code>h2 ~ p</code> targets both the "First paragraph" and the
+"Second paragraph," skipping over the intermediary <code>div</code>
+element.</p>
+<h2 id="practical-use-cases">Practical Use Cases</h2>
+<p>The general sibling combinator is widely used in CSS-only UI patterns
+to control multi-element state changes.</p>
+<h3 id="accessible-form-validation-and-field-hints">Accessible Form
+Validation and Field Hints</h3>
+<p>Form states can automatically reveal helper text or highlight
+subsequent fields when a user enters invalid data:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>input<span class="in">:invalid</span> <span class="op">~</span> <span class="fu">.error-message</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">block</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>input<span class="in">:invalid</span> <span class="op">~</span> <span class="fu">.field-hint</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#d9534f</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="the-checkbox-hack-for-navigation-and-modals">The Checkbox Hack
+for Navigation and Modals</h3>
+<p>By using hidden toggle inputs, developers can reveal or style
+navigation drawers, modal overlays, and multiple distinct UI blocks
+simultaneously:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#menu-toggle</span><span class="in">:checked</span> <span class="op">~</span> nav {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateX(</span><span class="dv">0</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#menu-toggle</span><span class="in">:checked</span> <span class="op">~</span> <span class="fu">.backdrop</span> {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">pointer-events</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="contextual-list-and-grid-highlighting">Contextual List and Grid
+Highlighting</h3>
+<p>Hovering over a specific item can trigger visual cues on all
+succeeding sibling items, useful for sequence chains or timeline
+steps:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.step</span><span class="in">:hover</span> <span class="op">~</span> <span class="fu">.step</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0.5</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="browser-support-and-limitations">Browser Support and
+Limitations</h2>
+<p>The general sibling combinator is fully supported across all modern
+web browsers and legacy engines back through Internet Explorer 7.</p>
+<p>Its main functional constraint is unidirectional evaluation: CSS
+selectors cannot navigate backward or upward in the DOM. The general
+sibling combinator can only select subsequent siblings, meaning
+<code>selectorA ~ selectorB</code> will never match any instance of
+<code>selectorB</code> that appears before <code>selectorA</code>.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

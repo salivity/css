@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS math-depth Manages MathML Script Styling - css</title>
+    <meta name="description" content="The CSS math-depth property controls the nesting level of mathematical expressions within MathML, directly regulating how subscript, superscript, and nested sub-formulas are scaled and styled. By monitoring and calculating hierarchical depth, it automate">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-math-depth-manages-math-ml-script-styling">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS math-depth Manages MathML Script Styling - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-math-depth-manages-math-ml-script-styling" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS math-depth property controls the nesting level of mathematical expressions within MathML, directly regulating how subscript, superscript, and nested sub-formulas are scaled and styled. By monitoring and calculating hierarchical depth, it automate" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-math-depth-manages-mathml-script-styling">How CSS
+math-depth Manages MathML Script Styling</h1>
+<p>The CSS <code>math-depth</code> property controls the nesting level
+of mathematical expressions within MathML, directly regulating how
+subscript, superscript, and nested sub-formulas are scaled and styled.
+By monitoring and calculating hierarchical depth, it automates the
+progressive reduction of font sizes and triggers math-specific OpenType
+font features, ensuring that mathematical typography remains readable,
+balanced, and structurally accurate across complex equations.</p>
+<h2 id="understanding-math-depth-in-mathml">Understanding math-depth in
+MathML</h2>
+<p>In traditional typography and mathematical typesetting (such as TeX),
+nested elements like indices, superscripts, and fractions require
+smaller text sizes to denote hierarchy and conserve vertical space.
+MathML Core integrates this behavior into CSS through the
+<code>math-depth</code> property.</p>
+<p>The <code>math-depth</code> property calculates an integer value
+representing the mathematical nesting level of an element. As
+expressions nest deeper—such as a superscript inside another
+superscript—the value of <code>math-depth</code> increases, signaling
+the rendering engine to adapt the typography accordingly.</p>
+<h2 id="values-and-syntax">Values and Syntax</h2>
+<p>The <code>math-depth</code> property accepts explicit numbers,
+relative adjustments, or keyword values:</p>
+<ul>
+<li><strong><code>auto-add</code></strong>: The default behavior. If an
+element naturally introduces a script level change (such as an
+<code>&lt;msup&gt;</code>, <code>&lt;msub&gt;</code>, or
+<code>&lt;mroot&gt;</code> element), the browser automatically
+increments the depth by one.</li>
+<li><strong><code>add(&lt;integer&gt;)</code></strong>: Inherits the
+computed depth from the parent and modifies it by the specified integer
+(e.g., <code>math-depth: add(1)</code> or
+<code>math-depth: add(-1)</code>).</li>
+<li><strong><code>&lt;integer&gt;</code></strong>: Explicitly sets an
+absolute depth level, overriding any inherited values (e.g.,
+<code>math-depth: 0</code>).</li>
+</ul>
+<h2 id="how-math-depth-affects-visual-styling">How math-depth Affects
+Visual Styling</h2>
+<p>The primary function of <code>math-depth</code> is to adjust
+typography and font sizing based on depth calculations:</p>
+<h3 id="1-dynamic-font-scaling">1. Dynamic Font Scaling</h3>
+<p>When <code>math-depth</code> increments, user-agent stylesheets apply
+font scaling based on parameters defined in the font's OpenType
+<code>MATH</code> table (specifically
+<code>ScriptPercentScaleDown</code> and
+<code>ScriptScriptPercentScaleDown</code>). Typically:</p>
+<ul>
+<li>A depth of <code>0</code> renders at the base font size (100%).</li>
+<li>A depth of <code>1</code> scales down (typically around 70–75% of
+the base size).</li>
+<li>A depth of <code>2</code> scales down further (typically around
+50–60% of the base size).</li>
+</ul>
+<p>To prevent text from becoming unreadable, browsers generally cap the
+automated reduction beyond a depth of 2, maintaining the minimum
+readable size for subsequent nested layers unless overridden by author
+styles.</p>
+<h3 id="2-activation-of-opentype-math-features">2. Activation of
+OpenType Math Features</h3>
+<p>Certain OpenType math fonts include specialized glyph variants
+designed explicitly for scripts. The <code>math-depth</code> property
+instructs the browser to enable OpenType features such as
+<code>ssty</code> (Math Script Style Alternates). At depth 1, the
+browser enables the first alternate (<code>ssty=1</code>); at depth 2,
+it enables the second alternate (<code>ssty=2</code>), providing glyphs
+with thicker stems and adjusted proportions tailored for small-scale
+readability.</p>
+<h3 id="3-interaction-with-math-style">3. Interaction with
+math-style</h3>
+<p>The <code>math-depth</code> property works in tandem with the
+<code>math-style</code> property, which toggles between
+<code>normal</code> (display style) and <code>compact</code> (inline
+style). While <code>math-style</code> determines whether an expression
+is spaced compactly or displayed openly, <code>math-depth</code>
+strictly manages script shrinkage and hierarchy.</p>
+<h2 id="practical-overrides-and-customization">Practical Overrides and
+Customization</h2>
+<p>Authors can use <code>math-depth</code> to correct rendering issues
+in deeply nested equations or to prevent unwanted font shrinking:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Prevent superscripts from shrinking in a specific formula */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>math <span class="fu">.no-shrink</span> msup <span class="op">&gt;</span> <span class="in">:last-child</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">math-depth</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Force a sub-expression to render as a nested script */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.custom-script</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">math-depth</span><span class="ch">:</span> add<span class="fu">(</span><span class="dv">1</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By standardizing math hierarchy management into CSS,
+<code>math-depth</code> bridges the gap between semantic MathML markups
+and modern web font engines, enabling predictable, typographically sound
+mathematical layouts.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

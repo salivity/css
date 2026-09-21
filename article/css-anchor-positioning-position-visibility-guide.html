@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Anchor Positioning position-visibility Guide - css</title>
+    <meta name="description" content="The CSS Anchor Positioning API introduces the position-visibility property to manage how anchored elements behave when their trigger elements scroll out of view. This property prevents UI components like tooltips, popovers, and floating menus from becomi">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-anchor-positioning-position-visibility-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Anchor Positioning position-visibility Guide - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-anchor-positioning-position-visibility-guide" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS Anchor Positioning API introduces the position-visibility property to manage how anchored elements behave when their trigger elements scroll out of view. This property prevents UI components like tooltips, popovers, and floating menus from becomi" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-anchor-positioning-position-visibility-guide">CSS Anchor
+Positioning position-visibility Guide</h1>
+<p>The CSS Anchor Positioning API introduces the
+<code>position-visibility</code> property to manage how anchored
+elements behave when their trigger elements scroll out of view. This
+property prevents UI components like tooltips, popovers, and floating
+menus from becoming awkwardly orphaned on screen when their associated
+anchors are no longer visible. By using
+<code>position-visibility</code>, developers can control whether an
+anchored element stays visible, hides automatically, or disappears when
+constrained by its container, eliminating the need for complex
+JavaScript scroll and intersection listeners.</p>
+<h3 id="the-problem-floating-orphaned-elements">The Problem: Floating
+Orphaned Elements</h3>
+<p>When pairing an element (such as a tooltip) to an anchor (such as a
+button inside a scrollable area), normal absolute or fixed positioning
+can cause visual bugs. As the user scrolls, the button might slide off
+the top of the viewport, but the tooltip may remain visible, floating in
+empty space detached from its context.</p>
+<p>The <code>position-visibility</code> property solves this by linking
+the visual rendering of the anchored element directly to the visibility
+and position of its anchor.</p>
+<h3 id="key-values-of-position-visibility">Key Values of
+<code>position-visibility</code></h3>
+<p>The <code>position-visibility</code> property accepts three primary
+values that dictate how the anchored element responds to scrolling:</p>
+<ul>
+<li><strong><code>anchors-visible</code></strong>: This is the most
+common solution for handling scrolled anchors. The anchored element
+remains visible only as long as its anchor is visible within its scroll
+container or viewport. If the anchor is completely clipped or scrolled
+out of view, the anchored element is automatically hidden.</li>
+<li><strong><code>always</code></strong>: The anchored element remains
+visible at all times, even if the anchor has scrolled completely out of
+view. In this case, the element will stay fixed at the edge or pinned to
+where the anchor would be, regardless of whether the user can actually
+see the anchor.</li>
+<li><strong><code>no-overflow</code></strong>: The anchored element is
+hidden if it overflows the boundaries of its containing block or the
+viewport. This is useful when an anchor is still partially on screen,
+but there is no longer enough room to render the anchored element
+without clipping or visual overlap.</li>
+</ul>
+<h3 id="implementation-example">Implementation Example</h3>
+<p>To apply this behavior, assign the property to the anchored element
+using CSS:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Define the anchor */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.action-button</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  anchor-name<span class="ch">:</span> <span class="dv">--tooltip-anchor</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Define the anchored element */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.tooltip</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  position-anchor<span class="ch">:</span> <span class="dv">--tooltip-anchor</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  position-visibility<span class="ch">:</span> <span class="dv">anchors-visible</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">bottom</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">top</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">left</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">center</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this implementation, the <code>.tooltip</code> element tracks
+<code>.action-button</code>. As long as <code>.action-button</code>
+remains in the visible scroll area, <code>.tooltip</code> is displayed.
+The moment <code>.action-button</code> scrolls outside the visible
+boundary, the browser automatically suppresses rendering of
+<code>.tooltip</code>.</p>
+<h3 id="practical-benefits">Practical Benefits</h3>
+<ul>
+<li><strong>Zero JavaScript Overhead:</strong> Eliminates the need for
+<code>IntersectionObserver</code> logic or scroll event listeners
+previously required to toggle visibility classes.</li>
+<li><strong>Cleaner User Interfaces:</strong> Ensures contextual UI
+elements only appear when their associated context is genuinely present
+and relevant to the user.</li>
+<li><strong>Performance:</strong> Browser-level visibility calculations
+occur on the compositor thread, ensuring smooth scrolling without layout
+thrashing.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

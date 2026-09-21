@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS clip-path path Parses SVG Coordinate Strings - css</title>
+    <meta name="description" content="The CSS clip-path: path() function allows developers to use SVG path syntax directly within stylesheets to define complex clipping boundaries. This article explains how browsers parse the coordinate strings supplied to path(), how SVG commands translate">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-clip-path-path-parses-svg-coordinate-strings">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS clip-path path Parses SVG Coordinate Strings - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-clip-path-path-parses-svg-coordinate-strings" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS clip-path: path() function allows developers to use SVG path syntax directly within stylesheets to define complex clipping boundaries. This article explains how browsers parse the coordinate strings supplied to path(), how SVG commands translate" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-clip-path-path-parses-svg-coordinate-strings">How CSS
+clip-path path Parses SVG Coordinate Strings</h1>
+<p>The CSS <code>clip-path: path()</code> function allows developers to
+use SVG path syntax directly within stylesheets to define complex
+clipping boundaries. This article explains how browsers parse the
+coordinate strings supplied to <code>path()</code>, how SVG commands
+translate into CSS rendering rules, how units and coordinate systems are
+mapped, and how the browser determines which areas of an element remain
+visible.</p>
+<h3 id="svg-path-data-syntax">SVG Path Data Syntax</h3>
+<p>The <code>path()</code> function accepts a string literal containing
+standard SVG path data commands, matching the specification of the SVG
+<code>d</code> attribute. The browser's CSS parser processes this string
+character by character, separating commands from numeric coordinate
+parameters.</p>
+<p>Commands inside the string fall into two structural categories:</p>
+<ul>
+<li><strong>Uppercase commands (Absolute):</strong> Evaluated relative
+to the origin <code>(0, 0)</code> of the reference box. Examples include
+<code>M</code> (moveto), <code>L</code> (lineto), <code>C</code> (cubic
+Bézier curve), and <code>Z</code> (closepath).</li>
+<li><strong>Lowercase commands (Relative):</strong> Evaluated relative
+to the end position of the preceding command. Examples include
+<code>m</code>, <code>l</code>, and <code>c</code>.</li>
+</ul>
+<p>Separators between coordinates can be whitespace, commas, or negative
+signs (e.g., <code>10-20</code> is parsed as <code>10</code> and
+<code>-20</code>).</p>
+<h3 id="coordinate-space-and-unit-mapping">Coordinate Space and Unit
+Mapping</h3>
+<p>Unlike standard SVG elements that can use viewBox scaling or flexible
+percentages, the <code>path()</code> function in CSS operates under
+fixed coordinate rules:</p>
+<ol type="1">
+<li><strong>User Units Map to Pixels:</strong> Numbers inside the
+coordinate string are unitless per SVG syntax specifications. The CSS
+engine maps every unitless number directly to CSS pixels
+(<code>px</code>). For instance, <code>M 10 20</code> moves the clipping
+point to <code>10px</code> along the X-axis and <code>20px</code> along
+the Y-axis.</li>
+<li><strong>Reference Box Origin:</strong> By default, coordinates
+resolve against the top-left corner <code>(0, 0)</code> of the element's
+<code>border-box</code>, unless another reference box (such as
+<code>padding-box</code> or <code>content-box</code>) is declared
+alongside <code>clip-path</code>.</li>
+<li><strong>Lack of Native Responsive Scaling:</strong> Because the path
+string only accepts unitless values, coordinates do not automatically
+stretch to fit the element's width or height. To scale a path
+dynamically with an element, authors must apply CSS transforms, use
+<code>transform-box</code>, or use an external SVG
+<code>&lt;clipPath&gt;</code> element paired with
+<code>clipPathUnits="objectBoundingBox"</code>.</li>
+</ol>
+<h3 id="fill-rules-for-defining-interior-regions">Fill Rules for
+Defining Interior Regions</h3>
+<p>The browser determines which side of the path boundary constitutes
+the "inside" (the clipped visible area) using a fill-rule algorithm. An
+optional fill rule keyword can precede the path string:</p>
+<ul>
+<li><strong><code>nonzero</code> (Default):</strong> A ray is drawn from
+a point to infinity in any direction. The parser counts path segments
+crossing the ray: left-to-right crossings count as +1, and right-to-left
+crossings count as -1. If the net sum is not zero, the point is inside
+the clipping area.</li>
+<li><strong><code>evenodd</code>:</strong> A ray is drawn from a point
+to infinity in any direction. The parser counts the total number of path
+segments crossed. If the total is an odd number, the point is inside; if
+even, it is outside. This rule is ideal for shapes with cutouts or
+overlapping segments.</li>
+</ul>
+<p>Syntax example:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>clip-path<span class="in">:</span> path<span class="in">(</span>evenodd<span class="op">,</span> &quot;M 0 0 L 100 0 L 100 100 L 0 100 Z M 25 25 L 75 25 L 75 75 L 25 75 Z&quot;<span class="in">)</span>;</span></code></pre></div>
+<h3 id="parsing-errors-and-fallback-behavior">Parsing Errors and
+Fallback Behavior</h3>
+<p>CSS parsers treat the contents of <code>path()</code> strictly. If
+the coordinate string contains syntax errors—such as unknown command
+letters, incorrect numbers of arguments for a given command (e.g.,
+supplying five coordinates to a cubic Bézier <code>C</code> command
+instead of six), or invalid characters—the browser flags the entire
+<code>clip-path</code> declaration as invalid. When this occurs, the
+property is discarded, and the element renders without clipping.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styling Native Spellcheck with CSS ::spelling-error - css</title>
+    <meta name="description" content="This article explains how the CSS ::spelling-error pseudo-element formats native spellchecker highlights in web applications. You will learn how browsers identify misspelled words, which CSS properties are supported to override default browser rendering,">
+    <link rel="canonical" href="https://salivity.github.io/css/article/styling-native-spellcheck-with-css-spelling-error">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Styling Native Spellcheck with CSS ::spelling-error - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/styling-native-spellcheck-with-css-spelling-error" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how the CSS ::spelling-error pseudo-element formats native spellchecker highlights in web applications. You will learn how browsers identify misspelled words, which CSS properties are supported to override default browser rendering," />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="styling-native-spellcheck-with-css-spelling-error">Styling
+Native Spellcheck with CSS ::spelling-error</h1>
+<p>This article explains how the CSS <code>::spelling-error</code>
+pseudo-element formats native spellchecker highlights in web
+applications. You will learn how browsers identify misspelled words,
+which CSS properties are supported to override default browser
+rendering, how to write the styling rules, and the technical limitations
+governing highlight pseudo-elements.</p>
+<h3 id="understanding-the-spelling-error-pseudo-element">Understanding
+the <code>::spelling-error</code> Pseudo-Element</h3>
+<p>The <code>::spelling-error</code> pseudo-element is part of the CSS
+Pseudo-Elements Level 4 specification. It belongs to the family of
+highlight pseudo-elements, which also includes <code>::selection</code>,
+<code>::target-text</code>, and <code>::grammar-error</code>.</p>
+<p>Browsers typically format misspelled words inside editable
+regions—such as <code>&lt;textarea&gt;</code>,
+<code>&lt;input&gt;</code>, or elements with
+<code>contenteditable="true"</code>—with a native wavy red underline.
+The <code>::spelling-error</code> pseudo-element allows authors to
+override this operating-system or browser-default visual indicator and
+apply custom styling to text segments that fail spellchecking.</p>
+<h3 id="supported-properties">Supported Properties</h3>
+<p>Because highlight pseudo-elements operate directly on the text
+rendering layer without altering the layout of the document, the CSS
+properties that can be applied to <code>::spelling-error</code> are
+strictly limited. You cannot apply box-model properties like
+<code>margin</code>, <code>padding</code>, or <code>display</code>.</p>
+<p>Only the following CSS properties are valid within
+<code>::spelling-error</code>:</p>
+<ul>
+<li><strong>Text Decoration:</strong> <code>text-decoration-line</code>,
+<code>text-decoration-style</code>, <code>text-decoration-color</code>,
+<code>text-decoration-thickness</code></li>
+<li><strong>Color:</strong> <code>color</code></li>
+<li><strong>Background:</strong> <code>background-color</code></li>
+<li><strong>Text Effects:</strong> <code>text-shadow</code></li>
+<li><strong>SVG Properties:</strong> <code>fill</code>,
+<code>stroke</code>, <code>stroke-width</code></li>
+</ul>
+<h3 id="customizing-the-native-highlight">Customizing the Native
+Highlight</h3>
+<p>By default, a browser renders an error with a style equivalent
+to:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">::spelling-error</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">wavy underline</span> <span class="cn">red</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>To alter this visual indicator, target the pseudo-element globally or
+scope it to specific editable containers.</p>
+<h4 id="example-modifying-underline-appearance">Example: Modifying
+Underline Appearance</h4>
+<p>You can change the color, thickness, or pattern of the underline to
+better match your application's design system:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Scoped to a specific editable container */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.editor</span><span class="in">::spelling-error</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-line</span><span class="ch">:</span> <span class="dv">underline</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-style</span><span class="ch">:</span> <span class="dv">dotted</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-color</span><span class="ch">:</span> <span class="cn">#ff9800</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-thickness</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="example-adding-background-highlighting">Example: Adding
+Background Highlighting</h4>
+<p>You can also apply background tinting or text color changes to make
+errors stand out clearly:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">::spelling-error</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#b71c1c</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#ffebee</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">underline</span> <span class="dv">wavy </span><span class="cn">#e53935</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="cascade-and-inheritance-rules">Cascade and Inheritance
+Rules</h3>
+<p>Highlight pseudo-elements do not inherit styles down the standard DOM
+tree. Instead, they inherit from the corresponding highlight
+pseudo-element of their parent element. If no custom
+<code>::spelling-error</code> rule is defined on a parent, the styling
+falls back to the user agent's default highlight styles, rather than
+inheriting custom text-decoration rules from standard CSS selectors.</p>
+<p>Furthermore, if a user selects a piece of text that contains a
+spelling error, the styles defined in <code>::selection</code> will
+paint over or combine with <code>::spelling-error</code> depending on
+how the browser layers highlight elements. Typically,
+<code>::selection</code> has a higher painting priority than
+<code>::spelling-error</code>.</p>
+<h3 id="implementation-requirements">Implementation Requirements</h3>
+<p>For <code>::spelling-error</code> styles to render, the target
+element must have native spellchecking enabled. Ensure the element is
+editable and that spellchecking is not disabled via HTML attributes:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> contenteditable</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="ot"> spellcheck</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;editor&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  Thiss is an exampel of misspelled text.</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>If the browser does not recognize a word and the spellchecker
+activates, the native highlight is replaced immediately by the
+properties defined in your <code>::spelling-error</code>
+declaration.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

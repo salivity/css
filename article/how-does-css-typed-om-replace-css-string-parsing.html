@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS Typed OM Replace CSS String Parsing? - css</title>
+    <meta name="description" content="The CSS Typed Object Model (Typed OM) API transforms how JavaScript interacts with CSS values by converting string-based representations into strongly typed JavaScript objects. Historically, developers had to parse strings and append units manually using">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-typed-om-replace-css-string-parsing">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS Typed OM Replace CSS String Parsing? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-typed-om-replace-css-string-parsing" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS Typed Object Model (Typed OM) API transforms how JavaScript interacts with CSS values by converting string-based representations into strongly typed JavaScript objects. Historically, developers had to parse strings and append units manually using" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-typed-om-replace-css-string-parsing">How Does CSS
+Typed OM Replace CSS String Parsing?</h1>
+<p>The CSS Typed Object Model (Typed OM) API transforms how JavaScript
+interacts with CSS values by converting string-based representations
+into strongly typed JavaScript objects. Historically, developers had to
+parse strings and append units manually using <code>element.style</code>
+or <code>window.getComputedStyle()</code>. Typed OM replaces this
+error-prone workflow with direct object access via
+<code>attributeStyleMap</code> and <code>computedStyleMap()</code>,
+exposing specialized types such as <code>CSSUnitValue</code>,
+<code>CSSKeywordValue</code>, and <code>CSSMathValue</code>. This
+approach eliminates manual regular expressions, minimizes type coercion
+bugs, and provides noticeable performance optimizations by bypassing the
+browser's repeated string-parsing pipeline.</p>
+<h2 id="the-limitations-of-legacy-css-string-manipulation">The
+Limitations of Legacy CSS String Manipulation</h2>
+<p>Traditional DOM style manipulation treats CSS values exclusively as
+strings. Reading a computed dimension like <code>width</code> or
+<code>opacity</code> returns a string format, requiring developers to
+extract numbers using parsing utilities:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Legacy string-based approach</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> el <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.box&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> currentWidth <span class="op">=</span> <span class="bu">window</span><span class="op">.</span><span class="fu">getComputedStyle</span>(el)<span class="op">.</span><span class="at">width</span><span class="op">;</span> <span class="co">// Returns &quot;150.5px&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Requires manual parsing and string concatenation</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> newWidth <span class="op">=</span> <span class="pp">parseFloat</span>(currentWidth) <span class="op">+</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>el<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">width</span> <span class="op">=</span> <span class="vs">`</span><span class="sc">${</span>newWidth<span class="sc">}</span><span class="vs">px`</span><span class="op">;</span></span></code></pre></div>
+<p>This legacy pattern introduces several challenges:</p>
+<ul>
+<li><strong>Parsing Overhead:</strong> Every write requires the browser
+to parse the incoming string into an internal representation. Every read
+forces the browser to serialize its internal values back into
+strings.</li>
+<li><strong>Fragile Math:</strong> Handling multi-unit expressions or
+complex transforms requires intricate string templates, increasing the
+likelihood of syntax errors.</li>
+<li><strong>Implicit Type Coercion:</strong> Invalid string assignments
+(like <code>el.style.opacity = "none"</code>) fail silently without
+standard JavaScript runtime exceptions.</li>
+</ul>
+<h2 id="typed-om-interfaces-and-syntax">Typed OM Interfaces and
+Syntax</h2>
+<p>Typed OM exposes CSS values as structured subclasses of the base
+<code>CSSStyleValue</code> class. Instead of reading or modifying the
+standard <code>style</code> string properties, developers use style
+property maps.</p>
+<h3 id="reading-and-writing-values">Reading and Writing Values</h3>
+<p>Inline styles are managed with
+<code>element.attributeStyleMap</code>, while computed values are
+retrieved using <code>element.computedStyleMap()</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> el <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.box&#39;</span>)<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Setting typed values</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>el<span class="op">.</span><span class="at">attributeStyleMap</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&#39;opacity&#39;</span><span class="op">,</span> <span class="fl">0.8</span>)<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>el<span class="op">.</span><span class="at">attributeStyleMap</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&#39;width&#39;</span><span class="op">,</span> <span class="bu">CSS</span><span class="op">.</span><span class="fu">px</span>(<span class="dv">200</span>))<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>el<span class="op">.</span><span class="at">attributeStyleMap</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&#39;margin-top&#39;</span><span class="op">,</span> <span class="bu">CSS</span><span class="op">.</span><span class="fu">percent</span>(<span class="dv">5</span>))<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Reading computed typed values</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> computedMap <span class="op">=</span> el<span class="op">.</span><span class="fu">computedStyleMap</span>()<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> widthValue <span class="op">=</span> computedMap<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;width&#39;</span>)<span class="op">;</span> <span class="co">// Returns a CSSUnitValue object</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(widthValue<span class="op">.</span><span class="at">value</span>)<span class="op">;</span> <span class="co">// 200 (Number)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(widthValue<span class="op">.</span><span class="at">unit</span>)<span class="op">;</span>  <span class="co">// &quot;px&quot; (String)</span></span></code></pre></div>
+<h3 id="core-data-types">Core Data Types</h3>
+<p>Typed OM introduces dedicated object representations for standard CSS
+expressions:</p>
+<ul>
+<li><strong><code>CSSUnitValue</code>:</strong> Encapsulates a numerical
+value and an associated unit (e.g., <code>CSS.px(10)</code>,
+<code>CSS.deg(45)</code>, <code>CSS.ms(200)</code>).</li>
+<li><strong><code>CSSKeywordValue</code>:</strong> Handles keyword
+properties like <code>CSSKeywordValue('auto')</code> or
+<code>CSSKeywordValue('inherit')</code>.</li>
+<li><strong><code>CSSMathValue</code>:</strong> Represents mathematical
+calculations, including <code>CSSMathSum</code>,
+<code>CSSMathProduct</code>, and <code>CSSMathMinMax</code>, directly
+matching CSS functions like <code>calc()</code>, <code>min()</code>, and
+<code>max()</code>.</li>
+<li><strong><code>CSSTransformValue</code>:</strong> Represents complex
+2D and 3D transforms as lists of specific components, such as
+<code>CSSRotate</code>, <code>CSSTranslate</code>, and
+<code>CSSScale</code>, removing the need for matrix math strings.</li>
+</ul>
+<h2 id="arithmetic-and-complex-expressions">Arithmetic and Complex
+Expressions</h2>
+<p>Instead of constructing concatenated <code>calc()</code> strings,
+Typed OM allows developers to build mathematical expressions
+programmatically through object methods:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Constructing calc(100% - 20px)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> calculatedWidth <span class="op">=</span> <span class="kw">new</span> <span class="fu">CSSMathSum</span>(<span class="bu">CSS</span><span class="op">.</span><span class="fu">percent</span>(<span class="dv">100</span>)<span class="op">,</span> <span class="bu">CSS</span><span class="op">.</span><span class="fu">px</span>(<span class="op">-</span><span class="dv">20</span>))<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>el<span class="op">.</span><span class="at">attributeStyleMap</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&#39;width&#39;</span><span class="op">,</span> calculatedWidth)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Modifying existing dimensions cleanly</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> currentMargin <span class="op">=</span> el<span class="op">.</span><span class="at">attributeStyleMap</span><span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;margin-top&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (currentMargin <span class="kw">instanceof</span> CSSUnitValue) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  el<span class="op">.</span><span class="at">attributeStyleMap</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&#39;margin-top&#39;</span><span class="op">,</span> <span class="bu">CSS</span><span class="op">.</span><span class="fu">px</span>(currentMargin<span class="op">.</span><span class="at">value</span> <span class="op">+</span> <span class="dv">15</span>))<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="performance-and-reliability-benefits">Performance and
+Reliability Benefits</h2>
+<p>Typed OM bridges the gap between JavaScript runtime execution and the
+browser's internal style engine:</p>
+<ul>
+<li><strong>Lower CPU Overhead:</strong> Bypassing string serialization
+and deserialization significantly reduces overhead during high-frequency
+updates, such as scroll handlers and custom animation loops.</li>
+<li><strong>Built-in Error Handling:</strong> Typed OM surfaces invalid
+assignments early through proper JavaScript errors rather than failing
+silently inside the rendering engine.</li>
+<li><strong>Unit Safety:</strong> Value and unit properties are
+decoupled, allowing mathematical operations to execute directly on
+numeric types without custom conversion utilities.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

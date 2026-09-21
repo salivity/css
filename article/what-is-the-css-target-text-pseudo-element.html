@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is the CSS ::target-text Pseudo-Element? - css</title>
+    <meta name="description" content="The ::target-text pseudo-element in CSS allows developers to style text directly linked and scrolled to via URL text fragments. When a user navigates to a webpage using a scroll-to-text fragment, the browser automatically scrolls to the specified passage">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-is-the-css-target-text-pseudo-element">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What is the CSS ::target-text Pseudo-Element? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-is-the-css-target-text-pseudo-element" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The ::target-text pseudo-element in CSS allows developers to style text directly linked and scrolled to via URL text fragments. When a user navigates to a webpage using a scroll-to-text fragment, the browser automatically scrolls to the specified passage" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-is-the-css-target-text-pseudo-element">What is the CSS
+::target-text Pseudo-Element?</h1>
+<p>The <code>::target-text</code> pseudo-element in CSS allows
+developers to style text directly linked and scrolled to via URL text
+fragments. When a user navigates to a webpage using a scroll-to-text
+fragment, the browser automatically scrolls to the specified passage and
+applies a default highlight. By using <code>::target-text</code>, you
+can customize the appearance of this targeted text to match your
+website's design system, ensuring branded visual consistency while
+enhancing accessibility and readability.</p>
+<h3 id="understanding-scroll-to-text-fragments">Understanding
+Scroll-to-Text Fragments</h3>
+<p>Scroll-to-text fragmentation—often called Text Fragments—is a web
+feature that enables deep linking directly to specific words or phrases
+on a webpage rather than relying on predefined anchor IDs
+(<code>#section-id</code>).</p>
+<p>These URLs contain a specific hash syntax:</p>
+<pre class="text"><code>https://example.com/page.html#:~:text=target%20text</code></pre>
+<p>When a user visits a link containing <code>#:~:text=</code>, the
+browser parses the parameter, locates the matching text, scrolls it into
+the viewport, and applies a highlight. By default, browsers typically
+highlight this text with a bright yellow background.</p>
+<h3 id="what-does-target-text-do">What Does <code>::target-text</code>
+Do?</h3>
+<p>The <code>::target-text</code> pseudo-element provides direct control
+over the appearance of the text targeted by these text fragments.
+Without custom CSS, users see browser-specific default highlights, which
+can clash with your site's color palette or create poor contrast with
+dark-mode themes.</p>
+<p>Using <code>::target-text</code>, you can override these
+defaults:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">::target-text</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#2b6cb0</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#ffffff</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="supported-properties">Supported Properties</h3>
+<p>For performance and security reasons, <code>::target-text</code> does
+not support every CSS property. Similar to other highlight
+pseudo-elements like <code>::selection</code> and
+<code>::highlight()</code>, it only accepts properties that affect text
+and background rendering:</p>
+<ul>
+<li><strong>Color:</strong> <code>color</code></li>
+<li><strong>Backgrounds:</strong> <code>background-color</code>,
+<code>background-image</code></li>
+<li><strong>Text Decoration:</strong>
+<code>text-decoration-color</code>, <code>text-decoration-line</code>,
+<code>text-decoration-style</code>,
+<code>text-decoration-thickness</code></li>
+<li><strong>Text Shadow:</strong> <code>text-shadow</code></li>
+<li><strong>Stroke &amp; Fill:</strong> <code>stroke</code>,
+<code>fill</code> (for SVG text)</li>
+</ul>
+<p>Properties that alter layout or typography dimensions—such as
+<code>font-size</code>, <code>margin</code>, <code>padding</code>, or
+<code>display</code>—are completely ignored.</p>
+<h3 id="practical-implementation-example">Practical Implementation
+Example</h3>
+<p>Here is a practical example showing how to style text targets for
+both light and dark themes:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Default/Light mode styling */</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in">::target-text</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#e0f2fe</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#0369a1</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">underline</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-color</span><span class="ch">:</span> <span class="cn">#0284c7</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* Dark mode styling */</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">prefers-color-scheme</span><span class="ch">:</span> <span class="dv">dark</span><span class="fu">)</span> {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="in">::target-text</span> {</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#0f4c81</span><span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#f0f9ff</span><span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-decoration-color</span><span class="ch">:</span> <span class="cn">#38bdf8</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="accessibility-considerations">Accessibility Considerations</h3>
+<p>When overriding <code>::target-text</code>, contrast is critical.
+Ensure that the combination of <code>color</code> and
+<code>background-color</code> passes WCAG AA contrast requirements (at
+least 4.5:1 for normal text). If the contrast is too low, visually
+impaired users may find the targeted text unreadable once
+highlighted.</p>
+<h3 id="browser-support">Browser Support</h3>
+<p>The <code>::target-text</code> pseudo-element is part of the CSS
+Pseudo-Elements Level 4 specification and is supported in modern
+Chromium-based browsers (such as Chrome, Edge, and Opera) and Safari.
+Browsers that do not support <code>::target-text</code> simply fall back
+to their default highlight behavior or ignore the rule entirely, making
+it safe to use as a progressive enhancement.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

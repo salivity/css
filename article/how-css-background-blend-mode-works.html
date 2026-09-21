@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS background-blend-mode Works - css</title>
+    <meta name="description" content="The CSS background-blend-mode property dictates how an element's multiple background layers—such as background images, gradients, and a background color—blend with one another visually. By applying standard digital imaging blend modes directly in the">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-background-blend-mode-works">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS background-blend-mode Works - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-background-blend-mode-works" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS background-blend-mode property dictates how an element's multiple background layers—such as background images, gradients, and a background color—blend with one another visually. By applying standard digital imaging blend modes directly in the" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-background-blend-mode-works">How CSS
+background-blend-mode Works</h1>
+<p>The CSS <code>background-blend-mode</code> property dictates how an
+element's multiple background layers—such as background images,
+gradients, and a background color—blend with one another visually. By
+applying standard digital imaging blend modes directly in the
+stylesheet, developers can create sophisticated visual effects without
+pre-rendering altered images in graphic editing software. This guide
+covers the layering mechanics, stacking order, and operational behavior
+of <code>background-blend-mode</code>.</p>
+<h2 id="the-background-layer-stack">The Background Layer Stack</h2>
+<p>To understand how blending occurs, you must first understand how CSS
+stacks backgrounds. In CSS, an element can have multiple background
+images or gradients alongside a single background color.</p>
+<ol type="1">
+<li><strong>Top Layers:</strong> The first background image declared in
+the <code>background-image</code> list sits at the very top of the
+stack.</li>
+<li><strong>Subsequent Layers:</strong> Each following image sits
+directly beneath the previous one.</li>
+<li><strong>Base Layer:</strong> The <code>background-color</code> is
+always rendered as the bottommost layer, beneath all background images
+and gradients.</li>
+</ol>
+<h2 id="how-the-blending-process-works">How the Blending Process
+Works</h2>
+<p>Blending is calculated from the bottom of the stack upward.</p>
+<p>The bottommost image layer blends with the underlying
+<code>background-color</code>. The resulting composite then serves as
+the backdrop for the next image layer up, repeating this process
+sequentially until the topmost background layer is blended into the
+final output.</p>
+<p>Because the property only applies to the element's own background
+context, background layers do not blend with the element's text, child
+elements, or parent elements. To blend an entire element with its
+surrounding DOM context, <code>mix-blend-mode</code> is used
+instead.</p>
+<h2 id="syntax-and-layer-mapping">Syntax and Layer Mapping</h2>
+<p>The <code>background-blend-mode</code> property accepts a
+comma-separated list of blend modes corresponding to each background
+image layer:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-image</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;pattern.png&#39;</span><span class="fu">)</span><span class="op">,</span> <span class="fu">url(</span><span class="st">&#39;photo.jpg&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3b82f6</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-blend-mode</span><span class="ch">:</span> <span class="dv">multiply</span><span class="op">,</span> <span class="dv">screen</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this example:</p>
+<ul>
+<li><code>photo.jpg</code> blends with the blue
+<code>background-color</code> using the <code>screen</code> mode.</li>
+<li><code>pattern.png</code> blends with the composite below it using
+the <code>multiply</code> mode.</li>
+</ul>
+<p>If fewer blend modes are provided than there are background images,
+the list of blend modes repeats from the beginning to match the number
+of images. If only a single value is provided, it applies to every layer
+in the stack.</p>
+<h2 id="common-blend-modes">Common Blend Modes</h2>
+<p>Blend modes perform specific mathematical formulas on the color
+channel values (ranging from 0 to 1) of overlapping pixels:</p>
+<ul>
+<li><strong><code>normal</code>:</strong> The default setting. The upper
+layer fully obscures the lower layer based on its opacity, with no color
+calculation applied.</li>
+<li><strong><code>multiply</code>:</strong> Multiplies the color values
+of the upper and lower layers, resulting in a darker overall tone.
+Blending with white produces no change, while blending with black
+results in black.</li>
+<li><strong><code>screen</code>:</strong> Inverts, multiplies, and
+inverts the color values back, resulting in a brighter overall tone.
+Blending with black leaves the image unchanged, while blending with
+white results in pure white.</li>
+<li><strong><code>overlay</code>:</strong> Combines
+<code>multiply</code> and <code>screen</code> depending on the base
+layer's brightness. Light areas become lighter and dark areas become
+darker, increasing overall contrast.</li>
+<li><strong><code>darken</code> and <code>lighten</code>:</strong>
+Selects the darker or lighter pixel value between the overlapping layers
+on a per-channel basis.</li>
+<li><strong><code>color-dodge</code> and
+<code>color-burn</code>:</strong> Brightens or darkens the base color to
+reflect the blend color by decreasing or increasing contrast.</li>
+<li><strong><code>luminosity</code>, <code>color</code>,
+<code>hue</code>, and <code>saturation</code>:</strong> Blends specific
+HSL components while preserving the other components of the underlying
+layer.</li>
+</ul>
+<h2 id="transparency-and-opaque-layers">Transparency and Opaque
+Layers</h2>
+<p>Blending calculations rely heavily on alpha channels. If a top image
+layer is completely opaque and uses the <code>normal</code> blend mode,
+it will completely hide any background layers and colors beneath it. For
+blend modes to produce visible results across layers, the images should
+either possess transparent areas, use semi-transparent gradients, or use
+blend modes other than <code>normal</code>.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

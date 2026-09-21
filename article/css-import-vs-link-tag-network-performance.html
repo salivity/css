@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @import vs Link Tag: Network Performance - css</title>
+    <meta name="description" content="While both the CSS @import rule and the HTML <link> tag load external stylesheets, their impact on network performance is vastly different. The HTML <link> tag enables browsers to download stylesheets in parallel, maximizing network efficiency. In contra">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-import-vs-link-tag-network-performance">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS @import vs Link Tag: Network Performance - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-import-vs-link-tag-network-performance" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="While both the CSS @import rule and the HTML <link> tag load external stylesheets, their impact on network performance is vastly different. The HTML <link> tag enables browsers to download stylesheets in parallel, maximizing network efficiency. In contra" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-import-vs-link-tag-network-performance">CSS @import vs Link
+Tag: Network Performance</h1>
+<p>While both the CSS <code>@import</code> rule and the HTML
+<code>&lt;link&gt;</code> tag load external stylesheets, their impact on
+network performance is vastly different. The HTML
+<code>&lt;link&gt;</code> tag enables browsers to download stylesheets
+in parallel, maximizing network efficiency. In contrast, the CSS
+<code>@import</code> rule introduces sequential request waterfalls,
+forcing the browser to wait for parent files to download before
+discovering dependent styles, which severely slows down page
+rendering.</p>
+<h2 id="how-the-html-link-tag-works">How the HTML
+<code>&lt;link&gt;</code> Tag Works</h2>
+<p>The <code>&lt;link rel="stylesheet"&gt;</code> element resides
+directly within the HTML document, typically in the
+<code>&lt;head&gt;</code> section.</p>
+<p>Because it is present in the raw HTML markup, modern browser preload
+scanners can identify it almost immediately during the initial HTML
+parsing phase. The browser triggers download requests for all linked
+stylesheets concurrently alongside other critical assets like scripts
+and fonts. This parallel downloading avoids unnecessary idle network
+time and accelerates the construction of the CSS Object Model
+(CSSOM).</p>
+<h2 id="how-the-css-import-rule-works">How the CSS <code>@import</code>
+Rule Works</h2>
+<p>The <code>@import</code> rule is written inside a CSS file or a
+<code>&lt;style&gt;</code> block to import one stylesheet into
+another.</p>
+<p>This syntax creates an architectural dependency. The browser must
+first download, parse, and evaluate the initial stylesheet before it can
+discover the <code>@import</code> statement inside it. Only after
+reading that rule can the browser dispatch a new network request to
+fetch the imported file. If that imported file contains further
+<code>@import</code> rules, the process repeats.</p>
+<h2 id="the-performance-cost-request-waterfalls">The Performance Cost:
+Request Waterfalls</h2>
+<p>The primary network penalty of <code>@import</code> is the creation
+of a "request waterfall."</p>
+<ul>
+<li><strong>Parallel Execution (<code>&lt;link&gt;</code>):</strong> If
+a page references three stylesheets via <code>&lt;link&gt;</code> tags,
+all three download at the same time. The total load time equals roughly
+the duration of the slowest single file.</li>
+<li><strong>Sequential Execution (<code>@import</code>):</strong> If a
+stylesheet imports two consecutive files using <code>@import</code>, the
+browser fetches them one after another. This multiplies round-trip times
+(RTT) across the network, exponentially increasing latency—especially on
+mobile networks.</li>
+</ul>
+<h2 id="impact-on-core-web-vitals">Impact on Core Web Vitals</h2>
+<p>CSS is a render-blocking resource. Browsers will not paint pixels to
+the screen until the CSSOM is fully built to prevent a flash of unstyled
+content (FOUC).</p>
+<p>Because <code>@import</code> delays the discovery and completion of
+CSS files:</p>
+<ul>
+<li><strong>First Contentful Paint (FCP):</strong> Delayed because the
+browser is waiting on sequential stylesheet downloads before it can
+render anything.</li>
+<li><strong>Largest Contentful Paint (LCP):</strong> Pushed back
+significantly as layout and style calculations remain blocked.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The CSS <code>@import</code> rule is obsolete for production
+performance. Modern web development favors using HTML
+<code>&lt;link rel="stylesheet"&gt;</code> tags directly in the
+document, or utilizing build tools and bundlers to merge multiple
+modular CSS files into a single, optimized production bundle.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

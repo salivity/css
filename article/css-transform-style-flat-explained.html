@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS transform-style: flat Explained - css</title>
+    <meta name="description" content="This article explores the default flat value of the CSS transform-style property and its impact on 3D rendering contexts. You will learn what transform-style: flat does by default, the mechanism behind how it flattens nested 3D elements onto a single two">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-transform-style-flat-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS transform-style: flat Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-transform-style-flat-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the default flat value of the CSS transform-style property and its impact on 3D rendering contexts. You will learn what transform-style: flat does by default, the mechanism behind how it flattens nested 3D elements onto a single two" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-transform-style-flat-explained">CSS transform-style: flat
+Explained</h1>
+<p>This article explores the default <code>flat</code> value of the CSS
+<code>transform-style</code> property and its impact on 3D rendering
+contexts. You will learn what <code>transform-style: flat</code> does by
+default, the mechanism behind how it flattens nested 3D elements onto a
+single two-dimensional plane, and how it fundamentally differs from a
+true 3D scene.</p>
+<h2 id="what-is-transform-style">What is
+<code>transform-style</code>?</h2>
+<p>The <code>transform-style</code> CSS property determines whether the
+children of an element are positioned in a shared 3D coordinate space or
+flattened into the element's 2D plane. It accepts two values:</p>
+<ul>
+<li><code>flat</code> (default)</li>
+<li><code>preserve-3d</code></li>
+</ul>
+<p>Because <code>flat</code> is the initial, default value for all HTML
+elements, any 3D transformation applied to an element will not
+automatically create an interconnected 3D environment for its
+descendants unless explicitly altered.</p>
+<h2 id="the-default-value-flat">The Default Value:
+<code>flat</code></h2>
+<p>When an element has <code>transform-style: flat</code>, it does not
+share its 3D space with its children. Even if a parent element has a 3D
+transformation—such as <code>rotateX()</code> or
+<code>perspective</code>—applied to it, its child elements are computed
+and drawn directly on the surface of the parent.</p>
+<p>In this state:</p>
+<ul>
+<li>The parent element acts as a 2D canvas for its children.</li>
+<li>Child elements do not exist in their own separate depth layers
+relative to the global scene; they exist strictly on the surface of
+their parent.</li>
+</ul>
+<h2 id="how-flat-flattens-nested-3d-elements">How <code>flat</code>
+Flattens Nested 3D Elements</h2>
+<p>The flattening process occurs during the graphical compositing phase
+of rendering. Here is how the browser handles nested elements under
+<code>transform-style: flat</code>:</p>
+<h3 id="1-local-3d-calculation">1. Local 3D Calculation</h3>
+<p>The browser first computes any 3D transforms applied directly to the
+child element (such as
+<code>transform: rotateY(45deg) translateZ(50px);</code>). At this local
+level, the child performs its transformation relative to its own
+coordinate origin.</p>
+<h3 id="2-projection-onto-the-parent-plane">2. Projection onto the
+Parent Plane</h3>
+<p>Because the parent is set to <code>flat</code>, the browser takes the
+finished transformation of the child and projects it onto the parent’s
+2D surface. This acts like shining a light on a 3D object to cast a flat
+shadow: the spatial depth (the Z-axis coordinates) is discarded, and
+only the 2D visual representation is painted onto the parent.</p>
+<h3 id="3-destruction-of-the-shared-z-space">3. Destruction of the
+Shared Z-Space</h3>
+<p>In a true 3D scene, elements with a higher Z-position appear in front
+of elements with a lower Z-position, regardless of DOM order. Under
+<code>transform-style: flat</code>, spatial depth is lost:</p>
+<ul>
+<li>Visual stacking falls back to standard CSS stacking context rules
+(DOM order and <code>z-index</code>).</li>
+<li>A child element with <code>transform: translateZ(200px)</code> will
+not poke out in front of sibling elements if standard stacking order
+dictates it should be behind them.</li>
+</ul>
+<h3 id="4-rigid-composite-rotation">4. Rigid Composite Rotation</h3>
+<p>If you apply a 3D transform to the parent container (such as rotating
+it along the Y-axis), the entire parent and its flattened children
+rotate as a single, rigid sheet of paper. The children do not maintain
+independent angles or depth relative to the viewer; they rotate solely
+because the flat plane they were painted on is rotating.</p>
+<h2 id="code-comparison">Code Comparison</h2>
+<p>Consider the following markup:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;parent&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;child&quot;</span><span class="dt">&gt;</span>Front Layer<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.parent</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">rotateY(</span><span class="dv">45</span><span class="dt">deg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform-style</span><span class="ch">:</span> <span class="dv">flat</span><span class="op">;</span> <span class="co">/* Default behavior */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.child</span> {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateZ(</span><span class="dv">100</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>With <code>transform-style: flat</code>:</p>
+<ul>
+<li>The <code>.child</code> element does not actually move 100 pixels
+toward the screen in world space.</li>
+<li>The <code>.child</code> is flattened against
+<code>.parent</code>.</li>
+<li>The entire <code>.parent</code> container rotates 45 degrees,
+carrying the painted <code>.child</code> along with it like a sticker on
+a board.</li>
+</ul>
+<p>To allow <code>.child</code> to break free from the plane and retain
+its 100-pixel forward position in 3D space, the parent must explicitly
+declare <code>transform-style: preserve-3d</code>.</p>
+<h2 id="why-flat-is-the-default">Why <code>flat</code> is the
+Default</h2>
+<p>Rendering independent elements in a shared 3D space requires
+significant GPU resources, continuous depth sorting, and complex
+intersection handling. Setting <code>flat</code> as the default ensures
+that browsers optimize rendering by compositing elements into 2D layers,
+preventing accidental performance degradation on complex layouts.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

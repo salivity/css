@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS border-start-start-radius to Physical Corners - css</title>
+    <meta name="description" content="The CSS border-start-start-radius property defines the curvature of an element's corner using logical dimensions rather than fixed physical locations. Instead of directly targeting a static corner like top-left or top-right, this property dynamically map">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-border-start-start-radius-to-physical-corners">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS border-start-start-radius to Physical Corners - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-border-start-start-radius-to-physical-corners" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS border-start-start-radius property defines the curvature of an element's corner using logical dimensions rather than fixed physical locations. Instead of directly targeting a static corner like top-left or top-right, this property dynamically map" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-border-start-start-radius-to-physical-corners">CSS
+border-start-start-radius to Physical Corners</h1>
+<p>The CSS <code>border-start-start-radius</code> property defines the
+curvature of an element's corner using logical dimensions rather than
+fixed physical locations. Instead of directly targeting a static corner
+like top-left or top-right, this property dynamically maps to a physical
+corner based on the element's writing mode (<code>writing-mode</code>)
+and text direction (<code>direction</code>). This approach allows
+borders to adapt automatically to different languages and reading
+orientations without the need for manual overrides.</p>
+<h2 id="the-logic-of-start-start">The Logic of "Start-Start"</h2>
+<p>The name <code>border-start-start-radius</code> is derived from two
+CSS flow-relative axes:</p>
+<ol type="1">
+<li><strong>The Block Axis (first "start"):</strong> Refers to the start
+edge of the block flow direction—the direction in which blocks of
+content (like paragraphs) are stacked.</li>
+<li><strong>The Inline Axis (second "start"):</strong> Refers to the
+start edge of the inline flow direction—the direction in which text
+flows within a single line.</li>
+</ol>
+<p>Therefore, <code>border-start-start-radius</code> always targets the
+intersection where the <strong>block-start</strong> edge meets the
+<strong>inline-start</strong> edge.</p>
+<h2 id="physical-mapping-across-writing-modes-and-directions">Physical
+Mapping Across Writing Modes and Directions</h2>
+<p>The physical corner targeted by
+<code>border-start-start-radius</code> shifts depending on the layout
+context established by <code>writing-mode</code> and
+<code>direction</code>.</p>
+<h3 id="1-horizontal-writing-mode-writing-mode-horizontal-tb">1.
+Horizontal Writing Mode (<code>writing-mode: horizontal-tb</code>)</h3>
+<p>This is the default configuration for languages like English,
+Spanish, and Arabic. Content stacks from top to bottom (block-start is
+the <strong>top</strong>).</p>
+<ul>
+<li><strong>Left-to-Right (<code>direction: ltr</code>):</strong>
+Inline-start is on the left. The corner resolves to
+<strong><code>border-top-left-radius</code></strong>.</li>
+<li><strong>Right-to-Left (<code>direction: rtl</code>):</strong>
+Inline-start is on the right. The corner resolves to
+<strong><code>border-top-right-radius</code></strong>.</li>
+</ul>
+<h3
+id="2-vertical-right-to-left-writing-mode-writing-mode-vertical-rl">2.
+Vertical Right-to-Left Writing Mode
+(<code>writing-mode: vertical-rl</code>)</h3>
+<p>Used in traditional East Asian scripts. Content lines stack from
+right to left (block-start is the <strong>right</strong> edge), and text
+flows vertically from top to bottom.</p>
+<ul>
+<li><strong>Left-to-Right (<code>direction: ltr</code>):</strong>
+Inline-start is at the top. The corner resolves to
+<strong><code>border-top-right-radius</code></strong>.</li>
+<li><strong>Right-to-Left (<code>direction: rtl</code>):</strong>
+Inline-start is at the bottom. The corner resolves to
+<strong><code>border-bottom-right-radius</code></strong>.</li>
+</ul>
+<h3
+id="3-vertical-left-to-right-writing-mode-writing-mode-vertical-lr">3.
+Vertical Left-to-Right Writing Mode
+(<code>writing-mode: vertical-lr</code>)</h3>
+<p>Used in scripts like traditional Mongolian. Content lines stack from
+left to right (block-start is the <strong>left</strong> edge), and text
+flows vertically from top to bottom.</p>
+<ul>
+<li><strong>Left-to-Right (<code>direction: ltr</code>):</strong>
+Inline-start is at the top. The corner resolves to
+<strong><code>border-top-left-radius</code></strong>.</li>
+<li><strong>Right-to-Left (<code>direction: rtl</code>):</strong>
+Inline-start is at the bottom. The corner resolves to
+<strong><code>border-bottom-left-radius</code></strong>.</li>
+</ul>
+<h2 id="summary-mapping-reference">Summary Mapping Reference</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><code>writing-mode</code></th>
+<th style="text-align: left;"><code>direction</code></th>
+<th style="text-align: left;">Physical Corner Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>horizontal-tb</code></td>
+<td style="text-align: left;"><code>ltr</code></td>
+<td style="text-align: left;">Top-Left</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>horizontal-tb</code></td>
+<td style="text-align: left;"><code>rtl</code></td>
+<td style="text-align: left;">Top-Right</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vertical-rl</code></td>
+<td style="text-align: left;"><code>ltr</code></td>
+<td style="text-align: left;">Top-Right</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vertical-rl</code></td>
+<td style="text-align: left;"><code>rtl</code></td>
+<td style="text-align: left;">Bottom-Right</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vertical-lr</code></td>
+<td style="text-align: left;"><code>ltr</code></td>
+<td style="text-align: left;">Top-Left</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vertical-lr</code></td>
+<td style="text-align: left;"><code>rtl</code></td>
+<td style="text-align: left;">Bottom-Left</td>
+</tr>
+</tbody>
+</table>
+<p>By leveraging <code>border-start-start-radius</code>, UI components
+maintain their intended visual hierarchy—such as rounding the leading
+corner of a speech bubble, card, or tab—across both Western and
+bidirectional or vertical layouts seamlessly.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

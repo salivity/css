@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS white-space: nowrap vs text-wrap: balance - css</title>
+    <meta name="description" content="While both CSS properties influence how text breaks across lines, they serve entirely different typographic purposes. white-space: nowrap strictly prevents text from wrapping at all, forcing it to remain on a single horizontal line regardless of containe">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-white-space-nowrap-vs-text-wrap-balance">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS white-space: nowrap vs text-wrap: balance - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-white-space-nowrap-vs-text-wrap-balance" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="While both CSS properties influence how text breaks across lines, they serve entirely different typographic purposes. white-space: nowrap strictly prevents text from wrapping at all, forcing it to remain on a single horizontal line regardless of containe" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-white-space-nowrap-vs-text-wrap-balance">CSS white-space:
+nowrap vs text-wrap: balance</h1>
+<p>While both CSS properties influence how text breaks across lines,
+they serve entirely different typographic purposes.
+<code>white-space: nowrap</code> strictly prevents text from wrapping at
+all, forcing it to remain on a single horizontal line regardless of
+container boundaries. In contrast, <code>text-wrap: balance</code>
+permits wrapping across multiple lines but calculates line breaks
+algorithmically so that each line has roughly equal width, eliminating
+awkward single-word lines known as typographic orphans.</p>
+<h3 id="understanding-white-space-nowrap">Understanding
+<code>white-space: nowrap</code></h3>
+<p>The <code>white-space: nowrap</code> rule suppresses all automatic
+line breaks caused by whitespace within an element. Text will only break
+onto a new line if a literal <code>&lt;br&gt;</code> tag is introduced
+or if forced by another property like
+<code>overflow-wrap: anywhere</code>.</p>
+<p>Key characteristics of <code>white-space: nowrap</code>:</p>
+<ul>
+<li><strong>Single-Line Rendering:</strong> The browser collapses
+whitespace sequences into single spaces and renders all inline text on
+one continuous line.</li>
+<li><strong>Overflow Risk:</strong> If the container width is smaller
+than the rendered text, the text will overflow its boundary unless
+paired with properties like <code>overflow: hidden</code> or
+<code>text-overflow: ellipsis</code>.</li>
+<li><strong>Common Use Cases:</strong> Ideal for UI elements that must
+not break, such as buttons, badges, navigation links, table cells, or
+currency and date formats.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.badge</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">white-space</span><span class="ch">:</span> <span class="dv">nowrap</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="understanding-text-wrap-balance">Understanding
+<code>text-wrap: balance</code></h3>
+<p>Introduced in modern CSS (CSS Text Module Level 4),
+<code>text-wrap: balance</code> is an aesthetic text-formatting
+property. Instead of greedily filling each line until it runs out of
+space, the browser balances the number of characters and words across
+all lines so they appear visually harmonious and roughly equal in
+length.</p>
+<p>Key characteristics of <code>text-wrap: balance</code>:</p>
+<ul>
+<li><strong>Multi-Line Distribution:</strong> Text still wraps within
+the container, but the browser balances line lengths to avoid trailing
+words (orphans).</li>
+<li><strong>Performance Limits:</strong> Because balancing lines
+requires the browser to run iterative layout calculations, it is
+typically restricted by user agents to blocks containing six lines or
+fewer.</li>
+<li><strong>Common Use Cases:</strong> Ideal for headings, subheadings,
+pull quotes, and short promotional copy where visual symmetry enhances
+readability.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>h1 {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  text-wrap<span class="ch">:</span> <span class="dv">balance</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="core-differences">Core Differences</h3>
+<ol type="1">
+<li><strong>Line Count:</strong> <code>white-space: nowrap</code> forces
+the text onto a single line, whereas <code>text-wrap: balance</code> is
+designed specifically for multi-line text blocks.</li>
+<li><strong>Container Boundaries:</strong>
+<code>white-space: nowrap</code> ignores the container width and allows
+content to overflow. <code>text-wrap: balance</code> respects container
+width and wraps content inside it.</li>
+<li><strong>Primary Purpose:</strong> <code>white-space: nowrap</code>
+is a layout constraint tool used to prevent structural breaking.
+<code>text-wrap: balance</code> is a typographic enhancement tool used
+to improve the visual rhythm of wrapped text.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

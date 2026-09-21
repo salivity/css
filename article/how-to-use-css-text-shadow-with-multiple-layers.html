@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS text-shadow with Multiple Layers - css</title>
+    <meta name="description" content="The CSS text-shadow property allows web developers to add depth, contrast, and creative visual styling to typography without relying on external image files. This article covers the fundamental syntax of text-shadow, explains each of its functional value">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-text-shadow-with-multiple-layers">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS text-shadow with Multiple Layers - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-text-shadow-with-multiple-layers" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS text-shadow property allows web developers to add depth, contrast, and creative visual styling to typography without relying on external image files. This article covers the fundamental syntax of text-shadow, explains each of its functional value" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-text-shadow-with-multiple-layers">How to Use CSS
+text-shadow with Multiple Layers</h1>
+<p>The CSS <code>text-shadow</code> property allows web developers to
+add depth, contrast, and creative visual styling to typography without
+relying on external image files. This article covers the fundamental
+syntax of <code>text-shadow</code>, explains each of its functional
+values, and demonstrates how to layer multiple blurred shadows
+simultaneously using comma separation to create advanced effects such as
+neon glows and 3D lettering.</p>
+<hr />
+<h3 id="what-is-the-css-text-shadow-property">What is the CSS
+<code>text-shadow</code> Property?</h3>
+<p>The <code>text-shadow</code> property applies one or more shadow
+effects to the text content of an HTML element. The basic syntax
+requires horizontal and vertical offsets, with optional values for blur
+radius and color:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>selector {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-shadow</span><span class="ch">:</span> <span class="dv">offset-x offset-y blur-radius color</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong><code>offset-x</code></strong>: Specifies the horizontal
+distance of the shadow. Positive values place the shadow to the right;
+negative values shift it to the left.</li>
+<li><strong><code>offset-y</code></strong>: Specifies the vertical
+distance of the shadow. Positive values place the shadow below the text;
+negative values shift it above.</li>
+<li><strong><code>blur-radius</code></strong>: An optional length value
+that defines the softness or feathering of the shadow. A value of
+<code>0</code> produces a crisp, hard-edged shadow, while higher values
+create a more dispersed, diffuse blur.</li>
+<li><strong><code>color</code></strong>: An optional color value (using
+hex, RGB, HSL, or named colors). If omitted, it defaults to the
+element's text <code>color</code> property in most modern browsers.</li>
+</ul>
+<hr />
+<h3 id="applying-multiple-blurred-shadow-layers">Applying Multiple
+Blurred Shadow Layers</h3>
+<p>To apply multiple shadows to the same text, separate each shadow
+definition with a comma. The browser renders these layers in a specific
+stacking order: the first shadow listed is painted on top (closest to
+the text), and each subsequent shadow is layered underneath the one
+before it.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>selector {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-shadow</span><span class="ch">:</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">shadow-layer-1</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">shadow-layer-2</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">shadow-layer-3</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By assigning increasing <code>blur-radius</code> values to successive
+layers, you can build smooth gradients, intense ambient glows, or deep
+atmospheric lighting.</p>
+<h4 id="example-multi-layer-neon-glow">Example: Multi-Layer Neon
+Glow</h4>
+<p>In this example, multiple layers of the same color are stacked with
+progressively larger blur radii to create a realistic neon illumination
+effect:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.neon-text</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#ffffff</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-shadow</span><span class="ch">:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Layer 1: Sharp inner glow */</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="dv">0</span> <span class="dv">5</span><span class="dt">px</span> <span class="cn">#00e5ff</span><span class="op">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Layer 2: Medium glow */</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="dv">0</span> <span class="dv">10</span><span class="dt">px</span> <span class="cn">#00e5ff</span><span class="op">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Layer 3: Broad ambient glow */</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="dv">0</span> <span class="dv">20</span><span class="dt">px</span> <span class="cn">#00b0ff</span><span class="op">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Layer 4: Distant diffused light */</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="dv">0</span> <span class="dv">40</span><span class="dt">px</span> <span class="cn">#0081cb</span><span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong>Layer 1</strong> (<code>blur-radius: 5px</code>) establishes
+an intense, bright border immediately around the glyphs.</li>
+<li><strong>Layer 2 and 3</strong> (<code>10px</code> and
+<code>20px</code>) blend the light outward into the background.</li>
+<li><strong>Layer 4</strong> (<code>40px</code>) creates the widest,
+softest falloff using a slightly darker shade to emulate natural light
+dissipation.</li>
+</ul>
+<h4 id="example-directional-3d-drop-shadow-with-ambient-blur">Example:
+Directional 3D Drop Shadow with Ambient Blur</h4>
+<p>You can also combine directional displacement layers with soft
+ambient layers:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.depth-text</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#f1f1f1</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-shadow</span><span class="ch">:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Hard edge layer for depth */</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span><span class="dt">px</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span> <span class="cn">#333333</span><span class="op">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Intermediate blurred layer */</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.4</span><span class="fu">)</span><span class="op">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Soft ambient background shadow */</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">8</span><span class="dt">px</span> <span class="dv">8</span><span class="dt">px</span> <span class="dv">15</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.2</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<h3 id="key-considerations">Key Considerations</h3>
+<ul>
+<li><strong>Stacking Order</strong>: Always place tighter, sharper
+shadows at the beginning of the list and broader, more blurred shadows
+toward the end.</li>
+<li><strong>Performance</strong>: Rendering high blur values and
+multiple shadow layers requires computational overhead from the
+browser's GPU/CPU. Keep the number of layers modest, especially on
+elements that animate.</li>
+<li><strong>Accessibility</strong>: Heavy shadows can reduce text
+legibility. Ensure the contrast between the base text color and its
+surrounding background meets WCAG standards regardless of the shadow
+effects applied.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Cascade Layers vs Specificity: How Conflicts Resolve - css</title>
+    <meta name="description" content="This article explains how the modern CSS cascade reconciles conflicts between cascade layer ordering and standard selector specificity. Cascade layers introduce an explicit structural mechanism to the cascade algorithm, allowing developers to control pri">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-cascade-layers-vs-specificity-how-conflicts-resolve">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Cascade Layers vs Specificity: How Conflicts Resolve - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-cascade-layers-vs-specificity-how-conflicts-resolve" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how the modern CSS cascade reconciles conflicts between cascade layer ordering and standard selector specificity. Cascade layers introduce an explicit structural mechanism to the cascade algorithm, allowing developers to control pri" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-cascade-layers-vs-specificity-how-conflicts-resolve">CSS
+Cascade Layers vs Specificity: How Conflicts Resolve</h1>
+<p>This article explains how the modern CSS cascade reconciles conflicts
+between cascade layer ordering and standard selector specificity.
+Cascade layers introduce an explicit structural mechanism to the cascade
+algorithm, allowing developers to control priority independently of
+selector weight. Under standard rules, layer order takes absolute
+precedence over specificity, meaning a selector with low specificity in
+a higher-priority layer will override an ID-heavy selector in a
+lower-priority layer. However, this interaction changes dramatically
+when <code>!important</code> is applied, as the cascade deliberately
+inverts layer priorities to maintain author control.</p>
+<h3 id="the-position-of-layers-in-the-cascade-algorithm">The Position of
+Layers in the Cascade Algorithm</h3>
+<p>To understand how conflicts are resolved, it is necessary to see
+where layers fit within the full CSS cascade sorting algorithm. When
+resolving conflicting property declarations on the same element, the
+browser evaluates criteria in the following order:</p>
+<ol type="1">
+<li>Origin and Importance (User-agent, user, and author styles combined
+with normal or <code>!important</code> status)</li>
+<li>Scope Proximity</li>
+<li>Cascade Layer Order</li>
+<li>Selector Specificity</li>
+<li>Order of Appearance (Source order)</li>
+</ol>
+<p>Because cascade layers are evaluated at step 3 and specificity is
+evaluated at step 4, the cascade never compares selector specificity
+between different layers. Specificity is only used as a tie-breaker
+among competing rules that exist within the exact same layer.</p>
+<h3 id="normal-declarations-layer-order-trumps-specificity">Normal
+Declarations: Layer Order Trumps Specificity</h3>
+<p>For standard, non-<code>!important</code> declarations, layers
+declared later in the stylesheet take precedence over layers declared
+earlier. Furthermore, unlayered styles automatically take precedence
+over all layered styles.</p>
+<p>When two rules target the same element from different layers, the
+browser checks the layer precedence first:</p>
+<ul>
+<li><strong>Between Different Layers:</strong> The rule inside the later
+layer wins, regardless of selector complexity. A simple element selector
+like <code>button</code> in a higher-priority layer will defeat a highly
+specific selector like <code>#main-nav .menu-item button</code> in a
+lower-priority layer.</li>
+<li><strong>Layered vs. Unlayered Styles:</strong> Any unlayered rule
+automatically defeats a layered rule. A basic class selector
+<code>.btn</code> outside any <code>@layer</code> will override
+<code>#submit.btn</code> declared inside an <code>@layer</code>
+block.</li>
+<li><strong>Within the Same Layer:</strong> If two competing rules
+reside in the same layer, the layer priority is equal. Only then does
+the browser proceed to step 4, using standard selector specificity (IDs,
+classes, elements) to determine the winner.</li>
+</ul>
+<h3 id="the-important-inversion-rule">The <code>!important</code>
+Inversion Rule</h3>
+<p>The interaction between cascade layers and specificity changes
+completely when rules contain <code>!important</code>. To prevent
+low-level utility or design-system layers from being permanently
+overridden by external or feature-level <code>!important</code> rules,
+CSS inverts the layer hierarchy for important declarations.</p>
+<p>When resolving conflicts between <code>!important</code>
+declarations:</p>
+<ol type="1">
+<li><strong>Layered overrides Unlayered:</strong> Layered
+<code>!important</code> declarations override unlayered
+<code>!important</code> declarations.</li>
+<li><strong>Earlier Layers Win:</strong> The earliest declared layer
+takes the highest priority, inverting the normal layer hierarchy.</li>
+</ol>
+<p>For example, if Layer A is declared before Layer B, a normal rule in
+Layer B wins over Layer A. However, an <code>!important</code> rule in
+Layer A will win over an <code>!important</code> rule in Layer B, as
+well as an <code>!important</code> rule declared outside any layer.</p>
+<p>Just as with normal styles, selector specificity does not bridge
+across layers for <code>!important</code> rules. Specificity only
+resolves conflicts between two <code>!important</code> declarations that
+reside within the same layer.</p>
+<h3 id="summary-of-conflict-resolution">Summary of Conflict
+Resolution</h3>
+<ul>
+<li><strong>Layer priority is evaluated before specificity:</strong>
+Specificity cannot break out of a layer to beat a higher-priority
+layer.</li>
+<li><strong>Specificity is local:</strong> Specificity functions
+strictly as an internal sorting mechanism within each individual layer
+or within the unlayered style pool.</li>
+<li><strong>Normal styles favor later layers and unlayered
+rules:</strong> Unlayered &gt; Later Layers &gt; Earlier Layers.</li>
+<li><strong>Important styles favor earlier layers:</strong> Earlier
+Layers (<code>!important</code>) &gt; Later Layers
+(<code>!important</code>) &gt; Unlayered (<code>!important</code>).</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

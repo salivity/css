@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS Gap Work in Flexbox and Grid? - css</title>
+    <meta name="description" content="The CSS gap property defines the spacing, or gutters, between child elements in Flexbox, CSS Grid, and multi-column layouts without adding unwanted space to the outer edges. By establishing whitespace directly on the parent container, gap replaces comple">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-gap-work-in-flexbox-and-grid">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS Gap Work in Flexbox and Grid? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-gap-work-in-flexbox-and-grid" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS gap property defines the spacing, or gutters, between child elements in Flexbox, CSS Grid, and multi-column layouts without adding unwanted space to the outer edges. By establishing whitespace directly on the parent container, gap replaces comple" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-gap-work-in-flexbox-and-grid">How Does CSS Gap Work
+in Flexbox and Grid?</h1>
+<p>The CSS <code>gap</code> property defines the spacing, or gutters,
+between child elements in Flexbox, CSS Grid, and multi-column layouts
+without adding unwanted space to the outer edges. By establishing
+whitespace directly on the parent container, <code>gap</code> replaces
+complex margin hacks, simplifies responsive design, and creates clean,
+consistent spacing across both one-dimensional and two-dimensional
+layouts.</p>
+<h2 id="understanding-the-gap-property-syntax">Understanding the Gap
+Property Syntax</h2>
+<p>The <code>gap</code> property is a shorthand that sets both row and
+column spacing simultaneously. It combines two individual
+sub-properties: <code>row-gap</code> and <code>column-gap</code>.</p>
+<p>When declaring <code>gap</code>, you can specify one or two
+values:</p>
+<ul>
+<li><strong>Single Value:</strong> <code>gap: 20px;</code> applies an
+identical 20px space between both rows and columns.</li>
+<li><strong>Two Values:</strong> <code>gap: 15px 30px;</code> assigns
+the first value (15px) to <code>row-gap</code> and the second value
+(30px) to <code>column-gap</code>.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span> <span class="co">/* or display: grid; */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">gap</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">rem</span><span class="op">;</span> <span class="co">/* 1.5rem row and column spacing */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.custom-spaced-container</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">grid</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">row-gap</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">column-gap</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-gap-operates-in-css-grid">How Gap Operates in CSS Grid</h2>
+<p>In CSS Grid, <code>gap</code> defines the size of the grid tracks
+between designated rows and columns. It acts as an empty track
+divider:</p>
+<ol type="1">
+<li><strong>Fixed Gutters:</strong> Setting a gap size subtracts that
+total space from the grid container before calculating fractional units
+(<code>fr</code>).</li>
+<li><strong>Perimeter Preservation:</strong> Gutter spaces exist
+strictly <em>between</em> grid cells. The container's outer edges touch
+the outer tracks unless explicit <code>padding</code> is applied.</li>
+<li><strong>Empty Track Behavior:</strong> If grid items span multiple
+cells, the gap spacing is preserved under the spanned area
+automatically.</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.grid-layout</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">grid</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-template-columns</span><span class="ch">:</span> <span class="fu">repeat(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">1</span><span class="dt">fr</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">gap</span><span class="ch">:</span> <span class="dv">24</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this layout, two 24px gutters are placed between the three
+columns, leaving the outer left and right boundaries flush with the grid
+container.</p>
+<h2 id="how-gap-operates-in-flexbox">How Gap Operates in Flexbox</h2>
+<p>Flexbox uses <code>gap</code> to space adjacent flex items along both
+the main axis and the cross axis:</p>
+<ul>
+<li><strong>Single-Line Flex Containers:</strong> In a standard
+<code>flex-direction: row</code> container without wrapping,
+<code>gap</code> (specifically <code>column-gap</code>) places space
+only between items horizontally.</li>
+<li><strong>Multi-Line Wrapping:</strong> When
+<code>flex-wrap: wrap</code> is enabled, <code>row-gap</code> separates
+the resulting lines vertically, while <code>column-gap</code> separates
+the items horizontally within each line.</li>
+<li><strong>Direction Shifts:</strong> When
+<code>flex-direction: column</code> is used, the main axis becomes
+vertical, meaning <code>row-gap</code> controls the spacing between
+items in the column stack.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.flex-card-row</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">flex-wrap</span><span class="ch">:</span> <span class="dv">wrap</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">gap</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">rem</span> <span class="dv">1.5</span><span class="dt">rem</span><span class="op">;</span> <span class="co">/* 1rem between wrapped lines, 1.5rem between items */</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="css-gap-vs-legacy-margin-techniques">CSS Gap vs. Legacy Margin
+Techniques</h2>
+<p>Prior to widespread browser support for <code>gap</code>, developers
+relied on child margins and negative parent margins to simulate
+gutters:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Legacy Margin Technique */</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.legacy-parent</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">-10</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">.legacy-child</span> {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This approach created overflow issues, required extra wrapper
+elements, and demanded CSS pseudo-class resets like
+<code>:last-child</code> or <code>:nth-child()</code>.</p>
+<p>Using <code>gap</code> resolves these challenges:</p>
+<ul>
+<li><strong>Edge Isolation:</strong> No margin bleeding occurs outside
+the container.</li>
+<li><strong>Zero Resets:</strong> No <code>:first-child</code> or
+<code>:last-child</code> overrides are required.</li>
+<li><strong>Dynamic Reflow:</strong> When items wrap or hide
+dynamically, the browser calculates gutters solely between active,
+visible siblings.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

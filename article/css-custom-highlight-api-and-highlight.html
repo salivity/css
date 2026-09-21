@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Custom Highlight API and ::highlight() - css</title>
+    <meta name="description" content="The CSS Custom Highlight API provides a performant mechanism for styling arbitrary text ranges directly from JavaScript without modifying the underlying DOM structure. By decoupling text selection logic from HTML markup, developers can register ranges in">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-custom-highlight-api-and-highlight">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Custom Highlight API and ::highlight() - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-custom-highlight-api-and-highlight" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS Custom Highlight API provides a performant mechanism for styling arbitrary text ranges directly from JavaScript without modifying the underlying DOM structure. By decoupling text selection logic from HTML markup, developers can register ranges in" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-custom-highlight-api-and-highlight">CSS Custom Highlight API
+and ::highlight()</h1>
+<p>The CSS Custom Highlight API provides a performant mechanism for
+styling arbitrary text ranges directly from JavaScript without modifying
+the underlying DOM structure. By decoupling text selection logic from
+HTML markup, developers can register ranges into a global registry and
+style them declaratively using the <code>::highlight(custom-name)</code>
+pseudo-element. This article explains how the API works, how to register
+highlights in JavaScript, and how to style them using CSS.</p>
+<h3 id="the-problem-with-traditional-text-styling">The Problem with
+Traditional Text Styling</h3>
+<p>Traditionally, dynamically styling text—such as search result
+highlights, spell-checking markers, or collaborative editing
+cursors—required wrapping target text inside inline HTML elements like
+<code>&lt;mark&gt;</code> or <code>&lt;span&gt;</code>. This approach
+introduces significant drawbacks:</p>
+<ul>
+<li><strong>DOM Thrashing:</strong> Creating, inserting, or removing
+wrapper tags forces style recalculations and layout reflows, causing
+performance bottlenecks in large documents.</li>
+<li><strong>State Issues:</strong> Modifying the DOM can reset selection
+ranges, interfere with text mutation observers, and disrupt
+accessibility trees.</li>
+</ul>
+<p>The CSS Custom Highlight API solves these issues by styling text
+ranges in an overlay layer without altering the DOM hierarchy.</p>
+<h3 id="how-the-api-works">How the API Works</h3>
+<p>Using the API involves a four-step process spanning JavaScript and
+CSS:</p>
+<ol type="1">
+<li><strong>Create Ranges:</strong> Create one or more standard
+JavaScript <code>Range</code> objects identifying the text offsets to
+style.</li>
+<li><strong>Instantiate a Highlight:</strong> Pass the range objects to
+a <code>new Highlight()</code> constructor.</li>
+<li><strong>Register the Highlight:</strong> Add the
+<code>Highlight</code> instance to the <code>CSS.highlights</code>
+registry with a custom identifier.</li>
+<li><strong>Apply CSS:</strong> Style the registered name using the
+<code>::highlight(custom-name)</code> pseudo-element.</li>
+</ol>
+<h3 id="step-by-step-implementation">Step-by-Step Implementation</h3>
+<h4 id="1-creating-and-registering-ranges-in-javascript">1. Creating and
+Registering Ranges in JavaScript</h4>
+<p>First, identify the text nodes and create standard DOM
+<code>Range</code> instances:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Target a text node</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> textNode <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;#content&quot;</span>)<span class="op">.</span><span class="at">firstChild</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Define the start and end offsets</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> range1 <span class="op">=</span> <span class="kw">new</span> <span class="bu">Range</span>()<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>range1<span class="op">.</span><span class="fu">setStart</span>(textNode<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>range1<span class="op">.</span><span class="fu">setEnd</span>(textNode<span class="op">,</span> <span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> range2 <span class="op">=</span> <span class="kw">new</span> <span class="bu">Range</span>()<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>range2<span class="op">.</span><span class="fu">setStart</span>(textNode<span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>range2<span class="op">.</span><span class="fu">setEnd</span>(textNode<span class="op">,</span> <span class="dv">18</span>)<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Group the ranges into a Highlight object</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> searchResults <span class="op">=</span> <span class="kw">new</span> <span class="fu">Highlight</span>(range1<span class="op">,</span> range2)<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">// Register the highlight under a custom name</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">CSS</span><span class="op">.</span><span class="at">highlights</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&quot;search-results&quot;</span><span class="op">,</span> searchResults)<span class="op">;</span></span></code></pre></div>
+<h4 id="2-styling-the-highlight-in-css">2. Styling the Highlight in
+CSS</h4>
+<p>Once registered, the highlight name can be targeted globally or
+scoped to specific elements using the <code>::highlight()</code>
+pseudo-element:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">::highlight(</span>search-results<span class="in">)</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#fde047</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#000000</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">underline</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>You can also scope highlights to specific containers:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>article<span class="fu">.search-area</span><span class="in">::highlight(</span>search-results<span class="in">)</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#38bdf8</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#ffffff</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="supported-css-properties">Supported CSS Properties</h3>
+<p>Because highlight pseudo-elements do not create standard layout
+boxes, they only accept a restricted subset of CSS properties—similar to
+<code>::selection</code>:</p>
+<ul>
+<li><code>color</code></li>
+<li><code>background-color</code></li>
+<li><code>text-decoration</code> and its longhands
+(<code>text-decoration-line</code>, <code>text-decoration-color</code>,
+etc.)</li>
+<li><code>text-shadow</code></li>
+<li><code>stroke-color</code>, <code>fill-color</code>, and
+<code>stroke-width</code> (for SVG text)</li>
+</ul>
+<p>Properties that alter layout (such as <code>margin</code>,
+<code>padding</code>, <code>display</code>, or <code>font-size</code>)
+are ignored.</p>
+<h3 id="handling-overlapping-highlights-and-priorities">Handling
+Overlapping Highlights and Priorities</h3>
+<p>When multiple custom highlights overlap on the same text, conflicts
+are resolved using the <code>priority</code> property. Highlights with a
+higher priority number render on top of those with lower numbers:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> userNote <span class="op">=</span> <span class="kw">new</span> <span class="fu">Highlight</span>(range1)<span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>userNote<span class="op">.</span><span class="at">priority</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> syntaxError <span class="op">=</span> <span class="kw">new</span> <span class="fu">Highlight</span>(range1)<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>syntaxError<span class="op">.</span><span class="at">priority</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span> <span class="co">// Renders on top of userNote</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">CSS</span><span class="op">.</span><span class="at">highlights</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&quot;user-note&quot;</span><span class="op">,</span> userNote)<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">CSS</span><span class="op">.</span><span class="at">highlights</span><span class="op">.</span><span class="fu">set</span>(<span class="st">&quot;syntax-error&quot;</span><span class="op">,</span> syntaxError)<span class="op">;</span></span></code></pre></div>
+<p>If priorities are equal, the order in which the highlights were
+registered in <code>CSS.highlights</code> determines rendering order,
+with the most recently added highlight taking precedence. Default
+browser selections (<code>::selection</code>) always render on top of
+custom highlights.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

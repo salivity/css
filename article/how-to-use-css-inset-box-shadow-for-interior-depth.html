@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS Inset Box-Shadow for Interior Depth - css</title>
+    <meta name="description" content="The CSS box-shadow property with the inset keyword allows developers to draw shadows inside an element's container rather than casting them outward. This article explains how the browser calculates interior shadow projections, how coordinate values chang">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-inset-box-shadow-for-interior-depth">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS Inset Box-Shadow for Interior Depth - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-inset-box-shadow-for-interior-depth" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS box-shadow property with the inset keyword allows developers to draw shadows inside an element's container rather than casting them outward. This article explains how the browser calculates interior shadow projections, how coordinate values chang" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-inset-box-shadow-for-interior-depth">How to Use
+CSS Inset Box-Shadow for Interior Depth</h1>
+<p>The CSS <code>box-shadow</code> property with the <code>inset</code>
+keyword allows developers to draw shadows inside an element's container
+rather than casting them outward. This article explains how the browser
+calculates interior shadow projections, how coordinate values change
+behavior in inset mode, the relationship between inset shadows and
+border boundaries, and how combining these techniques produces tactile,
+three-dimensional depth in modern user interfaces.</p>
+<h2 id="the-mechanics-of-the-inset-keyword">The Mechanics of the Inset
+Keyword</h2>
+<p>By default, the <code>box-shadow</code> property creates a drop
+shadow that projects away from the element’s outer boundary onto
+surrounding elements. When the <code>inset</code> keyword is declared,
+the rendering engine reverses this projection:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>box-shadow<span class="in">:</span> inset <span class="ex">[</span><span class="ss">horizontal-offset</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">vertical-offset</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">blur-radius</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">spread-radius</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">color</span><span class="ex">]</span>;</span></code></pre></div>
+<p>Instead of drawing beneath the element, the browser renders the
+shadow within the element's perimeter. It sits above the element’s
+background layers but beneath any nested text, images, or child
+elements.</p>
+<h2 id="coordinate-and-spread-inversion">Coordinate and Spread
+Inversion</h2>
+<p>The spatial calculation shifts relative to the internal edges of the
+box:</p>
+<ul>
+<li><strong>Horizontal Offset (X):</strong> A positive value casts the
+shadow from the left inner edge toward the right. A negative value casts
+it from the right inner edge toward the left.</li>
+<li><strong>Vertical Offset (Y):</strong> A positive value casts the
+shadow from the top inner edge downward. A negative value casts it from
+the bottom inner edge upward.</li>
+<li><strong>Blur Radius:</strong> Controls the feathering of the shadow
+edge as it fades toward the center of the element. A higher blur
+produces a softer, more ambient falloff.</li>
+<li><strong>Spread Radius:</strong> Expands the physical boundary of the
+shadow inward toward the center, effectively reducing the visible area
+of the un-shadowed interior. A negative spread radius contracts the
+shadow back toward the perimeter edges.</li>
+</ul>
+<h2 id="clipping-and-border-interaction">Clipping and Border
+Interaction</h2>
+<p>Inset shadows originate strictly from the inner edge of the element's
+border box, aligning with the padding edge. If a border is applied to
+the element, the inset shadow does not overlap the border; it starts
+flush against the inner border perimeter.</p>
+<p>Furthermore, <code>box-shadow: inset</code> respects the curvature
+defined by <code>border-radius</code>. If an element has rounded
+corners, the browser curves the origin contour of the interior shadow
+accordingly, preserving natural optical perspective along the inner
+curves.</p>
+<h2 id="creating-realistic-interior-depth">Creating Realistic Interior
+Depth</h2>
+<p>To simulate realistic physical recession—such as a depressed button,
+a sunken input field, or an embedded card—developers frequently combine
+multiple inset shadows via a comma-separated list.</p>
+<p>By modeling a consistent light source, one inset shadow simulates the
+occlusion of light along the top and left edges, while a second, subtle,
+light-colored inset shadow simulates an edge reflection on the opposite
+bottom and right edges:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.sunken-well</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#e0e0e0</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">box-shadow</span><span class="ch">:</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">inset</span> <span class="dv">3</span><span class="dt">px</span> <span class="dv">3</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.2</span><span class="fu">)</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">inset</span> <span class="dv">-3</span><span class="dt">px</span> <span class="dv">-3</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.7</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This dual-shadow technique tricks the eye into perceiving the element
+as sitting physically below the plane of the surrounding document,
+adding visual hierarchy and tactile feedback to interactive states.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

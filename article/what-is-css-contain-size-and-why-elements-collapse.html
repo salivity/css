@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is CSS contain: size and Why Elements Collapse - css</title>
+    <meta name="description" content="The CSS contain: size property is a performance optimization tool that isolates an element's size calculation from its child contents. Applying this property tells the browser to compute the element's layout without examining its children, which drastica">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-is-css-contain-size-and-why-elements-collapse">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Is CSS contain: size and Why Elements Collapse - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-is-css-contain-size-and-why-elements-collapse" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS contain: size property is a performance optimization tool that isolates an element's size calculation from its child contents. Applying this property tells the browser to compute the element's layout without examining its children, which drastica" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-is-css-contain-size-and-why-elements-collapse">What Is CSS
+contain: size and Why Elements Collapse</h1>
+<p>The CSS <code>contain: size</code> property is a performance
+optimization tool that isolates an element's size calculation from its
+child contents. Applying this property tells the browser to compute the
+element's layout without examining its children, which drastically
+improves rendering performance. However, because the browser ignores the
+intrinsic dimensions of descendant elements, the target element
+collapses to a width or height of zero unless explicit dimensions or
+fallback sizing values are defined.</p>
+<h2 id="what-is-contain-size">What is <code>contain: size</code>?</h2>
+<p>The <code>contain</code> property is part of the CSS Containment
+specification. Its primary purpose is to decouple an element's subtree
+from the rest of the document tree, limiting the scope of browser
+recalculations during layout and paint cycles.</p>
+<p>When you declare <code>contain: size</code>, you establish size
+containment on the element. Under size containment:</p>
+<ul>
+<li>The element is laid out as if it has no contents.</li>
+<li>Changes to the size, layout, or content of child nodes do not
+trigger layout recalculations in the parent or ancestor elements.</li>
+<li>The element cannot derive its size from its descendants.</li>
+</ul>
+<h2 id="why-elements-collapse-without-explicit-dimensions">Why Elements
+Collapse Without Explicit Dimensions</h2>
+<p>Normally, HTML elements rely heavily on intrinsic sizing. A standard
+<code>&lt;div&gt;</code>, for example, expands vertically to fit the
+height of its text and child elements, and may expand horizontally
+depending on display rules.</p>
+<p>When you apply <code>contain: size</code>, the browser intentionally
+ignores the size of all descendants when calculating the parent
+element's box dimensions. Because the browser treats the element as
+though it contains nothing:</p>
+<ol type="1">
+<li><strong>Block-axis collapse:</strong> The height collapses to
+<code>0px</code> because there is no explicit height declared, and
+intrinsic content height cannot be read.</li>
+<li><strong>Inline-axis collapse:</strong> If the element is an
+inline-block, float, or flex/grid item with an automatic width, the
+width will also collapse to <code>0px</code>. A standard block element
+may still stretch to fill the horizontal width of its parent, but its
+vertical height will remain <code>0px</code>.</li>
+</ol>
+<p>Consequently, visually, the element appears to vanish or overlap with
+adjacent content.</p>
+<h2 id="how-to-prevent-collapsing">How to Prevent Collapsing</h2>
+<p>To use <code>contain: size</code> effectively without collapsing your
+layout, you must provide sizing information that does not depend on the
+element's children.</p>
+<h3 id="1-set-explicit-dimensions">1. Set Explicit Dimensions</h3>
+<p>Define fixed or relative sizes directly on the contained element
+using standard layout properties:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">contain</span><span class="ch">:</span> <span class="dv">size</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">400</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>You can also use properties like <code>min-height</code>,
+<code>min-width</code>, or <code>aspect-ratio</code> to establish
+non-zero bounds.</p>
+<h3 id="2-use-contain-intrinsic-size">2. Use
+<code>contain-intrinsic-size</code></h3>
+<p>The CSS <code>contain-intrinsic-size</code> property acts as a
+placeholder size specifically for elements under size containment. It
+provides a synthetic intrinsic dimension so the element maintains space
+on the page without inspecting the DOM tree of its children:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">contain</span><span class="ch">:</span> <span class="dv">size</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">contain-intrinsic-size</span><span class="ch">:</span> <span class="dv">1000</span><span class="dt">px</span> <span class="dv">500</span><span class="dt">px</span><span class="op">;</span> <span class="co">/* width height */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Modern browsers also support the <code>auto</code> keyword with
+<code>contain-intrinsic-size</code>, which remembers the last rendered
+size of the element when it was visible, preventing layout shifts when
+elements move on and off the screen:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">contain</span><span class="ch">:</span> <span class="dv">size</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">contain-intrinsic-size</span><span class="ch">:</span> <span class="bu">auto</span> <span class="dv">500</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="when-to-use-contain-size">When to Use
+<code>contain: size</code></h2>
+<p>Use <code>contain: size</code> when:</p>
+<ul>
+<li>You are building virtualized lists or infinite scroll feeds where
+off-screen components should not trigger costly layout
+recalculations.</li>
+<li>The dimensions of the container are strictly known beforehand via
+design constraints or aspect ratios.</li>
+<li>You are leveraging <code>content-visibility: auto</code>, which
+automatically applies size containment when elements are off-screen to
+improve initial page load performance.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

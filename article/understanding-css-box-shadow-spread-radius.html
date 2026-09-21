@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding CSS Box-Shadow Spread Radius - css</title>
+    <meta name="description" content="The CSS box-shadow property allows developers to add depth and dimension to UI components by rendering shadows around elements. Within its declaration, the spread radius is an optional fourth length parameter that directly controls the expansion or contr">
+    <link rel="canonical" href="https://salivity.github.io/css/article/understanding-css-box-shadow-spread-radius">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding CSS Box-Shadow Spread Radius - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/understanding-css-box-shadow-spread-radius" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS box-shadow property allows developers to add depth and dimension to UI components by rendering shadows around elements. Within its declaration, the spread radius is an optional fourth length parameter that directly controls the expansion or contr" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-css-box-shadow-spread-radius">Understanding CSS
+Box-Shadow Spread Radius</h1>
+<p>The CSS <code>box-shadow</code> property allows developers to add
+depth and dimension to UI components by rendering shadows around
+elements. Within its declaration, the spread radius is an optional
+fourth length parameter that directly controls the expansion or
+contraction of the shadow's footprint. This article explains how the
+spread radius functions, its role in the <code>box-shadow</code> syntax,
+how positive and negative values affect rendering, and how it differs
+from the blur radius.</p>
+<h3 id="syntax-and-placement">Syntax and Placement</h3>
+<p>The <code>box-shadow</code> property accepts up to four length
+values, an optional color, and an optional <code>inset</code>
+keyword:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>box-shadow<span class="in">:</span> <span class="ex">[</span><span class="ss">offset-x</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">offset-y</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">blur-radius</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">spread-radius</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">color</span><span class="ex">]</span>;</span></code></pre></div>
+<p>When four length values are supplied, the spread radius is always the
+fourth value. If omitted, the spread radius defaults to
+<code>0</code>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Example: 0px X-offset, 4px Y-offset, 8px blur, 2px spread */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">8</span><span class="dt">px</span> <span class="dv">2</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.2</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="how-spread-radius-works">How Spread Radius Works</h3>
+<p>While the <code>offset-x</code> and <code>offset-y</code> values
+position the shadow and the <code>blur-radius</code> softens its edges,
+the spread radius alters the overall dimensions of the shadow shape
+before any blur is applied.</p>
+<ul>
+<li><strong>Positive Values:</strong> Setting a positive value (e.g.,
+<code>4px</code>) causes the shadow to expand outward in all directions
+by that amount. This makes the shadow physically larger than the element
+casting it.</li>
+<li><strong>Negative Values:</strong> Setting a negative value (e.g.,
+<code>-4px</code>) causes the shadow to contract inward in all
+directions. This shrinks the shadow's dimensions, making it smaller than
+the element.</li>
+<li><strong>Zero Value (<code>0</code>):</strong> The shadow maintains
+the exact same dimensions as the element's border box before
+blurring.</li>
+</ul>
+<h3 id="spread-radius-vs-blur-radius">Spread Radius vs. Blur Radius</h3>
+<p>It is common to confuse the spread radius with the blur radius, but
+they serve two distinct geometric functions:</p>
+<ul>
+<li><strong>Blur Radius:</strong> Determines how soft, feathered, or
+diffused the edge of the shadow appears. It does not change the core
+size of the shadow source; it only controls the transition gradient from
+shadow color to transparency.</li>
+<li><strong>Spread Radius:</strong> Scales the underlying shape of the
+shadow. Increasing spread without blur results in a solid, expanded
+duplicate of the element behind it, similar to an outline or
+border.</li>
+</ul>
+<h3 id="common-use-cases">Common Use Cases</h3>
+<ol type="1">
+<li><p><strong>Simulating Outlines and Borders:</strong> By setting both
+offsets and the blur radius to <code>0</code>, a positive spread radius
+acts as a faux border that does not affect the document's layout or box
+model sizing:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>box-shadow<span class="in">:</span> 0 0 0 3px <span class="pp">#0070f3</span>;</span></code></pre></div></li>
+<li><p><strong>Constrained Natural Shadows:</strong> When casting
+directional shadows with a large blur, the shadow can bleed out from
+edges where it is not wanted. Applying a negative spread radius shrinks
+the shadow base, ensuring the blur only emerges prominently on the side
+dictated by the offsets:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>box-shadow<span class="in">:</span> 0 10px 15px -3px rgba<span class="in">(</span>0<span class="op">,</span> 0<span class="op">,</span> 0<span class="op">,</span> 0<span class="fu">.1</span><span class="in">)</span>;</span></code></pre></div></li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does the CSS :not() Pseudo-Class Work? - css</title>
+    <meta name="description" content="The CSS :not() pseudo-class, often called the negation pseudo-class, allows developers to apply styles to elements that do not match a specific selector or list of selectors. By accepting one or more arguments, it inverts the matching logic, preventing s">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-the-css-not-pseudo-class-work">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does the CSS :not() Pseudo-Class Work? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-the-css-not-pseudo-class-work" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS :not() pseudo-class, often called the negation pseudo-class, allows developers to apply styles to elements that do not match a specific selector or list of selectors. By accepting one or more arguments, it inverts the matching logic, preventing s" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-the-css-not-pseudo-class-work">How Does the CSS :not()
+Pseudo-Class Work?</h1>
+<p>The CSS <code>:not()</code> pseudo-class, often called the negation
+pseudo-class, allows developers to apply styles to elements that do not
+match a specific selector or list of selectors. By accepting one or more
+arguments, it inverts the matching logic, preventing selected styles
+from applying to targeted exceptions. This article explores the syntax,
+functionality, specificity rules, and practical use cases of
+<code>:not()</code> in modern web design.</p>
+<h2 id="syntax-and-basic-usage">Syntax and Basic Usage</h2>
+<p>The <code>:not()</code> pseudo-class takes a selector or a
+comma-separated list of selectors as its argument:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>selector<span class="in">:not(</span>exception-selector<span class="in">)</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* styles */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When the browser evaluates this rule, it targets any element matching
+the initial <code>selector</code> as long as it does not match the
+<code>exception-selector</code> enclosed inside the parentheses.</p>
+<h3 id="styling-lists-without-the-last-item">Styling Lists Without the
+Last Item</h3>
+<p>A classic use case involves applying bottom borders or margins to a
+list of items while excluding the final element:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>li<span class="in">:not(:last-child)</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-bottom</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#e0e0e0</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This approach eliminates the need to apply styles to every list item
+and subsequently reset the last item using an overriding rule.</p>
+<h2 id="multi-selector-support">Multi-Selector Support</h2>
+<p>In modern CSS (Selectors Level 4), <code>:not()</code> supports
+comma-separated argument lists. This allows developers to exclude
+multiple element types or classes within a single declaration:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>button<span class="in">:not(</span><span class="fu">.primary</span><span class="op">,</span> <span class="fu">.secondary</span><span class="op">,</span> <span class="ex">[</span><span class="ss">disabled</span><span class="ex">]</span><span class="in">)</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="dv">transparent</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#333</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This rule applies transparent backgrounds and dark text to buttons
+that do not carry the <code>.primary</code> class, the
+<code>.secondary</code> class, or the <code>disabled</code>
+attribute.</p>
+<h2 id="specificity-rules-of-not">Specificity Rules of :not()</h2>
+<p>Understanding how <code>:not()</code> interacts with CSS specificity
+is essential for avoiding unintended style overrides.</p>
+<ul>
+<li><strong>The <code>:not()</code> pseudo-class itself contributes zero
+specificity.</strong></li>
+<li><strong>The specificity of <code>:not()</code> equals the
+specificity of the most specific selector in its argument
+list.</strong></li>
+</ul>
+<p>For example:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Specificity: 0-0-1 (tag) + 0-1-0 (class inside :not) = 0-1-1 */</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>p<span class="in">:not(</span><span class="fu">.highlight</span><span class="in">)</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#555</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Specificity: 0-0-1 (tag) + 1-0-0 (ID is the highest inside :not) = 1-0-1 */</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>p<span class="in">:not(</span><span class="fu">.highlight</span><span class="op">,</span> <span class="pp">#featured</span><span class="in">)</span> {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#555</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Because the argument with the highest specificity determines the
+total weight of the selector, combining low-specificity elements with
+IDs inside <code>:not()</code> will significantly increase the rule's
+overall specificity.</p>
+<h2 id="important-limitations">Important Limitations</h2>
+<p>While powerful, the negation pseudo-class adheres to a few strict
+constraints:</p>
+<ul>
+<li><strong>No self-nesting:</strong> You cannot nest a
+<code>:not()</code> inside another <code>:not()</code>, such as
+<code>:not(:not(.active))</code>.</li>
+<li><strong>No pseudo-elements:</strong> Pseudo-elements like
+<code>::before</code> or <code>::after</code> cannot be used inside the
+argument list.</li>
+<li><strong>Positive matching required:</strong> <code>:not()</code>
+only filters elements that actually exist in the DOM; it cannot select
+elements that do not exist or style parent containers based on absent
+children (for child-dependent styling, consider the <code>:has()</code>
+relational pseudo-class).</li>
+</ul>
+<p>Using the <code>:not()</code> pseudo-class streamlines CSS by
+reducing code repetition and eliminating unnecessary selector overrides
+across modern stylesheets.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

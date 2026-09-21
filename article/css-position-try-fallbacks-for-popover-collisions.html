@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS position-try-fallbacks for Popover Collisions - css</title>
+    <meta name="description" content="The CSS position-try-fallbacks property, a core component of the CSS Anchor Positioning API, provides a native way to prevent popovers and tooltips from overflowing the screen. By automatically testing alternative layout configurations when a popover col">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-position-try-fallbacks-for-popover-collisions">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS position-try-fallbacks for Popover Collisions - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-position-try-fallbacks-for-popover-collisions" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS position-try-fallbacks property, a core component of the CSS Anchor Positioning API, provides a native way to prevent popovers and tooltips from overflowing the screen. By automatically testing alternative layout configurations when a popover col" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-position-try-fallbacks-for-popover-collisions">CSS
+position-try-fallbacks for Popover Collisions</h1>
+<p>The CSS <code>position-try-fallbacks</code> property, a core
+component of the CSS Anchor Positioning API, provides a native way to
+prevent popovers and tooltips from overflowing the screen. By
+automatically testing alternative layout configurations when a popover
+collides with viewport boundaries, it eliminates the historical reliance
+on heavy JavaScript libraries like Popper or Floating UI. This article
+explores how browser engines detect viewport collisions, the mechanics
+of fallback evaluations, and how to configure automatic flipping and
+custom positioning states.</p>
+<h2 id="the-viewport-collision-problem">The Viewport Collision
+Problem</h2>
+<p>Popovers and dropdown menus are anchored to specific trigger
+elements, such as buttons or links. If an anchor sits near the edge of
+the screen, displaying a popover in its default position (such as
+directly below or to the right of the anchor) can cause the popover to
+render off-screen or trigger unwanted scrollbars.</p>
+<p>Historically, solving this required JavaScript to calculate
+<code>getBoundingClientRect()</code> on scroll or resize events and
+dynamically flip the element. With CSS Anchor Positioning, the browser
+performs these spatial checks natively on the compositor thread.</p>
+<h2 id="how-position-try-fallbacks-works">How
+<code>position-try-fallbacks</code> Works</h2>
+<p>The <code>position-try-fallbacks</code> property defines a
+prioritized list of alternative position states that the browser should
+attempt if the default position causes the popover to overflow its
+containing block or the visible viewport.</p>
+<p>When rendering the anchored popover, the browser follows a structured
+resolution process:</p>
+<ol type="1">
+<li><strong>Default Position Check:</strong> The browser first attempts
+to render the popover using its default positioning styles (e.g.,
+placing it directly below the anchor via <code>position-anchor</code>
+and standard inset properties).</li>
+<li><strong>Collision Detection:</strong> The browser calculates the
+popover's geometry relative to the viewport. If any part of the element
+intersects the boundaries or overflows the available space, a collision
+is triggered.</li>
+<li><strong>Sequential Evaluation:</strong> The browser evaluates each
+fallback option listed in <code>position-try-fallbacks</code> in order
+from left to right.</li>
+<li><strong>Application:</strong> The first fallback that allows the
+popover to fit entirely within the viewport without clipping is applied.
+If none of the fallbacks fit perfectly, the browser selects the one that
+results in the least amount of overflow or falls back to the original
+placement, depending on standard constraints.</li>
+</ol>
+<h2 id="using-predefined-flip-keywords">Using Predefined Flip
+Keywords</h2>
+<p>For common use cases, CSS provides predefined keywords that
+automatically mirror the element's position across various axes without
+requiring custom rules:</p>
+<ul>
+<li><code>flip-block</code>: Inverts the position along the block axis
+(swapping <code>top</code> and <code>bottom</code>).</li>
+<li><code>flip-inline</code>: Inverts the position along the inline axis
+(swapping <code>left</code> and <code>right</code>, accounting for
+writing modes).</li>
+<li><code>flip-start</code>: Mirrors properties toward the start of the
+opposite axis.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.anchor-button</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  anchor-name<span class="ch">:</span> <span class="dv">--menu-button</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">.popover-menu</span> {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  position-anchor<span class="ch">:</span> <span class="dv">--menu-button</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">top</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">bottom</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">left</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">start</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Try flipping to the top if bottom overflows */</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  position-try-fallbacks<span class="ch">:</span> <span class="dv">flip-block</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If the button is positioned at the bottom of the viewport, the
+browser detects the collision and automatically recalculates the rules
+as <code>bottom: anchor(top)</code>, rendering the menu above the button
+instead.</p>
+<h2 id="defining-custom-fallbacks-with-position-try">Defining Custom
+Fallbacks with <code>@position-try</code></h2>
+<p>When layouts require more than simple axis flipping, custom fallback
+positions can be defined using the <code>@position-try</code> at-rule.
+This allows precise control over properties such as margins, insets, and
+transforms for different collision scenarios.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Define custom fallback states */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">@position-try</span> --top {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  top<span class="in">:</span> auto;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  bottom<span class="in">:</span> anchor<span class="in">(</span>top<span class="in">)</span>;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  margin-bottom<span class="in">:</span> 8px;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">@position-try</span> --right {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  top<span class="in">:</span> anchor<span class="in">(</span>top<span class="in">)</span>;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  bottom<span class="in">:</span> auto;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  left<span class="in">:</span> anchor<span class="in">(</span>end<span class="in">)</span>;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  margin-left<span class="in">:</span> 8px;</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">/* Apply fallbacks in order of preference */</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">.popover-menu</span> {</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  position-anchor<span class="ch">:</span> <span class="dv">--menu-button</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">top</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">bottom</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">left</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">start</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  position-try-fallbacks<span class="ch">:</span> <span class="dv">--top</span><span class="op">,</span> <span class="dv">--right</span><span class="op">,</span> <span class="dv">flip-inline</span><span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup, the browser first attempts to render the popover below
+the anchor. If it collides with the bottom edge, it tries the
+<code>--top</code> rule. If the top edge also causes an overflow, it
+attempts the <code>--right</code> rule, and finally attempts
+<code>flip-inline</code> before choosing the best fit.</p>
+<h2 id="performance-and-behavior-benefits">Performance and Behavior
+Benefits</h2>
+<p>Handling collisions natively through
+<code>position-try-fallbacks</code> offers two key technical
+advantages:</p>
+<ul>
+<li><strong>Zero Layout Thrashing:</strong> Because the browser engine
+handles geometry evaluation internally, there are no forced synchronous
+layouts caused by reading DOM properties via JavaScript.</li>
+<li><strong>Scroll Synchronization:</strong> Fallback adjustments occur
+seamlessly during scroll and resize events, preventing the visible
+position "jumping" or lagging often observed with JavaScript-driven
+positioning solutions.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS font-variation-settings and Custom Axes Guide - css</title>
+    <meta name="description" content="The font-variation-settings property in CSS provides low-level control over variable font features by directly manipulating the font's underlying OpenType axes. While modern CSS includes dedicated, high-level properties for standard axes—such as font-w">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-font-variation-settings-and-custom-axes-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS font-variation-settings and Custom Axes Guide - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-font-variation-settings-and-custom-axes-guide" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The font-variation-settings property in CSS provides low-level control over variable font features by directly manipulating the font's underlying OpenType axes. While modern CSS includes dedicated, high-level properties for standard axes—such as font-w" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-font-variation-settings-and-custom-axes-guide">CSS
+font-variation-settings and Custom Axes Guide</h1>
+<p>The <code>font-variation-settings</code> property in CSS provides
+low-level control over variable font features by directly manipulating
+the font's underlying OpenType axes. While modern CSS includes
+dedicated, high-level properties for standard axes—such as
+<code>font-weight</code> for <code>wght</code> or
+<code>font-stretch</code> for <code>wdth</code>—the
+<code>font-variation-settings</code> property remains essential for
+accessing and fine-tuning custom, proprietary axes defined by font
+creators.</p>
+<h3 id="understanding-font-variation-settings">Understanding
+<code>font-variation-settings</code></h3>
+<p>Variable fonts contain one or more axes of variation that allow a
+single font file to behave like multiple distinct font instances. The
+<code>font-variation-settings</code> property provides a mechanism to
+set these axes using a key-value syntax, where the key is a
+case-sensitive, four-character OpenType tag and the value is a numeric
+variable within that axis’s supported range.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>selector {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-variation-settings</span><span class="ch">:</span> <span class="st">&#39;tag1&#39;</span> <span class="dv">value</span><span class="op">,</span> <span class="st">&#39;tag2&#39;</span> <span class="dv">value</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="standard-axes-vs-custom-axes">Standard Axes vs. Custom Axes</h3>
+<p>OpenType specifications divide axes into two distinct categories:</p>
+<ol type="1">
+<li><p><strong>Standard (Registered) Axes:</strong> Standardized axes
+that have universal meanings across all fonts. They are identified by
+four lowercase characters:</p>
+<ul>
+<li><code>'wght'</code> (Weight)</li>
+<li><code>'wdth'</code> (Width)</li>
+<li><code>'slnt'</code> (Slant)</li>
+<li><code>'ital'</code> (Italic)</li>
+<li><code>'opsz'</code> (Optical Size)</li>
+</ul>
+<p>W3C specifications recommend using standard CSS properties
+(<code>font-weight</code>, <code>font-stretch</code>,
+<code>font-style</code>, and <code>font-optical-sizing</code>) instead
+of <code>font-variation-settings</code> when targeting standard axes to
+ensure semantic correctness and proper accessibility mappings.</p></li>
+<li><p><strong>Custom (Vendor-Specific) Axes:</strong> Proprietary
+variations designed by a type foundry for a specific typeface. Common
+examples include grade, serif size, flare, or roundness. Custom axes are
+identified by four <strong>uppercase</strong> characters, distinguishing
+them from registered axes.</p></li>
+</ol>
+<h3 id="implementing-custom-axes">Implementing Custom Axes</h3>
+<p>To use a custom axis, inspect the variable font's metadata or foundry
+documentation to identify the four-character uppercase tag and its
+allowed numerical range (e.g., <code>0</code> to <code>100</code>, or
+<code>-1</code> to <code>1</code>).</p>
+<p>For instance, the font Recursive includes custom axes such as Casual
+(<code>'CASL'</code>) and Cursive (<code>'CRSV'</code>). You target them
+directly through <code>font-variation-settings</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.casual-heading</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;Recursive&#39;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">700</span><span class="op">;</span> <span class="co">/* Standard axis handled by standard property */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-variation-settings</span><span class="ch">:</span> <span class="st">&#39;CASL&#39;</span> <span class="dv">1</span><span class="op">,</span> <span class="st">&#39;CRSV&#39;</span> <span class="dv">0.5</span><span class="op">;</span> <span class="co">/* Custom axes */</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Another widespread custom axis is Grade (<code>'GRAD'</code>), used
+to adjust the optical weight of text without changing its physical
+metrics or layout boundaries:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.dark-mode-text</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;Roboto Flex&#39;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-variation-settings</span><span class="ch">:</span> <span class="st">&#39;GRAD&#39;</span> <span class="dv">-0.5</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="animating-and-transitioning-custom-axes">Animating and
+Transitioning Custom Axes</h3>
+<p>Because values declared in <code>font-variation-settings</code> are
+numerical, custom axes can be animated or transitioned smoothly using
+standard CSS transitions and keyframes:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.interactive-button</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;ExampleVariableFont&#39;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-variation-settings</span><span class="ch">:</span> <span class="st">&#39;FLAR&#39;</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">font-variation-settings 0.3</span><span class="dt">s</span> <span class="dv">ease-in-out</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.interactive-button</span><span class="in">:hover</span> {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-variation-settings</span><span class="ch">:</span> <span class="st">&#39;FLAR&#39;</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="the-inheritance-caveat">The Inheritance Caveat</h3>
+<p>The primary drawback of <code>font-variation-settings</code> is that
+it acts as an all-or-nothing property; it does not cascade on an
+axis-by-axis basis. If a child element defines
+<code>font-variation-settings</code> to modify one axis, it overrides
+and resets all other custom axes declared on parent elements unless they
+are explicitly re-declared.</p>
+<p>To avoid unintended resets, manage custom axes using CSS custom
+properties (variables):</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--axis-casl</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--axis-crsv</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;Recursive&#39;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-variation-settings</span><span class="ch">:</span> <span class="st">&#39;CASL&#39;</span> <span class="fu">var(</span><span class="va">--axis-casl</span><span class="fu">)</span><span class="op">,</span> <span class="st">&#39;CRSV&#39;</span> <span class="fu">var(</span><span class="va">--axis-crsv</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">.playful</span> {</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="va">--axis-casl</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By binding custom axes to CSS variables, individual axes can be
+updated modularly without wiping out other declared variations in the
+cascade.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

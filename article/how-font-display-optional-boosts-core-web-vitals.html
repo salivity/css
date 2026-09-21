@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How font-display: optional Boosts Core Web Vitals - css</title>
+    <meta name="description" content="Web fonts often introduce performance bottlenecks that degrade user experience and search rankings, particularly on mobile devices and unstable network connections. This article explains the CSS font-display: optional property, details how its unique ren">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-font-display-optional-boosts-core-web-vitals">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How font-display: optional Boosts Core Web Vitals - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-font-display-optional-boosts-core-web-vitals" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Web fonts often introduce performance bottlenecks that degrade user experience and search rankings, particularly on mobile devices and unstable network connections. This article explains the CSS font-display: optional property, details how its unique ren" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-font-display-optional-boosts-core-web-vitals">How
+font-display: optional Boosts Core Web Vitals</h1>
+<p>Web fonts often introduce performance bottlenecks that degrade user
+experience and search rankings, particularly on mobile devices and
+unstable network connections. This article explains the CSS
+<code>font-display: optional</code> property, details how its unique
+rendering timeline handles slow network conditions, and demonstrates how
+it directly optimizes key Core Web Vitals metrics, including Cumulative
+Layout Shift (CLS) and Largest Contentful Paint (LCP).</p>
+<h2 id="what-is-font-display-optional">What Is
+<code>font-display: optional</code>?</h2>
+<p>The <code>font-display</code> descriptor determines how a font face
+is rendered depending on whether and when it has finished downloading.
+When assigned the value <code>optional</code>, the browser is given
+permission to treat the custom web font as non-critical.</p>
+<p>The rendering behavior follows a strict timeline:</p>
+<ul>
+<li><strong>Block period (very short):</strong> The browser gives the
+custom font an extremely short window—typically around 100
+milliseconds—to load. During this fraction of a second, text using the
+font is temporarily invisible.</li>
+<li><strong>Swap period (zero):</strong> If the font is not downloaded
+within that initial window, the browser immediately falls back to a
+system font. Crucially, the swap period is non-existent. The browser
+will <strong>never</strong> replace the fallback font with the custom
+font during the current page visit, even if the custom font finishes
+downloading half a second later.</li>
+</ul>
+<p>Instead, the browser continues downloading the custom font in the
+background and saves it to the disk cache. On subsequent page loads, the
+font is available instantly from the local cache and renders without
+delay.</p>
+<h2 id="how-it-protects-users-on-slow-networks">How It Protects Users on
+Slow Networks</h2>
+<p>On 3G, throttled 4G, or unstable Wi-Fi networks, remote web font
+files can take several seconds to download. Under default settings
+(<code>font-display: auto</code> or <code>block</code>), browsers hide
+text until the font arrives—a phenomenon known as Flash of Invisible
+Text (FOIT)—leading to blank screens and frustrated users. With
+<code>font-display: swap</code>, the browser shows a system font first,
+but swaps it once the custom font arrives, creating a distracting Flash
+of Unstyled Text (FOUT).</p>
+<p><code>font-display: optional</code> solves this by prioritizing text
+availability and stability over strict font presentation on the first
+visit. If network latency prevents the font from loading almost
+instantly, the browser commits entirely to the fallback font. Users
+never wait on a slow network to read your content, and the page
+interface remains static once rendered.</p>
+<h2 id="core-web-vitals-optimization">Core Web Vitals Optimization</h2>
+<p>Applying <code>font-display: optional</code> provides direct
+improvements to three core performance metrics.</p>
+<h3 id="1-cumulative-layout-shift-cls">1. Cumulative Layout Shift
+(CLS)</h3>
+<p>When a browser swaps a fallback font with a custom web font,
+differences in letter widths, line heights, and kerning almost always
+cause lines of text to re-wrap. This shifts surrounding elements down
+the page, generating a high CLS score.</p>
+<p>Because <code>font-display: optional</code> enforces a zero-swap
+period, it makes mid-session layout shifts caused by web fonts
+physically impossible. The font used for the first render remains the
+font for the rest of the session.</p>
+<h3 id="2-largest-contentful-paint-lcp">2. Largest Contentful Paint
+(LCP)</h3>
+<p>The LCP metric marks the point when the main content of a webpage has
+likely loaded. On many content-heavy pages, the largest visible element
+above the fold is a heading or text block.</p>
+<p>If that text is waiting on a remote font file under slow network
+conditions, the browser cannot mark the LCP milestone until the font
+downloads and the text becomes visible. With <code>optional</code>, the
+browser unblocks text rendering almost immediately using the fallback
+font, allowing the text element to paint quickly and registering an
+earlier LCP timestamp.</p>
+<h3 id="3-first-contentful-paint-fcp">3. First Contentful Paint
+(FCP)</h3>
+<p>By capping the font block window to approximately 100ms, the browser
+ensures that text elements contribute to the First Contentful Paint
+without being delayed by long round-trip times (RTT) across poor mobile
+connections.</p>
+<h2 id="implementation-example">Implementation Example</h2>
+<p>To apply this behavior, declare <code>font-display: optional</code>
+inside your <code>@font-face</code> rules:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;Inter&#39;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-style</span><span class="ch">:</span> <span class="dv">normal</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">400</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;/fonts/inter-v12-latin-regular.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-display</span><span class="ch">:</span> <span class="dv">optional</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;Inter&#39;</span><span class="op">,</span> <span class="dv">-apple-system</span><span class="op">,</span> <span class="dv">BlinkMacSystemFont</span><span class="op">,</span> <span class="st">&#39;Segoe UI&#39;</span><span class="op">,</span> <span class="dv">Roboto</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>To maximize the chance that the custom font loads within that initial
+100ms window on decent connections, pair this property with a preload
+hint in your document <code>&lt;head&gt;</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;preload&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;/fonts/inter-v12-latin-regular.woff2&quot;</span><span class="ot"> as</span><span class="op">=</span><span class="st">&quot;font&quot;</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;font/woff2&quot;</span><span class="ot"> crossorigin</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Preloading initiates the network request at the earliest possible
+stage, allowing the font to be ready before the browser completes its
+brief block period, while <code>font-display: optional</code> acts as a
+fail-safe that prevents performance penalties when network conditions
+deteriorate.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

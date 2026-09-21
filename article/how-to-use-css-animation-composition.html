@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS animation-composition - css</title>
+    <meta name="description" content="The CSS animation-composition property defines how an element's animated keyframe values interact with its underlying base styles or other running animations. By specifying one of three values—replace, add, or accumulate—developers gain precise contr">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-animation-composition">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS animation-composition - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-animation-composition" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS animation-composition property defines how an element's animated keyframe values interact with its underlying base styles or other running animations. By specifying one of three values—replace, add, or accumulate—developers gain precise contr" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-animation-composition">How to Use CSS
+animation-composition</h1>
+<p>The CSS <code>animation-composition</code> property defines how an
+element's animated keyframe values interact with its underlying base
+styles or other running animations. By specifying one of three
+values—<code>replace</code>, <code>add</code>, or
+<code>accumulate</code>—developers gain precise control over whether an
+animation completely overwrites an existing property value, stacks
+alongside it, or mathematically combines with it. This guide explains
+how each mode works, how they differ, and how to use them effectively in
+modern web design.</p>
+<hr />
+<h3 id="the-problem-it-solves">The Problem It Solves</h3>
+<p>By default, CSS animations completely override any base styles
+applied to an element for the targeted property. For example, if a base
+class applies <code>transform: translateX(50px)</code> and an animation
+defines <code>transform: rotate(45deg)</code>, the translation is lost
+during the animation because the rotation replaces it. Historically,
+developers had to redefine the base styles inside every keyframe. The
+<code>animation-composition</code> property solves this by allowing
+keyframes to dynamically combine with an element's existing
+properties.</p>
+<hr />
+<h3 id="the-three-composition-values">The Three Composition Values</h3>
+<p>The <code>animation-composition</code> property accepts three keyword
+values:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>animation-composition<span class="in">:</span> replace;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>animation-composition<span class="in">:</span> add;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>animation-composition<span class="in">:</span> accumulate;</span></code></pre></div>
+<h4 id="1-replace-default-behavior">1. <code>replace</code> (Default
+Behavior)</h4>
+<p>The <code>replace</code> value is the standard behavior of CSS
+animations. The keyframe value replaces the underlying base property
+value entirely.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateX(</span><span class="dv">100</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">spin 3</span><span class="dt">s</span> <span class="dv">infinite</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-composition</span><span class="ch">:</span> <span class="dv">replace</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> spin {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">to</span> {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transform</span><span class="ch">:</span> <span class="fu">rotate(</span><span class="dv">360</span><span class="dt">deg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong>Result:</strong> At the start of the animation,
+<code>translateX(100px)</code> is replaced by the initial animation
+state. The element rotates, but the 100px translation is ignored.</li>
+</ul>
+<h4 id="2-add-stacking-values">2. <code>add</code> (Stacking
+Values)</h4>
+<p>The <code>add</code> value appends the keyframe value to the
+underlying base value, creating a composite list. The animated value
+acts as an addition to the existing style chain from left to right.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateX(</span><span class="dv">100</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">spin 3</span><span class="dt">s</span> <span class="dv">infinite</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-composition</span><span class="ch">:</span> <span class="dv">add</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> spin {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">to</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transform</span><span class="ch">:</span> <span class="fu">rotate(</span><span class="dv">360</span><span class="dt">deg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong>Result:</strong> The browser evaluates the final transform
+as <code>transform: translateX(100px) rotate(360deg)</code>. The element
+maintains its original 100px offset while performing the rotation.</li>
+</ul>
+<p>For space-separated or comma-separated properties (such as
+<code>filter</code> or <code>box-shadow</code>), <code>add</code>
+appends the animation values onto the existing list:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">filter</span><span class="ch">:</span> <span class="fu">blur(</span><span class="dv">2</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">brighten 2</span><span class="dt">s</span> <span class="dv">infinite</span> <span class="dv">alternate</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-composition</span><span class="ch">:</span> <span class="dv">add</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> brighten {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">to</span> {</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">filter</span><span class="ch">:</span> <span class="fu">brightness(</span><span class="dv">1.5</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong>Result:</strong> The computed filter becomes
+<code>filter: blur(2px) brightness(1.5)</code>.</li>
+</ul>
+<h4 id="3-accumulate-combining-values-mathematically">3.
+<code>accumulate</code> (Combining Values Mathematically)</h4>
+<p>The <code>accumulate</code> value combines the underlying value and
+the animated value into a single, merged value whenever mathematically
+possible. Instead of appending to a list, it performs an arithmetic
+addition.</p>
+<p>Consider an element that already has a blur filter applied:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.image</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">filter</span><span class="ch">:</span> <span class="fu">blur(</span><span class="dv">5</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">pulse-blur 2</span><span class="dt">s</span> <span class="dv">infinite</span> <span class="dv">alternate</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-composition</span><span class="ch">:</span> <span class="dv">accumulate</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> pulse-blur {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">to</span> {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">filter</span><span class="ch">:</span> <span class="fu">blur(</span><span class="dv">10</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong>Result:</strong> With <code>accumulate</code>, the values
+merge arithmetically. At the end of the keyframe, the computed filter is
+<code>filter: blur(15px)</code> (5px + 10px), rather than a stacked list
+of two separate blur functions.</li>
+</ul>
+<hr />
+<h3 id="the-difference-between-add-and-accumulate">The Difference
+Between <code>add</code> and <code>accumulate</code></h3>
+<p>The distinction between <code>add</code> and <code>accumulate</code>
+is clearest when animating matching transform functions or multi-value
+units:</p>
+<ul>
+<li><strong>Using <code>add</code> on identical transform
+functions:</strong> If the base style is
+<code>transform: scale(2)</code> and the keyframe is
+<code>transform: scale(1.5)</code>, <code>add</code> produces
+<code>transform: scale(2) scale(1.5)</code>. The browser multiplies the
+matrices sequentially.</li>
+<li><strong>Using <code>accumulate</code> on identical transform
+functions:</strong> Using <code>accumulate</code> on the same styles
+combines them arithmetically. The base <code>scale(2)</code> and
+animated <code>scale(1.5)</code> sum their delta from the default state,
+resulting in a single <code>scale(2.5)</code>.</li>
+</ul>
+<p>If the values cannot be combined arithmetically—such as combining a
+<code>rotate()</code> with a
+<code>scale()</code>—<code>accumulate</code> falls back to behaving like
+<code>add</code>.</p>
+<hr />
+<h3 id="application-in-multiple-animations">Application in Multiple
+Animations</h3>
+<p>The <code>animation-composition</code> property can also accept a
+comma-separated list to handle multiple animations applied to a single
+selector:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.element</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateX(</span><span class="dv">50</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">slide 2</span><span class="dt">s</span> <span class="dv">infinite</span><span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">pulse 1</span><span class="dt">s</span> <span class="dv">infinite</span><span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-composition</span><span class="ch">:</span> <span class="dv">add</span><span class="op">,</span> <span class="dv">accumulate</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup, the <code>slide</code> animation stacks onto the base
+transform using <code>add</code>, while the <code>pulse</code> animation
+combines with the preceding states using <code>accumulate</code>. This
+granular control allows complex, layered UI micro-interactions without
+writing redundant CSS rules.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

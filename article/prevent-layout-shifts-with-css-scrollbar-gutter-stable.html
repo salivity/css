@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prevent Layout Shifts with CSS scrollbar-gutter: stable - css</title>
+    <meta name="description" content="This article provides an overview of the CSS scrollbar-gutter: stable property, examining how unexpected layout shifts occur when scrollbars appear and how this modern CSS feature permanently eliminates them. You will learn the mechanics behind the "scro">
+    <link rel="canonical" href="https://salivity.github.io/css/article/prevent-layout-shifts-with-css-scrollbar-gutter-stable">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Prevent Layout Shifts with CSS scrollbar-gutter: stable - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/prevent-layout-shifts-with-css-scrollbar-gutter-stable" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the CSS scrollbar-gutter: stable property, examining how unexpected layout shifts occur when scrollbars appear and how this modern CSS feature permanently eliminates them. You will learn the mechanics behind the "scro" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="prevent-layout-shifts-with-css-scrollbar-gutter-stable">Prevent
+Layout Shifts with CSS scrollbar-gutter: stable</h1>
+<p>This article provides an overview of the CSS
+<code>scrollbar-gutter: stable</code> property, examining how unexpected
+layout shifts occur when scrollbars appear and how this modern CSS
+feature permanently eliminates them. You will learn the mechanics behind
+the "scrollbar jump," how <code>scrollbar-gutter: stable</code> reserves
+space in the viewport, and how to implement it to improve visual
+stability and user experience across your web pages.</p>
+<h2 id="the-problem-the-scrollbar-jump-and-layout-shifts">The Problem:
+The "Scrollbar Jump" and Layout Shifts</h2>
+<p>When a user navigates between a short page that fits entirely within
+the viewport and a longer page that requires scrolling, browsers
+typically insert a vertical scrollbar. On operating systems configured
+with classic (non-overlay) scrollbars—such as default Windows
+setups—this scrollbar occupies physical space, typically between 12 and
+17 pixels.</p>
+<p>Because the viewport's available width shrinks by the width of the
+scrollbar, centered elements, full-width grids, and text re-flow
+instantly. This jarring visual snap is known as a layout shift. It harms
+user experience and can negatively impact Cumulative Layout Shift (CLS),
+a Core Web Vital metric used by search engines to evaluate page
+stability.</p>
+<p>Historically, developers addressed this using
+<code>overflow-y: scroll</code>, which forces a persistent scrollbar on
+every page. While this stops the jumping, it introduces an undesirable,
+inactive scrollbar track on pages that do not have enough content to
+scroll.</p>
+<h2 id="what-is-scrollbar-gutter-stable">What is
+<code>scrollbar-gutter: stable</code>?</h2>
+<p>The <code>scrollbar-gutter</code> property provides direct control
+over the presence of the space reserved for a scrollbar.</p>
+<p>When set to <code>stable</code>, the browser reserves a gutter—an
+empty strip equal to the width of the scrollbar—along the scrolling edge
+of the container, even when the content does not overflow.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>html {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">scrollbar-gutter</span><span class="ch">:</span> <span class="dv">stable</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By applying this rule to the root <code>html</code> element, the
+document layout width remains identical whether the page requires
+scrolling or not. When content expands or when the user navigates to a
+longer page, the scrollbar simply renders inside the already-reserved
+space without pushing or reflowing surrounding elements.</p>
+<h2 id="how-it-works-in-practice">How It Works in Practice</h2>
+<h3 id="default-behavior-scrollbar-gutter-auto">Default Behavior
+(<code>scrollbar-gutter: auto</code>)</h3>
+<p>By default, the browser only allocates space for a scrollbar when
+content overflows its container. If content is short, no gutter exists.
+When content grows beyond the container height, the layout width
+decreases to make room for the scrollbar.</p>
+<h3 id="stable-behavior-scrollbar-gutter-stable">Stable Behavior
+(<code>scrollbar-gutter: stable</code>)</h3>
+<p>With <code>stable</code>, the gutter is permanently present as long
+as the element could potentially scroll (i.e., <code>overflow</code> is
+set to <code>auto</code>, <code>scroll</code>, or left to standard
+document behavior).</p>
+<ul>
+<li><strong>If content does not overflow:</strong> The gutter remains
+empty, preserving the layout's width.</li>
+<li><strong>If content overflows:</strong> The scrollbar occupies the
+pre-existing gutter. The layout width does not change, and zero layout
+shift occurs.</li>
+</ul>
+<h3
+id="symmetrical-spacing-scrollbar-gutter-stable-both-edges">Symmetrical
+Spacing (<code>scrollbar-gutter: stable both-edges</code>)</h3>
+<p>If your layout relies on strict visual symmetry, having a reserved
+gutter only on the right edge might make centered content appear
+slightly off-center on pages without an active scrollbar. You can pass
+the optional <code>both-edges</code> keyword to mirror the reserved
+space on the opposite side:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>html {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">scrollbar-gutter</span><span class="ch">:</span> <span class="dv">stable</span> <span class="dv">both-edges</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This creates an identical gutter on both edges of the container,
+ensuring that perfectly centered elements remain centered relative to
+the viewport.</p>
+<h2 id="key-advantages-over-older-techniques">Key Advantages Over Older
+Techniques</h2>
+<ol type="1">
+<li><strong>Clean Visuals:</strong> Unlike
+<code>overflow-y: scroll</code>, <code>scrollbar-gutter: stable</code>
+does not render a disabled or empty scrollbar track; it simply reserves
+empty space.</li>
+<li><strong>Overlay Scrollbar Awareness:</strong> On platforms with
+overlay scrollbars (such as macOS or mobile devices), overlay scrollbars
+float above content and do not occupy layout space. The
+<code>scrollbar-gutter</code> property recognizes this and will not
+reserve unnecessary space if the user's system does not use classic
+scrollbars.</li>
+<li><strong>Component-Level Use:</strong> The property is not limited to
+the root element. It can be applied to modals, sidebars, data tables,
+and dropdown menus to prevent internal container jumping as dynamic data
+loads.</li>
+</ol>
+<h2 id="browser-support-and-progressive-enhancement">Browser Support and
+Progressive Enhancement</h2>
+<p>The <code>scrollbar-gutter</code> property is supported in all modern
+major browsers, including Chromium-based browsers (Chrome, Edge),
+Firefox, and Safari. Because unsupported browsers simply ignore unknown
+CSS properties and fall back to standard scrollbar behavior,
+<code>scrollbar-gutter: stable</code> can be implemented safely as a
+progressive enhancement to eliminate layout shifts immediately.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

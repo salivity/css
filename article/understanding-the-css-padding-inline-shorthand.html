@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the CSS padding-inline Shorthand - css</title>
+    <meta name="description" content="The CSS padding-inline shorthand is a logical property used to set the internal spacing on the inline axes of an element, typically replacing the physical padding-left and padding-right properties. This article covers what padding-inline is, how its synt">
+    <link rel="canonical" href="https://salivity.github.io/css/article/understanding-the-css-padding-inline-shorthand">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding the CSS padding-inline Shorthand - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/understanding-the-css-padding-inline-shorthand" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS padding-inline shorthand is a logical property used to set the internal spacing on the inline axes of an element, typically replacing the physical padding-left and padding-right properties. This article covers what padding-inline is, how its synt" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-the-css-padding-inline-shorthand">Understanding
+the CSS padding-inline Shorthand</h1>
+<p>The CSS <code>padding-inline</code> shorthand is a logical property
+used to set the internal spacing on the inline axes of an element,
+typically replacing the physical <code>padding-left</code> and
+<code>padding-right</code> properties. This article covers what
+<code>padding-inline</code> is, how its syntax works, how it adapts to
+different writing modes and text directions, and why it is an essential
+tool for building modern, responsive, and internationalized user
+interfaces.</p>
+<h3 id="what-is-padding-inline">What is
+<code>padding-inline</code>?</h3>
+<p>In standard web design, web pages have historically relied on
+physical properties such as <code>padding-left</code>,
+<code>padding-right</code>, <code>padding-top</code>, and
+<code>padding-bottom</code>. These properties correspond strictly to the
+physical sides of a display screen, regardless of language or document
+flow.</p>
+<p><code>padding-inline</code> is part of the CSS Logical Properties and
+Values specification. It defines the logical inline start and inline end
+padding of an element. In standard horizontal writing modes—such as
+English (left-to-right) or Arabic (right-to-left)—the inline axis
+corresponds to the horizontal axis. Therefore,
+<code>padding-inline</code> directly manages the lateral padding of an
+element.</p>
+<p>It serves as a shorthand mapping to two distinct properties:</p>
+<ul>
+<li><code>padding-inline-start</code></li>
+<li><code>padding-inline-end</code></li>
+</ul>
+<h3 id="syntax-and-usage">Syntax and Usage</h3>
+<p>The <code>padding-inline</code> shorthand accepts either one or two
+values, following the standard spacing syntax in CSS:</p>
+<h4 id="single-value-syntax">Single Value Syntax</h4>
+<p>When provided with a single value, that padding is applied equally to
+both the start and end of the inline axis:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.button</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding-inline</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In a standard left-to-right layout, this applies <code>1.5rem</code>
+to both the left and right sides.</p>
+<h4 id="two-value-syntax">Two-Value Syntax</h4>
+<p>When provided with two values, the first value sets the
+<code>padding-inline-start</code>, and the second value sets the
+<code>padding-inline-end</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding-inline</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">rem</span> <span class="dv">1</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In a left-to-right layout, this applies <code>2rem</code> to the left
+(start) and <code>1rem</code> to the right (end).</p>
+<h3 id="managing-lateral-padding-across-writing-modes">Managing Lateral
+Padding Across Writing Modes</h3>
+<p>The primary advantage of <code>padding-inline</code> over traditional
+physical properties is how it automatically adapts to different writing
+directions and writing modes.</p>
+<h4 id="left-to-right-ltr-vs-right-to-left-rtl">Left-to-Right (LTR) vs.
+Right-to-Left (RTL)</h4>
+<p>In a standard horizontal left-to-right (LTR) context, such as
+English:</p>
+<ul>
+<li><code>inline-start</code> maps to <code>left</code>.</li>
+<li><code>inline-end</code> maps to <code>right</code>.</li>
+</ul>
+<p>In a right-to-left (RTL) context, such as Arabic or Hebrew:</p>
+<ul>
+<li><code>inline-start</code> maps to <code>right</code>.</li>
+<li><code>inline-end</code> maps to <code>left</code>.</li>
+</ul>
+<p>If you use <code>padding-inline: 2rem 1rem;</code>, an LTR element
+gets 2rem on the left and 1rem on the right. If the user switches the
+document language to RTL (<code>dir="rtl"</code>), the browser
+automatically reverses this layout: 2rem is applied to the right, and
+1rem is applied to the left. Using traditional properties would have
+required manually overriding <code>padding-left</code> and
+<code>padding-right</code> inside specific RTL CSS rules.</p>
+<h4 id="vertical-writing-modes">Vertical Writing Modes</h4>
+<p>When an element uses a vertical writing mode (such as
+<code>writing-mode: vertical-rl</code>), the inline axis changes
+direction:</p>
+<ul>
+<li>The inline axis runs vertically (top to bottom).</li>
+<li>The block axis runs horizontally.</li>
+</ul>
+<p>In this scenario, <code>padding-inline</code> dynamically shifts to
+control the top and bottom padding, ensuring the lateral spacing
+relative to the flow of the text remains intact without requiring custom
+media queries or layout overrides.</p>
+<h3 id="why-use-padding-inline">Why Use
+<code>padding-inline</code>?</h3>
+<ol type="1">
+<li><strong>Simplified Internationalization (i18n):</strong> Components
+automatically display correct spacing when flipped between LTR and RTL
+scripts without additional CSS classes or stylesheets.</li>
+<li><strong>Cleaner, Shorter Code:</strong> Instead of declaring
+separate <code>padding-left</code> and <code>padding-right</code> rules,
+or resetting unintended top/bottom values when using the four-value
+<code>padding</code> shorthand, <code>padding-inline</code> sets both
+horizontal sides in a single, focused declaration.</li>
+<li><strong>Component Reusability:</strong> Design system components
+become more robust and context-agnostic, maintaining proper relative
+spacing inside diverse parent layouts.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

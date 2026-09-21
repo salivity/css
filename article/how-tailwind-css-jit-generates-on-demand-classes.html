@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Tailwind CSS JIT Generates On-Demand Classes - css</title>
+    <meta name="description" content="The Tailwind CSS Just-In-Time (JIT) compiler fundamentally changed utility-first styling by replacing massive, pre-generated stylesheets with an on-demand compilation engine. Instead of compiling thousands of unused utility classes upfront and purging th">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-tailwind-css-jit-generates-on-demand-classes">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Tailwind CSS JIT Generates On-Demand Classes - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-tailwind-css-jit-generates-on-demand-classes" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Tailwind CSS Just-In-Time (JIT) compiler fundamentally changed utility-first styling by replacing massive, pre-generated stylesheets with an on-demand compilation engine. Instead of compiling thousands of unused utility classes upfront and purging th" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-tailwind-css-jit-generates-on-demand-classes">How Tailwind
+CSS JIT Generates On-Demand Classes</h1>
+<p>The Tailwind CSS Just-In-Time (JIT) compiler fundamentally changed
+utility-first styling by replacing massive, pre-generated stylesheets
+with an on-demand compilation engine. Instead of compiling thousands of
+unused utility classes upfront and purging them later for production,
+the JIT engine dynamically generates the exact CSS required in real time
+based on your template files. This article explains the internal
+mechanics of the Tailwind CSS JIT compiler, detailing how it watches
+files, scans candidate strings, dynamically generates Abstract Syntax
+Trees (ASTs), and injects minimal CSS directly into your build
+pipeline.</p>
+<h3 id="1-file-watching-and-content-configuration">1. File Watching and
+Content Configuration</h3>
+<p>The JIT compiler begins by observing the file paths defined in your
+<code>tailwind.config.js</code> file under the <code>content</code>
+array. These typically include templates, scripts, and component files
+such as <code>.html</code>, <code>.jsx</code>, <code>.tsx</code>, or
+<code>.vue</code>.</p>
+<p>Whenever a file changes, the build tool (like Vite, Next.js, or
+PostCSS) alerts Tailwind's file-system watcher. Because Tailwind
+monitors these specific files, it only re-evaluates the code when a
+relevant file is modified, keeping build overhead minimal.</p>
+<h3 id="2-fast-tokenization-and-string-scanning">2. Fast Tokenization
+and String Scanning</h3>
+<p>Unlike standard CSS parsers or browser rendering engines, Tailwind
+does not attempt to parse the entire Document Object Model (DOM) or
+evaluate JavaScript execution. Doing so would make the build slow.
+Instead, it uses a high-performance, regular-expression-based token
+scanning algorithm.</p>
+<p>The scanner reads the raw text of modified files and extracts
+potential utility strings. It breaks the text down into individual
+tokens by matching class-like strings using characters valid in CSS
+identifiers, including colons, dashes, brackets, and slashes. Any string
+matching the token pattern—such as <code>px-4</code>,
+<code>hover:text-blue-500</code>, or <code>w-[120px]</code>—is extracted
+as a potential "candidate."</p>
+<h3 id="3-candidate-validation-and-rule-matching">3. Candidate
+Validation and Rule Matching</h3>
+<p>Once the scanner extracts candidate strings, it matches them against
+Tailwind’s internal registry of rules, variants, and design tokens:</p>
+<ul>
+<li><strong>Static Utilities:</strong> Standard utilities like
+<code>flex</code>, <code>hidden</code>, or <code>p-4</code> are matched
+against Tailwind’s core utility map.</li>
+<li><strong>Variants:</strong> Prefixes like <code>dark:</code>,
+<code>md:</code>, or <code>group-hover:</code> are separated from the
+base class. The engine registers which media queries, pseudo-classes, or
+custom parent-selectors need to be wrapped around the rule.</li>
+<li><strong>Arbitrary Values:</strong> When a class contains brackets
+(e.g., <code>top-[17px]</code>), the parser decodes the arbitrary value,
+infers the CSS property type (e.g., length, color, or number), and maps
+it to the corresponding CSS rule dynamically.</li>
+</ul>
+<p>If a candidate token does not match any valid rule, plugin, or
+arbitrary pattern, the compiler silently discards it without throwing
+errors.</p>
+<h3 id="4-postcss-abstract-syntax-tree-ast-generation">4. PostCSS
+Abstract Syntax Tree (AST) Generation</h3>
+<p>For every valid candidate, the JIT compiler generates PostCSS
+Abstract Syntax Tree (AST) nodes in memory:</p>
+<ol type="1">
+<li><strong>Rule Construction:</strong> It builds a CSS declaration
+(e.g., <code>padding-left: 1rem; padding-right: 1rem;</code>).</li>
+<li><strong>Variant Application:</strong> If variants exist, it wraps
+the declaration in appropriate CSS blocks, such as
+<code>@media (min-width: 768px)</code> or selector modifications like
+<code>:hover</code>.</li>
+<li><strong>Deduplication:</strong> The compiler tracks previously
+compiled classes in memory so it never duplicates CSS declarations, even
+if a class appears across hundreds of components.</li>
+</ol>
+<h3 id="5-in-memory-css-injection">5. In-Memory CSS Injection</h3>
+<p>Instead of writing CSS directly to disk on every change, the JIT
+engine keeps the generated AST in memory. It serializes these AST nodes
+into pure CSS and passes them back to the bundler through the standard
+PostCSS pipeline.</p>
+<p>During development, the generated styles are served directly via Hot
+Module Replacement (HMR), providing instantaneous browser updates. In
+production builds, the compiler runs a single pass over all specified
+content files, generating a hyper-optimized stylesheet that contains
+only the CSS classes explicitly used in the project.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

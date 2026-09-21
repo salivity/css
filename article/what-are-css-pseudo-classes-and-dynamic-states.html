@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Are CSS Pseudo-Classes and Dynamic States? - css</title>
+    <meta name="description" content="CSS pseudo-classes are specialized keywords added to selectors that allow developers to style HTML elements based on dynamic user interactions, historical browsing data, structural position, and real-time element states without relying on JavaScript. By">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-are-css-pseudo-classes-and-dynamic-states">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Are CSS Pseudo-Classes and Dynamic States? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-are-css-pseudo-classes-and-dynamic-states" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS pseudo-classes are specialized keywords added to selectors that allow developers to style HTML elements based on dynamic user interactions, historical browsing data, structural position, and real-time element states without relying on JavaScript. By" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-are-css-pseudo-classes-and-dynamic-states">What Are CSS
+Pseudo-Classes and Dynamic States?</h1>
+<p>CSS pseudo-classes are specialized keywords added to selectors that
+allow developers to style HTML elements based on dynamic user
+interactions, historical browsing data, structural position, and
+real-time element states without relying on JavaScript. By acting as
+built-in state listeners, these selectors monitor browser events—such as
+mouse hovers, keyboard navigation, form input validation, and document
+tree shifts—and automatically apply corresponding CSS declarations as
+those states change. Understanding pseudo-classes is fundamental to
+building responsive, accessible, and interactive user interfaces
+natively within the browser rendering engine.</p>
+<h2
+id="understanding-the-core-mechanics-of-pseudo-classes">Understanding
+the Core Mechanics of Pseudo-Classes</h2>
+<p>A pseudo-class is appended directly to a standard CSS selector using
+a single colon (<code>:</code>) prefix. Unlike standard class selectors
+defined explicitly in the HTML markup, pseudo-classes represent
+transient or contextual characteristics that cannot always be expressed
+through static attributes.</p>
+<p>When a browser renders a web page, it continuously monitors user
+input and Document Object Model (DOM) mutations. When an element meets
+the specific criteria defined by a pseudo-class, the rendering engine
+recalculates the computed styles for that element and triggers visual
+updates efficiently without requiring manual class toggling via script
+execution.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Syntax pattern */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>selector<span class="in">:pseudo-class</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  property<span class="ch">:</span> <span class="dv">value</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="capturing-interactive-and-user-action-states">Capturing
+Interactive and User Action States</h2>
+<p>The most common application of pseudo-classes is tracking how users
+actively interact with page components via pointing devices,
+touchscreens, or keyboards.</p>
+<ul>
+<li><strong><code>:hover</code></strong>: Triggers when a user positions
+a pointing device over an element without necessarily activating it.
+Commonly used on links, buttons, and navigation items to provide visual
+feedback.</li>
+<li><strong><code>:active</code></strong>: Applies while an element is
+being activated by the user, such as the exact interval between a mouse
+press and release, or during a physical touch press.</li>
+<li><strong><code>:focus</code></strong>: Activates when an element
+receives focus, typically when a user clicks into a text input or
+navigates using the Tab key.</li>
+<li><strong><code>:focus-visible</code></strong>: Differentiates between
+mouse focus and keyboard navigation focus, enabling distinct focus rings
+exclusively for users navigating via keyboard or assistive technology,
+avoiding unnecessary outlines for mouse clicks.</li>
+<li><strong><code>:focus-within</code></strong>: Matches an element if
+the element itself or any of its descendants currently matches
+<code>:focus</code>, making it useful for highlighting entire form
+containers or complex dropdown components.</li>
+</ul>
+<h2 id="managing-form-and-validation-states">Managing Form and
+Validation States</h2>
+<p>Dynamic form interfaces rely heavily on pseudo-classes to reflect
+input validity, accessibility attributes, and availability without
+client-side script overhead.</p>
+<ul>
+<li>**<code>:enabled</code> and <code>:disabled**</code>: Style elements
+based on whether they can receive user input or submit data.</li>
+<li><strong><code>:checked</code></strong>: Applies to radio buttons,
+checkboxes, or option elements that are currently selected.</li>
+<li>**<code>:valid</code> and <code>:invalid**</code>: Reflect whether
+an <code>&lt;input&gt;</code> meets the validation constraints defined
+by attributes such as <code>type="email"</code>, <code>pattern</code>,
+or <code>required</code>.</li>
+<li>**<code>:required</code> and <code>:optional**</code>: Target form
+controls based on whether filling them is mandatory.</li>
+<li><strong><code>:placeholder-shown</code></strong>: Identifies whether
+the form control's placeholder text is currently visible, enabling
+floating-label animations without JavaScript listeners.</li>
+</ul>
+<h2 id="structural-and-positional-pseudo-classes">Structural and
+Positional Pseudo-Classes</h2>
+<p>In addition to user-driven states, CSS provides structural
+pseudo-classes that evaluate an element’s position relative to its
+siblings in the DOM tree.</p>
+<ul>
+<li>**<code>:first-child</code> and <code>:last-child**</code>: Target
+elements that are the absolute first or last child within their parent
+container.</li>
+<li><strong><code>:nth-child(n)</code></strong>: Uses algebraic
+expressions (such as <code>2n+1</code> for alternating rows) to match
+elements based on precise numerical positions.</li>
+<li><strong><code>:not()</code></strong>: Acts as a negation operator,
+styling elements that do not match the specified selector list.</li>
+<li><strong><code>:has()</code></strong>: Acts as a relational or
+"parent" selector, applying styles to an element if any selector inside
+its argument matches relative to that element.</li>
+</ul>
+<p>By leveraging these native selectors, modern web applications achieve
+fluid, stateful user experiences directly in the stylesheet layer,
+reducing script dependencies and optimizing rendering performance.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS Flexbox Handle Alignment? - css</title>
+    <meta name="description" content="CSS Flexbox manages one-dimensional layout alignment through a system of two intersecting axes: the main axis and the cross axis. By defining a container as a flex formatting context, developers can distribute space, align items dynamically, and control">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-flexbox-handle-alignment">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS Flexbox Handle Alignment? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-flexbox-handle-alignment" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS Flexbox manages one-dimensional layout alignment through a system of two intersecting axes: the main axis and the cross axis. By defining a container as a flex formatting context, developers can distribute space, align items dynamically, and control" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-flexbox-handle-alignment">How Does CSS Flexbox
+Handle Alignment?</h1>
+<p>CSS Flexbox manages one-dimensional layout alignment through a system
+of two intersecting axes: the main axis and the cross axis. By defining
+a container as a flex formatting context, developers can distribute
+space, align items dynamically, and control wrapping along a single row
+or column. Alignment behavior relies primarily on four core CSS
+properties: <code>justify-content</code>, <code>align-items</code>,
+<code>align-self</code>, and <code>align-content</code>.</p>
+<h2 id="the-dual-axis-model">The Dual-Axis Model</h2>
+<p>To understand Flexbox alignment, you must first understand its
+coordinate system. Flexbox does not rely on traditional top, bottom,
+left, and right directions; instead, it uses directional axes defined by
+the <code>flex-direction</code> property.</p>
+<ul>
+<li><strong>The Main Axis:</strong> Defined by
+<code>flex-direction</code> (<code>row</code>, <code>row-reverse</code>,
+<code>column</code>, or <code>column-reverse</code>). If set to
+<code>row</code>, the main axis runs horizontally from left to right in
+standard left-to-right writing modes. If set to <code>column</code>, it
+runs vertically from top to bottom.</li>
+<li><strong>The Cross Axis:</strong> Runs perpendicular to the main
+axis. If the main axis is horizontal, the cross axis is vertical, and
+vice versa.</li>
+</ul>
+<h2 id="main-axis-alignment-with-justify-content">Main-Axis Alignment
+with justify-content</h2>
+<p>The <code>justify-content</code> property distributes free space
+along the main axis. It controls how child elements (flex items) sit
+relative to each other and to the container boundaries.</p>
+<ul>
+<li><code>flex-start</code> (or <code>start</code>): Groups items at the
+start of the main axis.</li>
+<li><code>flex-end</code> (or <code>end</code>): Groups items at the end
+of the main axis.</li>
+<li><code>center</code>: Centers items along the main axis.</li>
+<li><code>space-between</code>: Distributes items evenly, with the first
+item touching the start edge and the last item touching the end
+edge.</li>
+<li><code>space-around</code>: Places equal space around each item,
+resulting in half-sized spaces at the container edges.</li>
+<li><code>space-evenly</code>: Distributes items so that the space
+between any two items and the edges is identical.</li>
+</ul>
+<h2 id="cross-axis-alignment-with-align-items-and-align-self">Cross-Axis
+Alignment with align-items and align-self</h2>
+<p>Alignment perpendicular to the flow of content is handled by
+<code>align-items</code> on the container and <code>align-self</code> on
+individual items.</p>
+<h3 id="container-level-align-items">Container-Level: align-items</h3>
+<p>The <code>align-items</code> property establishes the default
+alignment for all direct children along the cross axis:</p>
+<ul>
+<li><code>stretch</code>: The default value; stretches items to fill the
+entire cross-axis height or width (if no explicit size is set).</li>
+<li><code>flex-start</code> / <code>start</code>: Aligns items to the
+cross-axis starting edge.</li>
+<li><code>flex-end</code> / <code>end</code>: Aligns items to the
+cross-axis ending edge.</li>
+<li><code>center</code>: Centers items along the cross axis.</li>
+<li><code>baseline</code>: Aligns items based on the baseline of their
+text content, ensuring consistent typography alignment across elements
+of varying sizes.</li>
+</ul>
+<h3 id="item-level-override-align-self">Item-Level Override:
+align-self</h3>
+<p>Individual flex items can break away from the container's
+<code>align-items</code> rule using <code>align-self</code>. It accepts
+the same alignment values (<code>flex-start</code>,
+<code>flex-end</code>, <code>center</code>, <code>baseline</code>,
+<code>stretch</code>), allowing targeted overrides without disrupting
+the alignment of adjacent items.</p>
+<h2 id="multi-line-alignment-with-align-content">Multi-Line Alignment
+with align-content</h2>
+<p>When <code>flex-wrap: wrap</code> is enabled, items that exceed the
+main axis length wrap onto multiple lines. In this multi-line context,
+<code>align-content</code> determines how extra space along the cross
+axis is distributed between the lines themselves, using values similar
+to <code>justify-content</code> (such as <code>space-between</code>,
+<code>space-around</code>, <code>center</code>, and
+<code>stretch</code>).</p>
+<h2 id="auto-margins-for-dynamic-spacing">Auto Margins for Dynamic
+Spacing</h2>
+<p>Flexbox also leverages standard CSS margins to absorb excess space.
+Applying <code>margin: auto</code> or a directional auto margin (such as
+<code>margin-left: auto</code>) to a flex item forces that margin to
+consume all available positive free space along the corresponding axis.
+This makes tasks like pushing a single navigation link to the far right
+edge simple, reliable, and responsive.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

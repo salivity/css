@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS grid-auto-flow: dense Fills Grid Holes - css</title>
+    <meta name="description" content="CSS Grid provides a powerful auto-placement algorithm to position elements without requiring explicit coordinates for every item. When grid items have varying sizes or span multiple tracks, the default layout often creates awkward, empty spaces. The grid">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-grid-auto-flow-dense-fills-grid-holes">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS grid-auto-flow: dense Fills Grid Holes - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-grid-auto-flow-dense-fills-grid-holes" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS Grid provides a powerful auto-placement algorithm to position elements without requiring explicit coordinates for every item. When grid items have varying sizes or span multiple tracks, the default layout often creates awkward, empty spaces. The grid" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-grid-auto-flow-dense-fills-grid-holes">How CSS
+grid-auto-flow: dense Fills Grid Holes</h1>
+<p>CSS Grid provides a powerful auto-placement algorithm to position
+elements without requiring explicit coordinates for every item. When
+grid items have varying sizes or span multiple tracks, the default
+layout often creates awkward, empty spaces. The
+<code>grid-auto-flow: dense</code> property solves this issue by
+instructing the browser to backtrack through the grid and pack smaller
+elements into previously bypassed holes, producing a compact and
+gap-free layout.</p>
+<h2 id="the-problem-default-auto-placement">The Problem: Default
+Auto-Placement</h2>
+<p>By default, CSS Grid uses <code>grid-auto-flow: row</code> (or
+<code>grid-auto-flow: column</code>). Under this behavior, the browser
+processes items strictly in the order they appear in the Document Object
+Model (DOM).</p>
+<p>When the browser encounters an item that spans multiple columns or
+rows and cannot fit into the current available space, it leaves that
+space empty and moves the large item to the next available track.
+Crucially, the standard algorithm only moves in a forward direction; it
+will never look backward to fill the gap it just left, even if later
+items in the source order are small enough to fit. This results in
+unintended empty "holes" across the grid.</p>
+<h2 id="what-is-grid-auto-flow-dense">What is
+<code>grid-auto-flow: dense</code>?</h2>
+<p>The <code>dense</code> keyword modifies the placement algorithm by
+enabling a "dense" packing mode. Instead of strictly preserving DOM
+sequence along the grid tracks, <code>grid-auto-flow: dense</code>
+allows the browser to reorder items visually to optimize space
+utilization.</p>
+<p>You can declare it on a grid container using either of the following
+syntaxes:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.grid-container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">grid</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-template-columns</span><span class="ch">:</span> <span class="fu">repeat(</span><span class="dv">4</span><span class="op">,</span> <span class="dv">1</span><span class="dt">fr</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-auto-flow</span><span class="ch">:</span> <span class="dv">dense</span><span class="op">;</span> <span class="co">/* Defaults to row dense */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Or explicitly set the flow direction alongside dense */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.grid-container</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-auto-flow</span><span class="ch">:</span> <span class="dv">row</span> <span class="dv">dense</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* or */</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-auto-flow</span><span class="ch">:</span> <span class="dv">column</span> <span class="dv">dense</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-it-fills-empty-layout-holes">How It Fills Empty Layout
+Holes</h2>
+<p>When <code>dense</code> is enabled, the browser handles placement
+through a dynamic search process:</p>
+<ol type="1">
+<li><strong>Space Allocation:</strong> As the browser encounters large
+items (e.g., an element set to <code>grid-column: span 2</code>), it
+attempts to place them. If the current row does not have enough
+remaining space, the item shifts to the next row, creating a gap behind
+it.</li>
+<li><strong>Backtracking:</strong> When subsequent items are processed,
+the layout engine does not automatically append them after the most
+recently placed item. Instead, it scans the entire grid from the start
+to identify the first open slot where the current item can physically
+fit.</li>
+<li><strong>Slot Filling:</strong> If a subsequent item has a small
+footprint (such as a standard 1x1 cell item), and a preceding gap can
+accommodate its dimensions, the browser places the item into that
+earlier gap.</li>
+</ol>
+<p>This mechanism ensures that empty cells created by oversized items
+are populated by any later, smaller elements found down the line in the
+HTML markup.</p>
+<h2 id="practical-use-cases">Practical Use Cases</h2>
+<ul>
+<li><strong>Image Galleries:</strong> Dynamic photo grids with a mix of
+portrait, landscape, and panoramic images can achieve a balanced,
+masonry-style look without empty cells.</li>
+<li><strong>Dashboard Widgets:</strong> Modular dashboards containing
+cards of varying dimensions (1x1, 2x1, 2x2) can pack tightly without
+manual positioning.</li>
+<li><strong>Product Listings:</strong> Highlighting specific "featured"
+products with larger spans while keeping the overall grid compact.</li>
+</ul>
+<h2 id="accessibility-and-usability-considerations">Accessibility and
+Usability Considerations</h2>
+<p>While <code>grid-auto-flow: dense</code> creates visually seamless
+layouts, it alters the visual presentation relative to the DOM source
+order.</p>
+<p>Because keyboard navigation (such as the <code>Tab</code> key) and
+screen readers follow the DOM order rather than the visual layout,
+navigating a dense grid can cause the focus ring to jump erratically
+across the screen. For this reason, <code>grid-auto-flow: dense</code>
+should primarily be used for non-sequential content where reading order
+and tab order are not critical to the user experience.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

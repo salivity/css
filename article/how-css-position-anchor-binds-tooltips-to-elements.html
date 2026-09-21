@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS position-anchor Binds Tooltips to Elements - css</title>
+    <meta name="description" content="The CSS position-anchor property is a core feature of the CSS Anchor Positioning API that connects an absolutely positioned element, such as a tooltip, to a specific reference element on the page. By establishing this relationship directly in CSS, develo">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-position-anchor-binds-tooltips-to-elements">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS position-anchor Binds Tooltips to Elements - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-position-anchor-binds-tooltips-to-elements" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS position-anchor property is a core feature of the CSS Anchor Positioning API that connects an absolutely positioned element, such as a tooltip, to a specific reference element on the page. By establishing this relationship directly in CSS, develo" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-position-anchor-binds-tooltips-to-elements">How CSS
+position-anchor Binds Tooltips to Elements</h1>
+<p>The CSS <code>position-anchor</code> property is a core feature of
+the CSS Anchor Positioning API that connects an absolutely positioned
+element, such as a tooltip, to a specific reference element on the page.
+By establishing this relationship directly in CSS, developers can bind
+floating UI components to their triggers without relying on nested DOM
+structures or JavaScript positioning libraries. This article explains
+how <code>position-anchor</code> works, how it pairs with the
+<code>anchor-name</code> property, and how to use it to position a
+tooltip relative to its trigger.</p>
+<h3 id="the-mechanism-behind-anchor-positioning">The Mechanism Behind
+Anchor Positioning</h3>
+<p>Traditionally, positioning a tooltip relative to an arbitrary element
+required calculating coordinates using JavaScript or placing the tooltip
+inside the trigger element with <code>position: relative</code>. The CSS
+Anchor Positioning specification solves this natively through a two-step
+association: naming the trigger and referencing that name on the
+anchored element.</p>
+<h3 id="step-1-naming-the-trigger-element">Step 1: Naming the Trigger
+Element</h3>
+<p>To make an element available as an anchor point, you assign it an
+identifier using the <code>anchor-name</code> property. The identifier
+must be a dashed-ident (prefixed with <code>--</code>), similar to a CSS
+custom property.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.tooltip-trigger</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  anchor-name<span class="ch">:</span> <span class="dv">--trigger-button</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This declaration registers <code>--trigger-button</code> in the
+browser's positioning context as an available anchor point.</p>
+<h3 id="step-2-referencing-the-trigger-with-position-anchor">Step 2:
+Referencing the Trigger with <code>position-anchor</code></h3>
+<p>The <code>position-anchor</code> property is applied to the anchored
+element—the tooltip. Setting this property tells the tooltip which
+anchor element to use as its default reference point for
+coordinates.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.tooltip</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  position-anchor<span class="ch">:</span> <span class="dv">--trigger-button</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Once <code>position-anchor</code> is declared, the tooltip is
+logically bound to <code>--trigger-button</code>.</p>
+<h3 id="step-3-aligning-with-the-anchor-function">Step 3: Aligning with
+the <code>anchor()</code> Function</h3>
+<p>Declaring <code>position-anchor</code> sets the default target, but
+it does not place the tooltip in space on its own. To physically align
+the tooltip to the trigger's edges, you use the <code>anchor()</code>
+function in directional inset properties (<code>top</code>,
+<code>bottom</code>, <code>left</code>, <code>right</code>).</p>
+<p>When <code>position-anchor</code> is active, the
+<code>anchor()</code> function defaults to that specified anchor without
+requiring you to pass the anchor's name inside every function call:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.tooltip</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  position-anchor<span class="ch">:</span> <span class="dv">--trigger-button</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Positions the bottom of the tooltip to the top edge of the trigger */</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">bottom</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">top</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Centers the tooltip horizontally relative to the trigger */</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">left</span><span class="ch">:</span> anchor<span class="fu">(</span><span class="dv">center</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateX(</span><span class="dv">-50</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Without <code>position-anchor</code>, you would have to write
+<code>bottom: anchor(--trigger-button top)</code> for every property.
+The <code>position-anchor</code> property streamlines the code by
+defining the scope globally for that element.</p>
+<h3 id="benefits-of-the-native-binding">Benefits of the Native
+Binding</h3>
+<ul>
+<li><strong>DOM Independence:</strong> The trigger and the tooltip can
+live in completely different parts of the HTML document, which is ideal
+for avoiding <code>overflow: hidden</code> clipping and
+<code>z-index</code> stacking context traps.</li>
+<li><strong>Automatic Updates:</strong> Because the browser engine
+handles the binding natively, the tooltip maintains its position when
+the page scrolls, resizes, or dynamically shifts, eliminating the jitter
+often seen with script-based positioning.</li>
+<li><strong>Fallback Handling:</strong> Combined with
+<code>position-try-fallbacks</code>, bound elements can automatically
+shift their placement if they risk rendering outside the viewport.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

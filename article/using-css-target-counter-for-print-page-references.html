@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using CSS target-counter for Print Page References - css</title>
+    <meta name="description" content="The CSS target-counter() function is a specialized feature defined in the CSS Paged Media and Generated Content specifications designed to generate dynamic cross-references and page numbers in print documents. By referencing the destination of an interna">
+    <link rel="canonical" href="https://salivity.github.io/css/article/using-css-target-counter-for-print-page-references">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using CSS target-counter for Print Page References - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/using-css-target-counter-for-print-page-references" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS target-counter() function is a specialized feature defined in the CSS Paged Media and Generated Content specifications designed to generate dynamic cross-references and page numbers in print documents. By referencing the destination of an interna" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="using-css-target-counter-for-print-page-references">Using CSS
+target-counter for Print Page References</h1>
+<p>The CSS <code>target-counter()</code> function is a specialized
+feature defined in the CSS Paged Media and Generated Content
+specifications designed to generate dynamic cross-references and page
+numbers in print documents. By referencing the destination of an
+internal hyperlink, this function automatically retrieves the exact page
+number where the target element resides, making it indispensable for
+creating printed tables of contents, indexes, and inline
+cross-references without manual pagination.</p>
+<h3 id="how-target-counter-works">How target-counter() Works</h3>
+<p>In print-oriented CSS rendering engines (such as PrinceXML,
+WeasyPrint, or Vivliostyle), documents are divided into distinct pages.
+Because dynamic content changes where specific sections fall across
+pages, authors cannot hardcode page numbers.</p>
+<p>The <code>target-counter()</code> function solves this by looking up
+the current value of a counter at the location of an anchor link. It
+evaluates the target element's position after the document has been
+fully paginated and outputs that value as generated content via the
+<code>content</code> property.</p>
+<h3 id="syntax-and-parameters">Syntax and Parameters</h3>
+<p>The basic syntax for the function is:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>target-counter<span class="in">(</span> &lt;url<span class="op">&gt;</span> <span class="op">,</span> &lt;counter-name<span class="op">&gt;</span> <span class="ex">[</span><span class="op">,</span> &lt;counter-style<span class="op">&gt;</span>]? <span class="in">)</span></span></code></pre></div>
+<ul>
+<li><strong><code>&lt;url&gt;</code></strong>: The reference to the
+target element. In most cross-references, this is dynamically pulled
+from an anchor tag's <code>href</code> attribute using the
+<code>attr()</code> function (e.g., <code>attr(href, url)</code>).</li>
+<li><strong><code>&lt;counter-name&gt;</code></strong>: The specific CSS
+counter to retrieve. For page numbers, this is typically set to the
+built-in <code>page</code> counter.</li>
+<li><strong><code>&lt;counter-style&gt;</code></strong>
+<em>(optional)</em>: Defines the formatting of the counter, such as
+<code>decimal</code>, <code>lower-roman</code>,
+<code>upper-alpha</code>, etc. If omitted, it defaults to
+<code>decimal</code>.</li>
+</ul>
+<h3 id="practical-implementation">Practical Implementation</h3>
+<p>The most common use case is creating an automated Table of Contents
+(TOC) or inline cross-reference that displays the page number alongside
+the section title.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Inline cross-reference example */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>a<span class="fu">.cross-ref</span><span class="in">::after</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">content</span><span class="ch">:</span> <span class="st">&quot; (see page &quot;</span> target-counter<span class="fu">(attr(</span><span class="dv">href</span><span class="op">,</span> <span class="dv">url</span><span class="fu">)</span><span class="op">,</span> <span class="dv">page</span><span class="fu">)</span> <span class="st">&quot;)&quot;</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Table of contents leader and page number */</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.toc</span> a<span class="in">::after</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">content</span><span class="ch">:</span> leader<span class="fu">(</span><span class="st">&#39;.&#39;</span><span class="fu">)</span> <span class="st">&quot; &quot;</span> target-counter<span class="fu">(attr(</span><span class="dv">href</span><span class="op">,</span> <span class="dv">url</span><span class="fu">)</span><span class="op">,</span> <span class="dv">page</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In the HTML, standard fragment identifiers are used:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>For more details, refer to the installation guide <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#installation&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;cross-ref&quot;</span><span class="dt">&gt;</span>here<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Rendered in print as: --&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- For more details, refer to the installation guide here (see page 42). --&gt;</span></span></code></pre></div>
+<h3 id="browser-and-tool-support">Browser and Tool Support</h3>
+<p>Standard web browsers (such as Chrome, Firefox, and Safari) focus on
+continuous screen media and do not natively support
+<code>target-counter()</code> in standard print stylesheets.
+Consequently, the function is primarily utilized in specialized
+HTML-to-PDF converters, publishing pipelines, and polyfills like
+Paged.js, which implement the full W3C Paged Media Module
+specifications.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

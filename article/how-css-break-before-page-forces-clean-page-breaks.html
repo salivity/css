@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS break-before: page Forces Clean Page Breaks - css</title>
+    <meta name="description" content="The CSS property break-before: page provides developers with precise control over pagination when printing web documents or generating PDFs from HTML. This article explains how the property functions within CSS fragmentation contexts, why it replaces leg">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-break-before-page-forces-clean-page-breaks">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS break-before: page Forces Clean Page Breaks - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-break-before-page-forces-clean-page-breaks" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS property break-before: page provides developers with precise control over pagination when printing web documents or generating PDFs from HTML. This article explains how the property functions within CSS fragmentation contexts, why it replaces leg" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-break-before-page-forces-clean-page-breaks">How CSS
+break-before: page Forces Clean Page Breaks</h1>
+<p>The CSS property <code>break-before: page</code> provides developers
+with precise control over pagination when printing web documents or
+generating PDFs from HTML. This article explains how the property
+functions within CSS fragmentation contexts, why it replaces legacy
+printing rules, and how to implement it to ensure specific elements
+reliably begin on a fresh printed page.</p>
+<h3 id="understanding-the-mechanism">Understanding the Mechanism</h3>
+<p>When a browser prepares a document for print, it creates a paged
+media formatting context. In this context, content is split across
+multiple discrete containers called fragmentainers (the physical pages).
+By default, the rendering engine splits content automatically based on
+page dimensions and margins, which often causes awkward splits across
+text blocks or headers.</p>
+<p>Applying <code>break-before: page</code> explicitly alters the layout
+engine's fragmentation behavior. It instructs the browser to terminate
+the current page box immediately before rendering the target element. As
+a result, any remaining vertical space on the active page is left blank,
+and the element—along with all subsequent content—is placed at the top
+of the next page.</p>
+<h3 id="modern-standard-vs-legacy-syntax">Modern Standard vs. Legacy
+Syntax</h3>
+<p>In earlier CSS specifications, forcing a page break required the
+<code>page-break-before</code> property:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Legacy approach */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.section-break</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">page-break-before</span><span class="ch">:</span> <span class="dv">always</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The CSS Fragmentation Module Level 3 standardized fragmentation
+across different media types (pages, multi-column layouts, and regions)
+into unified properties: <code>break-before</code>,
+<code>break-after</code>, and <code>break-inside</code>.</p>
+<p>While <code>page-break-before: always</code> is still supported by
+browsers for backward compatibility, <code>break-before: page</code> is
+the modern standard. It specifically targets paged media without
+interfering with multi-column containers, which use values like
+<code>column</code> instead.</p>
+<h3 id="implementation-and-usage">Implementation and Usage</h3>
+<p>To prevent forced breaks from affecting standard screen displays,
+apply the property within a print style block:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="an">print</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.page-break</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">break-before</span><span class="ch">:</span> <span class="dv">page</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This pattern is commonly applied to:</p>
+<ul>
+<li><strong>Top-level headings:</strong> Ensuring major chapters or
+sections (<code>h1</code>, <code>h2</code>) always begin at the top of a
+new page.</li>
+<li><strong>Document boundaries:</strong> Separating distinct records,
+such as invoices, receipts, or medical charts, within a single generated
+HTML view.</li>
+<li><strong>Tables and charts:</strong> Pushing large data tables to a
+new page so they are not cut off after just a few rows.</li>
+</ul>
+<h3 id="key-considerations-for-clean-breaks">Key Considerations for
+Clean Breaks</h3>
+<ul>
+<li><strong>Container Context:</strong> For
+<code>break-before: page</code> to work reliably, the target element
+should be a block-level element in the normal document flow. Applying it
+to elements inside modern layout containers, such as CSS Grid or
+Flexbox, can produce inconsistent results depending on the browser's
+print engine implementation.</li>
+<li><strong>Adjacent Breaks:</strong> If multiple page break
+declarations occur in succession, or if an element with
+<code>break-before: page</code> naturally falls at the very top of a new
+page, standard-compliant rendering engines will collapse the breaks to
+prevent blank pages.</li>
+<li><strong>Left and Right Paging:</strong> In double-sided printing,
+<code>break-before</code> also accepts <code>left</code> or
+<code>right</code> values (or <code>recto</code> and
+<code>verso</code>), which force the content to the next specific facing
+page, inserting a blank page automatically if necessary.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS column-count and column-gap Explained - css</title>
+    <meta name="description" content="The CSS column-count and column-gap properties are fundamental parts of the CSS Multi-column Layout Module, designed to split text and block content into magazine- or newspaper-style vertical columns. This article explains how column-count determines the">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-column-count-and-column-gap-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS column-count and column-gap Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-column-count-and-column-gap-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS column-count and column-gap properties are fundamental parts of the CSS Multi-column Layout Module, designed to split text and block content into magazine- or newspaper-style vertical columns. This article explains how column-count determines the" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-column-count-and-column-gap-explained">CSS column-count and
+column-gap Explained</h1>
+<p>The CSS <code>column-count</code> and <code>column-gap</code>
+properties are fundamental parts of the CSS Multi-column Layout Module,
+designed to split text and block content into magazine- or
+newspaper-style vertical columns. This article explains how
+<code>column-count</code> determines the number of columns an element
+displays, how <code>column-gap</code> controls the spacing between those
+columns, and how to implement both properties in web design.</p>
+<h3 id="what-is-column-count">What Is column-count?</h3>
+<p>The <code>column-count</code> property specifies the maximum number
+of columns an element's content should be divided into. Rather than
+requiring developers to manually split text across multiple
+<code>div</code> elements, the browser automatically balances the
+content across the specified number of columns.</p>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">column-count</span><span class="ch">:</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Values for <code>column-count</code>:</p>
+<ul>
+<li><strong><code>&lt;integer&gt;</code></strong>: A positive whole
+number (such as <code>2</code>, <code>3</code>, or <code>4</code>)
+specifying the target number of columns.</li>
+<li><strong><code>auto</code></strong>: The default value, which
+indicates that the number of columns should be determined by other
+properties, such as <code>column-width</code>.</li>
+</ul>
+<p>When content exceeds the vertical height available, it flows
+seamlessly from the bottom of one column to the top of the next.</p>
+<h3 id="what-is-column-gap">What Is column-gap?</h3>
+<p>The <code>column-gap</code> property sets the width of the empty
+space—often called the gutter—between adjacent columns. Without this
+property, columns would run directly into one another or rely on default
+browser spacing, which can make text difficult to read.</p>
+<p>Syntax:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">column-gap</span><span class="ch">:</span> <span class="dv">30</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Values for <code>column-gap</code>:</p>
+<ul>
+<li><strong><code>normal</code></strong>: The default value, which
+delegates the spacing to the browser (typically equivalent to
+<code>1em</code>).</li>
+<li><strong><code>&lt;length&gt;</code></strong>: A specific unit of
+measurement, such as <code>px</code>, <code>em</code>, or
+<code>rem</code>.</li>
+<li><strong><code>&lt;percentage&gt;</code></strong>: A percentage value
+defining the gap relative to the total width of the multi-column
+element.</li>
+</ul>
+<p>If you add a vertical line between columns using the
+<code>column-rule</code> property, that line is drawn within the space
+defined by <code>column-gap</code>, without adding extra width to the
+layout.</p>
+<h3 id="practical-implementation">Practical Implementation</h3>
+<p>Combining <code>column-count</code> and <code>column-gap</code>
+creates an organized, readable block of content with minimal CSS:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.article-body</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">column-count</span><span class="ch">:</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">column-gap</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup, the content inside <code>.article-body</code> is split
+evenly across three vertical columns with a <code>2rem</code> space
+between each column. If the viewport narrows, developers typically use
+CSS media queries to lower the <code>column-count</code> to prevent
+columns from becoming too narrow on smaller screens.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

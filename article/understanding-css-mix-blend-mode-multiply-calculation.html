@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding CSS Mix Blend Mode Multiply Calculation - css</title>
+    <meta name="description" content="The CSS property mix-blend-mode: multiply allows elements to blend with their background using a mathematical multiplication of color channel values. This article explains the mathematical formula powering the multiply blend mode, details how color chann">
+    <link rel="canonical" href="https://salivity.github.io/css/article/understanding-css-mix-blend-mode-multiply-calculation">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding CSS Mix Blend Mode Multiply Calculation - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/understanding-css-mix-blend-mode-multiply-calculation" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS property mix-blend-mode: multiply allows elements to blend with their background using a mathematical multiplication of color channel values. This article explains the mathematical formula powering the multiply blend mode, details how color chann" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-css-mix-blend-mode-multiply-calculation">Understanding
+CSS Mix Blend Mode Multiply Calculation</h1>
+<p>The CSS property <code>mix-blend-mode: multiply</code> allows
+elements to blend with their background using a mathematical
+multiplication of color channel values. This article explains the
+mathematical formula powering the multiply blend mode, details how color
+channels are processed, and explains why this calculation renders white
+backgrounds completely invisible while darkening non-white colors
+beneath them.</p>
+<h2 id="the-mathematical-formula">The Mathematical Formula</h2>
+<p>The multiply blend mode calculates color values on a per-channel
+basis (separately for Red, Green, and Blue). Before the calculation
+takes place, standard 8-bit RGB values (which range from 0 to 255) are
+normalized to a scale between 0.0 and 1.0:</p>
+<p><span class="math display">\[\text{Normalized Value} =
+\frac{\text{Color Channel Value}}{255}\]</span></p>
+<p>Once normalized, the formula multiplies the top layer's color
+(source) by the bottom layer's color (backdrop):</p>
+<p><span class="math display">\[\text{Result} = \text{Source} \times
+\text{Backdrop}\]</span></p>
+<p>To convert this back into a standard 8-bit RGB color for display, the
+result is multiplied back by 255:</p>
+<p><span class="math display">\[\text{Final RGB Channel} =
+\frac{\text{Source Channel} \times \text{Backdrop
+Channel}}{255}\]</span></p>
+<h2 id="how-white-backgrounds-disappear">How White Backgrounds
+Disappear</h2>
+<p>The identity element of multiplication is 1. When you multiply any
+number by 1, the value remains unchanged (<span class="math inline">\(x
+\times 1 = x\)</span>).</p>
+<p>In digital color:</p>
+<ul>
+<li>Pure white has an RGB value of <code>rgb(255, 255, 255)</code>.</li>
+<li>Normalized to the 0.0 to 1.0 scale, white equals <span
+class="math inline">\(1.0\)</span> across all three channels (<span
+class="math inline">\(\frac{255}{255} = 1.0\)</span>).</li>
+</ul>
+<p>When an element with a white background is layered on top of another
+color using <code>mix-blend-mode: multiply</code>, the calculation
+evaluates as:</p>
+<p><span class="math display">\[\text{Result} = 1.0 \times
+\text{Backdrop} = \text{Backdrop}\]</span></p>
+<p>Because the backdrop color values are multiplied by 1, they remain
+100% unaltered. As a result, pure white pixels become completely
+transparent, effectively removing white backgrounds from images, logos,
+and graphic assets without modifying the image file itself.</p>
+<h2 id="why-the-calculation-always-darkens">Why the Calculation Always
+Darkens</h2>
+<p>Because all color channels are normalized to values between 0.0 and
+1.0, multiplying two non-white colors means multiplying two fractions
+smaller than 1.</p>
+<p>Multiplying two positive numbers less than 1 always produces a
+smaller number:</p>
+<p><span class="math display">\[0.5 \times 0.5 = 0.25\]</span></p>
+<p>In RGB color spaces, lower numbers correspond to darker shades:</p>
+<ul>
+<li><strong>0.0 (<code>rgb(0, 0, 0)</code>)</strong> is pure black.</li>
+<li><strong>1.0 (<code>rgb(255, 255, 255)</code>)</strong> is pure
+white.</li>
+</ul>
+<p>If you multiply a mid-tone gray (<code>rgb(128, 128, 128)</code> or
+<span class="math inline">\(\approx 0.5\)</span>) with another mid-tone
+gray, the result is:</p>
+<p><span class="math display">\[\frac{128 \times 128}{255} \approx 64
+\text{ (a significantly darker gray)}\]</span></p>
+<p>If any channel in either layer is pure black (<code>0</code>), the
+multiplication results in zero (<span class="math inline">\(0 \times x =
+0\)</span>), yielding pure black regardless of the other layer's color.
+Therefore, <code>mix-blend-mode: multiply</code> can only ever preserve
+the original brightness (when multiplying by white) or darken the image;
+it can never produce a color lighter than either of the two source
+inputs.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

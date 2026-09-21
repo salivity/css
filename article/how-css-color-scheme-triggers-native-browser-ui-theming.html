@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS color-scheme Triggers Native Browser UI Theming - css</title>
+    <meta name="description" content="The CSS color-scheme property communicates to the browser that an element or entire document can comfortably render in both light and dark modes. Declaring color-scheme: light dark; explicitly instructs the rendering engine to align built-in browser inte">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-color-scheme-triggers-native-browser-ui-theming">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS color-scheme Triggers Native Browser UI Theming - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-color-scheme-triggers-native-browser-ui-theming" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS color-scheme property communicates to the browser that an element or entire document can comfortably render in both light and dark modes. Declaring color-scheme: light dark; explicitly instructs the rendering engine to align built-in browser inte" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-color-scheme-triggers-native-browser-ui-theming">How CSS
+color-scheme Triggers Native Browser UI Theming</h1>
+<p>The CSS <code>color-scheme</code> property communicates to the
+browser that an element or entire document can comfortably render in
+both light and dark modes. Declaring
+<code>color-scheme: light dark;</code> explicitly instructs the
+rendering engine to align built-in browser interface elements—such as
+form controls, default canvas backgrounds, and scrollbars—with the
+user's active operating system preference without requiring custom CSS
+rules.</p>
+<h3 id="the-role-of-the-user-agent-stylesheet">The Role of the
+User-Agent Stylesheet</h3>
+<p>Web browsers rely on an internal set of default styles called the
+User-Agent (UA) stylesheet. Historically, UA stylesheets were hardcoded
+exclusively for light mode, using bright backgrounds, light gray form
+inputs, and dark text. Even if a user enabled a dark theme in their
+operating system, browsers avoided modifying these default components
+automatically out of concern that dark controls might clash with
+unadapted, hardcoded website designs.</p>
+<p>When you add <code>color-scheme: light dark;</code> to the root of
+your stylesheet, you send an explicit opt-in signal to the browser
+engine (such as Blink, Gecko, or WebKit). This signal authorizes the
+engine to swap its traditional light UA stylesheet for a native dark UA
+stylesheet whenever the user's operating system or browser environment
+requests a dark presentation.</p>
+<h3 id="native-ui-components-affected">Native UI Components
+Affected</h3>
+<p>Applying <code>color-scheme: light dark</code> triggers immediate
+stylistic updates to several browser-rendered surfaces:</p>
+<ul>
+<li><strong>Form Controls:</strong> Form elements—including text fields,
+textareas, checkboxes, radio buttons, buttons, and
+<code>&lt;select&gt;</code> dropdowns—adopt native dark backgrounds,
+lighter borders, and high-contrast text.</li>
+<li><strong>System Pickers:</strong> Interactive popups like native
+date, time, and color pickers switch from stark white dialogs to dark
+surfaces matching the host OS design language.</li>
+<li><strong>Scrollbars:</strong> Browser window and overflow scrollbars
+automatically switch their tracks and thumbs from standard light gray to
+dark gray or black.</li>
+<li><strong>Canvas Background and Text:</strong> The default initial
+canvas background changes from white to black, and the default text
+color changes from black to white (corresponding to the system colors
+<code>Canvas</code> and <code>CanvasText</code>).</li>
+<li><strong>Spelling and Selection Indicators:</strong> Spellcheck
+squiggly lines and system highlight selections adjust their saturation
+and luminance to remain legible against dark backgrounds.</li>
+</ul>
+<h3 id="distinction-from-prefers-color-scheme">Distinction from
+<code>prefers-color-scheme</code></h3>
+<p>While the <code>@media (prefers-color-scheme: dark)</code> media
+query allows developers to manually apply custom CSS rules based on
+system preferences, it does not alter the native internal rendering of
+non-styled browser components.</p>
+<p>Conversely, the <code>color-scheme</code> property controls the
+browser's own rendering engine. While developers often combine both
+techniques, declaring <code>color-scheme: light dark;</code> ensures
+that unstyled HTML elements and OS-level widgets seamlessly adapt
+without writing dozens of custom pseudo-element selectors or manually
+restyling form controls.</p>
+<h3 id="implementation-and-scoping">Implementation and Scoping</h3>
+<p>The declaration is typically applied globally at the root level:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">light</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The property is also inheritable and can be scoped to specific
+containers. For example, assigning <code>color-scheme: dark;</code> to a
+specific sidebar forces all native controls and scrollbars inside that
+container to render in dark mode, regardless of the system-wide
+preference.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

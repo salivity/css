@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Striped Patterns Using Hard Color Stops - css</title>
+    <meta name="description" content="CSS gradients create seamless striped patterns by eliminating the default color interpolation between color stops, resulting in crisp, solid bands of color. By placing two distinct color stops at the exact same position—or by using modern shorthand whe">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-striped-patterns-using-hard-color-stops">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Striped Patterns Using Hard Color Stops - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-striped-patterns-using-hard-color-stops" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS gradients create seamless striped patterns by eliminating the default color interpolation between color stops, resulting in crisp, solid bands of color. By placing two distinct color stops at the exact same position—or by using modern shorthand whe" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-striped-patterns-using-hard-color-stops">CSS Striped
+Patterns Using Hard Color Stops</h1>
+<p>CSS gradients create seamless striped patterns by eliminating the
+default color interpolation between color stops, resulting in crisp,
+solid bands of color. By placing two distinct color stops at the exact
+same position—or by using modern shorthand where an ending stop is
+smaller than the preceding one—the browser generates an instantaneous
+transition rather than a smooth fade. When combined with repeated
+gradient dimensions or dedicated repeating functions, these hard
+transitions tile across an element infinitely without visible seams.</p>
+<h3 id="the-mechanics-of-hard-color-stops">The Mechanics of Hard Color
+Stops</h3>
+<p>By default, CSS linear gradients calculate a smooth color transition
+across the distance between two points. For example, a gradient running
+from <code>red 0%</code> to <code>blue 100%</code> blends smoothly
+across the entire container.</p>
+<p>To eliminate this transition and produce a solid stripe, you must
+position adjacent color stops at the exact same location:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>background<span class="in">:</span> linear-gradient<span class="in">(</span>90deg<span class="op">,</span> <span class="pp">#3498db</span> 0% 50%<span class="op">,</span> <span class="pp">#2ecc71</span> 50% 100%<span class="in">)</span>;</span></code></pre></div>
+<p>Because <code>#3498db</code> ends at <code>50%</code> and
+<code>#2ecc71</code> begins immediately at <code>50%</code>, the
+transition distance is zero pixels. The browser renders a sharp boundary
+known as a hard stop.</p>
+<p>Modern CSS allows a shorthand technique known as the zero-stop
+fix:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>background<span class="in">:</span> linear-gradient<span class="in">(</span>90deg<span class="op">,</span> <span class="pp">#3498db</span> 20px<span class="op">,</span> <span class="pp">#2ecc71</span> 0 40px<span class="in">)</span>;</span></code></pre></div>
+<p>According to the CSS specification, if a color stop is set to a value
+smaller than the one before it (such as <code>0</code> after
+<code>20px</code>), the browser automatically increases its value to
+match the previous stop, forcing a hard edge without repeating numeric
+values.</p>
+<h3 id="achieving-seamless-repetition">Achieving Seamless
+Repetition</h3>
+<p>There are two primary methods to make these hard-stop stripes repeat
+seamlessly across any element size.</p>
+<h4 id="method-1-using-background-size">Method 1: Using
+<code>background-size</code></h4>
+<p>You can define a single self-contained pattern cycle using a standard
+<code>linear-gradient</code>, constrain its dimensions with
+<code>background-size</code>, and allow <code>background-repeat</code>
+to tile it across the element.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.striped-box</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-image</span><span class="ch">:</span> <span class="fu">linear-gradient(</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">90</span><span class="dt">deg</span><span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cn">#ff6b6b</span> <span class="dv">0</span><span class="dt">%</span> <span class="dv">50</span><span class="dt">%</span><span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cn">#feca57</span> <span class="dv">50</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-size</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">px</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-repeat</span><span class="ch">:</span> <span class="dv">repeat-x</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This method is predictable because the pattern cycle matches the tile
+size. The seam remains invisible because the pattern completes its full
+alternating cycle inside the 40-pixel boundary before restarting.</p>
+<h4 id="method-2-using-repeating-linear-gradient">Method 2: Using
+<code>repeating-linear-gradient()</code></h4>
+<p>The <code>repeating-linear-gradient()</code> function automatically
+repeats color stops indefinitely without needing explicit
+<code>background-size</code> definitions. The repetition interval is
+dictated by the position of the final color stop.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.striped-box</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="fu">repeating-linear-gradient(</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">90</span><span class="dt">deg</span><span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cn">#48dbfb</span> <span class="dv">0</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cn">#1dd1a1</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">40</span><span class="dt">px</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The browser measures the pattern length from <code>0px</code> to
+<code>40px</code> and automatically loops this entire sequence. Because
+the end of the second stripe (<code>40px</code>) touches the start of
+the next cycle's first stripe (<code>0px</code>), the boundary between
+tiles remains mathematically seamless.</p>
+<h3 id="seamless-diagonal-stripes">Seamless Diagonal Stripes</h3>
+<p>Creating diagonal stripes introduces geometry that can lead to
+misalignments if calculated manually with <code>background-size</code>.
+Using <code>repeating-linear-gradient()</code> resolves this issue
+because the browser projects the color stops along an angled gradient
+ray perpendicular to the stripes:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.diagonal-stripes</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="fu">repeating-linear-gradient(</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">45</span><span class="dt">deg</span><span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cn">#2c3e50</span> <span class="dv">0</span><span class="dt">px</span> <span class="dv">15</span><span class="dt">px</span><span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cn">#ecf0f1</span> <span class="dv">15</span><span class="dt">px</span> <span class="dv">30</span><span class="dt">px</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By defining the color stops directly along the 45-degree ray, the
+stripes maintain consistent thickness and infinite repetition without
+relying on rectangular tile calculations that might cause seam
+artifacts.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

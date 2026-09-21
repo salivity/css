@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS transform-style preserve-3d Work? - css</title>
+    <meta name="description" content="The transform-style: preserve-3d CSS property establishes a shared three-dimensional rendering context, allowing nested elements to retain their individual 3D positions rather than flattening into a single 2D plane. By default, browsers collapse transfor">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-transform-style-preserve-3-d-work">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS transform-style preserve-3d Work? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-transform-style-preserve-3-d-work" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The transform-style: preserve-3d CSS property establishes a shared three-dimensional rendering context, allowing nested elements to retain their individual 3D positions rather than flattening into a single 2D plane. By default, browsers collapse transfor" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-transform-style-preserve-3d-work">How Does CSS
+transform-style preserve-3d Work?</h1>
+<p>The <code>transform-style: preserve-3d</code> CSS property
+establishes a shared three-dimensional rendering context, allowing
+nested elements to retain their individual 3D positions rather than
+flattening into a single 2D plane. By default, browsers collapse
+transformed child elements into the plane of their parent using
+<code>transform-style: flat</code>. Applying <code>preserve-3d</code>
+overrides this behavior, enabling complex spatial hierarchies such as 3D
+cubes, rotating cards, and layered parallax scenes where elements can
+intersect and interact across the X, Y, and Z axes.</p>
+<h2 id="the-default-2d-flattening-context">The Default 2D Flattening
+Context</h2>
+<p>In standard CSS rendering, the browser treats the DOM as a series of
+2D stacking layers. When you apply 3D transformations like
+<code>rotateY()</code> or <code>translateZ()</code> to child elements,
+the browser computes their 3D orientation, flattens the result into the
+2D surface of the immediate parent container, and then applies the
+parent's own transforms.</p>
+<p>This flattening destroys genuine depth. If a parent is rotated, all
+nested children are rotated as a single, flat texture. The default value
+responsible for this behavior is <code>transform-style: flat</code>.</p>
+<h2 id="creating-a-true-3d-coordinate-space">Creating a True 3D
+Coordinate Space</h2>
+<p>When you declare <code>transform-style: preserve-3d</code> on a
+parent container, the browser creates a persistent 3D coordinate system
+for all of its direct children.</p>
+<p>Instead of flattening each layer sequentially:</p>
+<ul>
+<li><strong>Shared Depth:</strong> Direct children position themselves
+along the Z-axis relative to the parent’s origin, allowing elements
+behind other elements to be naturally obscured according to 3D depth
+rather than standard <code>z-index</code>.</li>
+<li><strong>Spatial Intersection:</strong> Elements can physically pass
+through one another in virtual space when rotated or translated along
+intersecting planes.</li>
+<li><strong>Cumulative Transforms:</strong> Transformations applied to
+the parent cascade naturally through the 3D space, moving children while
+preserving their relative spatial offsets.</li>
+</ul>
+<h2 id="key-prerequisites-for-3d-rendering">Key Prerequisites for 3D
+Rendering</h2>
+<p>For <code>transform-style: preserve-3d</code> to function correctly,
+it must work in tandem with specific properties across the DOM tree:</p>
+<h3 id="1-defining-perspective">1. Defining Perspective</h3>
+<p>The <code>preserve-3d</code> property does not generate depth
+perspective by itself; it only preserves spatial relationships. A
+higher-level ancestor must define the viewing distance using the
+<code>perspective</code> property (e.g.,
+<code>perspective: 1000px</code>). Without perspective, 3D
+transformations render using isometric projection, which lacks realistic
+vanishing points.</p>
+<h3 id="2-multi-level-propagation">2. Multi-Level Propagation</h3>
+<p>The <code>transform-style</code> property is not automatically
+inherited by grandchildren. If you build a deeply nested structure (such
+as a 3D scene containing objects made of multiple 3D faces), every
+intermediate container between the root perspective element and the
+final transformed child must have
+<code>transform-style: preserve-3d</code> explicitly declared.</p>
+<h2 id="common-property-conflicts">Common Property Conflicts</h2>
+<p>Certain CSS properties force the browser to establish a new 2D
+clipping or grouping context, which immediately breaks
+<code>preserve-3d</code> and flattens the 3D hierarchy:</p>
+<ul>
+<li><code>overflow: hidden</code>, <code>overflow: scroll</code>, or
+<code>overflow: auto</code></li>
+<li><code>filter</code> properties (such as <code>blur()</code> or
+<code>drop-shadow()</code>)</li>
+<li><code>clip-path</code> or <code>mask</code></li>
+<li><code>mix-blend-mode</code> values other than
+<code>normal</code></li>
+<li><code>opacity</code> values less than 1 (in some rendering
+engines)</li>
+</ul>
+<p>When creating complex 3D interfaces, avoid placing these properties
+directly on containers designated as <code>preserve-3d</code>
+elements.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

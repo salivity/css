@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Fallback Fonts and the font-family Stack - css</title>
+    <meta name="description" content="The CSS font-family property allows developers to define a prioritized list of fonts—known as a font stack—to ensure text renders reliably across different devices, operating systems, and network conditions. When a user's browser renders text, it tra">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-fallback-fonts-and-the-font-family-stack">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Fallback Fonts and the font-family Stack - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-fallback-fonts-and-the-font-family-stack" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS font-family property allows developers to define a prioritized list of fonts—known as a font stack—to ensure text renders reliably across different devices, operating systems, and network conditions. When a user's browser renders text, it tra" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-fallback-fonts-and-the-font-family-stack">CSS Fallback Fonts
+and the font-family Stack</h1>
+<p>The CSS <code>font-family</code> property allows developers to define
+a prioritized list of fonts—known as a font stack—to ensure text renders
+reliably across different devices, operating systems, and network
+conditions. When a user's browser renders text, it traverses this
+comma-separated list from left to right, selecting the first available
+font installed on the system or loaded via web resources. If a preferred
+font fails to load, is unavailable, or lacks specific characters, the
+browser falls back to the next font in the stack, ultimately relying on
+a generic family as a final safety net.</p>
+<h2 id="how-the-font-stack-operates">How the Font Stack Operates</h2>
+<p>The <code>font-family</code> property accepts multiple font names
+arranged in order of preference:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;Helvetica Neue&quot;</span><span class="op">,</span> <span class="dv">Arial</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When parsing this declaration, the browser follows a sequential
+evaluation process:</p>
+<ol type="1">
+<li><strong>Target Evaluation:</strong> The browser checks if
+<code>"Helvetica Neue"</code> is available, either locally on the user's
+operating system or via a loaded <code>@font-face</code> rule.</li>
+<li><strong>First Fallback:</strong> If <code>"Helvetica Neue"</code> is
+missing or unreachable, the browser advances to <code>Arial</code>.</li>
+<li><strong>Generic Fallback:</strong> If neither is available, the
+browser defaults to the system's predefined <code>sans-serif</code>
+font.</li>
+</ol>
+<h2 id="glyph-by-glyph-fallback">Glyph-by-Glyph Fallback</h2>
+<p>A common misconception is that the browser chooses a single font from
+the stack for an entire block of text. In reality, CSS font matching
+occurs on a per-character (glyph-by-glyph) basis.</p>
+<p>If a primary font loads successfully but lacks a specific
+character—such as an emoji, a mathematical symbol, or a glyph from a
+non-Latin script—the browser temporarily falls back to the subsequent
+fonts in the stack to find one that contains that specific glyph. Only
+the missing glyph is rendered using the fallback font; the rest of the
+text remains in the primary font.</p>
+<h2 id="the-role-of-generic-font-families">The Role of Generic Font
+Families</h2>
+<p>Every robust font stack should terminate with a generic font family
+name. Generic family names are keywords that map directly to the
+operating system's or browser's default internal fonts. They do not
+require quotation marks.</p>
+<p>Common generic families include:</p>
+<ul>
+<li><strong><code>sans-serif</code>:</strong> Clean, stroke-free fonts
+(e.g., Arial, Roboto).</li>
+<li><strong><code>serif</code>:</strong> Traditional fonts with
+decorative strokes (e.g., Times New Roman, Georgia).</li>
+<li><strong><code>monospace</code>:</strong> Fixed-width fonts used
+primarily for code (e.g., Courier New, Consolas).</li>
+<li><strong><code>system-ui</code>:</strong> The native interface font
+of the user's operating system.</li>
+<li><strong><code>cursive</code></strong> and
+<strong><code>fantasy</code>:</strong> Stylized or decorative
+scripts.</li>
+</ul>
+<p>Omitting a generic family forces the browser to use its default
+display font (often a standard serif), which may disrupt the intended
+design aesthetic if the primary fonts fail.</p>
+<h2 id="syntax-rules-for-the-stack">Syntax Rules for the Stack</h2>
+<p>To ensure browsers parse font stacks correctly, specific syntax
+conventions must be observed:</p>
+<ul>
+<li><strong>Quotes for Multi-Word Names:</strong> Font names containing
+spaces, numbers, or punctuation (excluding hyphens) must be enclosed in
+single or double quotes (e.g., <code>"Open Sans"</code>,
+<code>"Times New Roman"</code>).</li>
+<li><strong>Unquoted Single-Word Names:</strong> Single-word font
+identifiers do not strictly require quotes (e.g., <code>Arial</code>,
+<code>Georgia</code>).</li>
+<li><strong>Unquoted Generic Families:</strong> Generic families such as
+<code>serif</code> or <code>sans-serif</code> must never be quoted, as
+quotation marks treat the keyword as a specific font name rather than a
+browser instruction.</li>
+</ul>
+<h2 id="minimizing-cumulative-layout-shift-cls">Minimizing Cumulative
+Layout Shift (CLS)</h2>
+<p>Because fallback fonts often have different dimensions, x-heights,
+and letter spacings than the custom web fonts they temporarily replace,
+font swapping can cause noticeable layout shifts (Cumulative Layout
+Shift).</p>
+<p>Modern CSS addresses this through font metric override properties
+within <code>@font-face</code> declarations:</p>
+<ul>
+<li><code>size-adjust</code></li>
+<li><code>ascent-override</code></li>
+<li><code>descent-override</code></li>
+<li><code>line-gap-override</code></li>
+</ul>
+<p>By applying these descriptors to local fallback fonts, developers can
+match the physical footprint of the fallback font to that of the custom
+web font, ensuring a smooth transition once the primary font loads.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

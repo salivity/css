@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using CSS font-palette to Customize Color Fonts - css</title>
+    <meta name="description" content="The CSS font-palette property allows developers to select and alter the color schemes embedded within multi-colored vector fonts, such as OpenType-SVG and COLR/CPAL fonts, without editing font files directly. By pairing font-palette with the @font-palett">
+    <link rel="canonical" href="https://salivity.github.io/css/article/using-css-font-palette-to-customize-color-fonts">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using CSS font-palette to Customize Color Fonts - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/using-css-font-palette-to-customize-color-fonts" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS font-palette property allows developers to select and alter the color schemes embedded within multi-colored vector fonts, such as OpenType-SVG and COLR/CPAL fonts, without editing font files directly. By pairing font-palette with the @font-palett" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="using-css-font-palette-to-customize-color-fonts">Using CSS
+font-palette to Customize Color Fonts</h1>
+<p>The CSS <code>font-palette</code> property allows developers to
+select and alter the color schemes embedded within multi-colored vector
+fonts, such as OpenType-SVG and COLR/CPAL fonts, without editing font
+files directly. By pairing <code>font-palette</code> with the
+<code>@font-palette-values</code> at-rule, you can choose from
+predefined palette sets, create custom color combinations, and override
+specific color indices. This capability brings responsive color theming,
+dark mode adaptability, and brand alignment to rich, multi-layered web
+typography purely through CSS.</p>
+<h2 id="the-architecture-of-multi-colored-vector-fonts">The Architecture
+of Multi-Colored Vector Fonts</h2>
+<p>Traditional digital fonts contain monochromatic vector paths colored
+entirely by the CSS <code>color</code> property. In contrast,
+multi-colored vector fonts contain multiple layers of geometry, each
+assigned a specific color.</p>
+<p>These designs rely on font tables such as the Color Palette Table
+(CPAL) paired with vector glyph definitions (like the SVG table in
+OpenType-SVG or the COLR table). The CPAL table acts as an indexed color
+swatches palette:</p>
+<ul>
+<li>Layer 1 maps to Color Index 0.</li>
+<li>Layer 2 maps to Color Index 1.</li>
+<li>Layer 3 maps to Color Index 2.</li>
+</ul>
+<p>A font designer can embed several alternative palettes within the
+same font file—for instance, one tuned for light backgrounds and another
+for dark backgrounds.</p>
+<h2 id="selecting-predefined-palettes-with-font-palette">Selecting
+Predefined Palettes with <code>font-palette</code></h2>
+<p>When a color font contains multiple built-in color configurations,
+the <code>font-palette</code> property can activate them directly.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.badge-light</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;MyColorFont&quot;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-palette</span><span class="ch">:</span> <span class="dv">light</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.badge-dark</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;MyColorFont&quot;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-palette</span><span class="ch">:</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The property accepts standard system keywords:</p>
+<ul>
+<li><code>normal</code>: The default appearance defined by the font
+designer.</li>
+<li><code>light</code>: The palette tagged by the font creator as
+optimized for light backgrounds.</li>
+<li><code>dark</code>: The palette tagged by the font creator as
+optimized for dark backgrounds.</li>
+</ul>
+<h2
+id="creating-custom-color-palettes-with-font-palette-values">Creating
+Custom Color Palettes with <code>@font-palette-values</code></h2>
+<p>When built-in palettes do not match a project's design system,
+developers can define custom palettes using the
+<code>@font-palette-values</code> at-rule. This rule binds to a specific
+<code>font-family</code> and exposes descriptors to remap the embedded
+colors.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@font-palette-values</span> --BrandTheme {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;MyColorFont&quot;</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">base-palette</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">override-colors</span><span class="ch">:</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="cn">#ff0055</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="cn">#00cc88</span><span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span> <span class="cn">#1a1a2e</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="key-descriptors-inside-font-palette-values">Key Descriptors
+inside <code>@font-palette-values</code></h3>
+<ol type="1">
+<li><strong><code>font-family</code></strong>: Explicitly links the
+custom palette rule to a declared font family name.</li>
+<li><strong><code>base-palette</code></strong>: Specifies the starting
+point for customization. It can accept a palette index number (e.g.,
+<code>0</code>, <code>1</code>) or keywords like <code>light</code> or
+<code>dark</code>. Any colors not explicitly overridden will inherit
+from this base.</li>
+<li><strong><code>override-colors</code></strong>: Maps a specific
+layer's index to a new CSS color definition. The syntax follows a
+comma-separated list of <code>[index] [color]</code> pairs. Modern CSS
+color formats, including <code>hsl()</code>, <code>oklch()</code>, and
+standard hex codes, are fully supported.</li>
+</ol>
+<h2 id="applying-the-custom-palette">Applying the Custom Palette</h2>
+<p>Once declared, custom palettes are assigned to an element by passing
+the custom dashed-ident identifier to the <code>font-palette</code>
+property.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.custom-heading</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;MyColorFont&quot;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-palette</span><span class="ch">:</span> <span class="dv">--BrandTheme</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="responsive-and-dynamic-color-changes">Responsive and Dynamic
+Color Changes</h2>
+<p>Because <code>font-palette</code> integrates directly into the CSS
+cascade, it responds seamlessly to user preferences, dynamic themes, and
+interactions without reloading font assets.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">@font-palette-values</span> --DynamicPalette {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;MyColorFont&quot;</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">base-palette</span><span class="ch">:</span> <span class="dv">light</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">prefers-color-scheme</span><span class="ch">:</span> <span class="dv">dark</span><span class="fu">)</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="im">@font-palette-values</span> --DynamicPalette {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;MyColorFont&quot;</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">base-palette</span><span class="ch">:</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override-colors</span><span class="ch">:</span> <span class="dv">0</span> <span class="cn">#ffd700</span><span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">.icon-text</span> {</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&quot;MyColorFont&quot;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-palette</span><span class="ch">:</span> <span class="dv">--DynamicPalette</span><span class="op">;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Using this setup, the browser swaps out the color layers instantly
+when switching between themes, providing complete stylistic control over
+vector color glyphs using standard CSS syntax.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

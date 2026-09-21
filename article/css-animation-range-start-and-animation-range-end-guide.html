@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS animation-range-start and animation-range-end Guide - css</title>
+    <meta name="description" content="This article provides a concise overview of how the CSS animation-range-start and animation-range-end properties define the precise boundaries of scroll-driven animations. You will learn the mechanics behind these properties, the syntax and values they a">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-animation-range-start-and-animation-range-end-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS animation-range-start and animation-range-end Guide - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-animation-range-start-and-animation-range-end-guide" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a concise overview of how the CSS animation-range-start and animation-range-end properties define the precise boundaries of scroll-driven animations. You will learn the mechanics behind these properties, the syntax and values they a" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-animation-range-start-and-animation-range-end-guide">CSS
+animation-range-start and animation-range-end Guide</h1>
+<p>This article provides a concise overview of how the CSS
+<code>animation-range-start</code> and <code>animation-range-end</code>
+properties define the precise boundaries of scroll-driven animations.
+You will learn the mechanics behind these properties, the syntax and
+values they accept—including percentages, lengths, and named
+view-timeline ranges—and how they determine exactly when an animation
+starts and finishes along a scroll timeline.</p>
+<h2 id="understanding-scroll-timeline-boundaries">Understanding Scroll
+Timeline Boundaries</h2>
+<p>In modern CSS scroll-driven animations, an animation's progress is
+mapped to scroll progress rather than elapsed wall-clock time. By
+default, an animation runs from the very beginning of the scroll
+container to the very end.</p>
+<p>The <code>animation-range-start</code> and
+<code>animation-range-end</code> properties allow developers to override
+this default behavior. They define the specific scroll positions where
+the animation timeline begins (0% progress) and completes (100%
+progress), effectively segmenting the scroll area into active and
+inactive zones.</p>
+<h2 id="syntax-and-accepted-values">Syntax and Accepted Values</h2>
+<p>Both properties accept values that determine an offset along the
+scroll or view timeline. These values fall into three primary
+categories:</p>
+<h3 id="1-percentages-and-lengths">1. Percentages and Lengths</h3>
+<p>When using standard scroll timelines (such as <code>scroll()</code>),
+positions are typically declared using percentages or length values:</p>
+<ul>
+<li><strong>Percentages:</strong> Relative to the total scrollable
+overflow. <code>animation-range-start: 20%</code> begins the animation
+when the user has scrolled 20% down the container.</li>
+<li><strong>Lengths:</strong> Fixed distances such as <code>px</code>,
+<code>vh</code>, or <code>rem</code>.
+<code>animation-range-end: 500px</code> ends the animation when the
+scroll offset reaches 500 pixels.</li>
+</ul>
+<h3 id="2-named-timeline-ranges">2. Named Timeline Ranges</h3>
+<p>When using a view timeline (<code>view()</code>), the progress
+depends on the visibility of a subject element inside the scrollport.
+CSS provides predefined range names to target specific phases of element
+visibility:</p>
+<ul>
+<li><strong><code>cover</code>:</strong> Spans from the moment the
+subject first enters the scrollport until it fully exits.</li>
+<li><strong><code>contain</code>:</strong> Spans from the moment the
+subject is fully visible inside the scrollport until any part of it
+starts to leave.</li>
+<li><strong><code>entry</code>:</strong> Spans from the moment the
+subject enters the scrollport until it is fully inside.</li>
+<li><strong><code>exit</code>:</strong> Spans from the moment the
+subject begins to leave the scrollport until it has completely
+left.</li>
+<li><strong><code>entry-crossing</code>:</strong> Spans from the moment
+the subject begins entering the scrollport until it crosses the opposite
+edge.</li>
+<li><strong><code>exit-crossing</code>:</strong> Spans from the moment
+the subject begins exiting until it fully crosses the starting
+edge.</li>
+</ul>
+<h3 id="3-named-ranges-with-percentage-offsets">3. Named Ranges with
+Percentage Offsets</h3>
+<p>Named ranges can be combined with a percentage to fine-tune the
+boundaries:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  animation-range-start<span class="ch">:</span> <span class="dv">entry 0</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  animation-range-end<span class="ch">:</span> <span class="dv">entry 100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this example, the animation starts the instant the card enters the
+view and finishes as soon as it is fully visible, remaining static for
+the remainder of the scroll.</p>
+<h2 id="default-values">Default Values</h2>
+<p>The default value for both properties is <code>normal</code>.</p>
+<ul>
+<li>On a standard <code>scroll()</code> timeline, <code>normal</code>
+resolves to <code>0%</code> for <code>animation-range-start</code> and
+<code>100%</code> for <code>animation-range-end</code>.</li>
+<li>On a <code>view()</code> timeline, <code>normal</code> resolves to
+<code>cover 0%</code> for the start and <code>cover 100%</code> for the
+end.</li>
+</ul>
+<h2 id="the-animation-range-shorthand">The <code>animation-range</code>
+Shorthand</h2>
+<p>You can combine both properties into the <code>animation-range</code>
+shorthand property:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Syntax: animation-range: &lt;start&gt; &lt;end&gt;; */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.element</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  animation-range<span class="ch">:</span> <span class="dv">entry 20</span><span class="dt">%</span> <span class="dv">exit 80</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If only one value is provided to the shorthand:</p>
+<ul>
+<li>If the value is a named range without a percentage (e.g.,
+<code>animation-range: entry</code>), it expands to cover the entire
+named range: <code>entry 0% entry 100%</code>.</li>
+<li>If the value is a length or percentage (e.g.,
+<code>animation-range: 20%</code>), it sets the start boundary to that
+value while the end boundary defaults to <code>normal</code>.</li>
+</ul>
+<h2 id="example-implementation">Example Implementation</h2>
+<p>The following example demonstrates a fade-in effect that begins as
+soon as the target element begins entering the screen and completes once
+it has entered by 50%:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> fadeIn {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">from</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateY(</span><span class="dv">40</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">to</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateY(</span><span class="dv">0</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">.animated-box</span> {</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  view-timeline-name<span class="ch">:</span> <span class="dv">--boxTimeline</span><span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  view-timeline-axis<span class="ch">:</span> <span class="dv">block</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-name</span><span class="ch">:</span> <span class="dv">fadeIn</span><span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  animation-timeline<span class="ch">:</span> <span class="dv">--boxTimeline</span><span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation-fill-mode</span><span class="ch">:</span> <span class="dv">both</span><span class="op">;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Configure the boundaries */</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  animation-range-start<span class="ch">:</span> <span class="dv">entry 0</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  animation-range-end<span class="ch">:</span> <span class="dv">entry 50</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By constraining the boundaries with
+<code>animation-range-start</code> and <code>animation-range-end</code>,
+the animation reaches its final state early in the scroll cycle and
+remains fixed in place as the user continues scrolling.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

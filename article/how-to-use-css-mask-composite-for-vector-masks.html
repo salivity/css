@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS mask-composite for Vector Masks - css</title>
+    <meta name="description" content="The CSS mask-composite property enables developers to construct complex clipping paths by combining multiple mask layers using Boolean operations like union, subtraction, intersection, and exclusion. Instead of relying on graphics software to merge shape">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-mask-composite-for-vector-masks">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS mask-composite for Vector Masks - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-mask-composite-for-vector-masks" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS mask-composite property enables developers to construct complex clipping paths by combining multiple mask layers using Boolean operations like union, subtraction, intersection, and exclusion. Instead of relying on graphics software to merge shape" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-mask-composite-for-vector-masks">How to Use CSS
+mask-composite for Vector Masks</h1>
+<p>The CSS <code>mask-composite</code> property enables developers to
+construct complex clipping paths by combining multiple mask layers using
+Boolean operations like union, subtraction, intersection, and exclusion.
+Instead of relying on graphics software to merge shapes, you can define
+separate vector masks or gradients in CSS and determine how their
+overlapping regions render on the screen. This article explains how
+<code>mask-composite</code> works, breaks down its core keywords,
+highlights the differences between standard and legacy WebKit
+implementations, and provides practical code examples.</p>
+<h3 id="how-multiple-mask-layers-work">How Multiple Mask Layers
+Work</h3>
+<p>In CSS, the <code>mask-image</code> property accepts multiple
+comma-separated values. When you define multiple masks, they stack on
+top of each other. The first mask listed resides at the top of the
+stack, and subsequent masks sit beneath it.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.element</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">mask-image</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;circle.svg&#39;</span><span class="fu">)</span><span class="op">,</span> <span class="fu">url(</span><span class="st">&#39;square.svg&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Without specifying <code>mask-composite</code>, browsers default to
+layering the masks over one another, showing the union of both shapes.
+The <code>mask-composite</code> property alters this behavior by
+applying compositing operations sequentially from the bottom to the top
+of the mask stack.</p>
+<h3 id="standard-boolean-operations">Standard Boolean Operations</h3>
+<p>The W3C specification defines four primary values for
+<code>mask-composite</code>. Each value represents a standard Boolean
+logic operation:</p>
+<ul>
+<li><strong><code>add</code> (Union):</strong> The default behavior. The
+source mask is placed over the destination mask. Any pixel covered by
+either mask will be visible.</li>
+<li><strong><code>subtract</code> (Difference):</strong> The source mask
+is removed from the destination mask. Only areas covered by the first
+mask that do not overlap with the second mask remain visible.</li>
+<li><strong><code>intersect</code> (Intersection):</strong> Only the
+overlapping regions between the masks are retained. Any area not covered
+by both masks is clipped out.</li>
+<li><strong><code>exclude</code> (XOR / Symmetric Difference):</strong>
+The overlapping area between the masks is cleared, leaving only the
+non-overlapping areas of each mask visible.</li>
+</ul>
+<p>When chaining more than two masks, you supply a comma-separated list
+to <code>mask-composite</code>. Each keyword dictates how that specific
+layer composites with the result of the layers beneath it.</p>
+<h3 id="standard-vs-webkit-syntax">Standard vs. WebKit Syntax</h3>
+<p>Browser implementations differ between the standard W3C specification
+and the older WebKit engine implementation.</p>
+<p>Standard browsers (such as Firefox) recognize the W3C keywords
+(<code>add</code>, <code>subtract</code>, <code>intersect</code>,
+<code>exclude</code>). Chromium-based browsers and Safari historically
+relied on <code>-webkit-mask-composite</code>, which uses Porter-Duff
+compositing operators instead of geometric Boolean keywords:</p>
+<ul>
+<li><code>add</code> corresponds to
+<code>-webkit-mask-composite: source-over;</code></li>
+<li><code>subtract</code> corresponds to
+<code>-webkit-mask-composite: destination-out;</code> (or
+<code>source-out</code> depending on layer order)</li>
+<li><code>intersect</code> corresponds to
+<code>-webkit-mask-composite: source-in;</code></li>
+<li><code>exclude</code> corresponds to
+<code>-webkit-mask-composite: xor;</code></li>
+</ul>
+<p>To ensure cross-browser compatibility, define both declarations
+together.</p>
+<h3 id="practical-implementation">Practical Implementation</h3>
+<p>The following example cuts a circle out of a rounded rectangle to
+create a custom cutout banner:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.cutout-card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#3498db</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Vector and gradient masks */</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">mask-image</span><span class="ch">:</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">radial-gradient(</span><span class="dv">circle</span> <span class="dv">at 20</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">,</span> <span class="dv">transparent</span> <span class="dv">20</span><span class="dt">px</span><span class="op">,</span> <span class="cn">black</span> <span class="dv">21</span><span class="dt">px</span><span class="fu">)</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">linear-gradient(</span><span class="cn">black</span><span class="op">,</span> <span class="cn">black</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* WebKit compatibility */</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">-webkit-mask-image</span><span class="ch">:</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">radial-gradient(</span><span class="dv">circle</span> <span class="dv">at 20</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span><span class="op">,</span> <span class="dv">transparent</span> <span class="dv">20</span><span class="dt">px</span><span class="op">,</span> <span class="cn">black</span> <span class="dv">21</span><span class="dt">px</span><span class="fu">)</span><span class="op">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">linear-gradient(</span><span class="cn">black</span><span class="op">,</span> <span class="cn">black</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">-webkit-mask-composite</span><span class="ch">:</span> <span class="dv">source-in</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Standard Boolean masking */</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">mask-composite</span><span class="ch">:</span> <span class="dv">intersect</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this implementation, the <code>intersect</code> operation ensures
+that only regions common to both the radial mask and the rectangular
+linear gradient are visible, creating a dynamic punch-hole effect
+without altering the underlying HTML structure.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

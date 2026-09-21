@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS ruby-position for Ruby Text - css</title>
+    <meta name="description" content="The CSS ruby-position property controls the placement of phonetic annotations, known as ruby text, relative to their base characters in East Asian typography. In languages such as Japanese and Chinese, ruby annotations provide pronunciation guides—such">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-ruby-position-for-ruby-text">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS ruby-position for Ruby Text - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-ruby-position-for-ruby-text" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS ruby-position property controls the placement of phonetic annotations, known as ruby text, relative to their base characters in East Asian typography. In languages such as Japanese and Chinese, ruby annotations provide pronunciation guides—such" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-ruby-position-for-ruby-text">How to Use CSS
+ruby-position for Ruby Text</h1>
+<p>The CSS <code>ruby-position</code> property controls the placement of
+phonetic annotations, known as ruby text, relative to their base
+characters in East Asian typography. In languages such as Japanese and
+Chinese, ruby annotations provide pronunciation guides—such as furigana,
+pinyin, or bopomofo—or contextual meanings alongside the primary text.
+This guide explains the functional values of <code>ruby-position</code>,
+how it interacts with different writing modes, and how to implement it
+to achieve correct typographical layout.</p>
+<h2 id="what-is-ruby-text">What is Ruby Text?</h2>
+<p>In East Asian web typography, ruby annotations are marked up using
+HTML elements: <code>&lt;ruby&gt;</code> wraps the entire construct,
+<code>&lt;rt&gt;</code> marks the ruby text (the annotation), and
+optional elements like <code>&lt;rp&gt;</code> provide fallbacks for
+unsupported browsers. By default, browsers place ruby annotations
+adjacent to the base characters according to standard typographical
+conventions, but the <code>ruby-position</code> property allows
+developers to alter this placement.</p>
+<h2 id="core-syntax-and-values">Core Syntax and Values</h2>
+<p>The <code>ruby-position</code> property is applied directly to the
+<code>&lt;ruby&gt;</code> container or its nested
+<code>&lt;rt&gt;</code> elements. It accepts several keyword values:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ruby {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ruby-position</span><span class="ch">:</span> <span class="dv">over</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="1-over">1. <code>over</code></h3>
+<p>This is the default value for standard horizontal text. It positions
+the ruby text above the base text in horizontal writing modes. When text
+is laid out vertically (such as Japanese vertical-right-to-left layout),
+<code>over</code> places the ruby text to the right of the base text,
+which corresponds to the typographical block-start side.</p>
+<h3 id="2-under">2. <code>under</code></h3>
+<p>The <code>under</code> value positions the annotation below the base
+text in horizontal writing modes. In vertical layouts, it places the
+ruby text to the left of the base text (the block-end side).</p>
+<p>This placement is common in:</p>
+<ul>
+<li><strong>Educational Chinese texts:</strong> Where Pinyin annotations
+are positioned beneath Chinese characters to avoid colliding with other
+marks.</li>
+<li><strong>Secondary Japanese annotations:</strong> Where complex
+literature uses simultaneous annotations, placing furigana (readings)
+above the text and definitions or translations below.</li>
+</ul>
+<h3 id="3-alternate">3. <code>alternate</code></h3>
+<p>Defined in the CSS Ruby Annotation Layout module,
+<code>alternate</code> is designed for elements with multiple levels of
+annotations. When applied, it alternates the position of consecutive
+<code>&lt;rt&gt;</code> elements, rendering one above
+(<code>over</code>) and the next below (<code>under</code>).</p>
+<h3 id="4-inter-character">4. <code>inter-character</code></h3>
+<p>The <code>inter-character</code> value is specifically designed for
+Taiwanese Bopomofo (Zhuyin). When text is rendered vertically, Bopomofo
+tone marks and phonetic symbols must be laid out vertically alongside
+and between the base characters rather than strictly stacked as a
+standard block annotation. If used in horizontal text, standard user
+agents fall back to <code>over</code>.</p>
+<h2 id="interaction-with-writing-modes">Interaction with Writing
+Modes</h2>
+<p>The physical rendering of <code>ruby-position</code> depends directly
+on the CSS <code>writing-mode</code> property:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Horizontal Writing
+(<code>horizontal-tb</code>)</th>
+<th style="text-align: left;">Vertical Writing
+(<code>vertical-rl</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>over</code></td>
+<td style="text-align: left;">Top of the text</td>
+<td style="text-align: left;">Right side of the text</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>under</code></td>
+<td style="text-align: left;">Bottom of the text</td>
+<td style="text-align: left;">Left side of the text</td>
+</tr>
+</tbody>
+</table>
+<p>Because East Asian literature frequently transitions between
+horizontal and vertical layouts, using standard directional keywords
+ensures that annotations follow logical block axes without requiring
+layout-specific overrides.</p>
+<h2 id="example-implementation">Example Implementation</h2>
+<p>The following example demonstrates how to set ruby annotations below
+the base characters for a Chinese Pinyin guide:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Learning Chinese: </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">ruby</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;pinyin-guide&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    漢 <span class="dt">&lt;</span><span class="kw">rt</span><span class="dt">&gt;</span>hàn<span class="dt">&lt;/</span><span class="kw">rt</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    語 <span class="dt">&lt;</span><span class="kw">rt</span><span class="dt">&gt;</span>yǔ<span class="dt">&lt;/</span><span class="kw">rt</span><span class="dt">&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">ruby</span><span class="dt">&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.pinyin-guide</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ruby-position</span><span class="ch">:</span> <span class="dv">under</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.pinyin-guide</span> rt {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">0.5</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#555</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup, the phonetic readings <code>hàn</code> and
+<code>yǔ</code> appear directly underneath their respective characters
+rather than above them, improving readability for specific instructional
+designs.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

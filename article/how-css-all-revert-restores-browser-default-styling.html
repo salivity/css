@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS all: revert Restores Browser Default Styling - css</title>
+    <meta name="description" content="The CSS declaration all: revert provides a straightforward way to strip custom author styles and restore an element to the default styling defined by the browser. This article explains the underlying cascade mechanics of the revert keyword, how it works">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-all-revert-restores-browser-default-styling">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS all: revert Restores Browser Default Styling - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-all-revert-restores-browser-default-styling" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS declaration all: revert provides a straightforward way to strip custom author styles and restore an element to the default styling defined by the browser. This article explains the underlying cascade mechanics of the revert keyword, how it works" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-all-revert-restores-browser-default-styling">How CSS
+all: revert Restores Browser Default Styling</h1>
+<p>The CSS declaration <code>all: revert</code> provides a
+straightforward way to strip custom author styles and restore an element
+to the default styling defined by the browser. This article explains the
+underlying cascade mechanics of the <code>revert</code> keyword, how it
+works in tandem with the <code>all</code> shorthand property, how it
+fundamentally differs from keywords like <code>initial</code> and
+<code>unset</code>, and how you can implement it to reset specific UI
+components cleanly.</p>
+<h2 id="the-css-cascade-and-origins">The CSS Cascade and Origins</h2>
+<p>To understand <code>revert</code>, you must understand cascade
+origins. CSS rules are evaluated based on three primary origins, ordered
+by precedence:</p>
+<ol type="1">
+<li><strong>Author Origin:</strong> The styles written by website
+developers in custom stylesheets, <code>&lt;style&gt;</code> tags, or
+inline <code>style</code> attributes.</li>
+<li><strong>User Origin:</strong> Custom styles configured by the user
+via browser settings, extensions, or accessibility overrides.</li>
+<li><strong>User-Agent Origin:</strong> The native default styles
+provided by the browser itself (such as making <code>&lt;h1&gt;</code>
+large and bold, or rendering <code>&lt;button&gt;</code> elements with
+native system bevels and padding).</li>
+</ol>
+<p>When you declare <code>revert</code> on a property within your author
+stylesheet, it tells the browser to discard all author-level
+declarations for that property and "roll back" to the next available
+origin—first checking the user origin, and then falling back to the
+browser's user-agent stylesheet.</p>
+<h2 id="how-all-revert-operates">How <code>all: revert</code>
+Operates</h2>
+<p>The <code>all</code> property acts as a universal shorthand
+representing almost every CSS property simultaneously, excluding
+<code>unicode-bidi</code> and <code>direction</code>.</p>
+<p>Combining <code>all</code> with <code>revert</code> creates a blanket
+reset:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.reset-element</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">all</span><span class="ch">:</span> <span class="bu">revert</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When this rule executes, the browser strips every author-defined
+style applied to <code>.reset-element</code>. Rather than resetting to
+an abstract default, the element takes on the styling of the browser's
+default user-agent stylesheet for that specific HTML tag. For instance,
+an <code>&lt;ul&gt;</code> element will regain its default bullet
+markers, left padding, and vertical margins, while a
+<code>&lt;button&gt;</code> will regain its default system borders,
+backgrounds, and click interactions.</p>
+<h2 id="differences-between-revert-initial-and-unset">Differences
+Between <code>revert</code>, <code>initial</code>, and
+<code>unset</code></h2>
+<p>Developers often confuse <code>revert</code> with
+<code>initial</code> and <code>unset</code>, but their behavior
+regarding browser defaults is radically different:</p>
+<ul>
+<li><strong><code>initial</code>:</strong> Resets a property to the
+official CSS specification default. For example, the specification
+default for <code>display</code> is <code>inline</code>. Setting
+<code>all: initial</code> on a <code>&lt;div&gt;</code> breaks its
+layout because it changes the <code>display</code> from
+<code>block</code> to <code>inline</code> and removes all browser-level
+formatting.</li>
+<li><strong><code>unset</code>:</strong> Acts dynamically. If a property
+naturally inherits (like <code>color</code> or
+<code>font-family</code>), <code>unset</code> acts as
+<code>inherit</code>. If a property does not inherit (like
+<code>margin</code> or <code>padding</code>), it acts as
+<code>initial</code>. Like <code>initial</code>, it does not restore
+browser defaults.</li>
+<li><strong><code>revert</code>:</strong> Respects the cascade
+hierarchy. It specifically looks for the user-agent styles. An
+<code>&lt;h1&gt;</code> given <code>all: revert</code> retains
+<code>display: block</code> and its tag-specific font sizing because
+those are specified in the browser's default stylesheet.</li>
+</ul>
+<h2 id="inheritance-handling">Inheritance Handling</h2>
+<p>For inherited properties, <code>revert</code> checks whether a parent
+element passes down a computed value. If an author-level style on a
+parent container sets <code>font-family: sans-serif;</code>, applying
+<code>all: revert</code> to a child element will cause inherited
+properties to continue inheriting from that parent. The property will
+only revert directly to the user-agent default if no parent style exists
+or if the property is non-inherited.</p>
+<h2 id="practical-use-case-resetting-form-controls">Practical Use Case:
+Resetting Form Controls</h2>
+<p>A common use case for <code>all: revert</code> is restoring native
+behavior to form controls inside heavily customized frameworks:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Container has heavy global styling overrides */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-container</span> input<span class="op">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-container</span> button {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* Restore this specific button to the operating system&#39;s native look */</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-container</span> button<span class="fu">.native-button</span> {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">all</span><span class="ch">:</span> <span class="bu">revert</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Applying <code>all: revert</code> neutralizes utility classes or
+aggressive CSS resets, allowing native UI components to render exactly
+as the browser and operating system originally intended.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

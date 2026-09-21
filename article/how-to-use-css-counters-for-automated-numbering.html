@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS Counters for Automated Numbering - css</title>
+    <meta name="description" content="CSS counters provide a native way to generate and control automated numbering directly within style sheets, eliminating the need to hardcode numbers in HTML or rely on JavaScript. By utilizing the counter-reset, counter-increment, and content properties">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-counters-for-automated-numbering">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS Counters for Automated Numbering - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-counters-for-automated-numbering" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS counters provide a native way to generate and control automated numbering directly within style sheets, eliminating the need to hardcode numbers in HTML or rely on JavaScript. By utilizing the counter-reset, counter-increment, and content properties" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-counters-for-automated-numbering">How to Use CSS
+Counters for Automated Numbering</h1>
+<p>CSS counters provide a native way to generate and control automated
+numbering directly within style sheets, eliminating the need to hardcode
+numbers in HTML or rely on JavaScript. By utilizing the
+<code>counter-reset</code>, <code>counter-increment</code>, and
+<code>content</code> properties alongside pseudo-elements, developers
+can build dynamic numbering systems for headings, ordered lists,
+pagination, and multi-level outlines. This article explains how these
+properties interact to track numerical values and render them seamlessly
+on a webpage.</p>
+<h3 id="the-mechanics-of-css-counters">The Mechanics of CSS
+Counters</h3>
+<p>CSS counters act as CSS-managed variables whose values can be
+initialized, tracked, and incremented based on document rules. The
+entire system relies on three core components:</p>
+<ol type="1">
+<li><strong><code>counter-reset</code></strong>: Creates or resets a
+counter variable on a specified element, typically a parent
+container.</li>
+<li><strong><code>counter-increment</code></strong>: Adjusts the value
+of the counter (by default, adding 1) whenever a specified selector
+matches.</li>
+<li><strong><code>counter()</code> or <code>counters()</code>
+function</strong>: Reads the value and prints it onto the page,
+typically inside the <code>content</code> property of a
+<code>::before</code> or <code>::after</code> pseudo-element.</li>
+</ol>
+<h3 id="1-initializing-with-counter-reset">1. Initializing with
+<code>counter-reset</code></h3>
+<p>The <code>counter-reset</code> property establishes a named counter
+and defines its starting value. It is usually declared on a parent
+element that encompasses all items that need to be counted.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">counter-reset</span><span class="ch">:</span> <span class="dv">section-counter 0</span><span class="op">;</span> <span class="co">/* Creates &#39;section-counter&#39; starting at 0 */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If no number is specified after the name, the value defaults to
+<code>0</code>. You can also initialize a counter to negative values or
+numbers other than zero.</p>
+<h3 id="2-updating-with-counter-increment">2. Updating with
+<code>counter-increment</code></h3>
+<p>The <code>counter-increment</code> property increases or decreases
+the counter value. This property is placed on the elements you want to
+count.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.section-item</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">counter-increment</span><span class="ch">:</span> <span class="dv">section-counter 1</span><span class="op">;</span> <span class="co">/* Increases &#39;section-counter&#39; by 1 */</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By default, omitting the step value increases the counter by
+<code>1</code>. You can also specify negative values (e.g.,
+<code>counter-increment: section-counter -1;</code>) to create
+countdowns, or steps greater than one to skip values.</p>
+<h3 id="3-displaying-the-counter-with-content">3. Displaying the Counter
+with <code>content</code></h3>
+<p>Because counters are purely stylistic mechanisms, they are rendered
+visually using generated content rather than changing the DOM. This is
+achieved using the <code>::before</code> or <code>::after</code>
+pseudo-elements.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.section-item</span><span class="in">::before</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">content</span><span class="ch">:</span> <span class="st">&quot;Section &quot;</span> <span class="fu">counter(</span><span class="dv">section-counter</span><span class="fu">)</span> <span class="st">&quot;: &quot;</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The <code>counter()</code> function accepts two arguments: the name
+of the counter and an optional list style (such as <code>decimal</code>,
+<code>upper-roman</code>, or <code>lower-alpha</code>). If omitted, it
+defaults to standard decimal numbers.</p>
+<h3 id="complete-example-numbering-headings">Complete Example: Numbering
+Headings</h3>
+<p>Below is a practical implementation that numbers
+<code>&lt;h2&gt;</code> headings inside an article:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>article {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">counter-reset</span><span class="ch">:</span> <span class="dv">heading-count</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>article h2 {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">counter-increment</span><span class="ch">:</span> <span class="dv">heading-count</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>article h2<span class="in">::before</span> {</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">content</span><span class="ch">:</span> <span class="fu">counter(</span><span class="dv">heading-count</span><span class="fu">)</span> <span class="st">&quot;. &quot;</span><span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#0066cc</span><span class="op">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="handling-nested-numbering-with-counters">Handling Nested
+Numbering with <code>counters()</code></h3>
+<p>For outlines, legal documents, or nested lists requiring multi-level
+numbering (e.g., "1.1", "1.2"), CSS provides the <code>counters()</code>
+function.</p>
+<p>When applied to nested structures, declaring
+<code>counter-reset</code> on the parent resets the scope for each
+sub-level. The <code>counters()</code> function takes the counter name
+and a string delimiter used to separate the nested levels:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ol {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">counter-reset</span><span class="ch">:</span> <span class="dv">list-counter</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">list-style-type</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>li {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">counter-increment</span><span class="ch">:</span> <span class="dv">list-counter</span><span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>li<span class="in">::before</span> {</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">content</span><span class="ch">:</span> <span class="fu">counters(</span><span class="dv">list-counter</span><span class="op">,</span> <span class="st">&quot;.&quot;</span><span class="fu">)</span> <span class="st">&quot; &quot;</span><span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup, a sub-item inside the second top-level item
+automatically displays as <code>2.1</code>, then <code>2.2</code>,
+maintaining accurate structural depth dynamically.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

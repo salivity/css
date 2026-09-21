@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS calc-size: Math on Intrinsic Sizing Keywords - css</title>
+    <meta name="description" content="The CSS calc-size() function is a layout utility designed to resolve the long-standing limitation of performing arithmetic operations on intrinsic sizing keywords such as auto, min-content, max-content, and fit-content. By accepting an intrinsic sizing k">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-calc-size-math-on-intrinsic-sizing-keywords">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS calc-size: Math on Intrinsic Sizing Keywords - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-calc-size-math-on-intrinsic-sizing-keywords" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS calc-size() function is a layout utility designed to resolve the long-standing limitation of performing arithmetic operations on intrinsic sizing keywords such as auto, min-content, max-content, and fit-content. By accepting an intrinsic sizing k" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-calc-size-math-on-intrinsic-sizing-keywords">CSS calc-size:
+Math on Intrinsic Sizing Keywords</h1>
+<p>The CSS <code>calc-size()</code> function is a layout utility
+designed to resolve the long-standing limitation of performing
+arithmetic operations on intrinsic sizing keywords such as
+<code>auto</code>, <code>min-content</code>, <code>max-content</code>,
+and <code>fit-content</code>. By accepting an intrinsic sizing keyword
+as a baseline and calculating modifications against its resolved layout
+dimension, <code>calc-size()</code> enables developers to dynamically
+scale content-driven sizes and smoothly animate elements between fixed
+lengths and intrinsic values.</p>
+<h3 id="why-standard-calc-cannot-handle-intrinsic-keywords">Why Standard
+<code>calc()</code> Cannot Handle Intrinsic Keywords</h3>
+<p>Traditional CSS calculations using <code>calc()</code> require values
+that resolve to definite <code>&lt;length-percentage&gt;</code> units.
+Intrinsic keywords like <code>auto</code>, <code>min-content</code>, and
+<code>max-content</code> are not length values; they are instructions
+evaluated during browser layout phases based on an element’s contents
+and its parent container. Because <code>calc()</code> expects compatible
+units at compile-time (such as pixels, rems, or percentages), an
+expression like <code>calc(auto + 20px)</code> is syntactically invalid
+and ignored by the browser parser.</p>
+<h3 id="syntax-and-mechanics-of-calc-size">Syntax and Mechanics of
+<code>calc-size()</code></h3>
+<p>The <code>calc-size()</code> function overcomes this boundary by
+splitting the operation into two distinct arguments:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>calc-size<span class="in">(</span>&lt;calc-size-basis<span class="op">&gt;,</span> &lt;calc-sum<span class="op">&gt;</span><span class="in">)</span></span></code></pre></div>
+<ol type="1">
+<li><strong><code>&lt;calc-size-basis&gt;</code></strong>: Defines the
+baseline size. This parameter accepts intrinsic sizing keywords
+(<code>auto</code>, <code>min-content</code>, <code>max-content</code>,
+<code>fit-content</code>, <code>content</code>), standard length
+measurements, or the keyword <code>any</code>.</li>
+<li><strong><code>&lt;calc-sum&gt;</code></strong>: Defines the
+mathematical operation to perform. Within this calculation, the keyword
+<code>size</code> represents the resolved layout dimension of the basis
+provided in the first argument.</li>
+</ol>
+<p>For example, to set an element's width to 30 pixels wider than its
+intrinsic text width, the implementation is:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>width<span class="in">:</span> calc-size<span class="in">(</span>max-content<span class="op">,</span> size <span class="op">+</span> 30px<span class="in">)</span>;</span></code></pre></div>
+<p>During the layout cycle, the browser first computes the pixel value
+of <code>max-content</code>. Once that measurement is determined, it
+assigns it to the <code>size</code> reference in the second argument,
+executes the addition, and applies the final dimension to the
+element.</p>
+<h3 id="interpolation-and-animating-to-auto">Interpolation and Animating
+to <code>auto</code></h3>
+<p>A primary motivation behind <code>calc-size()</code> is enabling CSS
+transitions and animations to and from intrinsic dimensions—a task
+previously impossible with pure CSS.</p>
+<p>Historically, animating an accordion panel from
+<code>height: 0</code> to <code>height: auto</code> fails because
+<code>auto</code> does not have a quantifiable numeric state to
+interpolate across intermediate frames. Because <code>calc-size()</code>
+converts an intrinsic keyword into a quantifiable value via its
+<code>size</code> keyword, browsers can interpolate between lengths and
+dynamic content heights.</p>
+<p>An accordion transition can be declared as:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.panel</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">height 0.3</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.panel.open</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> calc-size<span class="fu">(</span><span class="bu">auto</span><span class="op">,</span> <span class="dv">size</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The browser evaluates the target height of <code>auto</code>,
+resolves the corresponding <code>size</code>, and interpolates values
+linearly between <code>0px</code> and the calculated content height.</p>
+<h3 id="nested-calculations-and-safety-checks">Nested Calculations and
+Safety Checks</h3>
+<p>The <code>calc-size()</code> function safely handles nested
+arithmetic operations, percentages, and constraints. If the basis
+evaluation yields an invalid layout state or an unsupported keyword in a
+specific property context, the expression falls back gracefully without
+breaking standard layout rules. Additionally, setting the basis to
+<code>any</code> allows using <code>size</code> directly as an arbitrary
+length value within the calculation, ensuring flexibility when bridging
+dynamic components and design systems.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

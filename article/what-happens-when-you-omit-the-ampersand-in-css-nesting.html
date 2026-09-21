@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Happens When You Omit the Ampersand in CSS Nesting - css</title>
+    <meta name="description" content="In native CSS nesting, omitting the ampersand (&) causes the browser to treat the nested rule as an implicit descendant selector by automatically prepending an ampersand followed by a space (& ). While this makes nesting straightforward for child element">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-happens-when-you-omit-the-ampersand-in-css-nesting">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Happens When You Omit the Ampersand in CSS Nesting - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-happens-when-you-omit-the-ampersand-in-css-nesting" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In native CSS nesting, omitting the ampersand (&) causes the browser to treat the nested rule as an implicit descendant selector by automatically prepending an ampersand followed by a space (& ). While this makes nesting straightforward for child element" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-happens-when-you-omit-the-ampersand-in-css-nesting">What
+Happens When You Omit the Ampersand in CSS Nesting</h1>
+<p>In native CSS nesting, omitting the ampersand (<code>&amp;</code>)
+causes the browser to treat the nested rule as an implicit descendant
+selector by automatically prepending an ampersand followed by a space
+(<code>&amp; </code>). While this makes nesting straightforward for
+child elements and descendant classes, it completely changes how
+pseudo-classes, pseudo-elements, and compound selectors evaluate.
+Understanding this automatic behavior is essential for avoiding subtle
+layout and styling bugs when writing modern, preprocessor-free CSS.</p>
+<h2 id="the-default-behavior-implicit-descendant-combinator">The Default
+Behavior: Implicit Descendant Combinator</h2>
+<p>When you omit the <code>&amp;</code> selector inside a nested block,
+modern CSS interprets the nested selector as if you had written
+<code>&amp; [selector]</code> with a whitespace descendant
+combinator.</p>
+<p>Consider the following CSS:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.title</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Because the <code>&amp;</code> is omitted before <code>.title</code>,
+the browser evaluates it as:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> <span class="fu">.title</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This applies to element selectors as well, thanks to the CSS Nesting
+specification updates (often referred to as relaxed nesting):</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  p {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">line-height</span><span class="ch">:</span> <span class="dv">1.5</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This compiles conceptually to <code>.card p</code>, matching any
+<code>&lt;p&gt;</code> tag that is a descendant of
+<code>.card</code>.</p>
+<h2 id="the-pseudo-class-pitfall">The Pseudo-Class Pitfall</h2>
+<p>The most common issue when omitting the ampersand occurs with
+pseudo-classes such as <code>:hover</code>, <code>:focus</code>, or
+<code>:nth-child</code>.</p>
+<p>Developers often write:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.button</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="in">:hover</span> {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">darkblue</span><span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Because the <code>&amp;</code> was omitted, the browser treats
+<code>:hover</code> as a descendant selector:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.button</span> <span class="in">:hover</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">darkblue</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Instead of styling the <code>.button</code> when it is hovered, this
+rule styles <em>any descendant element inside the button</em> (such as
+an icon or <code>&lt;span&gt;</code>) when that child is hovered.</p>
+<p>To apply the state to the parent element itself, you must explicitly
+include the <code>&amp;</code> without a space:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.button</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&amp;</span><span class="in">:hover</span> {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">darkblue</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="compound-selectors-require-the-ampersand">Compound Selectors
+Require the Ampersand</h2>
+<p>Omitting the <code>&amp;</code> prevents you from creating compound
+selectors that target the same element with multiple classes or
+attributes.</p>
+<p>If you write:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.alert</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.warning</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-color</span><span class="ch">:</span> <span class="cn">orange</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The browser evaluates this as <code>.alert .warning</code> (a
+<code>.warning</code> element nested inside an <code>.alert</code>
+element).</p>
+<p>If the goal is to style an element that carries both classes
+simultaneously (<code>&lt;div class="alert warning"&gt;</code>),
+omitting the ampersand fails. You must explicitly attach the class
+directly to the ampersand:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.alert</span> {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&amp;</span><span class="fu">.warning</span> {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-color</span><span class="ch">:</span> <span class="cn">orange</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="modifying-ancestors-has-and-reverse-contexts">Modifying
+Ancestors (<code>:has</code> and Reverse Contexts)</h2>
+<p>Omitting the <code>&amp;</code> always nests downward into
+descendants. You cannot apply styles conditionally based on an ancestor
+or modify an outer context without explicitly placing the
+<code>&amp;</code>:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.item</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Fails: Interpreted as `.item html[dir=&quot;rtl&quot;]` */</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  html<span class="ex">[</span><span class="ss">dir</span><span class="op">=</span><span class="st">&quot;rtl&quot;</span><span class="ex">]</span> {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-right</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Works: Interpreted as `html[dir=&quot;rtl&quot;] .item` */</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  html<span class="ex">[</span><span class="ss">dir</span><span class="op">=</span><span class="st">&quot;rtl&quot;</span><span class="ex">]</span> <span class="op">&amp;</span> {</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-right</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="quick-reference-summary">Quick Reference Summary</h2>
+<ul>
+<li><strong>Without <code>&amp;</code>
+(<code>.parent { .child {} }</code>):</strong> Evaluates to
+<code>.parent .child</code> (Descendant selector).</li>
+<li><strong>With <code>&amp;</code> followed by a space
+(<code>.parent { &amp; .child {} }</code>):</strong> Identical to
+omitting <code>&amp;</code>.</li>
+<li><strong>With <code>&amp;</code> directly attached
+(<code>.parent { &amp;:hover {} }</code>):</strong> Evaluates to
+<code>.parent:hover</code> (Same-element modification).</li>
+<li><strong>With <code>&amp;</code> directly attached to a class
+(<code>.parent { &amp;.active {} }</code>):</strong> Evaluates to
+<code>.parent.active</code> (Compound selector).</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

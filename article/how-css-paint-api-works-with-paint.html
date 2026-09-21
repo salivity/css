@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS Paint API Works with paint() - css</title>
+    <meta name="description" content="The CSS Paint API, part of the CSS Houdini suite of standards, allows developers to generate custom, dynamic graphics programmatically directly within CSS using JavaScript. By invoking the paint(workletName) function inside standard CSS properties—such">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-paint-api-works-with-paint">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS Paint API Works with paint() - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-paint-api-works-with-paint" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS Paint API, part of the CSS Houdini suite of standards, allows developers to generate custom, dynamic graphics programmatically directly within CSS using JavaScript. By invoking the paint(workletName) function inside standard CSS properties—such" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-paint-api-works-with-paint">How CSS Paint API Works with
+paint()</h1>
+<p>The CSS Paint API, part of the CSS Houdini suite of standards, allows
+developers to generate custom, dynamic graphics programmatically
+directly within CSS using JavaScript. By invoking the
+<code>paint(workletName)</code> function inside standard CSS
+properties—such as <code>background-image</code> or
+<code>border-image</code>—the browser executes a designated Paint
+Worklet that renders visuals onto a 2D canvas context. This article
+explains the technical mechanics behind registering a worklet, invoking
+it via the <code>paint()</code> function, passing dynamic CSS variables,
+and how the browser handles the rendering lifecycle.</p>
+<h2 id="what-is-a-paint-worklet">What is a Paint Worklet?</h2>
+<p>A Paint Worklet is a lightweight JavaScript file that runs off the
+main thread inside the browser’s rendering pipeline. It functions
+similarly to the HTML5 Canvas API, providing a 2D drawing context
+(<code>PaintRenderingContext2D</code>) to draw shapes, lines, gradients,
+and colors directly into an element’s visual area before it is painted
+to the screen.</p>
+<h2 id="step-1-defining-the-paint-worklet-javascript">Step 1: Defining
+the Paint Worklet (JavaScript)</h2>
+<p>To use <code>paint(workletName)</code>, you must first define a class
+and register it using the global <code>registerPaint()</code> function
+inside a dedicated JavaScript file.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// my-worklet.js</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomBackgroundPainter {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Define which CSS custom properties the painter observes</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">static</span> <span class="kw">get</span> <span class="fu">inputProperties</span>() {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="st">&#39;--custom-color&#39;</span><span class="op">,</span> <span class="st">&#39;--stripe-width&#39;</span>]<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// The paint method is called whenever the element needs to be repainted</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paint</span>(ctx<span class="op">,</span> geometry<span class="op">,</span> properties) {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> color <span class="op">=</span> properties<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;--custom-color&#39;</span>)<span class="op">.</span><span class="fu">toString</span>()<span class="op">.</span><span class="fu">trim</span>() <span class="op">||</span> <span class="st">&#39;blue&#39;</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> width <span class="op">=</span> <span class="pp">parseFloat</span>(properties<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;--stripe-width&#39;</span>)) <span class="op">||</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> color<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> geometry<span class="op">.</span><span class="at">width</span><span class="op">,</span> width)<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">// Register the class under a unique worklet name</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">registerPaint</span>(<span class="st">&#39;customBackground&#39;</span><span class="op">,</span> CustomBackgroundPainter)<span class="op">;</span></span></code></pre></div>
+<p>The <code>paint()</code> method automatically receives three
+parameters:</p>
+<ol type="1">
+<li><strong><code>ctx</code></strong>: A 2D rendering context providing
+standard drawing methods like <code>fillRect()</code>,
+<code>arc()</code>, and <code>beginPath()</code>.</li>
+<li><strong><code>geometry</code></strong>: An object containing the
+<code>width</code> and <code>height</code> of the area being drawn
+onto.</li>
+<li><strong><code>properties</code></strong>: A style map used to read
+the CSS properties defined in <code>inputProperties</code>.</li>
+</ol>
+<h2 id="step-2-registering-the-worklet-in-html">Step 2: Registering the
+Worklet in HTML</h2>
+<p>The JavaScript file containing the worklet must be loaded by the main
+document using the <code>CSS.paintWorklet.addModule()</code> method:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="st">&#39;paintWorklet&#39;</span> <span class="kw">in</span> <span class="bu">CSS</span>) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">CSS</span><span class="op">.</span><span class="at">paintWorklet</span><span class="op">.</span><span class="fu">addModule</span>(<span class="st">&#39;my-worklet.js&#39;</span>)<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>This loads the worklet script into the browser's paint pipeline.</p>
+<h2 id="step-3-invoking-the-worklet-with-paint-in-css">Step 3: Invoking
+the Worklet with paint() in CSS</h2>
+<p>Once the worklet is registered under the identifier
+<code>customBackground</code>, you reference it inside your CSS rules
+using the <code>paint()</code> functional notation anywhere an image is
+accepted.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--custom-color</span><span class="ch">:</span> <span class="cn">#ff5722</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--stripe-width</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-image</span><span class="ch">:</span> <span class="fu">paint(</span><span class="dv">customBackground</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When the browser parses
+<code>background-image: paint(customBackground)</code>, it looks for a
+registered worklet named <code>customBackground</code>, runs its
+<code>paint()</code> function, and uses the resulting graphics as the
+background.</p>
+<h2 id="dynamic-repainting-via-css-properties">Dynamic Repainting via
+CSS Properties</h2>
+<p>The Paint API integrates tightly with the CSS Object Model (CSSOM).
+If an observed CSS custom property (listed in
+<code>inputProperties</code>) changes—either through user interaction,
+animations, or media queries—the browser automatically triggers the
+<code>paint()</code> function again:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box</span><span class="in">:hover</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--custom-color</span><span class="ch">:</span> <span class="cn">#4caf50</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--stripe-width</span><span class="ch">:</span> <span class="dv">60</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When the element is hovered, the browser invalidates the paint cache,
+reads the new values, and re-renders the canvas immediately without
+requiring manual DOM manipulation or custom requestAnimationFrame
+loops.</p>
+<h2 id="passing-direct-arguments-to-paint">Passing Direct Arguments to
+paint()</h2>
+<p>The <code>paint()</code> function also supports passing inline
+arguments, defined via the <code>inputArguments</code> static getter
+within the worklet class.</p>
+<p>In the worklet:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">static</span> <span class="kw">get</span> <span class="fu">inputArguments</span>() {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [<span class="st">&#39;&lt;color&gt;&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;length&gt;&#39;</span>]<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">paint</span>(ctx<span class="op">,</span> geometry<span class="op">,</span> properties<span class="op">,</span> args) {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> color <span class="op">=</span> args[<span class="dv">0</span>]<span class="op">.</span><span class="fu">toString</span>()<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> radius <span class="op">=</span> <span class="pp">parseFloat</span>(args[<span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Drawing logic using args...</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In the CSS:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-image</span><span class="ch">:</span> <span class="fu">paint(</span><span class="dv">customBackground</span><span class="op">,</span> <span class="cn">purple</span><span class="op">,</span> <span class="dv">15</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="performance-benefits">Performance Benefits</h2>
+<p>Because Paint Worklets operate within the browser's native rendering
+engine:</p>
+<ul>
+<li>They do not add nodes to the DOM tree, keeping memory footprints
+low.</li>
+<li>Repainting occurs during the paint phase of the rendering pipeline,
+avoiding unnecessary layout recalculations.</li>
+<li>Rendering can often be optimized or threaded by the browser engine,
+offering superior performance compared to using standard HTML Canvas
+overlays or complex inline SVGs.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

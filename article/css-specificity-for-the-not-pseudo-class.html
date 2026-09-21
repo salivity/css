@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Specificity for the :not Pseudo-Class - css</title>
+    <meta name="description" content="Understanding how CSS specificity works within the :not() negation pseudo-class is essential for writing predictable and maintainable stylesheets. While the :not() pseudo-class itself contributes no specificity to a selector, it adopts the specificity of">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-specificity-for-the-not-pseudo-class">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Specificity for the :not Pseudo-Class - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-specificity-for-the-not-pseudo-class" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Understanding how CSS specificity works within the :not() negation pseudo-class is essential for writing predictable and maintainable stylesheets. While the :not() pseudo-class itself contributes no specificity to a selector, it adopts the specificity of" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-specificity-for-the-not-pseudo-class">CSS Specificity for
+the :not Pseudo-Class</h1>
+<p>Understanding how CSS specificity works within the
+<code>:not()</code> negation pseudo-class is essential for writing
+predictable and maintainable stylesheets. While the <code>:not()</code>
+pseudo-class itself contributes no specificity to a selector, it adopts
+the specificity of the most specific selector present within its
+argument list. This article explains how CSS calculates specificity for
+negation lists like <code>:not(.class1, .class2)</code> and details the
+implications this behavior has on styling rules.</p>
+<h2 id="the-most-specific-argument-rule">The Most Specific Argument
+Rule</h2>
+<p>In CSS Selectors Level 4, functional pseudo-classes such as
+<code>:not()</code>, <code>:is()</code>, and <code>:has()</code> accept
+comma-separated selector lists. When determining the specificity of the
+pseudo-class, the browser does not count the pseudo-class name itself
+(its base specificity is <code>0-0-0</code>). Instead, the browser
+analyzes every selector inside the parentheses and assigns the entire
+pseudo-class the specificity of the single argument with the highest
+specificity weight.</p>
+<h2 id="specificity-breakdown-of-notclass1-class2">Specificity Breakdown
+of <code>:not(.class1, .class2)</code></h2>
+<p>When evaluating <code>:not(.class1, .class2)</code>, the calculation
+proceeds as follows:</p>
+<ol type="1">
+<li><strong>Evaluate the first argument:</strong> <code>.class1</code>
+is a class selector with a specificity of <code>0-1-0</code> (0 ID
+selectors, 1 class/attribute/pseudo-class selector, 0 type/element
+selectors).</li>
+<li><strong>Evaluate the second argument:</strong> <code>.class2</code>
+is also a class selector with a specificity of <code>0-1-0</code>.</li>
+<li><strong>Determine the highest specificity:</strong> Between
+<code>0-1-0</code> and <code>0-1-0</code>, the highest value is
+<code>0-1-0</code>.</li>
+<li><strong>Apply to the selector:</strong> The entire
+<code>:not(.class1, .class2)</code> expression receives a specificity of
+<code>0-1-0</code>.</li>
+</ol>
+<p>If you attach this pseudo-class to an element, such as
+<code>button:not(.class1, .class2)</code>, the element selector
+(<code>button</code>, which has a weight of <code>0-0-1</code>) is added
+to the pseudo-class specificity (<code>0-1-0</code>), resulting in a
+total specificity of <code>0-1-1</code>.</p>
+<h2 id="mixed-specificity-within-not">Mixed Specificity Within
+<code>:not()</code></h2>
+<p>The calculation becomes particularly important when arguments inside
+the list carry different weights. Consider the selector
+<code>:not(.class1, #unique-id)</code>:</p>
+<ul>
+<li><code>.class1</code> carries a weight of <code>0-1-0</code>.</li>
+<li><code>#unique-id</code> carries a weight of <code>1-0-0</code>.</li>
+</ul>
+<p>Because <code>#unique-id</code> has the highest specificity in the
+list, the entire <code>:not(.class1, #unique-id)</code> selector takes
+on a specificity of <code>1-0-0</code>. Even if a target element fails
+to match <code>.class1</code> and has nothing to do with
+<code>#unique-id</code>, any rule using this selector will still carry
+the heavy specificity of an ID selector.</p>
+<h2 id="practical-takeaway">Practical Takeaway</h2>
+<p>For <code>:not(.class1, .class2)</code>, the specificity is always
+equal to a single class (<code>0-1-0</code>) because both arguments
+share the same weight. When writing selector lists inside
+<code>:not()</code>, keep arguments at similar specificity levels to
+avoid accidentally inflating the selector's weight and creating
+difficult-to-override rules elsewhere in your CSS.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

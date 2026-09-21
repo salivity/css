@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS drop-shadow vs box-shadow: Key Differences - css</title>
+    <meta name="description" content="While both properties add shadow effects to web elements, the primary difference lies in how they handle transparency and element boundaries. The box-shadow property creates a shadow based strictly on an element's rectangular bounding box, regardless of">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-drop-shadow-vs-box-shadow-key-differences">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS drop-shadow vs box-shadow: Key Differences - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-drop-shadow-vs-box-shadow-key-differences" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="While both properties add shadow effects to web elements, the primary difference lies in how they handle transparency and element boundaries. The box-shadow property creates a shadow based strictly on an element's rectangular bounding box, regardless of" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-drop-shadow-vs-box-shadow-key-differences">CSS drop-shadow
+vs box-shadow: Key Differences</h1>
+<p>While both properties add shadow effects to web elements, the primary
+difference lies in how they handle transparency and element boundaries.
+The <code>box-shadow</code> property creates a shadow based strictly on
+an element's rectangular bounding box, regardless of whether the content
+inside is transparent. In contrast, <code>filter: drop-shadow()</code>
+evaluates the actual rendered pixels and alpha channel of an element,
+casting a shadow that contours around transparent PNGs, SVG shapes, and
+pseudo-elements.</p>
+<h3 id="1-shape-recognition-and-alpha-transparency">1. Shape Recognition
+and Alpha Transparency</h3>
+<ul>
+<li><strong><code>box-shadow</code></strong>: Treats the element as a
+solid box. Even if you use a transparent PNG image, an SVG icon, or an
+element with transparent background sections, <code>box-shadow</code>
+will cast a rectangular shadow behind the entire element's frame (though
+it does respect <code>border-radius</code>).</li>
+<li><strong><code>filter: drop-shadow()</code></strong>: Inspects the
+alpha mask of the element. If an element has transparent areas, the
+shadow passes through them and outlines the opaque pixels. This makes it
+ideal for transparent graphics, cut-out illustrations, and SVG
+graphics.</li>
+</ul>
+<h3 id="2-syntax-variations">2. Syntax Variations</h3>
+<p>The two properties share basic parameters for X-offset, Y-offset,
+blur radius, and color, but their feature sets diverge:</p>
+<ul>
+<li><p><strong>Syntax for <code>box-shadow</code></strong>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>box-shadow<span class="in">:</span> <span class="ex">[</span><span class="ss">offset-x</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">offset-y</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">blur-radius</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">spread-radius</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">color</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">inset</span><span class="ex">]</span>;</span></code></pre></div></li>
+<li><p><strong>Syntax for
+<code>filter: drop-shadow()</code></strong>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>filter<span class="in">:</span> drop-shadow<span class="in">(</span><span class="ex">[</span><span class="ss">offset-x</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">offset-y</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">blur-radius</span><span class="ex">]</span> <span class="ex">[</span><span class="ss">color</span><span class="ex">]</span><span class="in">)</span>;</span></code></pre></div></li>
+<li><p><strong>Spread Radius</strong>: <code>box-shadow</code> supports
+a spread parameter to expand or contract the shadow size beyond the blur
+radius. <code>drop-shadow()</code> does not support a spread parameter
+in standard CSS.</p></li>
+<li><p><strong>Inset Shadows</strong>: <code>box-shadow</code> allows
+the <code>inset</code> keyword to render the shadow inside the frame.
+<code>drop-shadow()</code> cannot render inner shadows.</p></li>
+</ul>
+<h3 id="3-handling-clipped-paths-and-pseudo-elements">3. Handling
+Clipped Paths and Pseudo-Elements</h3>
+<ul>
+<li><strong><code>clip-path</code></strong>: If you apply a
+<code>clip-path</code> to an element, <code>box-shadow</code> is clipped
+away because it exists outside the element's cut boundaries. However, if
+you apply <code>filter: drop-shadow()</code> to the parent container of
+the clipped element, the shadow wraps neatly around the custom polygon
+or path.</li>
+<li><strong>Pseudo-elements (<code>::before</code> and
+<code>::after</code>)</strong>: With <code>box-shadow</code>, shadows
+applied to a container do not naturally merge with its pseudo-elements
+(such as speech bubble pointers or tooltips). With
+<code>filter: drop-shadow()</code>, the parent and its pseudo-elements
+are composited together, producing a single, unified shadow contour
+around the combined shape.</li>
+</ul>
+<h3 id="4-performance-considerations">4. Performance Considerations</h3>
+<ul>
+<li><strong><code>box-shadow</code></strong>: Typically rendered
+directly by the browser's painting engine. It is lightweight and
+optimized for standard UI components like cards and buttons.</li>
+<li><strong><code>filter: drop-shadow()</code></strong>: Operates as a
+graphical filter, often offloaded to the GPU. While efficient for
+complex contours, applying it to large areas or animating it
+continuously can lead to higher GPU memory usage and performance
+overhead compared to <code>box-shadow</code>.</li>
+</ul>
+<h3 id="summary-when-to-use-which">Summary: When to Use Which</h3>
+<ul>
+<li>Use <strong><code>box-shadow</code></strong> for standard layout
+containers, cards, buttons, modals, or whenever you need inner
+(<code>inset</code>) shadows or spread adjustments.</li>
+<li>Use <strong><code>filter: drop-shadow()</code></strong> for
+transparent PNGs, SVGs, irregularly shaped UI elements (like speech
+bubbles with pointers), and elements shaped with
+<code>clip-path</code>.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

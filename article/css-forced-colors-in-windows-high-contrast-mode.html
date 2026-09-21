@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS forced-colors in Windows High Contrast Mode - css</title>
+    <meta name="description" content="The CSS forced-colors media feature detects whether a user agent has enforced a restricted, user-chosen color palette across the interface, as seen in Windows High Contrast Mode (now called Contrast Themes in Windows 11). This article explains how the fo">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-forced-colors-in-windows-high-contrast-mode">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS forced-colors in Windows High Contrast Mode - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-forced-colors-in-windows-high-contrast-mode" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS forced-colors media feature detects whether a user agent has enforced a restricted, user-chosen color palette across the interface, as seen in Windows High Contrast Mode (now called Contrast Themes in Windows 11). This article explains how the fo" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-forced-colors-in-windows-high-contrast-mode">CSS
+forced-colors in Windows High Contrast Mode</h1>
+<p>The CSS <code>forced-colors</code> media feature detects whether a
+user agent has enforced a restricted, user-chosen color palette across
+the interface, as seen in Windows High Contrast Mode (now called
+Contrast Themes in Windows 11). This article explains how the
+<code>forced-colors</code> media query works, why it is critical for web
+accessibility, how the browser modifies standard CSS styles under this
+mode, and how developers can write targeted CSS rules to ensure custom
+user interfaces remain functional and legible.</p>
+<h2 id="what-is-the-forced-colors-media-feature">What is the
+<code>forced-colors</code> Media Feature?</h2>
+<p>The <code>forced-colors</code> media query is defined in the CSS
+Media Queries Level 5 specification. It evaluates whether the operating
+system or browser is forcing a limited color palette onto the page to
+improve visual contrast and readability.</p>
+<p>The query accepts two values:</p>
+<ul>
+<li><code>none</code>: The operating system has not imposed a restricted
+color palette. Web pages render with their standard authored
+styles.</li>
+<li><code>active</code>: A restricted color palette is enforced by the
+operating system or browser. Author-defined colors are overridden by
+system-level color choices.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">forced-colors</span><span class="ch">:</span> <span class="dv">active</span><span class="fu">)</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* High contrast specific styles go here */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-windows-high-contrast-mode-interacts-with-the-browser">How
+Windows High Contrast Mode Interacts with the Browser</h2>
+<p>When a user enables a Contrast Theme in Windows, the browser enters
+forced colors mode. To guarantee minimum contrast ratios for people with
+low vision or photophobia, the browser automatically strips or overrides
+specific CSS properties:</p>
+<ul>
+<li><code>color</code> and <code>background-color</code> are mapped to
+system values (such as <code>Canvas</code> and
+<code>CanvasText</code>).</li>
+<li><code>border-color</code> is normalized to the system foreground
+color.</li>
+<li><code>box-shadow</code> and <code>text-shadow</code> are completely
+removed.</li>
+<li><code>fill</code> and <code>stroke</code> on SVGs may be overridden
+with system text colors.</li>
+<li>Background images set via <code>background-image</code> are often
+hidden unless they are explicitly defined as CSS gradients or content
+images.</li>
+</ul>
+<p>While these automated overrides make plain text readable, they can
+inadvertently break custom interactive components where visual
+boundaries or indicators rely on shadows, background colors, or subtle
+color contrasts.</p>
+<h2 id="common-use-cases-for-forced-colors-active">Common Use Cases for
+<code>forced-colors: active</code></h2>
+<p>Developers use the <code>@media (forced-colors: active)</code> block
+to address interface elements that lose meaning or visibility when the
+browser overrides colors.</p>
+<h3 id="1-restoring-lost-visual-boundaries">1. Restoring Lost Visual
+Boundaries</h3>
+<p>Modern designs frequently use <code>box-shadow</code> instead of
+borders for cards, modals, or form controls. Because forced colors mode
+disables shadows, these elements blend into the background. Developers
+can use <code>forced-colors: active</code> to apply explicit
+borders:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">forced-colors</span><span class="ch">:</span> <span class="dv">active</span><span class="fu">)</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.card</span> {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">CanvasText</span><span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="2-ensuring-transparent-borders-for-focus-states">2. Ensuring
+Transparent Borders for Focus States</h3>
+<p>A common pattern is using transparent borders on elements in default
+states so that adding a border on <code>:focus</code> or
+<code>:hover</code> does not cause layout shifting. In forced colors
+mode, transparent borders (<code>border: 1px solid transparent</code>)
+are rendered as solid system-colored lines. To prevent unexpected
+visible borders, use <code>border-color: transparent</code> carefully or
+ensure they render properly using system keywords.</p>
+<h3 id="3-preserving-svg-icons">3. Preserving SVG Icons</h3>
+<p>Inline SVGs using custom fills can disappear if the icon's background
+and fill both resolve to the same system color. By scoping SVG styles
+inside a <code>forced-colors: active</code> block, you can map fills
+directly to CSS system keywords:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">forced-colors</span><span class="ch">:</span> <span class="dv">active</span><span class="fu">)</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.icon</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fill</span><span class="ch">:</span> <span class="cn">LinkText</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="working-with-css-system-colors">Working with CSS System
+Colors</h2>
+<p>When adapting styles inside <code>forced-colors: active</code>,
+hardcoded hex or RGB colors should not be used. Hardcoded values defeat
+the purpose of the user's custom high-contrast settings (e.g.,
+white-on-black vs. yellow-on-black). Instead, use standard CSS system
+color keywords that adapt dynamically to the user's selected theme:</p>
+<ul>
+<li><code>Canvas</code>: Background of the application or document.</li>
+<li><code>CanvasText</code>: Main text color on the canvas.</li>
+<li><code>LinkText</code>: Text color for unvisited hyperlinks.</li>
+<li><code>Highlight</code>: Background color for selected items or
+text.</li>
+<li><code>HighlightText</code>: Text color for selected items.</li>
+<li><code>ButtonFace</code>: Background color for buttons.</li>
+<li><code>ButtonText</code>: Text color for buttons.</li>
+<li><code>Mark</code>: Background color for highlighted text (such as
+the <code>&lt;mark&gt;</code> tag).</li>
+</ul>
+<h2 id="opting-out-with-forced-color-adjust">Opting Out with
+<code>forced-color-adjust</code></h2>
+<p>In rare scenarios, an element must retain its original authored
+colors even when forced colors mode is active. Examples include color
+pickers, brand identity swatches, or photographic image filters. The
+<code>forced-color-adjust</code> property allows developers to exempt
+specific elements from browser overrides:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.color-swatch-red</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#e63946</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">forced-color-adjust</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Setting <code>forced-color-adjust: none</code> prevents the browser
+from changing the element's colors. This property should be used
+sparingly and only on elements where the preservation of true color is
+essential to the functionality of the interface.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS overflow-inline and overflow-block Explained - css</title>
+    <meta name="description" content="The CSS overflow-inline and overflow-block properties are logical properties that manage how an element handles content that exceeds its boundaries along the inline and block dimensions. Unlike physical properties such as overflow-x and overflow-y, which">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-overflow-inline-and-overflow-block-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS overflow-inline and overflow-block Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-overflow-inline-and-overflow-block-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS overflow-inline and overflow-block properties are logical properties that manage how an element handles content that exceeds its boundaries along the inline and block dimensions. Unlike physical properties such as overflow-x and overflow-y, which" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-overflow-inline-and-overflow-block-explained">CSS
+overflow-inline and overflow-block Explained</h1>
+<p>The CSS <code>overflow-inline</code> and <code>overflow-block</code>
+properties are logical properties that manage how an element handles
+content that exceeds its boundaries along the inline and block
+dimensions. Unlike physical properties such as <code>overflow-x</code>
+and <code>overflow-y</code>, which are anchored to fixed screen
+directions, these logical properties adapt dynamically based on the
+document's <code>writing-mode</code> and <code>direction</code>. This
+article explains how they function, their acceptable values, and why
+they are essential for modern web design and internationalization.</p>
+<h3 id="physical-vs-logical-dimensions">Physical vs. Logical
+Dimensions</h3>
+<p>Traditional CSS uses physical dimensions:</p>
+<ul>
+<li><code>overflow-x</code> controls horizontal overflow (left to
+right).</li>
+<li><code>overflow-y</code> controls vertical overflow (top to
+bottom).</li>
+</ul>
+<p>Logical properties shift the focus to the flow of content:</p>
+<ul>
+<li><strong>Inline dimension:</strong> The direction in which text runs
+within a line. In standard horizontal English (left-to-right), the
+inline axis is horizontal. In vertical writing modes (such as vertical
+Japanese), the inline axis runs vertically.</li>
+<li><strong>Block dimension:</strong> The direction in which blocks or
+lines of text are stacked. In standard horizontal English, the block
+axis is vertical. In vertical writing modes, the block axis runs
+horizontally.</li>
+</ul>
+<h3 id="what-is-overflow-inline">What is
+<code>overflow-inline</code>?</h3>
+<p>The <code>overflow-inline</code> property defines how clipped,
+scrollable, or visible content should be handled along the inline
+axis.</p>
+<ul>
+<li>In <code>writing-mode: horizontal-tb</code> (default Latin, Arabic,
+Hebrew, etc.), <code>overflow-inline</code> maps directly to
+<code>overflow-x</code>.</li>
+<li>In <code>writing-mode: vertical-rl</code> or
+<code>vertical-lr</code> (such as traditional East Asian scripts),
+<code>overflow-inline</code> maps to <code>overflow-y</code>.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-inline</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span> <span class="co">/* Adds horizontal scrolling in horizontal-tb, vertical scrolling in vertical modes */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="what-is-overflow-block">What is
+<code>overflow-block</code>?</h3>
+<p>The <code>overflow-block</code> property determines overflow behavior
+along the block axis.</p>
+<ul>
+<li>In <code>writing-mode: horizontal-tb</code>,
+<code>overflow-block</code> maps directly to
+<code>overflow-y</code>.</li>
+<li>In vertical writing modes, <code>overflow-block</code> maps directly
+to <code>overflow-x</code>.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-block</span><span class="ch">:</span> <span class="dv">hidden</span><span class="op">;</span> <span class="co">/* Clips content vertically in horizontal-tb, horizontally in vertical modes */</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="supported-values">Supported Values</h3>
+<p>Both properties accept the standard <code>overflow</code> keyword
+values:</p>
+<ul>
+<li><code>visible</code>: Content is not clipped and renders outside the
+element's box padding edge.</li>
+<li><code>hidden</code>: Overflowing content is clipped and cannot be
+scrolled programmatically via user interaction.</li>
+<li><code>clip</code>: Content is clipped at the element's overflow clip
+edge, preventing all scrolling, including programmatic scrolling.</li>
+<li><code>scroll</code>: Content is clipped, and scrollbars are always
+displayed along the specified axis, regardless of whether content
+overflows.</li>
+<li><code>auto</code>: Scrollbars appear only when the content exceeds
+the element’s boundaries along the specified axis.</li>
+</ul>
+<h3 id="why-use-logical-overflow-properties">Why Use Logical Overflow
+Properties?</h3>
+<ol type="1">
+<li><strong>Internationalization (i18n):</strong> When adapting
+interfaces for multilingual audiences, changing the
+<code>writing-mode</code> from horizontal to vertical or altering text
+direction does not require rewriting overflow rules.</li>
+<li><strong>Component Reusability:</strong> Design system components can
+be placed in different writing contexts without hardcoding horizontal or
+vertical scroll behaviors.</li>
+<li><strong>Consistency with Modern CSS:</strong> These properties align
+with the CSS Logical Properties and Values specification, complementing
+properties like <code>margin-inline</code>, <code>padding-block</code>,
+and <code>inset-inline</code>.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

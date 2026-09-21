@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS text-indent Formats Paragraph Typography - css</title>
+    <meta name="description" content="The CSS text-indent property controls the horizontal spacing applied to the beginning of text blocks, establishing a traditional typographic hierarchy on the web. This property primarily affects the very first line of a block container, allowing designer">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-text-indent-formats-paragraph-typography">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS text-indent Formats Paragraph Typography - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-text-indent-formats-paragraph-typography" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS text-indent property controls the horizontal spacing applied to the beginning of text blocks, establishing a traditional typographic hierarchy on the web. This property primarily affects the very first line of a block container, allowing designer" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-text-indent-formats-paragraph-typography">How CSS
+text-indent Formats Paragraph Typography</h1>
+<p>The CSS <code>text-indent</code> property controls the horizontal
+spacing applied to the beginning of text blocks, establishing a
+traditional typographic hierarchy on the web. This property primarily
+affects the very first line of a block container, allowing designers to
+mimic print layouts, create hanging indents, and manage readability
+without resorting to manual spacing hacks. This guide explains how
+<code>text-indent</code> functions, the values it accepts, advanced
+typographic techniques, and best practices for modern web design.</p>
+<h3 id="basic-function-and-syntax">Basic Function and Syntax</h3>
+<p>The <code>text-indent</code> property applies an offset to the first
+inline box within a block-level element, typically a
+<code>&lt;p&gt;</code> tag.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>p {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-indent</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By default, this indentation only applies to the very first line of
+text. Subsequent lines wrap normally to the edge of the container’s
+content box.</p>
+<h3 id="supported-measurement-units">Supported Measurement Units</h3>
+<p>The behavior of <code>text-indent</code> changes depending on the
+unit assigned to it:</p>
+<ul>
+<li><strong>Relative Units (<code>em</code>, <code>rem</code>,
+<code>ch</code>):</strong> The <code>em</code> unit is the preferred
+choice in paragraph typography because it scales proportionally with the
+element's <code>font-size</code>. An indent of <code>1.5em</code> to
+<code>2em</code> closely reflects standard book typography.</li>
+<li><strong>Absolute Units (<code>px</code>, <code>pt</code>,
+<code>cm</code>):</strong> Fixed values keep the indentation static
+regardless of text scaling. While functional, they can look
+disproportionately large or small if the font size changes on different
+screen sizes.</li>
+<li><strong>Percentages (<code>%</code>):</strong> Percentages calculate
+the indent based on the inline width of the containing element. This can
+cause erratic visual spacing on responsive layouts, where a wide desktop
+screen produces an excessively deep indent compared to a mobile
+screen.</li>
+</ul>
+<h3 id="creating-hanging-indents">Creating Hanging Indents</h3>
+<p>A hanging indent (or "outdent") occurs when the first line starts
+flush to the left, while all subsequent lines are indented. This is
+standard practice in bibliographies, citations, and numbered lists.</p>
+<p>To achieve this in CSS, combine a positive left margin or padding
+with an equal negative <code>text-indent</code>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.citation</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding-left</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-indent</span><span class="ch">:</span> <span class="dv">-2</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The <code>padding-left</code> pushes the entire block to the right,
+and the negative <code>text-indent</code> pulls only the first line back
+to the original left boundary.</p>
+<h3 id="advanced-keywords-each-line-and-hanging">Advanced Keywords:
+<code>each-line</code> and <code>hanging</code></h3>
+<p>Modern CSS implementations support additional keywords alongside the
+length value:</p>
+<ul>
+<li><strong><code>each-line</code>:</strong> Standard
+<code>text-indent</code> only alters the first line after a block
+boundary. Adding <code>each-line</code> forces the indentation to apply
+after hard line breaks (such as <code>&lt;br&gt;</code>) within the
+block.</li>
+<li><strong><code>hanging</code>:</strong> Inverts the target of the
+indent. Instead of shifting the first line, it indents every line
+<em>except</em> the first line.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-indent</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">em</span> <span class="dv">each-line</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><em>(Note: Browser support for <code>each-line</code> and
+<code>hanging</code> varies, so test across target platforms before
+using them in production.)</em></p>
+<h3 id="typographic-best-practices">Typographic Best Practices</h3>
+<p>In professional editorial design, paragraph separation is typically
+handled in one of two ways: space-separated paragraphs (using
+<code>margin-bottom</code>) or indent-separated paragraphs (using
+<code>text-indent</code>). Combining both creates visual clutter.</p>
+<p>When using indentation to separate paragraphs:</p>
+<ol type="1">
+<li><strong>Remove vertical paragraph margins:</strong> Set
+<code>margin-bottom: 0</code> on paragraphs to avoid mixing separation
+styles.</li>
+<li><strong>Exclude the first paragraph:</strong> Typographic convention
+dictates that the first paragraph of a chapter or section does not need
+an indent, as the break is already obvious. Use the adjacent sibling
+combinator to target only subsequent paragraphs:</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>p <span class="op">+</span> p {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-indent</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This ensures that only paragraphs following another paragraph receive
+the indent, maintaining clean alignment with headings and page
+edges.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

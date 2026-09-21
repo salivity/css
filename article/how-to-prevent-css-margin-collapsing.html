@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Prevent CSS Margin Collapsing? - css</title>
+    <meta name="description" content="Margin collapsing occurs when the vertical margins of adjacent block elements combine into a single margin, often causing unexpected layout behavior. While this is standard CSS specification behavior for block-level elements in normal flow, it can be del">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-prevent-css-margin-collapsing">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Prevent CSS Margin Collapsing? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-prevent-css-margin-collapsing" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Margin collapsing occurs when the vertical margins of adjacent block elements combine into a single margin, often causing unexpected layout behavior. While this is standard CSS specification behavior for block-level elements in normal flow, it can be del" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-prevent-css-margin-collapsing">How to Prevent CSS Margin
+Collapsing?</h1>
+<p>Margin collapsing occurs when the vertical margins of adjacent block
+elements combine into a single margin, often causing unexpected layout
+behavior. While this is standard CSS specification behavior for
+block-level elements in normal flow, it can be deliberately prevented
+using several modern and traditional CSS techniques. This guide covers
+the most effective methods to stop margin collapsing, ranging from
+changing display contexts to utilizing padding, borders, and modern
+layout modules.</p>
+<h2 id="use-flexbox-or-css-grid">Use Flexbox or CSS Grid</h2>
+<p>The most robust and modern way to prevent margin collapsing is to
+switch the parent container's layout context to Flexbox or CSS Grid.
+Margins never collapse between flex items or grid items.</p>
+<ul>
+<li><strong>Flexbox:</strong> Setting
+<code>display: flex; flex-direction: column;</code> on the parent
+container ensures that child elements maintain their full, independent
+vertical margins.</li>
+<li><strong>CSS Grid:</strong> Setting <code>display: grid;</code> on
+the parent container immediately isolates child margins from collapsing
+into one another.</li>
+</ul>
+<h2 id="establish-a-new-block-formatting-context-bfc">Establish a New
+Block Formatting Context (BFC)</h2>
+<p>Margins never collapse across the boundary of a Block Formatting
+Context. You can force a parent element or wrapper to establish an
+independent BFC using several CSS properties:</p>
+<ul>
+<li><code>display: flow-root;</code> — The modern, purpose-built
+property designed specifically to create a new BFC without any unwanted
+side effects on overflow or positioning.</li>
+<li><code>overflow: hidden;</code>, <code>overflow: auto;</code>, or
+<code>overflow: scroll;</code> — Creating scrollable or clipped overflow
+establishes a BFC, which isolates internal margins from external parent
+margins.</li>
+</ul>
+<h2 id="add-padding-or-borders-to-the-parent">Add Padding or Borders to
+the Parent</h2>
+<p>When a child element's margin collapses through its parent (known as
+parent-child margin collapsing), adding even a minimal physical
+separation stops the collapse:</p>
+<ul>
+<li><strong>Borders:</strong> Applying a top or bottom border, such as
+<code>border-top: 1px solid transparent;</code>, creates a physical
+boundary that keeps the child's margin contained inside the parent.</li>
+<li><strong>Padding:</strong> Adding <code>padding-top: 1px;</code> or
+<code>padding-bottom: 1px;</code> to the parent achieves the same
+containment effect without altering the parent's outer border box.</li>
+</ul>
+<h2 id="change-the-display-property-of-the-elements">Change the Display
+Property of the Elements</h2>
+<p>Margin collapsing only applies to block-level elements in normal
+flow. Changing how an element is rendered will prevent it from
+participating in margin collapse:</p>
+<ul>
+<li><code>display: inline-block;</code> — Inline-block elements respect
+top and bottom margins without collapsing with siblings or parents.</li>
+<li><code>position: absolute;</code> or <code>position: fixed;</code> —
+Out-of-flow positioned elements never collapse margins with surrounding
+elements.</li>
+<li><code>float: left;</code> or <code>float: right;</code> — Floated
+elements do not collapse margins with adjacent elements or their
+parents.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

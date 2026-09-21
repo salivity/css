@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS Containment Isolates Subtree Rendering - css</title>
+    <meta name="description" content="CSS containment allows developers to isolate specific subtrees of the Document Object Model (DOM) from the rest of the page to boost rendering performance. By declaring properties like contain: layout or contain: strict, you inform the browser that an el">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-containment-isolates-subtree-rendering">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS Containment Isolates Subtree Rendering - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-containment-isolates-subtree-rendering" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS containment allows developers to isolate specific subtrees of the Document Object Model (DOM) from the rest of the page to boost rendering performance. By declaring properties like contain: layout or contain: strict, you inform the browser that an el" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-containment-isolates-subtree-rendering">How CSS
+Containment Isolates Subtree Rendering</h1>
+<p>CSS containment allows developers to isolate specific subtrees of the
+Document Object Model (DOM) from the rest of the page to boost rendering
+performance. By declaring properties like <code>contain: layout</code>
+or <code>contain: strict</code>, you inform the browser that an
+element’s internal structure, styles, and rendering lifecycle do not
+affect outside elements, and vice versa. This article explores the
+mechanics of how layout and strict containment decouple rendering
+subtrees to eliminate unnecessary reflows and repaints.</p>
+<h2 id="the-problem-with-standard-dom-rendering">The Problem with
+Standard DOM Rendering</h2>
+<p>In a standard browser rendering pipeline, the DOM tree and render
+tree are deeply interconnected. When JavaScript or CSS alters the
+geometry, text, or visibility of a deeply nested element, the browser
+usually performs a layout operation (reflow) that propagates up the
+hierarchy to determine parent dimensions, sibling positions, and entire
+document boundaries. As web applications scale in complexity, these
+cascading recalculations cause frame drops and noticeable input
+latency.</p>
+<h2 id="how-contain-layout-isolates-subtrees">How
+<code>contain: layout</code> Isolates Subtrees</h2>
+<p>The <code>contain: layout</code> rule isolates the internal layout
+mechanics of an element from the surrounding document. When a browser
+encounters this property, it establishes strict layout boundaries
+through several structural behaviors:</p>
+<ul>
+<li><strong>Contained Layout Recalculations:</strong> Any changes made
+to the children of the element—such as altering margins, padding, or
+text content—do not trigger layout recalculations outside that element's
+boundary. The browser treats the subtree as a closed layout
+context.</li>
+<li><strong>Independent Formatting Context:</strong> The contained
+element automatically creates a new formatting context (similar to an
+element with <code>display: flow-root</code> or an explicit block
+formatting context). Floats do not escape, and margins do not collapse
+across the containment boundary.</li>
+<li><strong>Contained Containing Block:</strong> The element becomes a
+containing block for absolute and fixed position descendants. This
+guarantees that absolutely positioned children cannot reference
+coordinates outside this element, preventing layout shifts elsewhere on
+the page.</li>
+<li><strong>Stacking Context Generation:</strong> An element with layout
+containment automatically creates a new stacking context, confining
+z-index calculations to its own subtree.</li>
+</ul>
+<p>Because of these rules, the browser's layout engine can prune its
+layout tree traversal. If a change occurs inside the element, the engine
+only recomputes that subtree; it stops ascending once it hits the
+containment boundary.</p>
+<h2 id="how-contain-strict-maximizes-isolation">How
+<code>contain: strict</code> Maximizes Isolation</h2>
+<p>While <code>contain: layout</code> optimizes geometry calculations,
+<code>contain: strict</code> provides total isolation by combining four
+separate containment types: <code>size</code>, <code>layout</code>,
+<code>paint</code>, and <code>style</code>. Writing
+<code>contain: strict</code> is functionally equivalent to writing
+<code>contain: size layout paint style</code>.</p>
+<ul>
+<li><strong>Size Containment (<code>size</code>):</strong> The element’s
+size is calculated as if it has no children. This means the browser does
+not need to inspect or lay out the element's subtree to compute the
+parent container’s dimensions. Consequently, the contained element must
+have an explicitly defined width and height (or an aspect ratio);
+otherwise, its size defaults to zero.</li>
+<li><strong>Paint Containment (<code>paint</code>):</strong> The
+contents of the element are clipped to its padding box (unless
+explicitly overridden by <code>overflow</code> rules), and the element
+forms a new stacking context. More importantly, if the element is
+off-screen, the browser can completely skip painting its children during
+the render cycle, significantly saving GPU and CPU cycles.</li>
+<li><strong>Style Containment (<code>style</code>):</strong> Counters
+and quotes are scoped strictly to the subtree. A counter incremented
+inside the subtree will not leak into the rest of the document.</li>
+</ul>
+<p>By enforcing strict containment, the browser achieves optimal
+performance: it can completely skip rendering, layout calculation, and
+painting for off-screen subtrees because their dimensions are
+predetermined and their contents cannot influence the external page
+layout.</p>
+<h2 id="when-to-use-layout-vs-strict-containment">When to Use Layout vs.
+Strict Containment</h2>
+<p>Use <code>contain: layout</code> on dynamic components—such as
+interactive sidebars, comments sections, or feed items—where the height
+must adapt to user-generated content, but you want to prevent internal
+DOM updates from triggering full-page reflows.</p>
+<p>Use <code>contain: strict</code> on predictable, modular user
+interface components where dimensions can be set beforehand—such as
+virtualized list items, widget dashboards, or image carousels. This
+allows the browser to bypass layout and paint trees entirely whenever
+those modules are out of view or undergoing heavy internal DOM
+manipulations.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

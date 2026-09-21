@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS cubic-bezier(0, 0, 1, 1) and Linear Animation - css</title>
+    <meta name="description" content="This article explains the CSS cubic-bezier(0, 0, 1, 1) timing function, detailing how its mathematical coordinate values translate into motion. You will learn the mechanics of the CSS Bézier curve system, why this specific set of coordinates eliminates">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-cubic-bezier-0-0-1-1-and-linear-animation">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS cubic-bezier(0, 0, 1, 1) and Linear Animation - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-cubic-bezier-0-0-1-1-and-linear-animation" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the CSS cubic-bezier(0, 0, 1, 1) timing function, detailing how its mathematical coordinate values translate into motion. You will learn the mechanics of the CSS Bézier curve system, why this specific set of coordinates eliminates" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-cubic-bezier0-0-1-1-and-linear-animation">CSS
+cubic-bezier(0, 0, 1, 1) and Linear Animation</h1>
+<p>This article explains the CSS <code>cubic-bezier(0, 0, 1, 1)</code>
+timing function, detailing how its mathematical coordinate values
+translate into motion. You will learn the mechanics of the CSS Bézier
+curve system, why this specific set of coordinates eliminates
+acceleration and deceleration, and how it directly maps to the standard
+<code>linear</code> animation keyword.</p>
+<p>In CSS transitions and animations, the
+<code>animation-timing-function</code> and
+<code>transition-timing-function</code> properties control the rate of
+change over time. A cubic Bézier curve is defined by four points: two
+fixed anchor points and two adjustable control points. The anchor points
+represent the start and end of the timeline:</p>
+<ul>
+<li><strong>P0 (Start):</strong> Permanently fixed at coordinate
+<code>(0, 0)</code>, representing 0% time elapsed and 0% animation
+progress.</li>
+<li><strong>P3 (End):</strong> Permanently fixed at coordinate
+<code>(1, 1)</code>, representing 100% time elapsed and 100% animation
+progress.</li>
+</ul>
+<p>The <code>cubic-bezier(x1, y1, x2, y2)</code> function allows
+developers to define the two intermediate control points:</p>
+<ul>
+<li><strong>P1:</strong> Defined by <code>(x1, y1)</code></li>
+<li><strong>P2:</strong> Defined by <code>(x2, y2)</code></li>
+</ul>
+<p>In the declaration <code>cubic-bezier(0, 0, 1, 1)</code>, you place
+<strong>P1</strong> at <code>(0, 0)</code> and <strong>P2</strong> at
+<code>(1, 1)</code>.</p>
+<h3 id="the-mathematical-mapping-to-linear-motion">The Mathematical
+Mapping to Linear Motion</h3>
+<p>A cubic Bézier curve relies on control points acting like magnets
+that pull the motion path toward them. When P1 is set to
+<code>(0, 0)</code>, it sits directly on top of the starting anchor
+point (P0). When P2 is set to <code>(1, 1)</code>, it sits directly on
+top of the ending anchor point (P3).</p>
+<p>Because the control points are identical to the anchor points, there
+is no directional pull away from the direct vector between the start and
+end. The mathematical curve flattens completely into a straight diagonal
+line described by the linear equation:</p>
+<p><span class="math display">\[y = x\]</span></p>
+<p>On this graph:</p>
+<ul>
+<li>The <strong>X-axis</strong> represents <strong>time</strong> (from
+<span class="math inline">\(0.0\)</span> to <span
+class="math inline">\(1.0\)</span>).</li>
+<li>The <strong>Y-axis</strong> represents <strong>animation
+progression</strong> (from <span class="math inline">\(0.0\)</span> to
+<span class="math inline">\(1.0\)</span>).</li>
+</ul>
+<p>Because <span class="math inline">\(y\)</span> changes in direct 1:1
+proportion to <span class="math inline">\(x\)</span>, the slope (or
+derivative) remains constant at all times (<span
+class="math inline">\(\frac{dy}{dx} = 1\)</span>). A constant slope
+means zero acceleration and zero deceleration. The animated property
+moves at the exact same velocity from the first millisecond to the
+last.</p>
+<h3 id="equivalence-to-the-linear-keyword">Equivalence to the
+<code>linear</code> Keyword</h3>
+<p>In standard CSS specifications, the keyword <code>linear</code> is an
+alias for <code>cubic-bezier(0, 0, 1, 1)</code>. The browser executes
+the following two rules identically:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box-keyword</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">transform 2</span><span class="dt">s</span> <span class="dv">linear</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">.box-bezier</span> {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">transform 2</span><span class="dt">s</span> cubic-bezier<span class="fu">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>While writing <code>linear</code> is clearer and preferred for
+readability in standard web development,
+<code>cubic-bezier(0, 0, 1, 1)</code> serves as the foundational
+baseline when using visual curve-editor tools or generating programmatic
+animation curves.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

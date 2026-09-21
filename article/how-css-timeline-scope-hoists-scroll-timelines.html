@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS timeline-scope Hoists Scroll Timelines - css</title>
+    <meta name="description" content="The CSS timeline-scope property allows developers to hoist named scroll and view progress timelines from their default local context up to a shared ancestor element. By default, CSS scroll-driven animations restrict named timelines to the declaring eleme">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-timeline-scope-hoists-scroll-timelines">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS timeline-scope Hoists Scroll Timelines - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-timeline-scope-hoists-scroll-timelines" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS timeline-scope property allows developers to hoist named scroll and view progress timelines from their default local context up to a shared ancestor element. By default, CSS scroll-driven animations restrict named timelines to the declaring eleme" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-timeline-scope-hoists-scroll-timelines">How CSS
+timeline-scope Hoists Scroll Timelines</h1>
+<p>The CSS <code>timeline-scope</code> property allows developers to
+hoist named scroll and view progress timelines from their default local
+context up to a shared ancestor element. By default, CSS scroll-driven
+animations restrict named timelines to the declaring element and its DOM
+descendants. By declaring <code>timeline-scope</code> on a common
+ancestor, you expose that timeline to sibling elements, parents, or
+entirely separate branches within the shared subtree, enabling
+coordinated cross-component scroll animations without JavaScript.</p>
+<h2 id="the-default-timeline-scoping-limitation">The Default Timeline
+Scoping Limitation</h2>
+<p>When creating scroll-driven animations in CSS, you define a named
+timeline on a scroll container using properties like
+<code>scroll-timeline-name</code> or
+<code>view-timeline-name</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.scroller</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-y</span><span class="ch">:</span> <span class="dv">scroll</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  scroll-timeline-name<span class="ch">:</span> <span class="dv">--page-timeline</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Under normal CSS scoping rules, <code>--page-timeline</code> is
+strictly scoped to <code>.scroller</code> and its descendants. If you
+want an element outside of <code>.scroller</code>—such as a fixed
+header, a sibling progress bar, or a parent navigation bar—to animate
+based on <code>.scroller</code>'s scroll position, the animation fails
+to bind because the timeline name is out of scope.</p>
+<h2 id="how-timeline-scope-hoists-the-timeline">How timeline-scope
+Hoists the Timeline</h2>
+<p>The <code>timeline-scope</code> property solves this scoping boundary
+problem by operating similarly to variable declaration hoisting. When
+applied to an ancestral DOM element, it reserves one or more timeline
+names at that higher level.</p>
+<p>When an ancestor declares:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.common-ancestor</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  timeline-scope<span class="ch">:</span> <span class="dv">--page-timeline</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The browser attaches the identifier <code>--page-timeline</code> to
+<code>.common-ancestor</code>. When a descendant element deeper in the
+tree defines <code>scroll-timeline-name: --page-timeline</code>, the
+browser matches this definition to the hoisted scope rather than
+confining it locally.</p>
+<p>Consequently, any element contained within
+<code>.common-ancestor</code> gains the ability to reference
+<code>--page-timeline</code> using <code>animation-timeline</code>.</p>
+<h2 id="practical-implementation">Practical Implementation</h2>
+<p>Consider a layout where a progress indicator sits inside a header,
+parallel to the actual scrolling container:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;layout-wrapper&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">header</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;progress-bar&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">header</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">main</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;content-scroller&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">&lt;!-- Long scrollable content --&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">main</span><span class="dt">&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>To drive the <code>.progress-bar</code> animation using the scroll
+position of <code>.content-scroller</code>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* 1. Hoist the timeline name to the common ancestor */</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.layout-wrapper</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  timeline-scope<span class="ch">:</span> <span class="dv">--content-timeline</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* 2. Define the timeline on the scrollable container */</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.content-scroller</span> {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-y</span><span class="ch">:</span> <span class="dv">scroll</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  scroll-timeline-name<span class="ch">:</span> <span class="dv">--content-timeline</span><span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  scroll-timeline-axis<span class="ch">:</span> <span class="dv">block</span><span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">/* 3. Consume the timeline in a separate branch */</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">.progress-bar</span> {</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">scale</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform-origin</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">fill-bar linear</span><span class="op">;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  animation-timeline<span class="ch">:</span> <span class="dv">--content-timeline</span><span class="op">;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> fill-bar {</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="dv">to</span> {</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">scale</span><span class="ch">:</span> <span class="dv">1</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Without <code>timeline-scope: --content-timeline</code> on
+<code>.layout-wrapper</code>, <code>.progress-bar</code> would not
+recognize <code>--content-timeline</code>, rendering the animation
+inert.</p>
+<h2 id="multiple-timelines-and-precedence-rules">Multiple Timelines and
+Precedence Rules</h2>
+<p>The <code>timeline-scope</code> property accepts a comma-separated
+list of custom identifiers (names prefixed with <code>--</code>):</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.dashboard</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  timeline-scope<span class="ch">:</span> <span class="dv">--panel-one-timeline</span><span class="op">,</span> <span class="dv">--panel-two-timeline</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If multiple descendants declare a timeline matching a hoisted name,
+the browser resolves the conflict based on tree order: the timeline
+defined on the last matching element in document order is bound to the
+hoisted scope. If no descendant declares the hoisted timeline name, the
+timeline remains unattached, and animations referencing it will not
+run.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

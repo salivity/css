@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Inset Property: Replace Top Right Bottom Left - css</title>
+    <meta name="description" content="The CSS inset property is a modern shorthand that simplifies how developers position elements on a web page by replacing the individual top, right, bottom, and left properties. Instead of declaring up to four separate offset declarations in a stylesheet,">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-inset-property-replace-top-right-bottom-left">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Inset Property: Replace Top Right Bottom Left - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-inset-property-replace-top-right-bottom-left" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS inset property is a modern shorthand that simplifies how developers position elements on a web page by replacing the individual top, right, bottom, and left properties. Instead of declaring up to four separate offset declarations in a stylesheet," />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-inset-property-replace-top-right-bottom-left">CSS Inset
+Property: Replace Top Right Bottom Left</h1>
+<p>The CSS <code>inset</code> property is a modern shorthand that
+simplifies how developers position elements on a web page by replacing
+the individual <code>top</code>, <code>right</code>,
+<code>bottom</code>, and <code>left</code> properties. Instead of
+declaring up to four separate offset declarations in a stylesheet,
+<code>inset</code> allows you to set all directional offsets within a
+single line of code. This article explains how the <code>inset</code>
+property works, details its multi-value syntax, compares it to
+traditional positioning methods, and explores practical use cases for
+everyday web development.</p>
+<hr />
+<h3 id="what-is-the-css-inset-property">What is the CSS
+<code>inset</code> Property?</h3>
+<p>The <code>inset</code> property is part of the CSS Positioned Layout
+Module. It acts as an exact shorthand for the four physical offset
+properties: <code>top</code>, <code>right</code>, <code>bottom</code>,
+and <code>left</code>.</p>
+<p>Just like the traditional offset properties, <code>inset</code> has
+no effect on elements with <code>position: static</code>. It only
+applies to elements that have their <code>position</code> set to
+<code>relative</code>, <code>absolute</code>, <code>fixed</code>, or
+<code>sticky</code>.</p>
+<h3 id="replacing-the-traditional-method">Replacing the Traditional
+Method</h3>
+<p>Historically, stretching an absolute or fixed element across its
+entire containing block required four separate declarations:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.modal-backdrop</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">top</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">right</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">bottom</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">left</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>With the <code>inset</code> shorthand, the exact same behavior is
+achieved with a single declaration:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.modal-backdrop</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This reduces code verbosity, makes maintenance easier, and improves
+overall stylesheet readability.</p>
+<h3 id="syntax-and-value-mapping">Syntax and Value Mapping</h3>
+<p>The syntax of <code>inset</code> follows the standard
+four-directional multi-value pattern used by properties like
+<code>margin</code> and <code>padding</code> (often remembered by the
+acronym <strong>TRBL</strong>: Top, Right, Bottom, Left).</p>
+<p>Depending on the number of values supplied, <code>inset</code> maps
+to the directional offsets as follows:</p>
+<ul>
+<li><p><strong>One value:</strong> Applies to all four sides.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>inset<span class="in">:</span> 10px;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">/* top: 10px; right: 10px; bottom: 10px; left: 10px; */</span></span></code></pre></div></li>
+<li><p><strong>Two values:</strong> The first value sets
+<code>top</code> and <code>bottom</code>; the second sets
+<code>left</code> and <code>right</code>.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>inset<span class="in">:</span> 10px 20px;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">/* top: 10px; bottom: 10px; */</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* left: 20px; right: 20px; */</span></span></code></pre></div></li>
+<li><p><strong>Three values:</strong> The first value sets
+<code>top</code>; the second sets <code>left</code> and
+<code>right</code>; the third sets <code>bottom</code>.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>inset<span class="in">:</span> 10px 20px 30px;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">/* top: 10px; */</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* left: 20px; right: 20px; */</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* bottom: 30px; */</span></span></code></pre></div></li>
+<li><p><strong>Four values:</strong> Sets <code>top</code>,
+<code>right</code>, <code>bottom</code>, and <code>left</code> in
+clockwise order.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>inset<span class="in">:</span> 5px 10px 15px 20px;</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">/* top: 5px; */</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* right: 10px; */</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* bottom: 15px; */</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">/* left: 20px; */</span></span></code></pre></div></li>
+</ul>
+<h3 id="handling-unset-values-with-auto">Handling Unset Values with
+<code>auto</code></h3>
+<p>If you only need to position an element using specific sides, you can
+pass <code>auto</code> to the sides you want to leave unset, preserving
+the shorthand syntax:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Position an element pinned to the bottom-right corner */</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.badge</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset</span><span class="ch">:</span> <span class="bu">auto</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">10</span><span class="dt">px</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* top: auto; right: 10px; bottom: 10px; left: auto; */</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>While using individual properties (such as
+<code>bottom: 10px; right: 10px;</code>) is often clearer when only
+targeting one or two sides, <code>inset</code> remains useful when
+resetting previous declarations or explicitly clearing inherited
+offsets.</p>
+<h3 id="practical-use-cases">Practical Use Cases</h3>
+<h4 id="1-full-coverage-overlays">1. Full-Coverage Overlays</h4>
+<p>Creating full-bleed overlays, backdrops, and modal screens is the
+most common use case:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.overlay</span> {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.5</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="2-absolute-centering-with-margin-auto">2. Absolute Centering
+with <code>margin: auto</code></h4>
+<p>Combining <code>inset: 0</code> with <code>margin: auto</code> is an
+effective technique for centering elements with defined dimensions
+inside a positioned container:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card-centered</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="3-uniform-padding-for-absolute-elements">3. Uniform Padding for
+Absolute Elements</h4>
+<p>If an absolutely positioned element needs an even offset from all
+borders of its parent container, <code>inset</code> handles it
+seamlessly:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.inner-frame</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">dashed</span> <span class="cn">#ccc</span><span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="browser-support">Browser Support</h3>
+<p>The <code>inset</code> property is widely supported across all modern
+web browsers, including Chrome, Edge, Firefox, and Safari. It is fully
+standard and ready for production use without requiring vendor
+prefixes.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

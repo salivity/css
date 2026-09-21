@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS Contain Affect Paint Performance? - css</title>
+    <meta name="description" content="The CSS contain property improves browser rendering efficiency by isolating specific DOM subtrees from the rest of the document. When an element updates, the browser typically recalculates styles, reflows layout, and repaints pixels across broad portions">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-contain-affect-paint-performance">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS Contain Affect Paint Performance? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-contain-affect-paint-performance" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS contain property improves browser rendering efficiency by isolating specific DOM subtrees from the rest of the document. When an element updates, the browser typically recalculates styles, reflows layout, and repaints pixels across broad portions" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-contain-affect-paint-performance">How Does CSS
+Contain Affect Paint Performance?</h1>
+<p>The CSS <code>contain</code> property improves browser rendering
+efficiency by isolating specific DOM subtrees from the rest of the
+document. When an element updates, the browser typically recalculates
+styles, reflows layout, and repaints pixels across broad portions of the
+page. Applying different <code>contain</code> values allows developers
+to limit paint and layout recalculations strictly to the target
+container, eliminating unnecessary draw calls, optimizing compositing
+layers, and significantly reducing paint times during dynamic UI
+updates.</p>
+<p>Understanding how CSS containment impacts browser paint performance
+requires examining rendering pipeline mechanics and the exact behavioral
+differences among individual <code>contain</code> values.</p>
+<h2 id="the-browser-rendering-pipeline-and-paint">The Browser Rendering
+Pipeline and Paint</h2>
+<p>To understand the utility of containment, it is essential to trace
+how modern browsers render visual updates:</p>
+<ol type="1">
+<li><strong>Recalculate Style:</strong> Matches CSS selectors to DOM
+elements and computes computed values.</li>
+<li><strong>Layout (Reflow):</strong> Determines the exact geometry,
+position, and dimensions of every visual element.</li>
+<li><strong>Paint:</strong> Fills in pixels, recording drawing commands
+for text, colors, borders, shadows, and images into display lists.</li>
+<li><strong>Composite:</strong> Groups painted display lists into GPU
+layers and outputs them to the screen.</li>
+</ol>
+<p>Without containment, modifying a single DOM node can invalidate paint
+records for parent nodes or neighboring elements across the entire
+document. The paint phase becomes a major performance bottleneck during
+high-frequency operations like animations, scrolling, or dynamic DOM
+insertions.</p>
+<h2 id="core-css-contain-values-and-their-impact-on-paint">Core CSS
+<code>contain</code> Values and Their Impact on Paint</h2>
+<p>The <code>contain</code> property accepts individual keywords or
+combined shorthand values. Each value provides distinct operational
+boundaries to the browser engine.</p>
+<h3 id="contain-paint"><code>contain: paint</code></h3>
+<p>The <code>paint</code> keyword tells the browser that descendants of
+the element cannot visually escape its bounding box.</p>
+<ul>
+<li><strong>Clipping Behavior:</strong> The browser treats the element
+as an implicit clipping boundary, functioning similarly to
+<code>overflow: hidden</code>, though with distinct internal
+optimizations.</li>
+<li><strong>Offscreen Cull Optimization:</strong> If a
+<code>contain: paint</code> element is scrolled offscreen or hidden, the
+browser completely skips painting its child elements, saving substantial
+CPU and GPU cycles.</li>
+<li><strong>Stacking Context:</strong> The element automatically creates
+a new stacking context and a new containing block for absolutely
+positioned descendants.</li>
+<li><strong>Paint Invalidation Boundary:</strong> Visual changes inside
+the element (such as color modifications, border changes, or internal
+animations) invalidate only the display lists inside that container. The
+surrounding document does not need to repaint.</li>
+</ul>
+<h3 id="contain-layout"><code>contain: layout</code></h3>
+<p>The <code>layout</code> value isolates the internal layout of the
+element from the external layout tree.</p>
+<ul>
+<li><strong>Internal Isolation:</strong> Changes to descendants cannot
+affect the size or position of outside elements, and external changes do
+not trigger reflow inside the boundary.</li>
+<li><strong>Indirect Paint Benefits:</strong> Because layout changes
+naturally trigger subsequent paint operations, preventing whole-page
+layout recalculations directly eliminates the wide-scale repainting that
+follows reflows.</li>
+</ul>
+<h3 id="contain-size"><code>contain: size</code></h3>
+<p>The <code>size</code> value dictates that the element's layout sizing
+must be calculated without examining its children.</p>
+<ul>
+<li><strong>Intrinsic Sizing Removal:</strong> The element renders as if
+it has no content unless explicit dimensions (<code>width</code>,
+<code>height</code>, <code>aspect-ratio</code>) are specified.</li>
+<li><strong>Performance Impact:</strong> Primarily speeds up layout
+calculations. On its own, it has minimal direct impact on the paint
+phase compared to <code>contain: paint</code>.</li>
+</ul>
+<h3 id="contain-style"><code>contain: style</code></h3>
+<p>The <code>style</code> keyword prevents CSS counter increments and
+quotes configured within the subtree from affecting the rest of the
+document tree. It targets CSS counter scoping rather than visual paint
+operations.</p>
+<h2 id="compound-containment-values">Compound Containment Values</h2>
+<p>CSS provides two combined shorthand values commonly used for
+component-level performance tuning.</p>
+<h3 id="contain-content"><code>contain: content</code></h3>
+<p>The <code>content</code> keyword equals
+<code>contain: layout paint style</code>.</p>
+<ul>
+<li>Applies both layout and paint containment without requiring fixed
+width or height dimensions.</li>
+<li>Highly practical for reusable UI elements, cards, and list items
+where content-based auto-sizing is required, but visual and structural
+isolation is desired.</li>
+<li>Confines all internal redraws to the component boundary.</li>
+</ul>
+<h3 id="contain-strict"><code>contain: strict</code></h3>
+<p>The <code>strict</code> keyword equals
+<code>contain: size layout paint style</code>.</p>
+<ul>
+<li>Provides the highest level of isolation possible.</li>
+<li>Requires the host element to have explicit dimensions defined in
+CSS, as <code>size</code> containment treats child contents as having
+zero intrinsic size.</li>
+<li>Offers the maximum rendering performance gain because the browser
+bypasses child inspection during both the layout and paint estimation
+stages.</li>
+</ul>
+<h2 id="comparing-contain-values">Comparing <code>contain</code>
+Values</h2>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Isolates Layout</th>
+<th>Isolates Paint</th>
+<th>Requires Fixed Size</th>
+<th>Paint Performance Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>none</code></td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Standard baseline; global repaints possible</td>
+</tr>
+<tr>
+<td><code>paint</code></td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>Direct; clips overflow and halts offscreen paints</td>
+</tr>
+<tr>
+<td><code>layout</code></td>
+<td>Yes</td>
+<td>Indirectly</td>
+<td>No</td>
+<td>Moderate; avoids downstream repaints triggered by reflow</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>No</td>
+<td>Minimal</td>
+<td>Yes</td>
+<td>Minimal; focused on layout tree calculations</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Negligible paint impact</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>High; prevents layout/paint leakage for dynamic items</td>
+</tr>
+<tr>
+<td><code>strict</code></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Maximum; full rendering isolation across all pipelines</td>
+</tr>
+</tbody>
+</table>
+<h2 id="practical-implementation-in-modern-web-performance">Practical
+Implementation in Modern Web Performance</h2>
+<p>The primary paint benefit of <code>contain: paint</code> or
+<code>contain: content</code> appears in virtualized lists, single-page
+application shells, infinite scrolls, and custom design-system
+components.</p>
+<p>Applying <code>contain: paint</code> or <code>contain: content</code>
+to repeated elements ensures that hover effects, text updates, or
+internal layout alterations remain localized. The rendering engine skips
+evaluating unrelated display lists, prevents global compositor
+invalidation, and maintains steady frame rates during heavy screen
+updates.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS background-size: cover Scales Images - css</title>
+    <meta name="description" content="The background-size: cover property in CSS is a responsive design standard used to scale background images proportionally so they completely fill their target container. This article explains the underlying mechanics of how cover calculates image dimensi">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-background-size-cover-scales-images">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS background-size: cover Scales Images - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-background-size-cover-scales-images" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The background-size: cover property in CSS is a responsive design standard used to scale background images proportionally so they completely fill their target container. This article explains the underlying mechanics of how cover calculates image dimensi" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-background-size-cover-scales-images">How CSS
+background-size: cover Scales Images</h1>
+<p>The <code>background-size: cover</code> property in CSS is a
+responsive design standard used to scale background images
+proportionally so they completely fill their target container. This
+article explains the underlying mechanics of how <code>cover</code>
+calculates image dimensions, preserves aspect ratios, handles
+unavoidable cropping, and interacts with positioning properties to
+achieve consistent visual results across different screen sizes.</p>
+<h2 id="the-scaling-mechanism">The Scaling Mechanism</h2>
+<p>When you apply <code>background-size: cover</code> to an element, the
+browser scales the background image to the smallest possible size that
+still completely covers the container's background area. The browser
+executes this using two strict rules:</p>
+<ol type="1">
+<li><strong>Preserve the Aspect Ratio:</strong> The image is never
+stretched, squished, or distorted. The width-to-height ratio of the
+original asset is strictly maintained.</li>
+<li><strong>Eliminate Empty Space:</strong> The image scales until both
+its width and height are equal to or greater than the corresponding
+width and height of the container.</li>
+</ol>
+<p>In mathematical terms, the browser compares the aspect ratio of the
+image against the aspect ratio of the container:</p>
+<ul>
+<li><strong>Wider Containers:</strong> If the container is
+proportionally wider than the image, the browser scales the image so its
+width matches the container's width (100%). The height scales
+proportionally and expands beyond the container's top and bottom
+edges.</li>
+<li><strong>Taller Containers:</strong> If the container is
+proportionally taller than the image, the browser scales the image so
+its height matches the container's height (100%). The width scales
+proportionally and expands beyond the container's left and right
+edges.</li>
+</ul>
+<h2 id="the-inevitability-of-cropping">The Inevitability of
+Cropping</h2>
+<p>Because viewport and element dimensions change, a fixed-aspect-ratio
+image rarely matches the container's aspect ratio perfectly. As a
+result, <code>cover</code> prioritizes total coverage over total
+visibility.</p>
+<p>Whichever dimension exceeds the container’s bounds overflows outside
+the element. By default, background images do not display outside their
+container's padding box, meaning any overflowing parts of the image are
+cropped out of view.</p>
+<h2
+id="controlling-the-focal-point-with-background-position">Controlling
+the Focal Point with background-position</h2>
+<p>Since parts of an image are frequently cropped when using
+<code>cover</code>, controlling which portion remains visible is
+critical. By default, CSS anchors background images to the top-left
+corner (<code>background-position: 0% 0%</code>), causing all cropping
+to occur on the right and bottom edges.</p>
+<p>Pairing <code>background-size: cover</code> with
+<code>background-position: center center</code> (or simply
+<code>center</code>) ensures that the browser centers the image within
+the container. Cropping is then distributed evenly across opposing
+sides—equal amounts off the left and right, or equal amounts off the top
+and bottom. You can also anchor the image to specific focal areas, such
+as <code>top center</code> for portraits or <code>center right</code>
+for product imagery, to keep critical content in view.</p>
+<h2 id="difference-between-cover-and-contain">Difference Between cover
+and contain</h2>
+<p>To understand <code>cover</code>, it helps to contrast it with
+<code>contain</code>:</p>
+<ul>
+<li><strong><code>cover</code></strong> ensures that the entire
+container is covered by the image, sacrificing parts of the image to
+cropping if the aspect ratios do not align.</li>
+<li><strong><code>contain</code></strong> ensures that the entire image
+is visible within the container, sacrificing total coverage and leaving
+empty space (letterboxing) if the aspect ratios do not align.</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li><strong>Account for Mobile Displays:</strong> An image framed
+horizontally for desktop will be heavily cropped on vertical mobile
+screens. Keep key visual elements centered or use media queries to swap
+to a portrait-oriented asset on narrower viewports.</li>
+<li><strong>Optimize Asset Dimensions:</strong> Because
+<code>cover</code> will stretch an image to fit large viewports, use
+assets with sufficient resolution to prevent blurriness or pixelation on
+high-density displays, while compressing them properly to minimize page
+weight.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

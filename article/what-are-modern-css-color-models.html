@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Are Modern CSS Color Models? - css</title>
+    <meta name="description" content="Modern CSS color models, such as lch(), oklch(), and color(display-p3), allow web developers to access wider color gamuts, generate perceptually uniform palettes, and achieve richer color fidelity on contemporary screens. Unlike legacy formats like rgb()">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-are-modern-css-color-models">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Are Modern CSS Color Models? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-are-modern-css-color-models" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modern CSS color models, such as lch(), oklch(), and color(display-p3), allow web developers to access wider color gamuts, generate perceptually uniform palettes, and achieve richer color fidelity on contemporary screens. Unlike legacy formats like rgb()" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-are-modern-css-color-models">What Are Modern CSS Color
+Models?</h1>
+<p>Modern CSS color models, such as <code>lch()</code>,
+<code>oklch()</code>, and <code>color(display-p3)</code>, allow web
+developers to access wider color gamuts, generate perceptually uniform
+palettes, and achieve richer color fidelity on contemporary screens.
+Unlike legacy formats like <code>rgb()</code>, <code>hex</code>, and
+<code>hsl()</code>, these newer functional notations separate perceived
+lightness from color intensity, making programmatic color manipulation,
+dynamic theme creation, and accessible contrast calculations
+significantly more reliable across modern browsers.</p>
+<h2 id="legacy-color-formats-vs-modern-spaces">Legacy Color Formats vs
+Modern Spaces</h2>
+<p>For decades, the web relied predominantly on standard sRGB color
+formats: Hexadecimal codes, <code>rgb()</code>, and <code>hsl()</code>.
+While simple to implement, sRGB formats carry inherent limitations:</p>
+<ul>
+<li><strong>Gamut Constraints:</strong> sRGB represents a relatively
+small subset of the colors human eyes can perceive and that modern
+displays (such as OLED screens and Retina displays) can produce.</li>
+<li><strong>Perceptual Non-Uniformity in HSL:</strong> In
+<code>hsl()</code>, colors with identical lightness values often have
+drastically different perceived brightness. For example, pure yellow
+(<code>hsl(60, 100%, 50%)</code>) appears substantially brighter to
+human vision than pure blue (<code>hsl(240, 100%, 50%)</code>), making
+predictable color palette generation and accessible contrast pairing
+difficult.</li>
+</ul>
+<p>Modern color spaces resolve these issues by aligning mathematical
+representations of color with actual human visual perception.</p>
+<h2 id="understanding-lch">Understanding LCH</h2>
+<p>The <code>lch()</code> functional notation represents color using
+three parameters:</p>
+<ul>
+<li><strong>Lightness (L):</strong> A percentage from 0% (black) to 100%
+(white) indicating perceived brightness.</li>
+<li><strong>Chroma (C):</strong> A number representing color saturation
+or purity, theoretically unbounded, but practical limits range from 0
+(gray) to around 150+.</li>
+<li><strong>Hue (H):</strong> An angle from 0 to 360 degrees on the
+color wheel.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.badge-alert</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">lch(</span><span class="dv">65</span><span class="dt">%</span> <span class="dv">85</span> <span class="dv">45</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Because lightness is independent of hue and chroma, adjusting the hue
+angle keeps the perceived brightness constant. However, CIELCH exhibits
+a known mathematical anomaly: shifting chroma in certain blue hues can
+cause an unintended shift toward purple.</p>
+<h2 id="the-advantages-of-oklch">The Advantages of OKLCH</h2>
+<p>Developed by Björn Ottosson, <code>oklch()</code> improves directly
+upon <code>lch()</code>. It uses the same fundamental
+parameters—Lightness, Chroma, and Hue—while fixing the hue-shift
+distortion found in standard CIELCH.</p>
+<ul>
+<li><strong>Lightness (L):</strong> Specified as a percentage (0% to
+100%) or decimal (0 to 1).</li>
+<li><strong>Chroma (C):</strong> A decimal typically ranging from 0 to
+approximately 0.4.</li>
+<li><strong>Hue (H):</strong> An angle from 0 to 360 degrees or with
+units (<code>deg</code>, <code>rad</code>, <code>turn</code>).</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--primary-color</span><span class="ch">:</span> <span class="fu">oklch(</span><span class="dv">0.65</span> <span class="dv">0.22</span> <span class="dv">250</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--primary-hover</span><span class="ch">:</span> <span class="fu">oklch(</span><span class="dv">0.75</span> <span class="dv">0.22</span> <span class="dv">250</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><code>oklch()</code> is widely regarded as the premier choice for UI
+design systems and dynamic theming because increasing or decreasing
+lightness reliably changes brightness without altering the underlying
+perceived hue.</p>
+<h2 id="wide-gamut-with-display-p3">Wide Gamut with Display P3</h2>
+<p><code>display-p3</code> is a wide-gamut color space developed for
+modern digital displays. It covers roughly 50% more visible colors than
+standard sRGB, excelling particularly in vibrant greens and intense
+reds.</p>
+<p>In CSS, Display P3 is accessed via the generic <code>color()</code>
+function:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.vibrant-banner</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">color(</span><span class="dv">display-p3 1</span> <span class="dv">0.2</span> <span class="dv">0.3</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The parameters specify red, green, and blue coordinates as decimals
+from 0 to 1 (or percentages), mapped specifically to the P3 gamut.</p>
+<h2 id="feature-comparison">Feature Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Color Model</th>
+<th>Gamut Support</th>
+<th>Perceptually Uniform</th>
+<th>Primary Strength</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hsl()</code></td>
+<td>sRGB</td>
+<td>No</td>
+<td>Legacy familiarity</td>
+</tr>
+<tr>
+<td><code>lch()</code></td>
+<td>Unlimited (CIE LAB)</td>
+<td>Yes</td>
+<td>Direct lightness isolation</td>
+</tr>
+<tr>
+<td><code>oklch()</code></td>
+<td>Unlimited (CIE LAB)</td>
+<td>Yes (Refined)</td>
+<td>Consistent palettes without hue shifts</td>
+</tr>
+<tr>
+<td><code>display-p3</code></td>
+<td>Wide P3</td>
+<td>No</td>
+<td>Highly vibrant monitor output</td>
+</tr>
+</tbody>
+</table>
+<h2 id="practical-implementation-and-fallbacks">Practical Implementation
+and Fallbacks</h2>
+<p>Modern browsers across desktop and mobile support
+<code>oklch()</code>, <code>lch()</code>, and
+<code>color(display-p3)</code>. When building stylesheets for
+progressive enhancement, you can provide fallback declarations or use
+CSS conditional rules:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.button</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">rgb(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">102</span><span class="op">,</span> <span class="dv">204</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">oklch(</span><span class="dv">0.55</span> <span class="dv">0.2</span> <span class="dv">245</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">@supports</span> <span class="fu">(</span><span class="kw">color</span><span class="ch">:</span> <span class="fu">color(</span><span class="dv">display-p3 0</span> <span class="dv">1</span> <span class="dv">0</span><span class="fu">))</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.accent-element</span> {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="fu">color(</span><span class="dv">display-p3 0.1</span> <span class="dv">0.9</span> <span class="dv">0.2</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Adopting these modern color models allows developers to craft
+consistent, accessible, and vibrant visual experiences natively in
+CSS.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

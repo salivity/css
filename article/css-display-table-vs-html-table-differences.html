@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Display Table vs HTML Table Differences - css</title>
+    <meta name="description" content="While both CSS table layouts (display: table) and native HTML <table> elements utilize the same underlying tabular layout algorithm, they serve fundamentally different purposes in web development. Native HTML tables provide explicit structural semantics">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-display-table-vs-html-table-differences">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Display Table vs HTML Table Differences - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-display-table-vs-html-table-differences" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="While both CSS table layouts (display: table) and native HTML <table> elements utilize the same underlying tabular layout algorithm, they serve fundamentally different purposes in web development. Native HTML tables provide explicit structural semantics" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-display-table-vs-html-table-differences">CSS Display Table
+vs HTML Table Differences</h1>
+<p>While both CSS table layouts (<code>display: table</code>) and native
+HTML <code>&lt;table&gt;</code> elements utilize the same underlying
+tabular layout algorithm, they serve fundamentally different purposes in
+web development. Native HTML tables provide explicit structural
+semantics intended strictly for tabular data, ensuring screen readers
+and assistive technologies interpret rows and columns correctly. In
+contrast, CSS <code>display: table</code> properties decouple tabular
+presentation from markup, allowing developers to apply table-like visual
+behaviors—such as dynamic equal-height columns and vertical alignment—to
+arbitrary HTML elements without imposing tabular meaning.</p>
+<h3 id="semantic-meaning-and-accessibility">Semantic Meaning and
+Accessibility</h3>
+<p>The most critical distinction lies in document semantics and
+accessibility.</p>
+<ul>
+<li><strong>HTML Tables:</strong> Elements like
+<code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>,
+<code>&lt;th&gt;</code>, and <code>&lt;td&gt;</code> explicitly convey
+data relationships. Screen readers rely on this markup to announce data
+grids, associate data cells with header cells, and allow users to
+navigate logically across rows and columns. Using HTML tables for
+non-tabular content violates accessibility best practices and can
+disorient users relying on assistive technology.</li>
+<li><strong>CSS Table Display:</strong> Applying
+<code>display: table</code>, <code>display: table-row</code>, and
+<code>display: table-cell</code> to elements like
+<code>&lt;div&gt;</code> or <code>&lt;section&gt;</code> alters only the
+visual formatting model. Assistive technologies continue to treat the
+underlying elements according to their native HTML semantics.
+Consequently, CSS table properties can be used safely for visual layouts
+without misleading screen readers into announcing non-existent data
+matrices.</li>
+</ul>
+<h3 id="structural-rigidity-and-markup-flexibility">Structural Rigidity
+and Markup Flexibility</h3>
+<p>HTML tables enforce a strict, hierarchical Document Object Model
+(DOM) structure. A native table must consist of table rows enclosing
+table cells, and browsers automatically inject missing elements, such as
+a <code>&lt;tbody&gt;</code>, into the DOM tree if omitted.</p>
+<p>CSS table layout is far more forgiving. Browsers will automatically
+generate "anonymous" table-formatting objects to fill structural gaps.
+For example, if you declare an element as
+<code>display: table-cell</code> inside a parent with
+<code>display: table</code> without explicitly creating an intermediate
+<code>display: table-row</code>, the rendering engine generates an
+anonymous row box behind the scenes to maintain the layout
+algorithm.</p>
+<h3 id="responsive-design-adaptability">Responsive Design
+Adaptability</h3>
+<p>Modifying the structure of native HTML tables for mobile devices can
+be complex. While you can override HTML table elements with properties
+like <code>display: block</code> inside media queries, it often leads to
+messy overrides, broken attributes, and lingering accessibility
+issues.</p>
+<p>CSS table layout easily adapts within responsive designs. Because the
+base markup typically uses generic elements (such as
+<code>&lt;div&gt;</code>), switching a desktop table layout to a
+mobile-friendly layout requires changing a single CSS rule:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">table</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">.column</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">table-cell</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">max-width</span><span class="ch">:</span> <span class="dv">768</span><span class="dt">px</span><span class="fu">)</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.container</span><span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.column</span> {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">block</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="browser-defaults-and-styling">Browser Defaults and Styling</h3>
+<p>Native <code>&lt;table&gt;</code> elements carry legacy User-Agent
+stylesheets and inherent attributes such as <code>border-spacing</code>,
+<code>border-collapse</code>, and historical styling conventions that
+must be explicitly normalized or reset.</p>
+<p>Elements styled with <code>display: table</code> start as generic CSS
+containers. They do not inherit historical browser defaults, giving you
+a clean baseline where only the properties you define—such as
+<code>border-collapse: collapse</code> or
+<code>table-layout: fixed</code>—take effect.</p>
+<h3 id="when-to-use-each">When to Use Each</h3>
+<ul>
+<li><strong>Use HTML <code>&lt;table&gt;</code> elements:</strong>
+Exclusively when displaying structured data that warrants row and column
+mapping, such as financial statements, pricing comparisons, schedules,
+or analytics.</li>
+<li><strong>Use CSS <code>display: table</code>:</strong> When working
+in legacy codebases that require table-based alignment (like
+<code>vertical-align: middle</code> or automatic column width
+distribution) without the structural restrictions of HTML tables, though
+modern layouts are generally better served by CSS Flexbox or CSS
+Grid.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS user-select: none: How to Prevent Text Selection - css</title>
+    <meta name="description" content="The CSS user-select: none property prevents users from highlighting and selecting text within an interface by disabling the browser's default text selection behavior on targeted elements. This article explains how the property functions at the browser le">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-user-select-none-how-to-prevent-text-selection">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS user-select: none: How to Prevent Text Selection - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-user-select-none-how-to-prevent-text-selection" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS user-select: none property prevents users from highlighting and selecting text within an interface by disabling the browser's default text selection behavior on targeted elements. This article explains how the property functions at the browser le" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-user-select-none-how-to-prevent-text-selection">CSS
+user-select: none: How to Prevent Text Selection</h1>
+<p>The CSS <code>user-select: none</code> property prevents users from
+highlighting and selecting text within an interface by disabling the
+browser's default text selection behavior on targeted elements. This
+article explains how the property functions at the browser level, why it
+is essential for modern UI components like buttons and navigational
+controls, how inheritance affects nested elements, and the usability
+considerations you must keep in mind when applying it.</p>
+<h2 id="how-user-select-none-works">How user-select: none Works</h2>
+<p>When a user clicks and drags over text, or double-clicks a word,
+modern browsers initiate an internal selection mechanism managed by the
+DOM Selection API. This mechanism generates a visible selection
+highlight across text nodes and prepares the highlighted text for
+clipboard operations.</p>
+<p>Applying <code>user-select: none</code> instructs the rendering
+engine to exclude the designated element and its text nodes from this
+selection mechanism. As a result:</p>
+<ul>
+<li>Mouse drag events over the element will not create a highlight
+bounding box.</li>
+<li>Double-clicking or triple-clicking text will not highlight the word
+or paragraph.</li>
+<li>"Select All" (<code>Ctrl+A</code> or <code>Cmd+A</code>) commands
+bypass elements styled with <code>user-select: none</code>.</li>
+</ul>
+<p>The text remains fully rendered in the DOM, meaning screen readers
+can still read it, and search engine crawlers can still index it. The
+property strictly alters visual highlighting and selection via the user
+interface.</p>
+<h2 id="implementation-on-ui-components">Implementation on UI
+Components</h2>
+<p>Interactive elements in web applications—such as buttons, tabs,
+accordions, and drag-and-drop handles—often suffer from accidental text
+highlighting during fast or repeated clicking. Disabling selection
+preserves an application-like feel.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.button</span><span class="op">,</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.draggable-item</span><span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">.carousel-nav</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">-webkit-user-select</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span> <span class="co">/* Safari */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">user-select</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span>         <span class="co">/* Standard syntax */</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Vendor prefixes, primarily <code>-webkit-user-select</code>, are
+still recommended to ensure cross-browser compatibility, especially for
+older versions of Safari and iOS WebKit.</p>
+<h2 id="inheritance-and-overriding">Inheritance and Overriding</h2>
+<p>The <code>user-select</code> property is inherited by default. If you
+set <code>user-select: none</code> on a parent component, every child
+element within that component will also have text selection
+disabled.</p>
+<p>If a component contains editable fields or content that users should
+be allowed to copy (such as a code snippet inside a non-selectable
+card), you must explicitly restore selection on the child element:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">user-select</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">.card-code-output</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">user-select</span><span class="ch">:</span> <span class="dv">text</span><span class="op">;</span> <span class="co">/* Restores standard text selection */</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The available values for <code>user-select</code> include:</p>
+<ul>
+<li><code>none</code>: Prevents all selection on the element and its
+sub-elements.</li>
+<li><code>auto</code>: Computes to the default selection behavior of the
+browser.</li>
+<li><code>text</code>: Allows the user to select text normally.</li>
+<li><code>all</code>: Selects the entire element's content with a single
+click.</li>
+</ul>
+<h2 id="best-practices-and-usability">Best Practices and Usability</h2>
+<p>While <code>user-select: none</code> improves the visual stability of
+interactive controls, it should be used conservatively:</p>
+<ul>
+<li><strong>Target only controls:</strong> Limit the rule to UI elements
+like buttons, icon labels, sliders, and navigation menus.</li>
+<li><strong>Avoid content containers:</strong> Never apply
+<code>user-select: none</code> to long-form text, error messages,
+transactional data, or documentation. Preventing users from copying
+information they need creates significant frustration.</li>
+<li><strong>Not a security measure:</strong>
+<code>user-select: none</code> does not protect content from being
+scraped or copied. Users can still inspect the page source, view the DOM
+tree in developer tools, or disable CSS entirely to copy the text.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

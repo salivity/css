@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS Position Absolute Work with Ancestors? - css</title>
+    <meta name="description" content="CSS absolute positioning removes an element from the normal document flow and positions it precisely in relation to a specific ancestor element rather than its default location. This article explains the rules browsers follow to identify the correct cont">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-position-absolute-work-with-ancestors">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS Position Absolute Work with Ancestors? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-position-absolute-work-with-ancestors" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS absolute positioning removes an element from the normal document flow and positions it precisely in relation to a specific ancestor element rather than its default location. This article explains the rules browsers follow to identify the correct cont" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-position-absolute-work-with-ancestors">How Does CSS
+Position Absolute Work with Ancestors?</h1>
+<p>CSS absolute positioning removes an element from the normal document
+flow and positions it precisely in relation to a specific ancestor
+element rather than its default location. This article explains the
+rules browsers follow to identify the correct containing ancestor, how
+offset properties place the element within that ancestor’s coordinate
+system, and what happens when no positioned ancestor is defined.</p>
+<h2 id="the-containing-block-search-algorithm">The Containing Block
+Search Algorithm</h2>
+<p>When you apply <code>position: absolute</code> to an element, the
+browser determines its placement coordinates by looking up the DOM tree
+for the nearest ancestor that forms a <strong>containing
+block</strong>.</p>
+<p>By default, standard HTML elements have
+<code>position: static</code>, which means they participate in normal
+document flow and do not act as containing blocks for absolute
+descendants. The browser climbs up the ancestor chain until it
+encounters an element meeting one of the following criteria:</p>
+<ul>
+<li><strong>Positioned Ancestor:</strong> Any ancestor element with a
+<code>position</code> value set to <code>relative</code>,
+<code>absolute</code>, <code>fixed</code>, or <code>sticky</code>.</li>
+<li><strong>Transform, Filter, or Perspective:</strong> Any ancestor
+with CSS properties like <code>transform</code>, <code>filter</code>,
+<code>perspective</code>, or <code>clip-path</code> set to a value other
+than <code>none</code>.</li>
+<li><strong>Container Queries:</strong> Any ancestor with
+<code>container-type</code> set to <code>inline-size</code> or
+<code>size</code>.</li>
+<li><strong>Will-Change:</strong> Any ancestor with
+<code>will-change</code> specifying any of the above properties.</li>
+</ul>
+<p>The first ancestor that satisfies any of these conditions becomes the
+absolute element's containing block.</p>
+<h2 id="fallback-to-the-initial-containing-block">Fallback to the
+Initial Containing Block</h2>
+<p>If no ancestor in the DOM tree meets the criteria to establish a
+containing block, the element uses the <strong>initial containing
+block</strong>.</p>
+<p>In standard browser environments, the initial containing block
+corresponds to the dimensions and origin of the viewport for continuous
+media, anchored to the root element (<code>&lt;html&gt;</code>). In this
+scenario, coordinate offsets position the element relative to the entire
+page canvas rather than any enclosing container.</p>
+<h2 id="coordinate-offsets-and-padding-edges">Coordinate Offsets and
+Padding Edges</h2>
+<p>Once the containing block is established, the absolute element's
+position is dictated by the offset properties: <code>top</code>,
+<code>bottom</code>, <code>left</code>, and <code>right</code>.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.parent</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">relative</span><span class="op">;</span> <span class="co">/* Establishes the containing block */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">400</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.child</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">top</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">right</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In absolute positioning, offset distances are calculated from the
+<strong>padding box edges</strong> of the containing block, not its
+margin or content box. In the example above:</p>
+<ul>
+<li><code>top: 10px</code> places the top margin edge of
+<code>.child</code> 10 pixels below the top padding edge of
+<code>.parent</code>.</li>
+<li><code>right: 15px</code> places the right margin edge of
+<code>.child</code> 15 pixels inside the right padding edge of
+<code>.parent</code>.</li>
+</ul>
+<p>If no offset properties (<code>top</code>, <code>bottom</code>,
+<code>left</code>, <code>right</code>) are declared, the element remains
+at its static position—the exact coordinates it would have occupied in
+the normal document flow—while still floating outside the document flow
+without affecting sibling layouts.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

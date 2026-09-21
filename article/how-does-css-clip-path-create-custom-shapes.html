@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS clip-path Create Custom Shapes? - css</title>
+    <meta name="description" content="The CSS clip-path property enables web developers to define specific visible regions of an HTML element, effectively masking out unwanted areas to create geometric and organic custom shapes. By setting boundaries using predefined functions or external ve">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-clip-path-create-custom-shapes">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS clip-path Create Custom Shapes? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-clip-path-create-custom-shapes" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS clip-path property enables web developers to define specific visible regions of an HTML element, effectively masking out unwanted areas to create geometric and organic custom shapes. By setting boundaries using predefined functions or external ve" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-clip-path-create-custom-shapes">How Does CSS
+clip-path Create Custom Shapes?</h1>
+<p>The CSS <code>clip-path</code> property enables web developers to
+define specific visible regions of an HTML element, effectively masking
+out unwanted areas to create geometric and organic custom shapes. By
+setting boundaries using predefined functions or external vector paths,
+<code>clip-path</code> alters visual presentation without changing the
+underlying DOM structure. This article explores how
+<code>clip-path</code> works, the core shape functions available,
+performance advantages over traditional masking techniques, and
+practical implementation patterns for modern web layouts.</p>
+<h2 id="understanding-the-clipping-mechanism">Understanding the Clipping
+Mechanism</h2>
+<p>The <code>clip-path</code> property works by establishing a clipping
+region. Everything inside the designated boundary remains visible, while
+everything outside is rendered completely transparent.</p>
+<p>Unlike traditional CSS properties such as
+<code>border-radius</code>—which only curves rectangle
+corners—<code>clip-path</code> can construct arbitrary polygons,
+circles, ellipses, and complex SVG curves. Crucially, the clipped area
+prevents mouse events from firing on the hidden portions, ensuring that
+pointer interactions match the visual geometry of the rendered
+element.</p>
+<h2 id="core-basic-shape-functions">Core Basic Shape Functions</h2>
+<p>CSS provides several built-in shape functions that can be passed
+directly to the <code>clip-path</code> property:</p>
+<ul>
+<li><strong><code>circle()</code></strong>: Defines a circular clipping
+path using a radius and center coordinate.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.avatar</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">clip-path</span><span class="ch">:</span> <span class="fu">circle(</span><span class="dv">50</span><span class="dt">%</span> <span class="dv">at 50</span><span class="dt">%</span> <span class="dv">50</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong><code>ellipse()</code></strong>: Accepts two radii (x-axis
+and y-axis) along with a center position to generate oval masks.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.oval-badge</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">clip-path</span><span class="ch">:</span> <span class="fu">ellipse(</span><span class="dv">40</span><span class="dt">%</span> <span class="dv">25</span><span class="dt">%</span> <span class="dv">at 50</span><span class="dt">%</span> <span class="dv">50</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong><code>inset()</code></strong>: Defines an inner rectangular
+boundary offset from the edges of the reference box, with optional
+rounded corners.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card-inset</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">clip-path</span><span class="ch">:</span> <span class="fu">inset(</span><span class="dv">10</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="dv">round</span> <span class="dv">8</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><strong><code>polygon()</code></strong>: Constructs multi-point
+geometric forms like triangles, stars, and trapezoids using coordinate
+pairs.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.triangle</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">clip-path</span><span class="ch">:</span> <span class="fu">polygon(</span><span class="dv">50</span><span class="dt">%</span> <span class="dv">0</span><span class="dt">%</span><span class="op">,</span> <span class="dv">0</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span><span class="op">,</span> <span class="dv">100</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="advanced-vectors-using-svg-paths">Advanced Vectors Using SVG
+Paths</h2>
+<p>When geometric functions are insufficient for detailed artwork,
+<code>clip-path</code> can reference inline or external SVG paths using
+the <code>path()</code> or <code>url()</code> syntax:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.custom-wave</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">clip-path</span><span class="ch">:</span> <span class="fu">path(</span><span class="st">&quot;M 0,0 L 100,0 L 100,80 Q 50,100 0,80 Z&quot;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This approach allows designers to export intricate vector silhouettes
+directly from vector editing software and apply them to standard HTML
+content, including video containers, hero banners, and image
+galleries.</p>
+<h2 id="animation-and-transitions">Animation and Transitions</h2>
+<p>A major benefit of <code>clip-path</code> is native support for
+hardware-accelerated transitions and keyframe animations. Shapes can
+smoothly morph between states as long as the number of vertices remains
+identical.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.interactive-button</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">clip-path</span><span class="ch">:</span> <span class="fu">polygon(</span><span class="dv">0</span><span class="dt">%</span> <span class="dv">0</span><span class="dt">%</span><span class="op">,</span> <span class="dv">100</span><span class="dt">%</span> <span class="dv">0</span><span class="dt">%</span><span class="op">,</span> <span class="dv">100</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span><span class="op">,</span> <span class="dv">0</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">clip-path 0.3</span><span class="dt">s</span> <span class="dv">ease-in-out</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.interactive-button</span><span class="in">:hover</span> {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">clip-path</span><span class="ch">:</span> <span class="fu">polygon(</span><span class="dv">10</span><span class="dt">%</span> <span class="dv">0</span><span class="dt">%</span><span class="op">,</span> <span class="dv">90</span><span class="dt">%</span> <span class="dv">0</span><span class="dt">%</span><span class="op">,</span> <span class="dv">100</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span><span class="op">,</span> <span class="dv">0</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This capability makes <code>clip-path</code> an essential tool for
+dynamic UI components, reveal transitions, and interactive design
+patterns across modern browsers.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

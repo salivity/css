@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS text-wrap: balance: How It Works and Limitations - css</title>
+    <meta name="description" content="This article explains the CSS text-wrap: balance property, detailing the underlying algorithm that distributes text evenly across lines to avoid awkward typographic orphans. It also examines the computational reasons why browsers impose strict line limit">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-text-wrap-balance-how-it-works-and-limitations">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS text-wrap: balance: How It Works and Limitations - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-text-wrap-balance-how-it-works-and-limitations" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the CSS text-wrap: balance property, detailing the underlying algorithm that distributes text evenly across lines to avoid awkward typographic orphans. It also examines the computational reasons why browsers impose strict line limit" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-text-wrap-balance-how-it-works-and-limitations">CSS
+text-wrap: balance: How It Works and Limitations</h1>
+<p>This article explains the CSS <code>text-wrap: balance</code>
+property, detailing the underlying algorithm that distributes text
+evenly across lines to avoid awkward typographic orphans. It also
+examines the computational reasons why browsers impose strict line
+limits on this rule, reserving it exclusively for headings and short
+text blocks rather than full-length paragraphs.</p>
+<h2 id="what-is-text-wrap-balance">What is
+<code>text-wrap: balance</code>?</h2>
+<p>In traditional web typography, browsers use a "greedy" line-breaking
+algorithm. This approach fits as many words as possible onto each line
+before wrapping to the next. While efficient, it often leaves a single
+dangling word—known as an orphan or widow—on the final line of headings,
+creating visually unappealing and unbalanced layouts.</p>
+<p>The <code>text-wrap: balance</code> property instructs the browser to
+distribute text evenly across all lines within a container. Instead of
+maximizing words on early lines, it equalizes line lengths to produce a
+harmonious, symmetrical block of text.</p>
+<h2 id="how-the-balancing-algorithm-works">How the Balancing Algorithm
+Works</h2>
+<p>Unlike the standard line-wrapping mechanism, the balancing algorithm
+is iterative and relies on binary search techniques to achieve visual
+symmetry:</p>
+<ol type="1">
+<li><strong>Calculating the Initial Line Count:</strong> The browser
+first runs a standard layout pass using the greedy algorithm to
+determine the minimum number of lines required to display the text
+within the element's container width.</li>
+<li><strong>Binary Search for Minimum Width:</strong> Once the line
+count is known, the engine performs a binary search to find the
+narrowest possible line width that still maintains that exact line
+count.</li>
+<li><strong>Evaluating Break Points:</strong> The layout engine
+repeatedly tests candidate widths, measuring word widths and checking
+potential break opportunities until it discovers the optimal width where
+line lengths are as close to equal as possible without adding extra
+lines.</li>
+<li><strong>Rendering the Output:</strong> After settling on the
+balanced boundary, the browser lays out the text according to this
+calculated width, centering or aligning the balanced lines within the
+original parent container.</li>
+</ol>
+<h2 id="why-is-it-limited-to-short-headline-elements">Why is it Limited
+to Short Headline Elements?</h2>
+<p>Although balanced text looks aesthetically pleasing, browsers limit
+the application of <code>text-wrap: balance</code>—typically falling
+back to standard wrapping if the element exceeds roughly four to six
+lines. This limitation exists for two primary reasons: computational
+performance and typographic readability.</p>
+<h3 id="computational-performance-and-layout-cost">Computational
+Performance and Layout Cost</h3>
+<p>The standard greedy algorithm is computationally lightweight,
+operating in linear time <span class="math inline">\(O(N)\)</span>,
+where <span class="math inline">\(N\)</span> is the number of words. The
+browser only needs a single pass through the text string to determine
+where each line should break.</p>
+<p>In contrast, the balancing algorithm requires multiple layout passes
+to test line boundaries. Calculating text metrics involves complex font
+shaping, kerning, and word measurement. If applied to lengthy body
+text:</p>
+<ul>
+<li><strong>Layout Thrashing:</strong> Running multiple measurement
+passes on large blocks of text dramatically increases the cost of page
+rendering.</li>
+<li><strong>Scroll and Resize Latency:</strong> When a viewport is
+resized or dynamic content updates, recalculating balanced paragraphs
+causes severe frame drops and noticeable lag.</li>
+<li><strong>Exponential Combinations:</strong> As word count and line
+count grow, the search space for optimal break points expands,
+introducing a significant performance penalty for modern rendering
+engines.</li>
+</ul>
+<p>To protect page speed and maintain a 60-to-120 fps rendering loop,
+browser engines like Chromium place a hard ceiling (typically 6 lines)
+on elements styled with <code>text-wrap: balance</code>. If an element
+exceeds this threshold, the engine discards the balancing algorithm and
+immediately falls back to standard line wrapping.</p>
+<h3 id="typographic-readability">Typographic Readability</h3>
+<p>From a design perspective, balanced text is beneficial for headlines,
+captions, banners, and tooltips, where visual hierarchy and neatness are
+critical.</p>
+<p>In body copy, however, uneven right margins across many lines disrupt
+a reader's natural rhythm. Predictable, consistent line lengths help the
+eye quickly jump to the start of the next line. Balancing long
+paragraphs degrades this reading flow, making body text harder to scan
+and consume.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

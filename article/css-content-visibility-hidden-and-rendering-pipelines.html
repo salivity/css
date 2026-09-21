@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS content-visibility: hidden and Rendering Pipelines - css</title>
+    <meta name="description" content="The CSS content-visibility: hidden property optimizes web performance by allowing developers to instruct the browser to skip the rendering phases of an element's descendants while preserving its underlying state. This article breaks down how the browser">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-content-visibility-hidden-and-rendering-pipelines">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS content-visibility: hidden and Rendering Pipelines - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-content-visibility-hidden-and-rendering-pipelines" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS content-visibility: hidden property optimizes web performance by allowing developers to instruct the browser to skip the rendering phases of an element's descendants while preserving its underlying state. This article breaks down how the browser" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-content-visibility-hidden-and-rendering-pipelines">CSS
+content-visibility: hidden and Rendering Pipelines</h1>
+<p>The CSS <code>content-visibility: hidden</code> property optimizes
+web performance by allowing developers to instruct the browser to skip
+the rendering phases of an element's descendants while preserving its
+underlying state. This article breaks down how the browser rendering
+pipeline—specifically style computation, layout, and painting—handles
+subtrees marked with <code>content-visibility: hidden</code>, and
+explains how this mechanism delivers significant performance advantages
+over traditional methods like <code>display: none</code>.</p>
+<h3 id="the-core-rendering-pipeline">The Core Rendering Pipeline</h3>
+<p>To understand <code>content-visibility: hidden</code>, it is
+essential to trace the standard browser rendering lifecycle. Typically,
+when elements enter or update within the DOM, the browser executes a
+series of sequential phases:</p>
+<ol type="1">
+<li><strong>Recalculate Style:</strong> Matches CSS selectors to DOM
+nodes and computes final computed values.</li>
+<li><strong>Layout (Reflow):</strong> Determines the exact geometry,
+sizing, and position of every visible element.</li>
+<li><strong>Paint:</strong> Generates display lists containing
+instructions for drawing colors, borders, text, and images.</li>
+<li><strong>Composite:</strong> Translates paint instructions into GPU
+textures and layers them onto the screen.</li>
+</ol>
+<h3 id="how-content-visibility-hidden-halts-the-pipeline">How
+<code>content-visibility: hidden</code> Halts the Pipeline</h3>
+<p>Applying <code>content-visibility: hidden</code> introduces
+aggressive containment and instructs the browser to immediately skip
+rendering operations for all child elements of the target container.</p>
+<ul>
+<li><strong>Active Containment:</strong> The property applies strict
+containment (<code>layout</code>, <code>style</code>, and
+<code>paint</code> containment) to the element. This isolates the
+element's subtree from the rest of the document, ensuring that changes
+within the subtree do not trigger recalculations in the surrounding DOM
+tree.</li>
+<li><strong>Layout and Paint Bypassing:</strong> The browser generates
+the box for the container itself, but it completely skips the layout and
+paint operations for the descendants. The child nodes are treated as if
+they have zero rendering footprint.</li>
+<li><strong>Compositing Omission:</strong> Because no paint instructions
+are produced for the descendants, no compositing layers or GPU memory
+are allocated for the hidden content.</li>
+</ul>
+<h3 id="the-key-difference-preserved-state-vs-complete-destruction">The
+Key Difference: Preserved State vs. Complete Destruction</h3>
+<p>The major performance benefit of
+<code>content-visibility: hidden</code> emerges when comparing it to
+<code>display: none</code>:</p>
+<ul>
+<li><strong><code>display: none</code> Behavior:</strong> Completely
+tears down the element's layout boxes and rendering tree representation.
+When the element is shown again, the browser must rebuild the render
+tree, run full selector matching, recalculate styles from scratch, and
+compute full geometry for the entire subtree.</li>
+<li><strong><code>content-visibility: hidden</code> Behavior:</strong>
+Keeps the element's underlying rendering state and layout cache
+preserved in memory. While the execution of layout and paint is stopped,
+the browser does not discard the existing rendering structures.</li>
+</ul>
+<p>When the property is toggled back to
+<code>content-visibility: visible</code> (or removed), the browser
+bypasses the expensive recreation of the render tree. It reuses the
+cached layout data and only recalculates styles for properties that
+actively changed, dramatically reducing the time required to bring
+complex interfaces back to an interactive state.</p>
+<h3 id="handling-mutations-while-hidden">Handling Mutations While
+Hidden</h3>
+<p>If scripts modify the DOM or change styles inside a
+<code>content-visibility: hidden</code> container:</p>
+<ol type="1">
+<li><strong>Deferred Work:</strong> The browser marks the affected child
+elements as dirty, but it postpones the recalculation of style and
+layout indefinitely.</li>
+<li><strong>Batch Processing on Reveal:</strong> No style or layout
+thrashing occurs while the container remains hidden. When the visibility
+state changes, the browser resolves all accumulated modifications in a
+single, coordinated pass before presenting the frame.</li>
+</ol>
+<h3 id="accessibility-and-hit-testing-pipeline">Accessibility and
+Hit-Testing Pipeline</h3>
+<p>In addition to rendering and layout,
+<code>content-visibility: hidden</code> disconnects the subtree from
+hit-testing and the accessibility tree. Unlike
+<code>content-visibility: auto</code>, which keeps elements available to
+in-page search and assistive technologies, <code>hidden</code> blocks
+user interaction and removes descendant nodes from screen readers. This
+ensures the browser does not spend processing cycles calculating
+accessibility node bounds or touch targets for non-visible elements.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

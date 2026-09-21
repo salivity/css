@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS unicode-range Explained for Font Subsetting - css</title>
+    <meta name="description" content="The CSS @font-face descriptor unicode-range allows web developers to split large font files into smaller, modular chunks and instruct the browser to download only the specific character sets needed by a webpage. This article explains how unicode-range fu">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-unicode-range-explained-for-font-subsetting">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS unicode-range Explained for Font Subsetting - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-unicode-range-explained-for-font-subsetting" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS @font-face descriptor unicode-range allows web developers to split large font files into smaller, modular chunks and instruct the browser to download only the specific character sets needed by a webpage. This article explains how unicode-range fu" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-unicode-range-explained-for-font-subsetting">CSS
+unicode-range Explained for Font Subsetting</h1>
+<p>The CSS <code>@font-face</code> descriptor <code>unicode-range</code>
+allows web developers to split large font files into smaller, modular
+chunks and instruct the browser to download only the specific character
+sets needed by a webpage. This article explains how
+<code>unicode-range</code> functions, why it is critical for optimizing
+large character sets like Chinese, Japanese, Korean (CJK), or
+multilingual typefaces, and how it dramatically improves page loading
+performance by avoiding unnecessary font downloads.</p>
+<h3 id="the-problem-with-large-character-sets">The Problem with Large
+Character Sets</h3>
+<p>Standard Latin-based fonts usually contain a few hundred glyphs,
+resulting in file sizes of roughly 20 KB to 100 KB. In contrast, fonts
+supporting languages such as Chinese, Japanese, Korean, or extensive
+international and technical symbols can contain tens of thousands of
+glyphs. These full-scale font files often exceed 5 MB to 20 MB.</p>
+<p>Forcing a browser to download a multi-megabyte font file causes
+significant latency, delays text rendering, triggers high Cumulative
+Layout Shift (CLS), and wastes mobile bandwidth—especially if the
+webpage only displays a few dozen unique characters from that set.</p>
+<h3 id="how-unicode-range-solves-this">How <code>unicode-range</code>
+Solves This</h3>
+<p>The <code>unicode-range</code> descriptor defines a specific range of
+Unicode code points that a particular <code>@font-face</code> resource
+covers.</p>
+<p>When you define a <code>unicode-range</code>, modern browsers do not
+download the font file immediately upon discovering the CSS rule.
+Instead, the browser scans the text content of the page. If, and only
+if, a character on the page falls within the declared Unicode range, the
+browser requests that specific font file from the server.</p>
+<h3 id="implementation-and-subsetting">Implementation and
+Subsetting</h3>
+<p>To leverage <code>unicode-range</code> effectively, a large master
+font file must first be split into smaller subsets (using tools like
+<code>pyftsubset</code> or font optimization pipelines). Once
+partitioned, each subset is assigned to the same
+<code>font-family</code> name, but with a unique
+<code>unicode-range</code>.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Latin Character Subset */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;OpenSansComposite&#39;</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;fonts/OpenSans-Latin.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">unicode-range</span><span class="ch">:</span> <span class="dv">U+0000-00FF</span><span class="op">,</span> <span class="dv">U+0131</span><span class="op">,</span> <span class="dv">U+0152-0153</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">/* Cyrillic Character Subset */</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;OpenSansComposite&#39;</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;fonts/OpenSans-Cyrillic.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">unicode-range</span><span class="ch">:</span> <span class="dv">U+0301</span><span class="op">,</span> <span class="dv">U+0400-045F</span><span class="op">,</span> <span class="dv">U+0490-0491</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">/* High-frequency CJK Subset */</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;OpenSansComposite&#39;</span><span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;fonts/NotoSans-CJK-Subset1.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">unicode-range</span><span class="ch">:</span> <span class="dv">U+4E00-51FF</span><span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;OpenSansComposite&#39;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="syntax-format-for-code-points">Syntax Format for Code
+Points</h3>
+<p>The descriptor accepts single values, ranges, and wildcards separated
+by commas:</p>
+<ul>
+<li><strong>Single code point:</strong> <code>U+26</code> (the
+<code>&amp;</code> character)</li>
+<li><strong>Contiguous range:</strong> <code>U+0020-007F</code>
+(standard ASCII range)</li>
+<li><strong>Wildcard range:</strong> <code>U+4???</code> (covers all
+code points from <code>U+4000</code> to <code>U+4FFF</code>)</li>
+<li><strong>Multiple ranges:</strong>
+<code>U+0000-00FF, U+0131, U+0152-0153</code></li>
+</ul>
+<h3 id="key-performance-benefits">Key Performance Benefits</h3>
+<ul>
+<li><strong>Zero Waste:</strong> If a page only contains English text,
+the Cyrillic or CJK font chunks mapped under the same family are never
+fetched.</li>
+<li><strong>Faster Largest Contentful Paint (LCP):</strong> Critical
+initial text renders immediately with smaller initial subsets instead of
+waiting for a monolithic file to download.</li>
+<li><strong>Selective Overrides:</strong> Developers can use custom
+decorative fonts for specific characters (such as ampersands or
+copyright symbols) while letting system or body fonts handle the rest,
+without adding separate HTML classes to those characters.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

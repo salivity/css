@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How touch-action: pan-y Handles Scroll and Swipes - css</title>
+    <meta name="description" content="The CSS touch-action: pan-y property allows web applications to retain smooth native vertical page scrolling while simultaneously capturing horizontal swipe gestures with JavaScript. By explicitly declaring the allowed touch interactions directly in CSS,">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-touch-action-pan-y-handles-scroll-and-swipes">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How touch-action: pan-y Handles Scroll and Swipes - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-touch-action-pan-y-handles-scroll-and-swipes" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS touch-action: pan-y property allows web applications to retain smooth native vertical page scrolling while simultaneously capturing horizontal swipe gestures with JavaScript. By explicitly declaring the allowed touch interactions directly in CSS," />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-touch-action-pan-y-handles-scroll-and-swipes">How
+touch-action: pan-y Handles Scroll and Swipes</h1>
+<p>The CSS <code>touch-action: pan-y</code> property allows web
+applications to retain smooth native vertical page scrolling while
+simultaneously capturing horizontal swipe gestures with JavaScript. By
+explicitly declaring the allowed touch interactions directly in CSS, the
+browser can immediately separate vertical scrolling from horizontal
+movements without waiting for JavaScript execution, eliminating scroll
+lag and gesture conflicts.</p>
+<h3 id="the-problem-with-default-touch-handling">The Problem with
+Default Touch Handling</h3>
+<p>By default, mobile browsers handle all touch gestures directly on the
+viewport. When a user places a finger on the screen and drags, the
+browser must decide whether the gesture is meant to scroll the page,
+zoom, or interact with an element on the screen.</p>
+<p>Before the <code>touch-action</code> property, developers handled
+swipe gestures by listening to <code>touchstart</code>,
+<code>touchmove</code>, and <code>touchend</code> events in JavaScript.
+To prevent the page from moving horizontally or behaving unpredictably,
+developers often called <code>event.preventDefault()</code>. However,
+calling <code>preventDefault()</code> inside touch listeners forces the
+browser to wait for the JavaScript thread to finish before deciding
+whether to scroll, resulting in delayed, stuttering, or janky scrolling
+behavior.</p>
+<h3 id="how-touch-action-pan-y-solves-the-issue">How
+<code>touch-action: pan-y</code> Solves the Issue</h3>
+<p>The <code>touch-action</code> property informs the browser's
+compositor thread about which touch interactions are allowed on a
+specific element before any JavaScript touch event handlers are
+executed.</p>
+<p>When you apply <code>touch-action: pan-y</code> to an element:</p>
+<ol type="1">
+<li><strong>Vertical Panning Remains Native:</strong> The browser
+retains full native control over vertical scrolling
+(<code>pan-y</code>). When a user swipes up or down, the browser
+immediately scrolls the viewport smoothly without consulting the main
+JavaScript thread.</li>
+<li><strong>Horizontal Panning Is Relinquished:</strong> The browser
+disables its own default actions for horizontal movements
+(<code>pan-x</code>). The browser will not attempt to scroll
+horizontally or trigger native navigation gestures like swiping back or
+forward through browser history.</li>
+<li><strong>Gestures Pass Directly to JavaScript:</strong> Because the
+browser knows it will not handle horizontal panning natively, it
+immediately sends all horizontal pointer and touch events directly to
+your application logic.</li>
+</ol>
+<h3 id="implementing-horizontal-swipes-with-pan-y">Implementing
+Horizontal Swipes with <code>pan-y</code></h3>
+<p>This property is ideal for UI components like carousels, image
+sliders, tab switchers, and swipe-to-dismiss items.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.carousel-container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">touch-action</span><span class="ch">:</span> <span class="dv">pan-y</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow</span><span class="ch">:</span> <span class="dv">hidden</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>With this CSS rule applied, you can attach pointer event listeners in
+JavaScript to track horizontal movement:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> carousel <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.carousel-container&#39;</span>)<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> startX <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>carousel<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;pointerdown&#39;</span><span class="op">,</span> (e) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  startX <span class="op">=</span> e<span class="op">.</span><span class="at">clientX</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>carousel<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;pointerup&#39;</span><span class="op">,</span> (e) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> diffX <span class="op">=</span> e<span class="op">.</span><span class="at">clientX</span> <span class="op">-</span> startX<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (diffX <span class="op">&gt;</span> <span class="dv">50</span>) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Swipe right action</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (diffX <span class="op">&lt;</span> <span class="op">-</span><span class="dv">50</span>) {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Swipe left action</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<h3 id="performance-and-usability-advantages">Performance and Usability
+Advantages</h3>
+<ul>
+<li><strong>Jank-Free Scrolling:</strong> The browser does not need to
+wait for event listeners to resolve before executing vertical scrolls,
+ensuring the user experiences standard 60fps or 120fps scrolling.</li>
+<li><strong>Passive Event Listeners:</strong> Because you do not need to
+call <code>event.preventDefault()</code> to stop horizontal viewport
+shifting, you can safely use passive event listeners
+(<code>{ passive: true }</code>), which further improves rendering
+performance.</li>
+<li><strong>Predictable User Experience:</strong> Users can naturally
+scroll past interactive horizontal components while reading a page, but
+the moment their gesture aligns horizontally, the component responds
+instantly without accidental page shifting.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

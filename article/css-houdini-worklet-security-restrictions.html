@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Houdini Worklet Security Restrictions - css</title>
+    <meta name="description" content="CSS Houdini worklets allow developers to hook directly into the browser's rendering pipeline to execute custom paint, layout, and animation logic, but exposing low-level rendering mechanisms introduces notable security and privacy concerns. To protect ag">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-houdini-worklet-security-restrictions">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Houdini Worklet Security Restrictions - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-houdini-worklet-security-restrictions" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS Houdini worklets allow developers to hook directly into the browser's rendering pipeline to execute custom paint, layout, and animation logic, but exposing low-level rendering mechanisms introduces notable security and privacy concerns. To protect ag" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-houdini-worklet-security-restrictions">CSS Houdini Worklet
+Security Restrictions</h1>
+<p>CSS Houdini worklets allow developers to hook directly into the
+browser's rendering pipeline to execute custom paint, layout, and
+animation logic, but exposing low-level rendering mechanisms introduces
+notable security and privacy concerns. To protect against data leakage,
+UI spoofing, and side-channel attacks, modern browsers enforce strict
+security boundaries around worklets. This article outlines the core
+security restrictions governing Houdini worklets, including secure
+context enforcement, thread isolation, DOM and network restrictions, and
+safeguards against timing-based vulnerabilities.</p>
+<h3 id="secure-context-requirement">Secure Context Requirement</h3>
+<p>Modern browsers restrict CSS Houdini APIs exclusively to Secure
+Contexts. Worklets can only be registered and executed over HTTPS or on
+local development hostnames such as <code>localhost</code>. Because
+Houdini scripts run directly within the rendering pipeline, this
+requirement eliminates the risk of Man-in-the-Middle (MitM) attacks
+where an attacker on an insecure network could inject malicious
+rendering code into a user's session.</p>
+<h3 id="execution-isolation-and-the-workletglobalscope">Execution
+Isolation and the WorkletGlobalScope</h3>
+<p>Houdini worklets do not run in the standard window execution
+environment; instead, they operate within a dedicated
+<code>WorkletGlobalScope</code>. This global scope enforces strict
+architectural boundaries:</p>
+<ul>
+<li><strong>No DOM Access:</strong> Worklets cannot access
+<code>document</code>, <code>window</code>, or any underlying DOM nodes.
+This prevents rendering code from reading sensitive text on a page,
+injecting unexpected elements, or modifying document structures.</li>
+<li><strong>No Storage Access:</strong> Worklets have no access to
+storage APIs such as <code>localStorage</code>,
+<code>sessionStorage</code>, <code>IndexedDB</code>, or cookies,
+preventing unauthorized access to session tokens and cached user
+data.</li>
+<li><strong>Statelessness:</strong> Browsers can spawn multiple worklet
+instances across various rendering threads, terminate them, or execute
+them out of order. Worklets are intentionally designed to be stateless
+to prevent persistent tracking mechanisms from being established inside
+the rendering layer.</li>
+</ul>
+<h3 id="network-and-io-restrictions">Network and I/O Restrictions</h3>
+<p>Unlike Web Workers, which can communicate over networks and spawn
+additional background tasks, Houdini worklets have their I/O
+capabilities completely disabled:</p>
+<ul>
+<li><strong>No Network APIs:</strong> Standard networking
+interfaces—including <code>fetch()</code>, <code>XMLHttpRequest</code>,
+<code>EventSource</code>, and <code>WebSocket</code>—are absent from
+<code>WorkletGlobalScope</code>.</li>
+<li><strong>Data Exfiltration Prevention:</strong> Because worklets
+cannot initiate outbound network requests, they cannot directly
+exfiltrate computed style metrics, user interactions, or painted
+geometry to a remote server.</li>
+<li><strong>Module Loading Controls:</strong> Worklet scripts must be
+loaded using ECMAScript modules via methods such as
+<code>CSS.paintWorklet.addModule()</code>. These requests are subject to
+standard Cross-Origin Resource Sharing (CORS) rules, ensuring
+cross-origin scripts cannot be executed without proper authorization
+headers.</li>
+</ul>
+<h3 id="protection-against-timing-and-side-channel-attacks">Protection
+Against Timing and Side-Channel Attacks</h3>
+<p>Exposing low-level layout and paint routines creates potential
+vectors for side-channel attacks, such as inferring browsing history or
+user data based on rendering behavior. Browsers apply specific
+mitigations:</p>
+<ul>
+<li><strong>No High-Resolution Timers:</strong> Worklets do not have
+access to <code>performance.now()</code>. Restricting microsecond-level
+timing prevents attackers from measuring memory cache states, resource
+load times, or layout duration.</li>
+<li><strong>Visited Link Protection:</strong> Worklets cannot detect
+whether a link has been styled using the <code>:visited</code>
+pseudo-class. Input properties passed to worklets resolve
+<code>:visited</code> states as regular unvisited links, blocking
+history-sniffing exploits.</li>
+<li><strong>Pixel Reading Restrictions:</strong> CSS Paint Worklets do
+not provide a mechanism to read back pixels from the canvas or sample
+the existing output of surrounding elements, preventing cross-origin
+image extraction.</li>
+</ul>
+<h3 id="resource-budgeting-and-denial-of-service-defense">Resource
+Budgeting and Denial-of-Service Defense</h3>
+<p>Because worklets execute synchronously during critical stages of the
+rendering lifecycle (such as painting and layout passes), poorly written
+or malicious code could block the user interface. Browsers mitigate this
+through resource throttling:</p>
+<ul>
+<li><strong>Strict Execution Budgets:</strong> Browsers enforce time
+limits on worklet execution. If a worklet fails to produce a result
+within an allocated budget or enters an infinite loop, the browser can
+terminate execution, abort the frame, and fall back to native CSS
+rendering defaults.</li>
+<li><strong>Input Immobility:</strong> Worklets only receive read-only
+data, such as <code>CSSStyleValue</code> objects or layout geometry
+descriptors, ensuring that a worklet cannot trigger cascading layout
+recalculations or recursive style invalidation loops.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

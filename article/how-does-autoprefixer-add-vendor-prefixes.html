@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does Autoprefixer Add Vendor Prefixes? - css</title>
+    <meta name="description" content="Autoprefixer is a widely used PostCSS plugin that automates cross-browser CSS compatibility by parsing standard stylesheet declarations, comparing required properties against target browser datasets, and injecting vendor prefixes directly into the code.">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-autoprefixer-add-vendor-prefixes">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does Autoprefixer Add Vendor Prefixes? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-autoprefixer-add-vendor-prefixes" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Autoprefixer is a widely used PostCSS plugin that automates cross-browser CSS compatibility by parsing standard stylesheet declarations, comparing required properties against target browser datasets, and injecting vendor prefixes directly into the code." />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-autoprefixer-add-vendor-prefixes">How Does Autoprefixer
+Add Vendor Prefixes?</h1>
+<p>Autoprefixer is a widely used PostCSS plugin that automates
+cross-browser CSS compatibility by parsing standard stylesheet
+declarations, comparing required properties against target browser
+datasets, and injecting vendor prefixes directly into the code. Rather
+than using crude regular expressions or hardcoded lists, Autoprefixer
+relies on PostCSS to transform raw CSS into an Abstract Syntax Tree
+(AST). It then cross-references your specified browser targets via
+Browserslist against data from Can I Use to add necessary vendor
+prefixes—and remove obsolete ones—before serializing the tree back into
+clean, production-ready CSS.</p>
+<h2 id="the-role-of-postcss-and-the-abstract-syntax-tree">The Role of
+PostCSS and the Abstract Syntax Tree</h2>
+<p>Autoprefixer does not parse CSS on its own; it operates as an AST
+transformer within the PostCSS ecosystem. When a stylesheet is passed to
+PostCSS, the parser reads the text character by character and constructs
+an Abstract Syntax Tree (AST).</p>
+<p>An AST is a hierarchical tree representation of the code
+structure:</p>
+<ul>
+<li><strong>Root</strong>: The top-level node containing the entire
+stylesheet.</li>
+<li><strong>AtRule</strong>: Statements beginning with <code>@</code>
+(e.g., <code>@keyframes</code>, <code>@media</code>,
+<code>@supports</code>).</li>
+<li><strong>Rule</strong>: CSS selectors containing one or more
+declarations (e.g., <code>.container { ... }</code>).</li>
+<li><strong>Declaration</strong>: Key-value style pairs (e.g.,
+<code>display: flex</code> or <code>user-select: none</code>).</li>
+<li><strong>Comment</strong>: Comments within the CSS file.</li>
+</ul>
+<p>By breaking CSS into distinct nodes, Autoprefixer can
+programmatically inspect properties, values, selectors, and at-rules
+without accidentally altering string literals or comments.</p>
+<h2 id="target-definition-via-browserslist-and-can-i-use">Target
+Definition via Browserslist and Can I Use</h2>
+<p>Before modifying any node, Autoprefixer determines which prefixes are
+actually required based on your configuration.</p>
+<ol type="1">
+<li><strong>Target Resolution</strong>: It reads the project's
+<code>.browserslistrc</code> file or <code>package.json</code>
+configuration (e.g., <code>&gt; 1%, last 2 versions, not dead</code>) to
+identify target browsers.</li>
+<li><strong>Support Lookup</strong>: It references
+<code>caniuse-lite</code>, a compact version of the Can I Use database,
+which tracks the exact browser versions requiring prefixes like
+<code>-webkit-</code>, <code>-moz-</code>, <code>-ms-</code>, or
+<code>-o-</code>.</li>
+<li><strong>Prefix Mapping</strong>: It generates an in-memory
+dictionary mapping standard CSS features to specific vendor prefixes
+based on the active target matrix.</li>
+</ol>
+<h2 id="ast-traversal-and-node-modification">AST Traversal and Node
+Modification</h2>
+<p>Once the tree is built and the browser targets are established,
+Autoprefixer traverses each node in the AST:</p>
+<h3 id="1-inspecting-declarations-and-values">1. Inspecting Declarations
+and Values</h3>
+<p>Autoprefixer walks through all <code>Declaration</code> nodes to
+check both the property name and the assigned value.</p>
+<ul>
+<li><strong>Property Prefixing</strong>: If a property like
+<code>appearance</code> requires a prefix in your target browsers,
+Autoprefixer creates clone nodes with <code>-webkit-appearance</code> or
+<code>-moz-appearance</code> and inserts them immediately before the
+standard property.</li>
+<li><strong>Value Prefixing</strong>: If a property is standard but its
+value is prefixed (such as <code>display: -webkit-flex</code> or
+<code>background: -webkit-linear-gradient(...)</code>), Autoprefixer
+duplicates the declaration with the prefixed values.</li>
+</ul>
+<h3 id="2-inspecting-at-rules-and-selectors">2. Inspecting At-Rules and
+Selectors</h3>
+<p>CSS prefixing extends beyond standard rules:</p>
+<ul>
+<li><strong>Keyframes</strong>: For <code>@keyframes</code> animations,
+Autoprefixer checks if <code>-webkit-@keyframes</code> is required,
+duplicating the entire block if necessary.</li>
+<li><strong>Pseudo-elements and Selectors</strong>: For selectors like
+<code>::placeholder</code>, it inserts the appropriate prefixed versions
+(e.g., <code>::-webkit-input-placeholder</code>,
+<code>::-moz-placeholder</code>,
+<code>:-ms-input-placeholder</code>).</li>
+</ul>
+<h3 id="3-cleaning-obsolete-and-unneeded-prefixes">3. Cleaning Obsolete
+and Unneeded Prefixes</h3>
+<p>Autoprefixer also includes a clean-up phase. If your source CSS
+already contains outdated or redundant prefixes that no longer match
+your Browserslist targets (such as old <code>-moz-border-radius</code>
+declarations), Autoprefixer identifies and strips those nodes from the
+AST.</p>
+<h2 id="stringifying-the-modified-ast">Stringifying the Modified
+AST</h2>
+<p>After all AST nodes have been inspected, inserted, or removed,
+PostCSS initiates the stringification process. It walks the updated tree
+and serializes each node back into a plain CSS string.</p>
+<p>Because the modifications happen at the node level, the output
+preserves accurate source maps, line formatting, and comment placement.
+The resulting CSS file contains standard, modern declarations alongside
+only the exact vendor prefixes required by your intended audience.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Subgrid Rows: Aligning Cards in Dynamic Lists - css</title>
+    <meta name="description" content="This article explores how the CSS subgrid value for grid-template-rows solves the common problem of misaligned content within dynamic card layouts. You will learn the mechanics of grid-template-rows: subgrid, the limitations of traditional layout methods">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-subgrid-rows-aligning-cards-in-dynamic-lists">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Subgrid Rows: Aligning Cards in Dynamic Lists - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-subgrid-rows-aligning-cards-in-dynamic-lists" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the CSS subgrid value for grid-template-rows solves the common problem of misaligned content within dynamic card layouts. You will learn the mechanics of grid-template-rows: subgrid, the limitations of traditional layout methods" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-subgrid-rows-aligning-cards-in-dynamic-lists">CSS Subgrid
+Rows: Aligning Cards in Dynamic Lists</h1>
+<p>This article explores how the CSS <code>subgrid</code> value for
+<code>grid-template-rows</code> solves the common problem of misaligned
+content within dynamic card layouts. You will learn the mechanics of
+<code>grid-template-rows: subgrid</code>, the limitations of traditional
+layout methods, and a practical implementation to align card headers,
+bodies, and footers consistently across adjacent grid columns regardless
+of dynamic content size.</p>
+<h2 id="the-problem-with-dynamic-card-layouts">The Problem with Dynamic
+Card Layouts</h2>
+<p>In modern web design, dynamic card lists frequently contain varying
+amounts of content. One card may have a single-line title and short
+description, while an adjacent card contains a three-line title and
+lengthy text.</p>
+<p>Using traditional CSS Grid or Flexbox, the outer card boundaries can
+easily stretch to match the height of the tallest card in a row.
+However, the internal sections of those cards—such as headers, body
+content, and call-to-action buttons—remain isolated within each card's
+local layout context. This causes buttons and text sections to sit at
+mismatched vertical positions across the row, creating an uneven visual
+rhythm.</p>
+<h2 id="what-is-grid-template-rows-subgrid">What is
+<code>grid-template-rows: subgrid</code>?</h2>
+<p>Normally, setting <code>display: grid</code> on a child element
+creates a completely independent grid context disconnected from the
+parent grid's tracks.</p>
+<p>The <code>subgrid</code> value changes this behavior. When applied to
+a nested grid container via <code>grid-template-rows: subgrid</code>,
+the child element adopts the row tracks defined by its parent grid
+instead of generating its own independent row tracks. This allows direct
+descendants of the nested container to place themselves along the parent
+grid's tracks, sharing sizing calculations directly with neighboring
+cards.</p>
+<h2 id="how-subgrid-aligns-cards-in-dynamic-lists">How Subgrid Aligns
+Cards in Dynamic Lists</h2>
+<p>To align internal card components across dynamic columns, the layout
+relies on two structural requirements:</p>
+<ol type="1">
+<li><strong>The parent grid spans multiple rows per card:</strong>
+Instead of each card occupying a single grid row, the parent grid
+allocates multiple rows (such as one for the header, one for the body,
+and one for the footer).</li>
+<li><strong>The card uses subgrid for its rows:</strong> The card
+container spans these rows (for example, <code>grid-row: span 3</code>)
+and declares <code>grid-template-rows: subgrid</code>.</li>
+</ol>
+<p>Because the cards share the exact same row tracks, an expanding
+element in one card expands that row for every other card in the same
+horizontal track. If one card has a three-line title, the shared header
+row grows, neatly pushing the body and footer down uniformly across all
+cards in that row.</p>
+<h2 id="practical-implementation">Practical Implementation</h2>
+<h3 id="html-structure">HTML Structure</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;card-grid&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">article</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;card&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Short Title<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Brief text description.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">button</span><span class="dt">&gt;</span>Read More<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">article</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">article</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;card&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>A Much Longer Title That Wraps Across Multiple Lines<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Detailed text description that takes up more vertical space.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">button</span><span class="dt">&gt;</span>Read More<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">article</span><span class="dt">&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="css-implementation">CSS Implementation</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card-grid</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">grid</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-template-columns</span><span class="ch">:</span> <span class="fu">repeat(</span><span class="dv">auto-fit</span><span class="op">,</span> <span class="fu">minmax(</span><span class="dv">280</span><span class="dt">px</span><span class="op">,</span> <span class="dv">1</span><span class="dt">fr</span><span class="fu">))</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Automatically create rows sized by content */</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-auto-rows</span><span class="ch">:</span> <span class="bu">auto</span> <span class="bu">auto</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">gap</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">grid</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Span across the 3 parent rows: header, body, footer */</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-row</span><span class="ch">:</span> <span class="dv">span 3</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Inherit the row track sizing from .card-grid */</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-template-rows</span><span class="ch">:</span> <span class="dv">subgrid</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="summary-of-benefits">Summary of Benefits</h2>
+<p>Using <code>grid-template-rows: subgrid</code> for card lists
+provides several distinct advantages:</p>
+<ul>
+<li><strong>Pixel-perfect alignment:</strong> Headers, paragraphs, and
+action buttons align horizontally across dynamic sibling elements
+without fixed heights.</li>
+<li><strong>No JavaScript needed:</strong> Layout calculations are
+handled entirely in the browser's native rendering engine, eliminating
+the need for resize listeners or script-based height equalization.</li>
+<li><strong>Responsive and dynamic:</strong> The layout automatically
+adjusts when screen sizes change or when new content loads dynamically
+via APIs.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

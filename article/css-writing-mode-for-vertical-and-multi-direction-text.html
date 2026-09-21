@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS writing-mode for Vertical and Multi-Direction Text - css</title>
+    <meta name="description" content="The CSS writing-mode property controls whether text lines are laid out horizontally or vertically, as well as the direction in which new blocks progress across the screen. By default, web typography relies on horizontal top-to-bottom text, but writing-mo">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-writing-mode-for-vertical-and-multi-direction-text">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS writing-mode for Vertical and Multi-Direction Text - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-writing-mode-for-vertical-and-multi-direction-text" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS writing-mode property controls whether text lines are laid out horizontally or vertically, as well as the direction in which new blocks progress across the screen. By default, web typography relies on horizontal top-to-bottom text, but writing-mo" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-writing-mode-for-vertical-and-multi-direction-text">CSS
+writing-mode for Vertical and Multi-Direction Text</h1>
+<p>The CSS <code>writing-mode</code> property controls whether text
+lines are laid out horizontally or vertically, as well as the direction
+in which new blocks progress across the screen. By default, web
+typography relies on horizontal top-to-bottom text, but
+<code>writing-mode</code> allows developers to natively support vertical
+layouts essential for internationalization—such as traditional East
+Asian and Mongolian scripts—as well as modern graphic design accents
+like vertical headers and side labels. This article explains how the
+property works, outlines its core syntax values, demonstrates how it
+changes the coordinate flow of the document, and details how it pairs
+with other CSS properties to handle complex, multi-directional
+typographic layouts.</p>
+<h2 id="core-syntax-and-values">Core Syntax and Values</h2>
+<p>The <code>writing-mode</code> property defines the block flow
+direction (how lines stack) and the inline base direction (how
+characters run within a line).</p>
+<ul>
+<li><strong><code>horizontal-tb</code></strong>: The default web
+standard. Text flows horizontally along the inline axis, and lines
+progress vertically from top to bottom (<code>tb</code>).</li>
+<li><strong><code>vertical-rl</code></strong>: Text flows vertically
+from top to bottom along the inline axis, and lines stack from right to
+left (<code>rl</code>). This is the primary orientation for traditional
+Chinese, Japanese, and Korean (CJK) typography.</li>
+<li><strong><code>vertical-lr</code></strong>: Text flows vertically
+from top to bottom, but lines stack from left to right
+(<code>lr</code>). This layout is native to scripts like Mongolian and
+Phags-pa, and is frequently used for Western graphic design accents like
+sidebar badges.</li>
+<li><strong><code>sideways-rl</code> and
+<code>sideways-lr</code></strong>: Rotates all content, including
+scripts that normally stay upright, physically sideways. These values
+are useful for rotated labels, though browser support may vary compared
+to the standard vertical values.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Example Usage */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.vertical-text-rl</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">writing-mode</span><span class="ch">:</span> <span class="dv">vertical-rl</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.vertical-text-lr</span> {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">writing-mode</span><span class="ch">:</span> <span class="dv">vertical-lr</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-writing-mode-affects-the-box-model">How writing-mode Affects
+the Box Model</h2>
+<p>Changing <code>writing-mode</code> shifts the browser's coordinate
+system from physical dimensions to logical dimensions:</p>
+<ul>
+<li><strong>Inline Axis</strong>: The direction text runs within a
+single line. In <code>horizontal-tb</code>, the inline axis is
+horizontal (X-axis). In <code>vertical-rl</code> or
+<code>vertical-lr</code>, the inline axis becomes vertical
+(Y-axis).</li>
+<li><strong>Block Axis</strong>: The direction lines stack. In
+horizontal mode, the block axis is vertical (Y-axis). In vertical mode,
+the block axis becomes horizontal (X-axis).</li>
+</ul>
+<p>Because the axes flip, relying on physical properties like
+<code>width</code>, <code>height</code>, <code>margin-top</code>, and
+<code>margin-left</code> can lead to unexpected layouts. Instead, CSS
+Logical Properties dynamically adapt to the active
+<code>writing-mode</code>:</p>
+<ul>
+<li><code>inline-size</code> controls the size along the text line
+(equivalent to <code>height</code> in vertical mode).</li>
+<li><code>block-size</code> controls the size across lines (equivalent
+to <code>width</code> in vertical mode).</li>
+<li><code>margin-inline-start</code>, <code>margin-block-end</code>, and
+padding equivalents maintain structural consistency regardless of
+writing orientation.</li>
+</ul>
+<h2 id="controlling-glyph-orientation-text-orientation">Controlling
+Glyph Orientation: text-orientation</h2>
+<p>When text is displayed vertically, individual characters can either
+stand upright or rotate 90 degrees clockwise. The
+<code>text-orientation</code> property dictates this behavior when
+<code>writing-mode</code> is set to a vertical value:</p>
+<ul>
+<li><strong><code>mixed</code></strong> (default): Rotates horizontal
+scripts (such as Latin, Cyrillic, or Arabic) 90 degrees while keeping
+CJK characters upright.</li>
+<li><strong><code>upright</code></strong>: Forces all characters,
+including Latin letters and numbers, to sit upright in a stacked
+column.</li>
+<li><strong><code>sideways</code></strong>: Forces all text to be
+displayed as if the entire line were rotated 90 degrees.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.stacked-western-text</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">writing-mode</span><span class="ch">:</span> <span class="dv">vertical-rl</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-orientation</span><span class="ch">:</span> <span class="dv">upright</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="handling-multi-directional-text">Handling Multi-Directional
+Text</h2>
+<p>Complex typographic layouts often combine vertical and horizontal
+text simultaneously. CSS provides properties that work directly
+alongside <code>writing-mode</code> to solve these challenges:</p>
+<h3 id="combining-numbers-and-acronyms-tate-chū-yoko">Combining Numbers
+and Acronyms (Tate-chū-yoko)</h3>
+<p>In vertical East Asian typography, short Latin numbers or
+abbreviations (like "2024" or "CSS") are often placed side-by-side
+horizontally within a single vertical line. The
+<code>text-combine-upright</code> property achieves this effect:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.year-number</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-combine-upright</span><span class="ch">:</span> <span class="dv">all</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This compacts the enclosed characters into the space of a single
+full-width vertical character box.</p>
+<h3 id="direction-and-bidirectionality">Direction and
+Bidirectionality</h3>
+<p>The <code>direction</code> property (<code>ltr</code> or
+<code>rtl</code>) interacts with <code>writing-mode</code> to determine
+the start and end points of a line. In vertical modes, combining
+<code>writing-mode: vertical-rl</code> with <code>direction: rtl</code>
+reverses the starting point of the vertical text line, making text flow
+from the bottom of the page upward to the top.</p>
+<h2 id="practical-implementation-scenarios">Practical Implementation
+Scenarios</h2>
+<ul>
+<li><strong>Catering to Global Audiences</strong>: Rendering CJK and
+Mongolian literature accurately without relying on SVG hacks, canvas
+workarounds, or pre-rendered images.</li>
+<li><strong>User Interface Components</strong>: Creating side navigation
+tabs, book spines, table column headers, and timeline axes that save
+horizontal screen space while remaining fully accessible and
+selectable.</li>
+<li><strong>Accessible Typography</strong>: Because
+<code>writing-mode</code> is purely visual and structural, screen
+readers still read the text in its natural semantic order without
+disruption.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

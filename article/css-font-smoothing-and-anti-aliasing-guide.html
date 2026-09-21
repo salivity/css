@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS font-smoothing and Anti-Aliasing Guide - css</title>
+    <meta name="description" content="The CSS font-smooth and -webkit-font-smoothing properties give developers control over how browsers render font edges on supported displays. This guide explains how font anti-aliasing works in modern browsers, details the syntax for vendor-prefixed prope">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-font-smoothing-and-anti-aliasing-guide">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS font-smoothing and Anti-Aliasing Guide - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-font-smoothing-and-anti-aliasing-guide" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS font-smooth and -webkit-font-smoothing properties give developers control over how browsers render font edges on supported displays. This guide explains how font anti-aliasing works in modern browsers, details the syntax for vendor-prefixed prope" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-font-smoothing-and-anti-aliasing-guide">CSS font-smoothing
+and Anti-Aliasing Guide</h1>
+<p>The CSS <code>font-smooth</code> and
+<code>-webkit-font-smoothing</code> properties give developers control
+over how browsers render font edges on supported displays. This guide
+explains how font anti-aliasing works in modern browsers, details the
+syntax for vendor-prefixed properties like
+<code>-webkit-font-smoothing</code> and
+<code>-moz-osx-font-smoothing</code>, breaks down the visual difference
+between subpixel and grayscale rendering, and covers best practices for
+implementation.</p>
+<h2 id="what-is-font-anti-aliasing">What Is Font Anti-Aliasing?</h2>
+<p>Anti-aliasing is a technique used by computer displays to smooth the
+jagged edges of vector typography. Because screens are composed of a
+grid of fixed pixels, rendering curved or diagonal letterforms can
+result in stair-stepped, pixelated edges. Anti-aliasing softens these
+boundaries by filling neighboring pixels with intermediate shades of
+color, creating the optical illusion of smoother curves.</p>
+<p>Browsers and operating systems handle this smoothing process
+automatically, but developers can alter the rendering algorithm using
+CSS to achieve specific visual results.</p>
+<h2 id="the-standard-font-smooth-property">The Standard
+<code>font-smooth</code> Property</h2>
+<p>The standard <code>font-smooth</code> property was originally
+proposed in CSS3 drafts to control font rendering globally across all
+platforms. However, it was removed from the official W3C specifications
+and remains non-standard. Modern browsers do not support the unprefixed
+<code>font-smooth</code> property for standard web typography.</p>
+<p>Instead, control over anti-aliasing relies on vendor-prefixed
+properties primarily targeting macOS and iOS rendering engines.</p>
+<h2 id="the-vendor-prefixed-properties">The Vendor-Prefixed
+Properties</h2>
+<p>Because standard implementation does not exist, developers use
+<code>-webkit-font-smoothing</code> for WebKit and Chromium-based
+browsers, alongside <code>-moz-osx-font-smoothing</code> for Firefox on
+macOS.</p>
+<h3 id="1--webkit-font-smoothing">1.
+<code>-webkit-font-smoothing</code></h3>
+<p>Used by Safari, Chrome, Edge, and other WebKit/Blink browsers:</p>
+<ul>
+<li><strong><code>auto</code></strong>: Allows the browser to choose the
+rendering method, which usually defaults to subpixel anti-aliasing.</li>
+<li><strong><code>antialiased</code></strong>: Renders text using
+grayscale anti-aliasing instead of subpixel rendering. This produces
+thinner, sharper glyphs.</li>
+<li><strong><code>subpixel-antialiased</code></strong>: Renders text
+using subpixel anti-aliasing (using individual red, green, and blue
+subpixels). This makes text appear heavier and bolder.</li>
+<li><strong><code>none</code></strong>: Disables anti-aliasing entirely,
+resulting in raw, jagged pixel edges.</li>
+</ul>
+<h3 id="2--moz-osx-font-smoothing">2.
+<code>-moz-osx-font-smoothing</code></h3>
+<p>Used exclusively by Mozilla Firefox on macOS:</p>
+<ul>
+<li><strong><code>auto</code></strong>: Default setting, typically
+resolving to subpixel anti-aliasing.</li>
+<li><strong><code>grayscale</code></strong>: Matches WebKit’s
+<code>antialiased</code> mode, rendering text with whole-pixel grayscale
+smoothing.</li>
+<li><strong><code>unset</code> / <code>inherit</code></strong>: Standard
+CSS inheritance controls.</li>
+</ul>
+<h2 id="subpixel-vs-grayscale-anti-aliasing">Subpixel vs. Grayscale
+Anti-Aliasing</h2>
+<p>Understanding the difference between subpixel and grayscale
+anti-aliasing helps determine when to change the defaults.</p>
+<ul>
+<li><strong>Subpixel Anti-Aliasing (<code>subpixel-antialiased</code> /
+<code>auto</code>)</strong>: Each display pixel consists of red, green,
+and blue sub-components. Subpixel rendering manipulates these individual
+subpixels to triple the horizontal resolution of text edges. This makes
+small text significantly more legible on standard-resolution
+(non-Retina) displays. However, it can cause text to look overly thick
+or create faint color fringes.</li>
+<li><strong>Grayscale Anti-Aliasing (<code>antialiased</code> /
+<code>grayscale</code>)</strong>: This approach blends edges using pure
+shades of the font's color against the background color, treating each
+pixel as a single unit. The result is a cleaner, thinner, and more
+refined appearance, especially on high-density (Retina/HiDPI) screens
+where high pixel density eliminates the need for subpixel tricks.</li>
+</ul>
+<h2 id="practical-implementation">Practical Implementation</h2>
+<p>To apply crisp grayscale rendering across supported platforms,
+declare both properties together:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.smooth-text</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">-webkit-font-smoothing</span><span class="ch">:</span> <span class="dv">antialiased</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">-moz-osx-font-smoothing</span><span class="ch">:</span> <span class="dv">grayscale</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>To restore default subpixel rendering:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.default-text</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">-webkit-font-smoothing</span><span class="ch">:</span> <span class="dv">subpixel-antialiased</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">-moz-osx-font-smoothing</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="when-to-use-anti-aliasing-controls">When to Use Anti-Aliasing
+Controls</h2>
+<p>Overriding default system anti-aliasing should be done with specific
+use cases in mind:</p>
+<ul>
+<li><strong>Light Text on Dark Backgrounds</strong>: Subpixel rendering
+on dark backgrounds can cause "font blooming," where light text appears
+excessively bold, blurry, or haloed. Applying <code>antialiased</code>
+makes light text on dark backgrounds sharper and more readable.</li>
+<li><strong>Icon Fonts</strong>: When using icon fonts, subpixel
+anti-aliasing can distort fine geometric details. Setting icon classes
+to <code>antialiased</code> keeps them crisp.</li>
+<li><strong>Fine-Weight Web Fonts</strong>: Ultra-thin or light font
+weights can look muddy when rendered with subpixel anti-aliasing.
+Grayscale smoothing often preserves the intended design of delicate
+typefaces.</li>
+</ul>
+<p>These properties have no effect on Windows systems running ClearType,
+as Windows utilizes a separate rendering architecture managed by
+DirectWrite.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

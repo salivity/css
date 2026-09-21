@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS Cursor Communicates UI Affordances - css</title>
+    <meta name="description" content="This article examines how the CSS cursor property serves as a vital visual affordance in web design, bridging user intent and system response. Readers will learn the relationship between cursor styles and human perception, discover key cursor values that">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-cursor-communicates-ui-affordances">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS Cursor Communicates UI Affordances - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-cursor-communicates-ui-affordances" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines how the CSS cursor property serves as a vital visual affordance in web design, bridging user intent and system response. Readers will learn the relationship between cursor styles and human perception, discover key cursor values that" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-cursor-communicates-ui-affordances">How CSS Cursor
+Communicates UI Affordances</h1>
+<p>This article examines how the CSS <code>cursor</code> property serves
+as a vital visual affordance in web design, bridging user intent and
+system response. Readers will learn the relationship between cursor
+styles and human perception, discover key cursor values that guide user
+behavior, and explore best practices to maintain intuitive, accessible
+interface interactions without causing cognitive friction.</p>
+<h2 id="understanding-ui-affordances-and-the-cursor">Understanding UI
+Affordances and the Cursor</h2>
+<p>An affordance is a perceived property of an object that indicates how
+it can be used. In physical design, a handle affords pulling, while a
+flat plate affords pushing. In digital interfaces, users lack tactile
+feedback, making visual cues essential.</p>
+<p>The CSS <code>cursor</code> property bridges this gap by altering the
+pointer's shape based on the element beneath it. It provides
+instantaneous, real-time feedback that communicates whether an element
+can be clicked, dragged, edited, or ignored before the user even
+initiates an action. This dynamic response reduces cognitive load and
+reassures users of expected outcomes.</p>
+<h2 id="core-cursor-types-and-their-interactive-signals">Core Cursor
+Types and Their Interactive Signals</h2>
+<p>Browsers provide a standardized library of cursor styles, each tied
+to specific behavioral expectations.</p>
+<h3 id="1-action-and-selection-pointer-and-default">1. Action and
+Selection: <code>pointer</code> and <code>default</code></h3>
+<ul>
+<li><strong><code>pointer</code></strong>: Rendered typically as a hand
+with an extended index finger, this cursor signals clickability. It is
+standard for hyperlinks, buttons, and actionable toggles. It reassures
+users that clicking will trigger a navigation, state change, or
+submission.</li>
+<li><strong><code>default</code></strong>: The standard arrow indicates
+neutrality. It communicates that an element is static and
+non-interactive, preventing accidental clicks on purely informational
+text or containers.</li>
+</ul>
+<h3 id="2-content-manipulation-text-and-crosshair">2. Content
+Manipulation: <code>text</code> and <code>crosshair</code></h3>
+<ul>
+<li><strong><code>text</code> (I-beam)</strong>: Signals that text can
+be highlighted, copied, or directly edited, such as within input fields
+and text areas.</li>
+<li><strong><code>crosshair</code></strong>: Indicates precision
+targeting. It is commonly used in drawing applications, image-cropping
+tools, or data visualization charts where exact coordinate selection is
+required.</li>
+</ul>
+<h3 id="3-spatial-and-layout-control-grab-grabbing-and-resizers">3.
+Spatial and Layout Control: <code>grab</code>, <code>grabbing</code>,
+and Resizers</h3>
+<ul>
+<li><strong><code>grab</code> and <code>grabbing</code></strong>: An
+open hand (<code>grab</code>) informs users that an object can be picked
+up and moved, such as a card on a Kanban board or a map canvas. Once
+clicked, switching to <code>grabbing</code> (a closed fist) confirms
+that the drag action is actively underway.</li>
+<li><strong><code>col-resize</code>, <code>row-resize</code>,
+<code>ew-resize</code>, <code>ns-resize</code></strong>: Bi-directional
+arrows explicitly signal that a boundary can be adjusted, common in
+split-pane layouts, data tables, and modal adjustments.</li>
+</ul>
+<h3 id="4-status-and-restriction-not-allowed-and-wait">4. Status and
+Restriction: <code>not-allowed</code> and <code>wait</code></h3>
+<ul>
+<li><strong><code>not-allowed</code></strong>: Depicted as a circle with
+a slash, this cursor immediately signals that an interaction is
+forbidden, such as on a disabled button or unvalidated form field. It
+prevents wasted effort by warning users prior to click events.</li>
+<li><strong><code>wait</code> and <code>progress</code></strong>: An
+hourglass or spinning wheel communicates that the browser is busy.
+<code>wait</code> tells the user the interface is temporarily blocked,
+while <code>progress</code> shows that background work is happening
+while the UI remains partially usable.</li>
+</ul>
+<h2 id="best-practices-for-cursor-affordances">Best Practices for Cursor
+Affordances</h2>
+<p>To keep user interfaces predictable and trustworthy, apply the
+following guidelines:</p>
+<ul>
+<li><strong>Maintain Platform Conventions</strong>: Do not subvert
+standard meanings. Applying <code>cursor: pointer</code> to
+non-clickable text confuses users, while applying
+<code>cursor: default</code> to interactive buttons leads to missed
+interactions.</li>
+<li><strong>Pair with Visual State Changes</strong>: A cursor change
+should complement, not replace, other CSS pseudo-class states like
+<code>:hover</code> and <code>:focus</code>. Color shifts, elevation
+changes, and borders reinforce the cursor's message.</li>
+<li><strong>Use Custom Cursors Sparingly</strong>: When using custom
+image cursors via <code>cursor: url(...)</code>, always provide a
+standard fallback keyword (e.g.,
+<code>cursor: url('custom.png'), auto;</code>) and ensure the hotspot
+coordinates align precisely with the visual graphic.</li>
+<li><strong>Acknowledge Touch Devices</strong>: The <code>cursor</code>
+property relies on a mouse or trackpad hover state. Never rely solely on
+cursor cues to explain functionality, as touch-screen devices do not
+have persistent cursor states.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

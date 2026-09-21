@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Timing Functions and Cubic-Bezier Explained - css</title>
+    <meta name="description" content="This article provides an overview of CSS timing functions, explaining how they control the rate of change during transitions and animations. You will learn the mechanics behind the cubic-bezier() function, how its four coordinates govern acceleration and">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-timing-functions-and-cubic-bezier-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Timing Functions and Cubic-Bezier Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-timing-functions-and-cubic-bezier-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of CSS timing functions, explaining how they control the rate of change during transitions and animations. You will learn the mechanics behind the cubic-bezier() function, how its four coordinates govern acceleration and" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-timing-functions-and-cubic-bezier-explained">CSS Timing
+Functions and Cubic-Bezier Explained</h1>
+<p>This article provides an overview of CSS timing functions, explaining
+how they control the rate of change during transitions and animations.
+You will learn the mechanics behind the <code>cubic-bezier()</code>
+function, how its four coordinates govern acceleration and deceleration
+along a curve, and how these mathematical models translate into natural,
+physics-driven web motion.</p>
+<h2 id="what-are-css-timing-functions">What Are CSS Timing
+Functions?</h2>
+<p>CSS timing functions determine how an intermediate property value
+transitions from its start state to its end state over a set duration.
+Applied via properties like <code>transition-timing-function</code> or
+<code>animation-timing-function</code>, they do not alter the total time
+an animation takes, nor do they change the starting and ending values.
+Instead, they dictate the <em>velocity</em> of the transition throughout
+its execution.</p>
+<p>Without a timing function specifying varying speed, properties update
+in a purely mechanical way. By manipulating acceleration, timing
+functions allow elements to mimic real-world physics, such as inertia,
+friction, and gravity.</p>
+<h2 id="the-coordinate-system-of-cubic-bezier">The Coordinate System of
+<code>cubic-bezier()</code></h2>
+<p>The mathematical foundation of smooth web animations is the cubic
+Bézier curve, represented in CSS as
+<code>cubic-bezier(x1, y1, x2, y2)</code>. This function plots animation
+progress on a two-dimensional coordinate plane:</p>
+<ul>
+<li><strong>X-Axis (Time):</strong> Represents the progression of time
+from <code>0</code> (0% duration) to <code>1</code> (100% duration).
+Because time cannot flow backward, <code>x1</code> and <code>x2</code>
+must always fall within the range of <code>0</code> to
+<code>1</code>.</li>
+<li><strong>Y-Axis (Output Progress):</strong> Represents the
+progression of the animated property from <code>0</code> (start value)
+to <code>1</code> (end value). Unlike the time axis, the Y-axis can
+extend below <code>0</code> or above <code>1</code>, allowing elements
+to overshoot their target values for spring or bounce effects.</li>
+</ul>
+<p>A cubic Bézier curve relies on four anchor points:</p>
+<ol type="1">
+<li><strong>P0 (0, 0):</strong> The fixed starting point in both time
+and property state.</li>
+<li><strong>P1 (x1, y1):</strong> The first control handle, pulling the
+curve from the start.</li>
+<li><strong>P2 (x2, y2):</strong> The second control handle, pulling the
+curve toward the finish.</li>
+<li><strong>P3 (1, 1):</strong> The fixed ending point in both time and
+property state.</li>
+</ol>
+<p>When you write <code>cubic-bezier(x1, y1, x2, y2)</code>, you are
+specifying the coordinates of control points <strong>P1</strong> and
+<strong>P2</strong>.</p>
+<h2 id="how-the-curve-shapes-acceleration">How the Curve Shapes
+Acceleration</h2>
+<p>The slope of the curve at any given point represents the velocity of
+the animated element:</p>
+<ul>
+<li><strong>Steep Slope:</strong> Indicates rapid progression over a
+short period of time (high speed/acceleration).</li>
+<li><strong>Flat Slope:</strong> Indicates minimal progression over time
+(low speed/deceleration).</li>
+<li><strong>Negative Slope:</strong> Occurs when an element moves
+backward relative to its start or target position.</li>
+</ul>
+<p>By pulling the control handles, you reshape the curve and dictate how
+speed changes:</p>
+<ul>
+<li><strong>Ease-In (<code>cubic-bezier(0.42, 0, 1, 1)</code>):</strong>
+The curve starts flat and steepens toward the end. The animation begins
+slowly and accelerates until it abruptly hits the final state, mimicking
+a falling object.</li>
+<li><strong>Ease-Out
+(<code>cubic-bezier(0, 0, 0.58, 1)</code>):</strong> The curve starts
+steep and levels off near the top. The animation begins at maximum speed
+and gradually decelerates to a stop, mimicking a car braking.</li>
+<li><strong>Ease-In-Out
+(<code>cubic-bezier(0.42, 0, 0.58, 1)</code>):</strong> The curve starts
+flat, steepens in the middle, and flattens out at the end. The element
+accelerates out of its resting state and smoothly decelerates before
+settling.</li>
+</ul>
+<h2 id="standard-keywords-vs-custom-curves">Standard Keywords vs. Custom
+Curves</h2>
+<p>CSS includes predefined keyword aliases that represent standard cubic
+Bézier curves:</p>
+<ul>
+<li><code>linear</code>: Equivalent to
+<code>cubic-bezier(0, 0, 1, 1)</code>. The slope is constant, meaning
+the element moves at the exact same speed from start to finish.</li>
+<li><code>ease</code>: Equivalent to
+<code>cubic-bezier(0.25, 0.1, 0.25, 1)</code>. The default timing
+function; it accelerates quickly and decelerates gradually.</li>
+<li><code>ease-in</code>: Equivalent to
+<code>cubic-bezier(0.42, 0, 1, 1)</code>.</li>
+<li><code>ease-out</code>: Equivalent to
+<code>cubic-bezier(0, 0, 0.58, 1)</code>.</li>
+<li><code>ease-in-out</code>: Equivalent to
+<code>cubic-bezier(0.42, 0, 0.58, 1)</code>.</li>
+</ul>
+<p>Custom curves expand beyond these basic presets. By setting
+<code>y2</code> higher than <code>1</code> (for instance,
+<code>cubic-bezier(0.34, 1.56, 0.64, 1)</code>), the property value
+temporarily exceeds <code>100%</code> before snapping back to
+<code>1</code>, creating an elastic overshoot effect. Conversely,
+setting <code>y1</code> below <code>0</code> pulls the element in
+reverse before it lunges forward.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

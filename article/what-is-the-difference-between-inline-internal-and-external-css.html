@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is the Difference Between Inline, Internal, and External CSS? - css</title>
+    <meta name="description" content="Cascading Style Sheets (CSS) control the visual presentation of HTML elements, and they can be implemented using inline, internal, or external methods. Inline CSS applies styles directly to individual HTML tags via the style attribute, internal CSS embed">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-is-the-difference-between-inline-internal-and-external-css">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Is the Difference Between Inline, Internal, and External CSS? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-is-the-difference-between-inline-internal-and-external-css" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Cascading Style Sheets (CSS) control the visual presentation of HTML elements, and they can be implemented using inline, internal, or external methods. Inline CSS applies styles directly to individual HTML tags via the style attribute, internal CSS embed" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="what-is-the-difference-between-inline-internal-and-external-css">What
+Is the Difference Between Inline, Internal, and External CSS?</h1>
+<p>Cascading Style Sheets (CSS) control the visual presentation of HTML
+elements, and they can be implemented using inline, internal, or
+external methods. Inline CSS applies styles directly to individual HTML
+tags via the <code>style</code> attribute, internal CSS embeds rules
+inside a <code>&lt;style&gt;</code> block within the document head, and
+external CSS links an independent <code>.css</code> stylesheet to the
+HTML document. Understanding the differences in specificity,
+reusability, maintenance, and performance helps developers choose the
+right approach for any web project.</p>
+<h2 id="inline-css">Inline CSS</h2>
+<p>Inline CSS is written directly within an HTML element's opening tag
+using the <code>style</code> attribute. This approach applies
+declarations exclusively to that single element.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;color: blue; font-size: 16px;&quot;</span><span class="dt">&gt;</span>This text is styled with inline CSS.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="advantages">Advantages</h3>
+<ul>
+<li><strong>Immediate targeting:</strong> Useful for quick testing,
+debugging, or applying a one-off style override.</li>
+<li><strong>Highest basic specificity:</strong> Overrides both internal
+and external CSS rules targeting the same property (unless
+<code>!important</code> is used elsewhere).</li>
+</ul>
+<h3 id="disadvantages">Disadvantages</h3>
+<ul>
+<li><strong>Poor maintainability:</strong> Changing a global design
+choice requires editing every tag individually.</li>
+<li><strong>Code bloat:</strong> Repeats styling rules across multiple
+elements, significantly increasing HTML file size.</li>
+<li><strong>Separation of concerns:</strong> Mixes design structure with
+content, making the markup difficult to read.</li>
+</ul>
+<hr />
+<h2 id="internal-css">Internal CSS</h2>
+<p>Internal (or embedded) CSS is contained within
+<code>&lt;style&gt;</code> tags placed inside the
+<code>&lt;head&gt;</code> section of an HTML document. These style rules
+apply to any matching elements across that entire single page.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    body {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f4f4f4</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    p {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="kw">color</span><span class="ch">:</span> <span class="cn">#333333</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="kw">line-height</span><span class="ch">:</span> <span class="dv">1.6</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This page uses internal CSS.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="advantages-1">Advantages</h3>
+<ul>
+<li><strong>Single-page cohesion:</strong> Styles all matching elements
+across one HTML document without modifying individual tags.</li>
+<li><strong>No external requests:</strong> Eliminates the need for extra
+HTTP requests to fetch external files, which can prevent render-blocking
+delays for single-page templates or HTML email development.</li>
+</ul>
+<h3 id="disadvantages-1">Disadvantages</h3>
+<ul>
+<li><strong>Limited scope:</strong> Styles cannot be shared across
+multiple HTML pages; each page requires its own duplicate
+<code>&lt;style&gt;</code> block.</li>
+<li><strong>Larger HTML documents:</strong> Increases page weight for
+multi-page websites where styles are repeated across documents.</li>
+</ul>
+<hr />
+<h2 id="external-css">External CSS</h2>
+<p>External CSS separates styling rules into an independent file with a
+<code>.css</code> extension. The HTML file references this external file
+inside the <code>&lt;head&gt;</code> section using the
+<code>&lt;link&gt;</code> tag.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;styles.css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><em>Inside <code>styles.css</code>:</em></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Arial</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>h1 {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#1a73e8</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="advantages-2">Advantages</h3>
+<ul>
+<li><strong>Site-wide consistency:</strong> A single stylesheet can
+style thousands of pages across an entire web application.</li>
+<li><strong>Easy maintenance:</strong> Updating a color, font, or layout
+rule in one file instantly updates the entire website.</li>
+<li><strong>Browser caching:</strong> Once downloaded on the first page
+load, browsers cache the external <code>.css</code> file, speeding up
+navigation across subsequent pages.</li>
+<li><strong>Clean codebase:</strong> Keeps HTML strictly semantic and
+dedicated to structure.</li>
+</ul>
+<h3 id="disadvantages-2">Disadvantages</h3>
+<ul>
+<li><strong>Additional HTTP request:</strong> Requires a network fetch
+on the initial page visit, which can briefly delay rendering if not
+optimized.</li>
+</ul>
+<hr />
+<h2 id="comparison-summary">Comparison Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Inline CSS</th>
+<th>Internal CSS</th>
+<th>External CSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Location</strong></td>
+<td>Inside HTML tag attributes</td>
+<td>Inside <code>&lt;head&gt;</code> using
+<code>&lt;style&gt;</code></td>
+<td>Separate <code>.css</code> file</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Single element</td>
+<td>Single HTML page</td>
+<td>Entire website / multi-page</td>
+</tr>
+<tr>
+<td><strong>Maintainability</strong></td>
+<td>Very low</td>
+<td>Moderate</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Increases HTML payload</td>
+<td>Good for single pages, poor for sites</td>
+<td>Optimal due to browser caching</td>
+</tr>
+<tr>
+<td><strong>Best Use Case</strong></td>
+<td>Fast debugging, one-off overrides, HTML emails</td>
+<td>Single-page sites, landing pages</td>
+<td>Multi-page websites and web apps</td>
+</tr>
+</tbody>
+</table></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

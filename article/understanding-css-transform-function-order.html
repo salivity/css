@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding CSS Transform Function Order - css</title>
+    <meta name="description" content="When multiple transformation functions are listed within a single CSS transform property, their order determines the final visual result. CSS executes these transformations sequentially from right to left under the hood using matrix multiplication, which">
+    <link rel="canonical" href="https://salivity.github.io/css/article/understanding-css-transform-function-order">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding CSS Transform Function Order - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/understanding-css-transform-function-order" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When multiple transformation functions are listed within a single CSS transform property, their order determines the final visual result. CSS executes these transformations sequentially from right to left under the hood using matrix multiplication, which" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-css-transform-function-order">Understanding CSS
+Transform Function Order</h1>
+<p>When multiple transformation functions are listed within a single CSS
+<code>transform</code> property, their order determines the final visual
+result. CSS executes these transformations sequentially from right to
+left under the hood using matrix multiplication, which translates
+visually to applying changes from left to right relative to the
+element's own shifting coordinate system. Because matrix operations are
+non-commutative, reversing the order of the functions will dramatically
+alter the final position, orientation, and scale of the element.</p>
+<h2 id="the-mathematical-mechanism-right-to-left">The Mathematical
+Mechanism: Right to Left</h2>
+<p>In the CSS specification, every transform function—such as
+<code>rotate()</code>, <code>scale()</code>, <code>translate()</code>,
+or <code>skew()</code>—is represented internally as a mathematical
+matrix.</p>
+<p>When you define a transform list like:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>transform<span class="in">:</span> A B C;</span></code></pre></div>
+<p>The browser multiplies these individual matrices together to create a
+single composite matrix:</p>
+<p><span class="math display">\[\text{Composite Matrix} = A \times B
+\times C\]</span></p>
+<p>When an element's coordinate point (<span
+class="math inline">\(p\)</span>) is transformed, it is multiplied
+against this composite matrix:</p>
+<p><span class="math display">\[p&#39; = (A \times B \times C) \times p
+= A \times (B \times (C \times p))\]</span></p>
+<p>From the perspective of the original, fixed screen coordinates
+(global space), the operation closest to the point (<span
+class="math inline">\(C\)</span>) occurs first, followed by <span
+class="math inline">\(B\)</span>, and finally <span
+class="math inline">\(A\)</span>.</p>
+<h2 id="the-mental-model-left-to-right">The Mental Model: Left to
+Right</h2>
+<p>While the math operates right-to-left in global space, developers
+typically find it much easier to visualize the process from <strong>left
+to right</strong> by thinking in terms of the element's <strong>local
+coordinate system</strong>.</p>
+<p>Each transformation modifies the element's local coordinate axes (its
+X and Y axes):</p>
+<ol type="1">
+<li>The first function alters the element and its coordinate space.</li>
+<li>The subsequent function executes inside the <em>newly modified</em>
+coordinate space.</li>
+<li>Every step inherits the tilts, shifts, and scaling applied by
+earlier steps.</li>
+</ol>
+<h2 id="practical-comparison-translate-vs-rotate">Practical Comparison:
+Translate vs. Rotate</h2>
+<p>The interaction between <code>translate()</code> and
+<code>rotate()</code> clearly demonstrates how order dictates the final
+output.</p>
+<h3 id="case-1-translate-then-rotate">Case 1: Translate Then Rotate</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translate(</span><span class="dv">100</span><span class="dt">px</span><span class="op">,</span> <span class="dv">0</span><span class="fu">)</span> <span class="fu">rotate(</span><span class="dv">45</span><span class="dt">deg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ol type="1">
+<li><strong><code>translate(100px, 0)</code> executes first:</strong>
+The element moves 100 pixels to the right along the horizontal X-axis.
+Its local coordinate center moves with it.</li>
+<li><strong><code>rotate(45deg)</code> executes second:</strong> The
+element rotates 45 degrees clockwise around its new center.</li>
+</ol>
+<p>The element ends up displaced 100 pixels to the right and tilted.</p>
+<h3 id="case-2-rotate-then-translate">Case 2: Rotate Then Translate</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.box</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">rotate(</span><span class="dv">45</span><span class="dt">deg</span><span class="fu">)</span> <span class="fu">translate(</span><span class="dv">100</span><span class="dt">px</span><span class="op">,</span> <span class="dv">0</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ol type="1">
+<li><strong><code>rotate(45deg)</code> executes first:</strong> The
+element rotates 45 degrees clockwise in place. Crucially, its local X
+and Y axes rotate 45 degrees as well.</li>
+<li><strong><code>translate(100px, 0)</code> executes second:</strong>
+The element moves 100 pixels along its <em>rotated</em> X-axis (down and
+to the right at a 45-degree angle).</li>
+</ol>
+<p>The element ends up positioned diagonally down-right from its origin,
+rather than directly to the right.</p>
+<h2 id="individual-css-transform-properties">Individual CSS Transform
+Properties</h2>
+<p>Modern CSS introduces individual properties for transforms:
+<code>translate</code>, <code>rotate</code>, and <code>scale</code>.
+Unlike the <code>transform</code> shorthand property where order is
+customized by the author, these independent properties follow a fixed,
+predetermined order regardless of how they are declared in the
+stylesheet:</p>
+<ol type="1">
+<li><code>translate</code></li>
+<li><code>rotate</code></li>
+<li><code>scale</code></li>
+</ol>
+<p>If you use the shorthand <code>transform</code> property, you retain
+complete control over the calculation order. If you need transforms
+evaluated in an arbitrary sequence, use the <code>transform</code>
+property rather than the independent properties.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

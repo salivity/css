@@ -1,0 +1,2774 @@
+[
+  [
+    462,
+    "CSS Cascade Layers vs Specificity: How Conflicts Resolve",
+    "This article explains how the modern CSS cascade reconciles conflicts between cascade layer ordering and standard selector specificity. Cascade layers introduce an explicit structural mechanism to the cascade algorithm, allowing developers to control pri",
+    false
+  ],
+  [
+    461,
+    "How CSS reading-flow Fixes Flexbox Navigation",
+    "The proposed CSS reading-flow property addresses a long-standing accessibility problem in web design: the disconnect between visual layout and keyboard focus order. In modern layouts using Flexbox, CSS properties like order or flex-direction: row-reverse",
+    false
+  ],
+  [
+    460,
+    "How to Use color-scheme Meta Tag and CSS Property",
+    "Modern browsers support both the HTML color-scheme meta tag and the CSS color-scheme property to adapt default user-interface elements to light and dark themes. While both mechanisms communicate whether a page supports light, dark, or both color modes, t",
+    false
+  ],
+  [
+    459,
+    "CSS text-decoration-skip-ink: auto Explained",
+    "The CSS property text-decoration-skip-ink: auto controls how underlines and overlines interact with text glyphs, specifically preventing lines from cutting directly through descending letters. By dynamically creating small, clean breaks in the underline",
+    false
+  ],
+  [
+    458,
+    "CSS scrollbar-gutter: both-edges Symmetrical Margins",
+    "This article explains how the CSS scrollbar-gutter: both-edges declaration preserves balanced horizontal layouts in web design. By understanding layout shifts caused by dynamic scrollbars, you will learn how reserving space on both sides of a scroll cont",
+    false
+  ],
+  [
+    457,
+    "Prevent Layout Shifts with CSS scrollbar-gutter: stable",
+    "This article provides an overview of the CSS scrollbar-gutter: stable property, examining how unexpected layout shifts occur when scrollbars appear and how this modern CSS feature permanently eliminates them. You will learn the mechanics behind the \"scro",
+    false
+  ],
+  [
+    456,
+    "CSS Container Style Queries for Computed Styles",
+    "CSS container queries extend beyond viewport and dimensional constraints, allowing developers to query the computed styles of an ancestor element using the style() functional notation. This article explains the mechanics of CSS container style queries, h",
+    false
+  ],
+  [
+    455,
+    "CSS style() Queries: How to Query Parent Variables",
+    "The CSS style() container query function is a contextual styling feature that allows child elements to adapt their styles based on the computed styles—specifically CSS custom properties (variables)—of a parent container. Unlike traditional media or c",
+    false
+  ],
+  [
+    454,
+    "CSS var() Fallback: Ensuring Robust Style Defaults",
+    "The CSS var() fallback syntax provides an essential safety net for modern web design, allowing developers to define backup values when custom properties are missing or undefined. By using the syntax var(--custom-property, fallback-value), web application",
+    false
+  ],
+  [
+    453,
+    "Invalid CSS Custom Properties at Computed-Value Time",
+    "When a CSS custom property resolves to an invalid value for the property it is applied to, the browser cannot catch the error during the initial parsing phase. Instead, the declaration becomes \"invalid at computed-value time\" (IACVT). When this occurs, C",
+    false
+  ],
+  [
+    452,
+    "How CSS Custom Properties Update in DOM Subtrees",
+    "CSS custom properties (often called CSS variables) dynamically propagate changes through the DOM using standard CSS inheritance, cascade algorithms, and targeted style invalidation. When a custom property is overridden on a descendant element or class, t",
+    false
+  ],
+  [
+    451,
+    "CSS env() and safe-area-inset-top Guide",
+    "The CSS env() function allows developers to insert user-agent-defined environment variables directly into their stylesheets, making it essential for responsive web design on modern mobile devices. When smartphones introduced hardware features like camera",
+    false
+  ],
+  [
+    450,
+    "CSS @import Media Queries and Mobile Resource Loading",
+    "This article examines how the CSS @import rule interacts with media queries on mobile devices, detailing the mechanics behind conditional resource fetching, its impact on browser network behavior, and the distinction between render-blocking execution and",
+    false
+  ],
+  [
+    449,
+    "CSS corner-top-left-shape Property Explained",
+    "This article explores the proposed CSS corner-top-left-shape property, detailing how it works alongside border-radius to enable beveled, notched, and scooped corners without complex workarounds. You will learn about the limitations of existing border sty",
+    false
+  ],
+  [
+    448,
+    "CSS calc-size: Math on Intrinsic Sizing Keywords",
+    "The CSS calc-size() function is a layout utility designed to resolve the long-standing limitation of performing arithmetic operations on intrinsic sizing keywords such as auto, min-content, max-content, and fit-content. By accepting an intrinsic sizing k",
+    false
+  ],
+  [
+    447,
+    "CSS anchor-name Syntax for Global Anchors",
+    "The CSS anchor-name property allows an element to declare itself as an anchor, enabling other absolute or fixed-positioned elements to position themselves relative to it. In CSS Anchor Positioning, anchor identifiers are registered globally across the do",
+    false
+  ],
+  [
+    446,
+    "How CSS timeline-scope Hoists Scroll Timelines",
+    "The CSS timeline-scope property allows developers to hoist named scroll and view progress timelines from their default local context up to a shared ancestor element. By default, CSS scroll-driven animations restrict named timelines to the declaring eleme",
+    false
+  ],
+  [
+    445,
+    "CSS view-timeline-name: Broadcast Scroll Progress",
+    "The CSS view-timeline-name property is a core feature of the CSS Scroll-driven Animations specification that establishes a named view progress timeline linked to a specific element's position within a scroll container. By assigning a custom identifier (a",
+    false
+  ],
+  [
+    444,
+    "CSS animation-range-start and animation-range-end Guide",
+    "This article provides a concise overview of how the CSS animation-range-start and animation-range-end properties define the precise boundaries of scroll-driven animations. You will learn the mechanics behind these properties, the syntax and values they a",
+    false
+  ],
+  [
+    443,
+    "CSS cubic-bezier(0, 0, 1, 1) and Linear Animation",
+    "This article explains the CSS cubic-bezier(0, 0, 1, 1) timing function, detailing how its mathematical coordinate values translate into motion. You will learn the mechanics of the CSS Bézier curve system, why this specific set of coordinates eliminates",
+    false
+  ],
+  [
+    442,
+    "CSS steps() for Frame-by-Frame Sprite Animations",
+    "This article explains how the CSS property animation-timing-function: steps(4, jump-end) enables retro, stop-motion, and frame-by-frame sprite sheet animations. By replacing continuous transitions with abrupt, calculated shifts, the steps() timing functi",
+    false
+  ],
+  [
+    441,
+    "CSS transform-style: flat Explained",
+    "This article explores the default flat value of the CSS transform-style property and its impact on 3D rendering contexts. You will learn what transform-style: flat does by default, the mechanism behind how it flattens nested 3D elements onto a single two",
+    false
+  ],
+  [
+    440,
+    "CSS Filter Blur vs Backdrop Filter Blur",
+    "Both filter: blur() and backdrop-filter: blur() create blur effects in modern web design, but they apply the effect to fundamentally different layers of the document. While filter: blur() blurs an element along with all of its child content, backdrop-fil",
+    false
+  ],
+  [
+    439,
+    "CSS Grayscale Filter Calculation and Child Elements",
+    "The CSS filter: grayscale(100%) function transforms an element's visual appearance by converting all of its colors into shades of gray. This conversion relies on a standardized luminance algorithm based on human visual perception rather than a simple ave",
+    false
+  ],
+  [
+    438,
+    "How to Isolate Tones with CSS Luminosity Blend Mode",
+    "The CSS background-blend-mode: luminosity property isolates the monochrome tonal values of an image by decoupling its brightness information from its chromatic data. By pairing an image with a neutral background color, the browser discards the image's na",
+    false
+  ],
+  [
+    437,
+    "CSS image-rendering: crisp-edges for Line Art",
+    "The CSS image-rendering: crisp-edges property is used to maintain sharp, well-defined lines and high contrast when scaling images, preventing the browser from applying standard smoothing algorithms. In digital line art, technical diagrams, and pixel art,",
+    false
+  ],
+  [
+    436,
+    "How to Use CSS page Property for Print Layouts",
+    "The CSS page property enables developers to apply custom page layouts to specific sections of an HTML document during printing or PDF generation. By pairing named @page at-rules from the CSS Paged Media Module with the page selector property, individual",
+    false
+  ],
+  [
+    435,
+    "CSS break-after: recto: Force Right-Hand Page Starts",
+    "The CSS break-after: recto property is a specialized rule in paged media used to ensure that the content following a specific element always begins on a right-hand page. Primarily used when preparing digital documents for physical print or bound book for",
+    false
+  ],
+  [
+    434,
+    "CSS Page Left and Right for Double-Sided Printing",
+    "CSS Paged Media module provides the @page :left and @page :right pseudo-class selectors to target alternating pages in a printed document. This setup facilitates professional double-sided (duplex) book printing by allowing developers and typesetters to d",
+    false
+  ],
+  [
+    433,
+    "How to Use CSS @page :first for Cover Pages",
+    "The CSS @page :first pseudo-class is a specialized rule within CSS Paged Media used to apply distinct styles exclusively to the first page of a printed or PDF-rendered document. When converting HTML content into paged media—such as reports, books, or i",
+    false
+  ],
+  [
+    432,
+    "CSS Bleed Property for Print Trim Margins",
+    "The CSS bleed property defines the distance that content extends beyond the cut line of a physical page box to accommodate mechanical variations during commercial printing. When paired with the @page at-rule and crop marks, it ensures that background col",
+    false
+  ],
+  [
+    431,
+    "CSS Marks Crop Cross in Pre-Press Print Styling",
+    "The CSS marks: crop cross declaration is a specialized paged media rule used to generate physical trim guidelines and alignment targets outside the document's page area during commercial printing. In professional pre-press workflows, this property automa",
+    false
+  ],
+  [
+    430,
+    "Using CSS string-set for Print Headers",
+    "The CSS string-set property allows developers to dynamically extract text content from elements within a document and inject that content into margin boxes, such as running headers and footers, during print rendering. Defined in the CSS Paged Media Modul",
+    false
+  ],
+  [
+    429,
+    "Using CSS target-counter for Print Page References",
+    "The CSS target-counter() function is a specialized feature defined in the CSS Paged Media and Generated Content specifications designed to generate dynamic cross-references and page numbers in print documents. By referencing the destination of an interna",
+    false
+  ],
+  [
+    428,
+    "Using CSS counter-increment with Custom Intervals",
+    "The CSS counter-increment property allows web developers to control numerical sequences on web pages without relying on JavaScript or manual markup. By appending an optional integer to the counter name—such as in counter-increment: my-counter 2—CSS i",
+    false
+  ],
+  [
+    427,
+    "CSS hyphenate-limit-chars: Prevent Awkward Hyphenation",
+    "The CSS hyphenate-limit-chars property provides fine-grained control over how text breaks across lines by defining character count thresholds for hyphenation. When using automatic hyphenation, web browsers often break short words or leave tiny fragments",
+    false
+  ],
+  [
+    426,
+    "How CSS hyphens: auto Uses Language Dictionaries",
+    "The CSS hyphens: auto property allows browsers to automatically break long words across multiple lines using hyphens to prevent awkward text wrapping and uneven margins. To execute these breaks accurately without altering word meanings or creating unread",
+    false
+  ],
+  [
+    425,
+    "CSS text-wrap: balance: How It Works and Limitations",
+    "This article explains the CSS text-wrap: balance property, detailing the underlying algorithm that distributes text evenly across lines to avoid awkward typographic orphans. It also examines the computational reasons why browsers impose strict line limit",
+    false
+  ],
+  [
+    424,
+    "Equalize Font Spacing with CSS line-gap-override",
+    "When web fonts load asynchronously, differences in intrinsic font metrics between the custom font and the local fallback font cause text to shift vertically, leading to Cumulative Layout Shift (CLS). The CSS line-gap-override property solves this issue b",
+    false
+  ],
+  [
+    423,
+    "CSS descent-override: Aligning Fallback Font Baselines",
+    "The CSS descent-override descriptor allows developers to manually define the descent metric of a font face within an @font-face rule. This article explores what descent-override does, the typographic problems it solves, and how it aligns baseline heights",
+    false
+  ],
+  [
+    422,
+    "Fix Vertical Layout Shifts with CSS ascent-override",
+    "Web font loading frequently introduces Cumulative Layout Shift (CLS) when fallback fonts swap with custom web fonts, causing page content to visibly jump. The CSS ascent-override descriptor eliminates these vertical layout shifts by enabling developers t",
+    false
+  ],
+  [
+    421,
+    "CSS unicode-range Explained for Font Subsetting",
+    "The CSS @font-face descriptor unicode-range allows web developers to split large font files into smaller, modular chunks and instruct the browser to download only the specific character sets needed by a webpage. This article explains how unicode-range fu",
+    false
+  ],
+  [
+    420,
+    "How CSS font-size-adjust Preserves Fallback x-Height",
+    "When web fonts fail to load or swap dynamically, differences in typeface proportions can cause jarring layout shifts and poor legibility. The CSS font-size-adjust property solves this issue by standardizing the perceived visual size—specifically the lo",
+    false
+  ],
+  [
+    419,
+    "How font-display: optional Boosts Core Web Vitals",
+    "Web fonts often introduce performance bottlenecks that degrade user experience and search rankings, particularly on mobile devices and unstable network connections. This article explains the CSS font-display: optional property, details how its unique ren",
+    false
+  ],
+  [
+    418,
+    "How font-display: swap Eliminates FOIT",
+    "Web fonts significantly enhance visual design, but their loading behavior can compromise user experience through the Flash of Invisible Text (FOIT). When a browser downloads a custom web font, it traditionally hides the text until the file is completely",
+    false
+  ],
+  [
+    417,
+    "How to Protect Brand Logos with forced-color-adjust",
+    "This article explains how the CSS forced-color-adjust: none property safeguards brand identity in accessibility modes such as Windows High Contrast Mode. You will learn why operating system color overrides can break the visual presentation of logos, how",
+    false
+  ],
+  [
+    416,
+    "How CSS ruby-align Spaces Pronunciation Guides",
+    "The CSS ruby-align property controls how ruby annotation text—commonly used for pronunciation guides such as Japanese furigana or Chinese pinyin—is horizontally distributed relative to its underlying base text. Because pronunciation annotations rarel",
+    false
+  ],
+  [
+    415,
+    "CSS text-spacing-trim for CJK Punctuation Spacing",
+    "The CSS text-spacing-trim property provides native typographic control over the spacing around punctuation marks in Chinese, Japanese, and Korean (CJK) text. By automating the adjustment and removal of excessive whitespace inherent to full-width East Asi",
+    false
+  ],
+  [
+    414,
+    "CSS position-area: Simplifying Anchor Placement",
+    "The CSS position-area property revolutionizes CSS Anchor Positioning by replacing verbose inset mathematics and alignment declarations with an intuitive, 3x3 directional grid model. This article explores how position-area functions, breaks down its direc",
+    false
+  ],
+  [
+    413,
+    "CSS Anchor Positioning position-visibility Guide",
+    "The CSS Anchor Positioning API introduces the position-visibility property to manage how anchored elements behave when their trigger elements scroll out of view. This property prevents UI components like tooltips, popovers, and floating menus from becomi",
+    false
+  ],
+  [
+    412,
+    "How to Transition Display with CSS allow-discrete",
+    "Historically, hiding an element by setting its CSS display to none caused an immediate disappearance, instantly cutting off any active exit transitions like fades or slides. The declaration transition: display 0.3s allow-discrete solves this issue by ena",
+    false
+  ],
+  [
+    411,
+    "CSS @starting-style: Display None to Block Guide",
+    "The CSS @starting-style at-rule enables smooth entry transitions for elements changing their rendering state, specifically resolving the longstanding limitation of transitioning from display: none to display: block. This article explains how @starting-st",
+    false
+  ],
+  [
+    410,
+    "CSS Nesting: Compound vs Descendant Selectors",
+    "Native CSS nesting uses the nesting selector (&) to reference the parent rule, allowing developers to write more modular and readable stylesheets. The key distinction between &.active and & .active comes down to whitespace: omitting the space creates a c",
+    false
+  ],
+  [
+    409,
+    "CSS @layer Import Syntax for External Stylesheets",
+    "This article explains how to use the CSS @layer import syntax to load entire external stylesheets directly into designated cascade layers. By integrating the layer keyword or function into standard @import rules, developers can manage the cascade priorit",
+    false
+  ],
+  [
+    408,
+    "How CSS revert-layer Works in Cascade Layers",
+    "The CSS revert-layer keyword allows developers to step backward through the cascade hierarchy, rolling a property's value back to the declaration set in the previous cascade layer. This article explains the evaluation order of cascade layers, how revert-",
+    false
+  ],
+  [
+    407,
+    "CSS Shorthand Properties and Overwritten Defaults",
+    "CSS shorthand properties allow developers to set multiple related style rules simultaneously using a single declaration, significantly reducing stylesheet file size and improving code readability. However, shorthand properties do not merely act as conven",
+    false
+  ],
+  [
+    406,
+    "CSS Transitions in the Cascade Hierarchy",
+    "CSS transition declarations occupy a unique position in the CSS cascade hierarchy, sitting at the absolute top of the cascade’s origin and importance order while they are actively running. This article explains how the browser prioritizes active transi",
+    false
+  ],
+  [
+    405,
+    "CSS Cascade: Author Styles vs User-Agent Defaults",
+    "In the CSS cascade, author stylesheets and user-agent defaults represent two distinct origins of style rules that determine how a browser renders a web page. Normal declarations written in author stylesheets inherently outweigh standard user-agent defaul",
+    false
+  ],
+  [
+    404,
+    "Why CSS :where() Specificity Is Always Zero",
+    "The CSS :where() pseudo-class is explicitly designed to match elements while completely stripping away the specificity of any selectors passed inside its argument list. Even when provided with high-specificity selectors such as IDs or multiple classes—",
+    false
+  ],
+  [
+    403,
+    "CSS :is() Pseudo-Class Specificity Explained",
+    "This article explains how the CSS :is() pseudo-class determines selector specificity by dynamically inheriting the weight of its most specific argument. You will learn the mechanics behind specificity calculation in CSS selectors, why matching an element",
+    false
+  ],
+  [
+    402,
+    "CSS Specificity: Universal Selector and Combinators",
+    "In CSS, understanding how browsers calculate selector specificity is essential for managing cascade conflicts and writing predictable styles. This guide explains the specificity values assigned to the universal selector () and combinators (+, >, ~, and t",
+    false
+  ],
+  [
+    401,
+    "CSS Specificity for the :not Pseudo-Class",
+    "Understanding how CSS specificity works within the :not() negation pseudo-class is essential for writing predictable and maintainable stylesheets. While the :not() pseudo-class itself contributes no specificity to a selector, it adopts the specificity of",
+    false
+  ],
+  [
+    400,
+    "Understanding the CSS padding-inline Shorthand",
+    "The CSS padding-inline shorthand is a logical property used to set the internal spacing on the inline axes of an element, typically replacing the physical padding-left and padding-right properties. This article covers what padding-inline is, how its synt",
+    false
+  ],
+  [
+    399,
+    "CSS margin-block: Logical Top and Bottom Margins",
+    "The CSS margin-block shorthand is a logical property that sets the margins on an element's block dimension, which typically corresponds to the top and bottom margins in standard horizontal layouts. Instead of tying layout strictly to physical screen orie",
+    false
+  ],
+  [
+    398,
+    "CSS border-start-start-radius to Physical Corners",
+    "The CSS border-start-start-radius property defines the curvature of an element's corner using logical dimensions rather than fixed physical locations. Instead of directly targeting a static corner like top-left or top-right, this property dynamically map",
+    false
+  ],
+  [
+    397,
+    "CSS overflow-inline and overflow-block Explained",
+    "The CSS overflow-inline and overflow-block properties are logical properties that manage how an element handles content that exceeds its boundaries along the inline and block dimensions. Unlike physical properties such as overflow-x and overflow-y, which",
+    false
+  ],
+  [
+    396,
+    "Targeting E-Ink Screens with CSS update slow",
+    "The CSS @media (update: slow) media query allows web developers to detect and optimize websites for devices with low refresh rates, such as Amazon Kindle readers and electronic paper displays. By identifying hardware that struggles with frequent renderin",
+    false
+  ],
+  [
+    395,
+    "Using CSS scripting: none for Graceful Degradation",
+    "The CSS scripting media feature allows developers to query whether scripting languages, primarily JavaScript, are supported and active on the current document. In graceful degradation and progressive enhancement strategies, targeting @media (scripting: n",
+    false
+  ],
+  [
+    394,
+    "How to Use the CSS inverted-colors Media Query",
+    "The inverted-colors CSS media query is a user-preference feature defined in the CSS Media Queries Level 5 specification that detects whether the operating system or browser is actively inverting display colors. Users with low vision, photophobia, or othe",
+    false
+  ],
+  [
+    393,
+    "CSS video-dynamic-range Media Feature Explained",
+    "This article provides an overview of the CSS video-dynamic-range media feature, a capability introduced in Media Queries Level 5. It covers what the feature does, the values it accepts, how it distinguishes between standard and high dynamic range video h",
+    false
+  ],
+  [
+    392,
+    "CSS Dynamic-Range High for HDR Displays",
+    "The CSS dynamic-range media query allows web developers to detect whether a user's display hardware supports High Dynamic Range (HDR) and adjust visual styles accordingly. Modern screens with HDR capabilities can display significantly higher peak brightn",
+    false
+  ],
+  [
+    391,
+    "CSS Resolution Media Feature for Retina Displays",
+    "The CSS resolution media feature allows developers to target devices based on the pixel density of their output screens, making it an essential tool for serving high-quality graphics to Retina and HiDPI displays. This article explains how the resolution",
+    false
+  ],
+  [
+    390,
+    "Simplifying Responsive CSS with Range Syntax",
+    "CSS Media Queries Level 4 introduced the media query range syntax, modernizing how developers write responsive layout rules. Traditionally, defining responsive boundaries required verbose min-width and max-width properties, which often resulted in confus",
+    false
+  ],
+  [
+    389,
+    "CSS contain-intrinsic-width and height for Layout Stability",
+    "The CSS contain-intrinsic-width and contain-intrinsic-height properties specify fallback dimensions for elements affected by size containment, preventing drastic layout shifts when elements are not actively rendered. When used alongside performance-optim",
+    false
+  ],
+  [
+    388,
+    "CSS content-visibility: hidden and Rendering Pipelines",
+    "The CSS content-visibility: hidden property optimizes web performance by allowing developers to instruct the browser to skip the rendering phases of an element's descendants while preserving its underlying state. This article breaks down how the browser",
+    false
+  ],
+  [
+    387,
+    "CSS Visibility Collapse for Table Rows Explained",
+    "The CSS property visibility: collapse is a specialized styling value designed primarily for internal table elements such as rows (<tr>), row groups (<tbody>), and columns (<col>). It allows developers to completely hide table elements without disrupting",
+    false
+  ],
+  [
+    386,
+    "CSS inline-grid vs grid: Key Differences Explained",
+    "CSS Grid provides two primary display values to establish a grid formatting context: display: grid and display: inline-grid. While both produce an identical internal grid layout for their child elements, they differ fundamentally in how the parent contai",
+    false
+  ],
+  [
+    385,
+    "CSS display: inline-flex in Flowing Paragraphs",
+    "The display: inline-flex CSS declaration creates a flexbox container that behaves as an inline element on the outside while maintaining full flexbox layout capabilities on the inside. This article explains the technical mechanics of display: inline-flex,",
+    false
+  ],
+  [
+    384,
+    "How CSS display: flow-root Generates a Clean BFC",
+    "The CSS display: flow-root property provides a modern, semantic method for generating a new Block Formatting Context (BFC) on an element without introducing unintended visual or behavioral side effects. Historically, developers relied on workarounds such",
+    false
+  ],
+  [
+    383,
+    "CSS display: contents and Screen Reader Accessibility",
+    "The CSS display: contents property allows developers to remove a container element's visual box from the layout tree while keeping its child elements intact, which is especially useful for CSS Grid and Flexbox layouts. However, using this property freque",
+    false
+  ],
+  [
+    382,
+    "How CSS OKLab Fixes Gradient Gray Dead Zones",
+    "The traditional CSS gradient often suffers from a muddy, desaturated band known as the \"gray dead zone\" when transitioning between vibrant complementary colors. This article explains why legacy sRGB interpolation creates these dull intermediate shades an",
+    false
+  ],
+  [
+    381,
+    "CSS color-interpolation-method in Color-Mix",
+    "The CSS color-interpolation-method parameter defines the exact color space and mathematical algorithm used to blend colors together in modern CSS features, including the color-mix() function and CSS gradients. By allowing developers to explicitly choose",
+    false
+  ],
+  [
+    380,
+    "How to Style Radio Buttons with CSS accent-color",
+    "The CSS accent-color property provides a lightweight, native method for applying custom brand colors to user-interface elements without overwriting their underlying accessibility features. This article explains how the property styles HTML radio buttons,",
+    false
+  ],
+  [
+    379,
+    "How CSS direction: rtl Flips Document Layout Flow",
+    "The CSS direction: rtl property alters the inline base direction and layout flow of an HTML document or element from the standard left-to-right orientation to right-to-left. This property is vital for supporting right-to-left languages such as Arabic, He",
+    false
+  ],
+  [
+    378,
+    "Guide to CSS unicode-bidi for Arabic and Hebrew Text",
+    "This article provides an overview of the CSS unicode-bidi property and explains how it controls the rendering of bidirectional text. It covers how the Unicode Bidirectional (BiDi) algorithm processes right-to-left (RTL) languages like Arabic and Hebrew,",
+    false
+  ],
+  [
+    377,
+    "CSS quotes Property with open-quote and close-quote",
+    "The CSS quotes property defines the specific characters used for quotation marks, while the open-quote and close-quote values for the content property determine where those marks appear. Working together, they allow developers to implement language-sensi",
+    false
+  ],
+  [
+    376,
+    "Fast In-Page Search With CSS Custom Highlight API",
+    "This article explains the CSS Custom Highlight API, a modern web platform feature designed to style arbitrary text ranges without altering the underlying DOM structure. It explores the performance bottlenecks associated with traditional DOM-based text hi",
+    false
+  ],
+  [
+    375,
+    "CSS Custom Highlight API and ::highlight()",
+    "The CSS Custom Highlight API provides a performant mechanism for styling arbitrary text ranges directly from JavaScript without modifying the underlying DOM structure. By decoupling text selection logic from HTML markup, developers can register ranges in",
+    false
+  ],
+  [
+    374,
+    "What Is the CSS ::grammar-error Pseudo-Element?",
+    "The CSS ::grammar-error pseudo-element allows web developers to customize the visual appearance of text that the user agent flags as grammatically incorrect. While browsers traditionally render grammar warnings using default visual markers—such as a wa",
+    false
+  ],
+  [
+    373,
+    "Styling Native Spellcheck with CSS ::spelling-error",
+    "This article explains how the CSS ::spelling-error pseudo-element formats native spellchecker highlights in web applications. You will learn how browsers identify misspelled words, which CSS properties are supported to override default browser rendering,",
+    false
+  ],
+  [
+    372,
+    "Understanding CSS :blank vs :empty Pseudo-Classes",
+    "The CSS :blank pseudo-class is a Selectors Level 4 proposal designed to target elements that contain no content or contain only whitespace. While modern web design frequently requires hiding or styling elements without visible content, the traditional :e",
+    false
+  ],
+  [
+    371,
+    "Using CSS :indeterminate for Tri-State Checkboxes",
+    "The CSS :indeterminate pseudo-class allows developers to style form elements that exist in an undefined or mixed state, serving as the visual backbone for tri-state checkboxes in nested UI trees. In hierarchical interfaces—such as file directories, cat",
+    false
+  ],
+  [
+    370,
+    "Understanding the CSS :default Pseudo-Class",
+    "The CSS :default pseudo-class is a structural selector used to target form elements that are set as the default option within a group or form. This article explores how :default works, focusing on its application to default submission buttons, pre-select",
+    false
+  ],
+  [
+    369,
+    "Dynamic Form Labeling with CSS Required and Optional",
+    "The CSS :required and :optional pseudo-classes provide a native, resilient mechanism for styling form controls and their associated labels based on whether user input is mandatory. By targeting form elements according to the presence or absence of the HT",
+    false
+  ],
+  [
+    368,
+    "CSS :in-range and :out-of-range Pseudo-Classes Explained",
+    "The CSS :in-range and :out-of-range pseudo-classes provide a native way to style form controls based on whether their current values satisfy specified minimum and maximum constraints. This guide explains how these selectors work with HTML number inputs,",
+    false
+  ],
+  [
+    367,
+    "CSS :user-valid: Styling Forms After Interaction",
+    "The CSS :user-valid pseudo-class provides a native solution for form validation by delaying positive styling until a user meaningfully interacts with a form field. Unlike the traditional :valid pseudo-class, which applies styles immediately upon page loa",
+    false
+  ],
+  [
+    366,
+    "CSS :user-invalid vs :invalid for Better Form UX",
+    "The CSS :user-invalid pseudo-class represents any form element whose value fails validation constraints, but only after a user has actively interacted with it. Unlike the classic :invalid pseudo-class—which flags errors instantly on page load before a",
+    false
+  ],
+  [
+    365,
+    "Pure CSS Theme Toggle with :root:has(:checked)",
+    "Modern CSS allows developers to implement full-featured, global theme toggles—such as switching between light and dark modes—without relying on JavaScript. By pairing the :has() relational pseudo-class with the :checked state of an HTML form control,",
+    false
+  ],
+  [
+    364,
+    "CSS :link vs a Selector: Key Differences Explained",
+    "This article explores the purpose of the CSS :link pseudo-class and clarifies how it differs from the standard a tag selector. You will learn how each selector handles the href attribute, how browser history affects them, and how CSS specificity impacts",
+    false
+  ],
+  [
+    363,
+    "Understanding CSS :visited Privacy Restrictions",
+    "The CSS :visited pseudo-class allows developers to alter the appearance of links a user has already clicked. Historically, this capability introduced a severe vulnerability known as \"history sniffing,\" enabling malicious websites to silently harvest a vi",
+    false
+  ],
+  [
+    362,
+    "Understanding the CSS :active Pseudo-Class",
+    "This article provides an overview of the CSS :active pseudo-class, explaining what it is, how it works under the hood, and how developers use it to simulate physical mouse-down interactions. You will learn the mechanics behind the activation state, how t",
+    false
+  ],
+  [
+    361,
+    "How CSS Hover Works on Mobile Touch Screens",
+    "On mobile touch devices, the CSS :hover pseudo-class behaves unpredictably because there is no persistent cursor to track pointer position across the screen. Instead of triggering when a pointer glides over an element, mobile operating systems adapt :hov",
+    false
+  ],
+  [
+    360,
+    "How CSS Isolation Scopes Mix-Blend-Mode Effects",
+    "The CSS isolation property controls how elements create a new stacking context, serving as a boundary that prevents mix-blend-mode calculations from leaking into surrounding page elements. When developing modular UI components, applying mix-blend-mode ca",
+    false
+  ],
+  [
+    359,
+    "How mix-blend-mode: screen Filters Black Backgrounds",
+    "The CSS mix-blend-mode: screen property eliminates black backgrounds in overlays by applying an inverted multiplicative blending formula to the color values of an element and its backdrop. In digital compositing, this blend mode inverts both layers, mult",
+    false
+  ],
+  [
+    358,
+    "Understanding CSS Mix Blend Mode Multiply Calculation",
+    "The CSS property mix-blend-mode: multiply allows elements to blend with their background using a mathematical multiplication of color channel values. This article explains the mathematical formula powering the multiply blend mode, details how color chann",
+    false
+  ],
+  [
+    357,
+    "Applying SVG Filters to HTML with CSS Filter URL",
+    "The CSS filter: url(#svg-filter) property allows standard HTML elements to leverage advanced, multi-stage graphic effects by routing their rendered output through SVG filter pipelines. This article explains the technical mechanics behind this bridge, det",
+    false
+  ],
+  [
+    356,
+    "What Is CSS mask-type Luminance in SVG Masking",
+    "The CSS mask-type: luminance property determines whether an SVG <mask> element uses the brightness of its graphic content to calculate opacity rather than its transparency. When set to luminance, the mask converts color values into light intensity: pure",
+    false
+  ],
+  [
+    355,
+    "How to Use CSS mask-composite for Vector Masks",
+    "The CSS mask-composite property enables developers to construct complex clipping paths by combining multiple mask layers using Boolean operations like union, subtraction, intersection, and exclusion. Instead of relying on graphics software to merge shape",
+    false
+  ],
+  [
+    354,
+    "How CSS background-repeat: round Scales Patterns",
+    "This article provides an overview of the CSS background-repeat: round property value, detailing how it works, how it differs from traditional background repetition methods, and the mathematical logic browsers use to scale image tiles. You will learn how",
+    false
+  ],
+  [
+    353,
+    "CSS background-repeat space: Tile Patterns Without Clipping",
+    "The background-repeat: space property in CSS solves the problem of cropped patterns by calculating how many whole images fit within a container and distributing any remaining empty space evenly between them. Unlike standard background repetition, which b",
+    false
+  ],
+  [
+    352,
+    "CSS background-origin Property Explained",
+    "The CSS background-origin property determines the positioning area of a background image, defining the exact coordinate origin where the image begins rendering. This article covers how background-origin interacts with the CSS box model, breaks down its t",
+    false
+  ],
+  [
+    351,
+    "CSS shape-image-threshold: Wrapping Transparent PNGs",
+    "The CSS shape-image-threshold property defines the exact alpha channel boundary used to wrap inline text around non-rectangular images. When paired with shape-outside, it reads the transparency data of a raster image—such as a transparent PNG—and set",
+    false
+  ],
+  [
+    350,
+    "CSS image-orientation: Fix EXIF Photo Rotation",
+    "The CSS image-orientation: from-image property is a styling rule that forces browsers to correct an image's display orientation using embedded EXIF metadata. When users take photos on smartphones or digital cameras, the device often saves the image in it",
+    false
+  ],
+  [
+    349,
+    "How text-size-adjust: 100% Prevents Safari Font Zoom",
+    "This article explains how the CSS text-size-adjust: 100% property stops mobile Safari from arbitrarily enlarging font sizes. By default, iOS WebKit applies a built-in text-inflation algorithm to boost legibility, particularly when devices rotate from por",
+    false
+  ],
+  [
+    348,
+    "CSS font-smoothing and Anti-Aliasing Guide",
+    "The CSS font-smooth and -webkit-font-smoothing properties give developers control over how browsers render font edges on supported displays. This guide explains how font anti-aliasing works in modern browsers, details the syntax for vendor-prefixed prope",
+    false
+  ],
+  [
+    347,
+    "CSS ui-sans-serif on macOS, Windows, and Linux",
+    "The CSS ui-sans-serif generic font keyword allows web applications to match the native user interface typography of a user's operating system without hardcoding platform-specific font stacks. Introduced in the CSS Fonts Module Level 4, this keyword dynam",
+    false
+  ],
+  [
+    346,
+    "What Is the CSS system-ui Generic Font Family?",
+    "The system-ui value is a standard generic font family keyword in CSS designed to match the native typography of a visitor's host operating system. This article examines the definition and purpose of system-ui, details how modern browsers map it to specif",
+    false
+  ],
+  [
+    345,
+    "How CSS color-scheme Triggers Native Browser UI Theming",
+    "The CSS color-scheme property communicates to the browser that an element or entire document can comfortably render in both light and dark modes. Declaring color-scheme: light dark; explicitly instructs the rendering engine to align built-in browser inte",
+    false
+  ],
+  [
+    344,
+    "CSS inset-block for Vertical Layout Boundaries",
+    "The CSS inset-block property is a logical shorthand property used to define the distance between a positioned element and its containing block along the block axis. In standard horizontal writing modes, the block axis runs vertically, making inset-block",
+    false
+  ],
+  [
+    343,
+    "How to Use CSS inset-inline for Logical Positioning",
+    "The CSS inset-inline property is a modern logical shorthand that defines the start and end offsets of a positioned element along its inline axis. Instead of binding element placement to rigid physical directions like left and right, inset-inline adapts d",
+    false
+  ],
+  [
+    342,
+    "CSS Inset Property: Replace Top Right Bottom Left",
+    "The CSS inset property is a modern shorthand that simplifies how developers position elements on a web page by replacing the individual top, right, bottom, and left properties. Instead of declaring up to four separate offset declarations in a stylesheet,",
+    false
+  ],
+  [
+    341,
+    "How CSS contain: paint Creates a Containing Block",
+    "The CSS contain: paint declaration optimizes rendering performance by guaranteeing that an element’s descendants do not paint outside its bounds. Because the browser must ensure that all visual output remains confined within the element's box, applying",
+    false
+  ],
+  [
+    340,
+    "Why CSS Filter Breaks Position Fixed",
+    "Applying a CSS filter to a parent element breaks child position: fixed viewport anchoring because the CSS specification mandates that any non-none filter establishes a new containing block for all descendants. Consequently, instead of anchoring relative",
+    false
+  ],
+  [
+    339,
+    "Position Fixed Inside a CSS Transform",
+    "In CSS, applying a transform property to an ancestor element fundamentally alters how child elements with position: fixed behave. Instead of anchoring to the browser viewport as expected, the fixed element becomes trapped within the transformed ancestor,",
+    false
+  ],
+  [
+    338,
+    "How CSS Grid Handles Overlapping Items",
+    "This article explains how CSS Grid resolves overlapping elements placed on identical track coordinates, detailing the default stacking order, the native support for the z-index property, and how positioning interacts within the grid formatting context. B",
+    false
+  ],
+  [
+    337,
+    "CSS Grid Span Keyword: Column and Row Placement",
+    "In CSS Grid layouts, the span keyword allows you to specify how many tracks—columns or rows—a grid item should expand across, rather than manually calculating absolute start and end grid lines. This article provides a concise guide to how the span ke",
+    false
+  ],
+  [
+    336,
+    "CSS Grid Positive and Negative Line Indexing",
+    "CSS Grid line numbering provides a dual-direction indexing system that allows developers to position grid items relative to either boundary of a grid container. Positive indices count sequentially forward starting from the container's start edge, while n",
+    false
+  ],
+  [
+    335,
+    "CSS Subgrid Rows: Aligning Cards in Dynamic Lists",
+    "This article explores how the CSS subgrid value for grid-template-rows solves the common problem of misaligned content within dynamic card layouts. You will learn the mechanics of grid-template-rows: subgrid, the limitations of traditional layout methods",
+    false
+  ],
+  [
+    334,
+    "CSS grid-auto-columns: Sizing Implicit Columns",
+    "The CSS grid-auto-columns property defines the size of implicit column tracks that are generated automatically when grid items are positioned outside of the explicitly defined column template. When a grid item overflows the explicit grid—either through",
+    false
+  ],
+  [
+    333,
+    "How CSS grid-auto-flow: dense Fills Grid Holes",
+    "CSS Grid provides a powerful auto-placement algorithm to position elements without requiring explicit coordinates for every item. When grid items have varying sizes or span multiple tracks, the default layout often creates awkward, empty spaces. The grid",
+    false
+  ],
+  [
+    332,
+    "CSS justify-items: Grid vs Flexbox Explained",
+    "The justify-items property is a CSS Box Alignment module feature designed to control the alignment of child elements along the inline (horizontal) axis within their allocated layout slots. While justify-items is fully functional and widely used in CSS Gr",
+    false
+  ],
+  [
+    331,
+    "CSS align-content in Multi-Line Flexbox",
+    "The CSS align-content property manages the alignment and spacing of entire flex lines along the cross axis within a flex container. This article explains what align-content does, how it differs from other alignment properties, and the specific prerequisi",
+    false
+  ],
+  [
+    330,
+    "flex: 1 1 0% vs flex: 1 1 auto in CSS",
+    "The primary difference between flex: 1 1 0% and flex: 1 1 auto lies in the flex-basis value, which dictates how the browser calculates and distributes space among flex items. While both declarations allow items to grow and shrink equally, flex: 1 1 0% di",
+    false
+  ],
+  [
+    329,
+    "Why Flex Items Default to Min-Width Auto",
+    "In CSS Flexbox, flex items default to min-width: auto rather than min-width: 0 to preserve the visual integrity of content and prevent data loss. By computing to an element's minimum intrinsic content size, this default ensures that text, images, and nes",
+    false
+  ],
+  [
+    328,
+    "How to Fix Flexbox Child Overflow Using min-width: 0",
+    "In CSS layout design, flex items frequently break out of their parent containers when containing long words, code blocks, or nested elements, rendering properties like text-overflow: ellipsis ineffective. This article explains why this unexpected overflo",
+    false
+  ],
+  [
+    327,
+    "CSS box-sizing content-box Calculation Guide",
+    "In CSS, box-sizing: content-box is the default box model behavior that determines how a browser calculates an HTML element's total rendered dimensions. This article explains the underlying mathematical formula of the content-box model, illustrates how pa",
+    false
+  ],
+  [
+    326,
+    "CSS outline-offset: How to Space Outlines",
+    "The CSS outline-offset property controls the space between an element's border edge and its rendered outline. Unlike standard borders or margins, outlines do not occupy document flow or trigger layout recalculations. By adjusting outline-offset, develope",
+    false
+  ],
+  [
+    325,
+    "CSS border-radius Slash Syntax for Elliptical Corners",
+    "This article explains how the CSS border-radius shorthand uses the forward slash (/) syntax to define elliptical corners. By separating horizontal and vertical radii with a slash, developers can break away from standard circular curves to create custom o",
+    false
+  ],
+  [
+    324,
+    "Understanding CSS Box-Shadow Spread Radius",
+    "The CSS box-shadow property allows developers to add depth and dimension to UI components by rendering shadows around elements. Within its declaration, the spread radius is an optional fourth length parameter that directly controls the expansion or contr",
+    false
+  ],
+  [
+    323,
+    "How to Use CSS Inset Box-Shadow for Interior Depth",
+    "The CSS box-shadow property with the inset keyword allows developers to draw shadows inside an element's container rather than casting them outward. This article explains how the browser calculates interior shadow projections, how coordinate values chang",
+    false
+  ],
+  [
+    322,
+    "How to Use CSS text-shadow with Multiple Layers",
+    "The CSS text-shadow property allows web developers to add depth, contrast, and creative visual styling to typography without relying on external image files. This article covers the fundamental syntax of text-shadow, explains each of its functional value",
+    false
+  ],
+  [
+    321,
+    "CSS text-transform full-width in CJK Typography",
+    "The CSS property text-transform: full-width is a typographic tool designed to harmonize Latin and half-width characters within East Asian (Chinese, Japanese, and Korean) layouts. This article explains how the property operates by mapping standard half-wi",
+    false
+  ],
+  [
+    320,
+    "CSS text-transform: capitalize and Title Casing",
+    "The CSS text-transform: capitalize property is a styling declaration designed to alter the visual casing of text without modifying the underlying HTML content. While developers often reach for it to create headline styling, it does not achieve true, gram",
+    false
+  ],
+  [
+    319,
+    "CSS counter-set: Assigning Custom Counter Values",
+    "The CSS counter-set property provides a direct way to modify the value of an active CSS counter without altering its nesting or scoping structure. While CSS counters typically rely on automatic step-by-step additions, counter-set allows developers to ass",
+    false
+  ],
+  [
+    318,
+    "How CSS list-style-position inside Wraps Text",
+    "This article explains the CSS list-style-position: inside property, detailing how it alters marker placement within list items and directly affects the wrapping behavior of multi-line text compared to the default outside setting. The list-style-position",
+    false
+  ],
+  [
+    317,
+    "CSS list-style-type: Alphabets and Roman Numerals",
+    "The CSS list-style-type property allows web developers to customize the markers used in HTML lists by replacing standard numbers or bullet points with predefined styles. By applying specific keywords to an ordered list (<ol>) or individual list items (<l",
+    false
+  ],
+  [
+    316,
+    "CSS caption-side: bottom for Data Tables",
+    "The CSS caption-side: bottom property is used in web design to position a data table’s <caption> element directly beneath the table grid rather than at the top. This article explains how the property functions, why it is essential for semantic labeling",
+    false
+  ],
+  [
+    315,
+    "How CSS border-spacing Sets Table Cell Gutters",
+    "The CSS border-spacing property controls the distance between the borders of adjacent table cells, commonly referred to as cell gutters, in an uncollapsed table model. This article explains how border-spacing operates, the prerequisite conditions require",
+    false
+  ],
+  [
+    314,
+    "What Is CSS border-collapse: collapse?",
+    "The border-collapse: collapse property in CSS is used to merge adjacent table cell borders into a single, shared border, eliminating the default gaps between them. In standard HTML rendering, tables display borders with distinct spaces separating individ",
+    false
+  ],
+  [
+    313,
+    "How CSS empty-cells: hide Handles Blank Table Cells",
+    "The CSS empty-cells: hide property allows developers to control the presentation of empty HTML table cells by suppressing their borders and backgrounds. This article covers how the property determines what qualifies as an \"empty\" cell, the mandatory layo",
+    false
+  ],
+  [
+    312,
+    "How CSS table-layout: fixed Speeds Up Rendering",
+    "The CSS table-layout: fixed property changes how browsers calculate column widths and render HTML tables, offering significant performance gains for data-heavy layouts. By default, browsers must parse an entire table's content before establishing its lay",
+    false
+  ],
+  [
+    311,
+    "How to Use CSS Resize on Textarea and Div",
+    "The CSS resize property enables developers to grant users manual control over an element's dimensions by displaying an interactive grab handle on its bottom-right corner. While <textarea> elements natively support this behavior by default, applying it to",
+    false
+  ],
+  [
+    310,
+    "How to Use CSS scroll-margin for Anchor Links",
+    "The CSS scroll-margin property is a modern styling feature that establishes an offset around an element when it is scrolled into view via anchor links, keyboard navigation, or JavaScript APIs. When websites use fixed or sticky navigation bars, jumping to",
+    false
+  ],
+  [
+    309,
+    "CSS scroll-padding for Fixed Headers",
+    "Fixed headers frequently obscure content when navigating to page anchors or using CSS Scroll Snap, as browsers align snap positions directly against the physical edge of the viewport. The CSS scroll-padding property eliminates this issue by defining an o",
+    false
+  ],
+  [
+    308,
+    "CSS scroll-snap-stop: always Explained",
+    "The CSS property scroll-snap-stop: always is a powerful tool designed to control pagination and scrolling velocity within scroll-snap containers. By default, users flicking or scrolling quickly can bypass multiple snap targets in a single gesture. Applyi",
+    false
+  ],
+  [
+    307,
+    "How CSS scroll-snap-align: center Aligns Items",
+    "This article explains how the CSS scroll-snap-align: center property achieves precise element alignment within a scroll container. By exploring the relationship between the container's snapport and the child element's snap area, you will learn the exact",
+    false
+  ],
+  [
+    306,
+    "CSS Scroll-Driven Animation Timeline Ranges",
+    "This article provides an overview of CSS scroll-driven animation timeline ranges, focusing on the cover, contain, entry, and exit keywords. These named ranges allow developers to synchronize CSS keyframe animations precisely with an element's position as",
+    false
+  ],
+  [
+    305,
+    "How CSS view-timeline Controls Scroll Animations",
+    "The CSS view-timeline property allows developers to link CSS animations directly to the visibility and position of a specific element inside a scroll container or viewport. This article explains how view-timeline functions, how it monitors an element's e",
+    false
+  ],
+  [
+    304,
+    "How to Use CSS scroll-timeline for Scroll Animations",
+    "This article explores the CSS scroll-timeline property, explaining how it enables modern web developers to create scroll-driven animations natively in CSS without relying on external JavaScript libraries. You will learn the mechanics behind the property,",
+    false
+  ],
+  [
+    303,
+    "How to Use CSS animation-composition",
+    "The CSS animation-composition property defines how an element's animated keyframe values interact with its underlying base styles or other running animations. By specifying one of three values—replace, add, or accumulate—developers gain precise contr",
+    false
+  ],
+  [
+    302,
+    "CSS animation-direction: alternate for Smooth Loops",
+    "This article explains the CSS animation-direction: alternate property, detailing how it works, why it eliminates jarring visual snaps in keyframe cycles, and how developers can use it to build seamless, continuous looping animations. By understanding thi",
+    false
+  ],
+  [
+    301,
+    "How the CSS Rotate Property Simplifies Keyframe Animations",
+    "The introduction of independent CSS transform properties—specifically rotate—has fundamentally changed how developers build and compose web animations. Historically, animating rotation required managing the monolithic transform property, which often",
+    false
+  ],
+  [
+    300,
+    "Individual CSS Transforms vs the Transform Property",
+    "CSS provides two distinct approaches for geometrically modifying elements: the traditional, combined transform property and individual transform properties (translate, rotate, and scale). While both achieve similar visual results, they fundamentally diff",
+    false
+  ],
+  [
+    299,
+    "Understanding CSS Transform Function Order",
+    "When multiple transformation functions are listed within a single CSS transform property, their order determines the final visual result. CSS executes these transformations sequentially from right to left under the hood using matrix multiplication, which",
+    false
+  ],
+  [
+    298,
+    "CSS matrix and matrix3d Functions Explained",
+    "The CSS matrix() and matrix3d() functions provide a low-level method for applying affine transformations directly to HTML elements using mathematical matrices. Rather than chaining individual functions like rotate(), scale(), translate(), and skew(), the",
+    false
+  ],
+  [
+    297,
+    "How CSS transform-origin Changes Scale and Rotation",
+    "The CSS transform-origin property dictates the anchor point around which visual transformations occur on an element. By default, every HTML element rotates and scales relative to its exact geometric center (50% 50%). This guide breaks down how modifying",
+    false
+  ],
+  [
+    296,
+    "Understanding CSS transform-box for SVG Elements",
+    "The CSS transform-box property defines the reference coordinate box used to compute transformations and transformation origins on elements, playing a critical role in Scalable Vector Graphics (SVG). By determining whether transforms are calculated relati",
+    false
+  ],
+  [
+    295,
+    "How CSS perspective-origin Adjusts 3D Vanishing Points",
+    "The CSS perspective-origin property defines the exact position from which a viewer looks at a 3D-transformed scene, effectively establishing the visual vanishing point. While the perspective property sets the distance between the viewer and the z=0 plane",
+    false
+  ],
+  [
+    294,
+    "CSS Perspective Property vs Transform Perspective",
+    "Understanding the difference between the CSS perspective property on a parent element and the transform: perspective() functional notation on a child is essential for mastering 3D web design. While both methods simulate depth by defining the distance bet",
+    false
+  ],
+  [
+    293,
+    "How CSS Perspective Sets 3D Viewer Distance",
+    "The CSS perspective property establishes the distance between the viewer's eye and the screen's z-plane ($z = 0$), determining the intensity of the visual depth applied to 3D-transformed child elements. By defining this virtual distance along the z-axis,",
+    false
+  ],
+  [
+    292,
+    "CSS Backface-Visibility Hidden in 3D Card Flips",
+    "In web design, creating realistic 3D card-flip animations requires precise control over how elements render in three-dimensional space. This article explores the purpose of the CSS backface-visibility: hidden property, explaining how it works, why it pre",
+    false
+  ],
+  [
+    291,
+    "How CSS translateZ(0) Triggers Hardware Compositing",
+    "The CSS rule transform: translateZ(0) is one of the most famous performance \"hacks\" in web development history, used to eliminate visual stutter and achieve smooth 60-frames-per-second animations. This article examines the browser rendering pipeline, exp",
+    false
+  ],
+  [
+    290,
+    "Why Excessive CSS will-change Hurts Performance",
+    "The CSS will-change property is designed to inform the browser ahead of time about which properties of an element are likely to be animated, allowing the rendering engine to apply proactive optimizations. However, excessively applying will-change forces",
+    false
+  ],
+  [
+    289,
+    "Understanding CSS will-change: transform and GPU Layers",
+    "The CSS property will-change: transform is a performance optimization hint that informs the browser an element is expected to undergo transform animations in the near future. By signaling this intent in advance, the browser promotes the element to its ow",
+    false
+  ],
+  [
+    288,
+    "How touch-action: pan-y Handles Scroll and Swipes",
+    "The CSS touch-action: pan-y property allows web applications to retain smooth native vertical page scrolling while simultaneously capturing horizontal swipe gestures with JavaScript. By explicitly declaring the allowed touch interactions directly in CSS,",
+    false
+  ],
+  [
+    287,
+    "What Is CSS contain: size and Why Elements Collapse",
+    "The CSS contain: size property is a performance optimization tool that isolates an element's size calculation from its child contents. Applying this property tells the browser to compute the element's layout without examining its children, which drastica",
+    false
+  ],
+  [
+    286,
+    "CSS Contain Layout: Stop Layout Recalculation",
+    "The CSS contain: layout property is a performance optimization feature that isolates an element’s internal layout from the rest of the document. Under normal circumstances, changes to an element's geometry can trigger reflows that bubble up to parent e",
+    false
+  ],
+  [
+    285,
+    "CSS contain paint: Optimize Canvas and Lists",
+    "The CSS contain: paint property is a powerful optimization tool that informs the browser engine that an element's visual contents will never display outside its defined bounding box. This article breaks down how contain: paint works under the hood and de",
+    false
+  ],
+  [
+    284,
+    "CSS contain-intrinsic-size and content-visibility",
+    "The CSS contain-intrinsic-size property acts as a placeholder sizing mechanism for elements that use size containment, most notably when paired with content-visibility: auto. By default, skipping the rendering of off-screen content causes layout collapse",
+    false
+  ],
+  [
+    283,
+    "How CSS aspect-ratio Prevents Video Embed CLS",
+    "The CSS aspect-ratio property eliminates Cumulative Layout Shift (CLS) on responsive video embeds by allowing browsers to calculate and reserve the required layout space before the external video asset downloads. By defining a fixed proportional relation",
+    false
+  ],
+  [
+    282,
+    "CSS -webkit-line-clamp: History and Support",
+    "The -webkit-line-clamp property is a legacy CSS feature originally created to truncate multi-line text blocks with an ellipsis after a specified number of lines. Despite its vendor-prefixed name and reliance on obsolete layout models, it remains universa",
+    false
+  ],
+  [
+    281,
+    "CSS line-clamp: Truncate Multi-Line Text with Ellipsis",
+    "The CSS line-clamp property allows developers to limit the rendering of a text block to a specified number of lines, automatically appending an ellipsis (...) at the truncation point. This article explains how the property operates under the hood, the ma",
+    false
+  ],
+  [
+    280,
+    "CSS text-emphasis in East Asian Typography",
+    "The CSS text-emphasis property is a styling feature designed to apply emphasis marks to text, serving as the digital equivalent of traditional typographic accents used primarily in East Asian languages such as Chinese, Japanese, and Korean. Unlike Wester",
+    false
+  ],
+  [
+    279,
+    "How to Use CSS ruby-position for Ruby Text",
+    "The CSS ruby-position property controls the placement of phonetic annotations, known as ruby text, relative to their base characters in East Asian typography. In languages such as Japanese and Chinese, ruby annotations provide pronunciation guides—such",
+    false
+  ],
+  [
+    278,
+    "CSS text-rendering optimizeLegibility and Performance",
+    "The CSS property text-rendering: optimizeLegibility is used by web developers to enhance text appearance by enabling advanced font features such as kerning and ligatures. While it noticeably improves typographic beauty, particularly for headlines and lar",
+    false
+  ],
+  [
+    277,
+    "How font-kerning: normal Controls Letter Spacing",
+    "The CSS font-kerning: normal property ensures that text renders with the typographer’s intended spacing between specific character pairs. By explicitly activating the kerning metrics embedded within a font file, this property resolves awkward visual ga",
+    false
+  ],
+  [
+    276,
+    "CSS Stylistic Sets: How to Use ss01 and ss02",
+    "CSS stylistic sets are OpenType font features that allow web developers to swap default character glyphs for alternate designs provided by a typeface. This guide explains what stylistic sets (ss01 through ss20) are, why they are used, and the standard CS",
+    false
+  ],
+  [
+    275,
+    "CSS font-feature-settings for OpenType Ligatures",
+    "The CSS font-feature-settings property provides low-level access to advanced OpenType typographic capabilities, allowing web developers to explicitly enable or disable font ligatures. Ligatures merge two or more adjacent characters—such as \"fi\", \"fl\",",
+    false
+  ],
+  [
+    274,
+    "Prevent Synthetic Bold with font-synthesis-weight: none",
+    "This article explains how the CSS property font-synthesis-weight: none stops browsers from automatically generating artificial bold text. When a requested bold typeface is missing from a font family, browsers by default simulate bolding by distorting the",
+    false
+  ],
+  [
+    273,
+    "CSS font-optical-sizing: auto Explained",
+    "This article explores the CSS font-optical-sizing: auto property, explaining how it works with variable fonts and how it dynamically adjusts glyph weights, stroke contrast, and proportions across different screen sizes. You will learn the mechanics behin",
+    false
+  ],
+  [
+    272,
+    "CSS Custom Properties Across Shadow DOM Boundaries",
+    "CSS custom properties, commonly known as CSS variables, provide a bridge across shadow DOM boundaries, resolving the tension between component encapsulation and global design systems. While the shadow DOM intentionally blocks standard CSS selectors from",
+    false
+  ],
+  [
+    271,
+    "CSS Light DOM vs Shadow DOM Styling Precedence",
+    "This article explains the styling precedence and specificity rules between the light DOM and the shadow DOM in modern web components. It details how style encapsulation works, how light DOM styles interact with the shadow boundary, and the exact hierarch",
+    false
+  ],
+  [
+    270,
+    "Using CSS :host-context() for Web Component Theming",
+    "The CSS :host-context() pseudo-class enables ancestor-sensitive component theming by allowing elements inside a Shadow DOM to style themselves based on the presence of specific selectors on their ancestor elements in the Light DOM. While the Shadow DOM n",
+    false
+  ],
+  [
+    269,
+    "CSS :host Pseudo-Class for Custom Elements",
+    "This article provides a comprehensive overview of the CSS :host pseudo-class, an essential tool for styling Web Components. You will learn what the :host selector is, why it is necessary within the Shadow DOM, how to apply default styles to a custom elem",
+    false
+  ],
+  [
+    268,
+    "How Shadow DOM Prevents CSS Leakage",
+    "This article explores how CSS encapsulation in the Shadow DOM protects web components from global stylesheet leakage. It explains the mechanics of the shadow boundary, how the browser's CSS engine handles scoped selectors, the distinct behavior of inheri",
+    false
+  ],
+  [
+    267,
+    "CSS ::slotted() Pseudo-Element in Web Components",
+    "The ::slotted() CSS pseudo-element is used within a Web Component's Shadow DOM to select and style elements that are projected into a <slot>. This article covers the fundamental purpose of ::slotted(), how to write its syntax, how specificity works betwe",
+    false
+  ],
+  [
+    266,
+    "Styling Shadow DOM with the CSS ::part() Pseudo-Element",
+    "Web Components rely on the Shadow DOM to encapsulate internal markup and styles, preventing external CSS rules from unintentionally leaking inside. The CSS ::part() pseudo-element bridges this encapsulation gap in an intentional, controlled manner by all",
+    false
+  ],
+  [
+    265,
+    "CSS :state() Pseudo-Class in Custom Web Components",
+    "This article explores the CSS :state() pseudo-class, a feature of the Custom State Set API that allows developers to style autonomous custom web components based on their internal, custom states. By reading this guide, you will learn why :state() was int",
+    false
+  ],
+  [
+    264,
+    "Using CSS :defined to Style Unregistered Custom Elements",
+    "This article explains how the CSS :defined pseudo-class targets custom elements based on their registration status in the browser. You will learn how to use the :not(:defined) selector to style custom elements before their JavaScript definitions load, ef",
+    false
+  ],
+  [
+    263,
+    "CSS Houdini Worklet Security Restrictions",
+    "CSS Houdini worklets allow developers to hook directly into the browser's rendering pipeline to execute custom paint, layout, and animation logic, but exposing low-level rendering mechanisms introduces notable security and privacy concerns. To protect ag",
+    false
+  ],
+  [
+    262,
+    "CSS Houdini Animation Worklets Explained",
+    "This article explores the CSS Houdini Animation Worklet API, a low-level browser interface designed to bring high-performance, scriptable animations to the modern web. You will learn what an Animation Worklet is, the problems it solves regarding main-thr",
+    false
+  ],
+  [
+    261,
+    "How CSS Paint API Works with paint()",
+    "The CSS Paint API, part of the CSS Houdini suite of standards, allows developers to generate custom, dynamic graphics programmatically directly within CSS using JavaScript. By invoking the paint(workletName) function inside standard CSS properties—such",
+    false
+  ],
+  [
+    260,
+    "Guide to the CSS.registerProperty() Method",
+    "The CSS.registerProperty() method is a JavaScript API provided by the CSS Houdini Properties and Values API that allows developers to explicitly register CSS custom properties with built-in type checking, default values, and inheritance rules. By definin",
+    false
+  ],
+  [
+    259,
+    "How CSS initial-value Prevents Invalid Fallbacks",
+    "The CSS initial-value descriptor, used within the @property rule of the CSS Properties and Values API, prevents invalid property fallbacks by providing a guaranteed, type-safe default value for custom properties. Standard unregistered CSS variables often",
+    false
+  ],
+  [
+    258,
+    "CSS @property: Understanding the inherits Descriptor",
+    "The inherits descriptor inside a CSS @property rule specifies whether a registered custom property cascades down the DOM tree to child elements. Part of the CSS Properties and Values API, this descriptor accepts a boolean value—true or false—allowing",
+    false
+  ],
+  [
+    257,
+    "How to Animate CSS Gradients with @property",
+    "CSS gradients are treated by the browser as background images rather than colors, which prevents the rendering engine from directly interpolating smooth transitions between them. Standard CSS custom properties fail to resolve this because the browser rea",
+    false
+  ],
+  [
+    256,
+    "How to Define CSS Custom Property Types with @property",
+    "The CSS @property rule, part of the CSS Houdini suite, allows developers to register custom properties with explicit types, inheritance behaviors, and default values. By providing strict type definitions such as <color> or <length>, browsers can properly",
+    false
+  ],
+  [
+    255,
+    "What Is CSS all: inherit and How Does It Work?",
+    "This article explores the CSS all: inherit declaration, detailing how it works, what it affects, and how it alters the standard cascade. You will learn how combining the all shorthand property with the inherit keyword forces an element to pull every appl",
+    false
+  ],
+  [
+    254,
+    "How CSS all: revert Restores Browser Default Styling",
+    "The CSS declaration all: revert provides a straightforward way to strip custom author styles and restore an element to the default styling defined by the browser. This article explains the underlying cascade mechanics of the revert keyword, how it works",
+    false
+  ],
+  [
+    253,
+    "CSS all unset: What It Is and Reset Use Cases",
+    "The CSS all: unset declaration provides a comprehensive way to reset an HTML element by clearing nearly all of its applied styles at once. This article explains how the all shorthand and the unset keyword work together to change CSS property values based",
+    false
+  ],
+  [
+    252,
+    "Pure CSS Tooltips Using attr() and ::after",
+    "Pure CSS tooltips allow developers to display contextual hints without relying on JavaScript libraries or extra DOM elements. By combining custom HTML data- attributes with the CSS attr() function and the ::after pseudo-element, you can dynamically extra",
+    false
+  ],
+  [
+    251,
+    "How to Use the CSS attr() Function with Content",
+    "This article provides a comprehensive overview of the CSS attr() function, focusing on how it works in tandem with the content property to retrieve values from HTML attributes. You will learn the core syntax, how the browser processes attribute values vi",
+    false
+  ],
+  [
+    250,
+    "How CSS column-span: all Breaks Multi-Column Flow",
+    "The CSS column-span: all declaration allows a specific block-level element inside a multi-column container to span across all columns rather than being confined to a single column box. This article explains the mechanics behind this behavior, including h",
+    false
+  ],
+  [
+    249,
+    "How to Use the CSS column-rule Property",
+    "This article provides an overview of the CSS column-rule property, explaining its syntax, component sub-properties, and practical implementation. You will learn how this property draws visual divider lines between multi-column text layouts, how it intera",
+    false
+  ],
+  [
+    248,
+    "CSS Columns Shorthand Property Explained",
+    "The CSS columns property is a shorthand that sets both column-width and column-count in a single declaration. By combining these two properties, columns provides a powerful, responsive mechanism for multi-column text layouts, allowing the browser to dyna",
+    false
+  ],
+  [
+    247,
+    "How to Use the CSS shape-margin Property",
+    "The CSS shape-margin property is used to create space between wrapping inline text and the boundary defined by the shape-outside property. While standard CSS margins push the entire rectangular box model of an element away from surrounding elements, shap",
+    false
+  ],
+  [
+    246,
+    "How CSS offset-rotate Aligns Elements on a Path",
+    "The CSS offset-rotate property defines the orientation of an element as it travels along a motion curve defined by offset-path. By dynamically calculating the tangent of the path at the element's current position, offset-rotate allows an object—such as",
+    false
+  ],
+  [
+    245,
+    "How to Animate Along Paths with CSS offset-path",
+    "The CSS offset-path property, part of the CSS Motion Path module, allows developers to animate DOM elements along complex, custom geometric trajectories such as curves, circles, or SVG paths. Traditionally, moving elements across non-linear trajectories",
+    false
+  ],
+  [
+    244,
+    "How CSS clip-path path Parses SVG Coordinate Strings",
+    "The CSS clip-path: path() function allows developers to use SVG path syntax directly within stylesheets to define complex clipping boundaries. This article explains how browsers parse the coordinate strings supplied to path(), how SVG commands translate",
+    false
+  ],
+  [
+    243,
+    "CSS forced-color-adjust Property Explained",
+    "The CSS forced-color-adjust property allows developers to opt specific elements out of user-agent color overrides in high-contrast accessibility modes, such as Windows Contrast Themes (formerly Windows High Contrast Mode). When forced colors mode is acti",
+    false
+  ],
+  [
+    242,
+    "How CSS math-depth Manages MathML Script Styling",
+    "The CSS math-depth property controls the nesting level of mathematical expressions within MathML, directly regulating how subscript, superscript, and nested sub-formulas are scaled and styled. By monitoring and calculating hierarchical depth, it automate",
+    false
+  ],
+  [
+    241,
+    "CSS conic-gradient Syntax for Pie Charts",
+    "The CSS conic-gradient() function allows developers to create native, lightweight pie charts using pure CSS without relying on SVG or external JavaScript libraries. By rotating color transitions around a central anchor point and utilizing hard color stop",
+    false
+  ],
+  [
+    240,
+    "CSS Striped Patterns Using Hard Color Stops",
+    "CSS gradients create seamless striped patterns by eliminating the default color interpolation between color stops, resulting in crisp, solid bands of color. By placing two distinct color stops at the exact same position—or by using modern shorthand whe",
+    false
+  ],
+  [
+    239,
+    "CSS element() in Firefox and Screen Sharing",
+    "The CSS element() function is a specialized CSS feature currently supported primarily in Mozilla Firefox that allows any HTML element to be treated as a dynamic, live image. This article explores how the element() function works, its implementation via v",
+    false
+  ],
+  [
+    238,
+    "How to Use CSS cross-fade() to Blend Backgrounds",
+    "The CSS cross-fade() function enables developers to blend two graphical images together at defined opacity levels directly in stylesheets, eliminating the need for pre-rendered image files or stacked HTML elements. This article explains the underlying me",
+    false
+  ],
+  [
+    237,
+    "CSS image-set() for Responsive Raster Graphics",
+    "The CSS image-set() function provides a native way to deliver responsive raster graphics via CSS properties such as background-image. Much like the HTML srcset attribute on the <img> element, image-set() allows developers to supply a list of image source",
+    false
+  ],
+  [
+    236,
+    "How CSS break-before: page Forces Clean Page Breaks",
+    "The CSS property break-before: page provides developers with precise control over pagination when printing web documents or generating PDFs from HTML. This article explains how the property functions within CSS fragmentation contexts, why it replaces leg",
+    false
+  ],
+  [
+    235,
+    "CSS Print Page Counters: counter(page) Explained",
+    "CSS print page counters, specifically counter(page) and counter(pages), are specialized CSS features used in paged media to dynamically generate page numbers for printed documents and exported PDFs. This article explains what these counters are, the diff",
+    false
+  ],
+  [
+    234,
+    "CSS Print Headers and Footers with Page Margin Boxes",
+    "CSS handles print headers and footers through the CSS Paged Media Module, specifically using the @page rule combined with predefined page-margin boxes. By dividing the margin area surrounding a printed page into sixteen distinct regions, CSS allows devel",
+    false
+  ],
+  [
+    233,
+    "CSS caret-shape for Terminal-Style Inputs",
+    "The CSS caret-shape property allows developers to change the visual appearance of the text insertion cursor in editable elements from a traditional vertical bar to a block or underscore. In terminal-style web interfaces, this property provides a native,",
+    false
+  ],
+  [
+    232,
+    "How CSS accent-color Affects Accessibility Contrast",
+    "The CSS accent-color property simplifies form control styling by applying a custom brand tint to native elements like checkboxes, radio buttons, and range sliders. A crucial built-in feature of this property is its automated contrast ratio management, wh",
+    false
+  ],
+  [
+    231,
+    "CSS Scrollbar Styling: Standard Properties vs WebKit",
+    "Customizing scrollbars in modern web design is split between two distinct approaches: the standard W3C properties (scrollbar-width and scrollbar-color) and the legacy, vendor-prefixed ::-webkit-scrollbar pseudo-elements. This article breaks down the fund",
+    false
+  ],
+  [
+    230,
+    "Extending Boundaries with CSS overflow-clip-margin",
+    "This article explains how the CSS overflow-clip-margin property functions, how it interacts with overflow: clip, and how it expands an element's clipping perimeter beyond its standard boundaries. You will learn the syntax, the reference boxes used to def",
+    false
+  ],
+  [
+    229,
+    "CSS box-decoration-break: clone on Inline Spans",
+    "The CSS box-decoration-break: clone property controls how an element's styling behaves when it breaks across multiple lines, columns, or pages. When applied to multi-line inline <span> elements, it duplicates box decorations—such as padding, borders, m",
+    false
+  ],
+  [
+    228,
+    "How CSS corner-shape Expands Border-Radius",
+    "The CSS corner-shape property proposal introduces advanced geometric control to web design, expanding styling capabilities far beyond standard circular curves. While the traditional border-radius property is limited to circular and elliptical arcs, corne",
+    false
+  ],
+  [
+    227,
+    "CSS @font-palette-values in Brand Typography",
+    "The CSS @font-palette-values at-rule allows developers and designers to customize the color palettes embedded within modern color fonts directly through stylesheets. In brand typography, this feature is used to adapt multi-colored typefaces, iconography",
+    false
+  ],
+  [
+    226,
+    "Using CSS font-palette to Customize Color Fonts",
+    "The CSS font-palette property allows developers to select and alter the color schemes embedded within multi-colored vector fonts, such as OpenType-SVG and COLR/CPAL fonts, without editing font files directly. By pairing font-palette with the @font-palett",
+    false
+  ],
+  [
+    225,
+    "How CSS text-wrap: pretty Prevents Typographic Orphans",
+    "Web typography has long struggled with awkward line breaks, particularly typographic orphans that leave a single word dangling on its own line at the end of a paragraph. The CSS property text-wrap: pretty provides a native, layout-friendly solution to th",
+    false
+  ],
+  [
+    224,
+    "How CSS hanging-punctuation Improves Margin Alignment",
+    "The CSS hanging-punctuation property improves editorial margin alignment by allowing punctuation marks to sit outside the visual bounding box of a text block. In traditional print typography, placing punctuation outside the alignment edge creates a clean",
+    false
+  ],
+  [
+    223,
+    "Using the HTML Popover API with CSS Styling",
+    "The native HTML Popover API provides a standard, browser-native mechanism for displaying floating UI elements—such as tooltips, dropdown menus, and toast notifications—without relying on heavy JavaScript libraries. When combined with CSS styling, it",
+    false
+  ],
+  [
+    222,
+    "CSS position-try-fallbacks for Popover Collisions",
+    "The CSS position-try-fallbacks property, a core component of the CSS Anchor Positioning API, provides a native way to prevent popovers and tooltips from overflowing the screen. By automatically testing alternative layout configurations when a popover col",
+    false
+  ],
+  [
+    221,
+    "CSS anchor() Function for Coordinate Offsets",
+    "The CSS anchor() function is a core feature of the CSS Anchor Positioning API designed to tether an absolutely or fixed positioned element to another element on the page, known as the anchor. By resolving to a specific coordinate offset, anchor() enables",
+    false
+  ],
+  [
+    220,
+    "How CSS position-anchor Binds Tooltips to Elements",
+    "The CSS position-anchor property is a core feature of the CSS Anchor Positioning API that connects an absolutely positioned element, such as a tooltip, to a specific reference element on the page. By establishing this relationship directly in CSS, develo",
+    false
+  ],
+  [
+    219,
+    "Guide to the CSS Anchor Positioning API",
+    "The CSS Anchor Positioning API is a native web feature that allows developers to tether floating elements—such as tooltips, dropdown menus, context menus, and popovers—directly to other elements on a page known as anchors. Historically, anchoring ele",
+    false
+  ],
+  [
+    218,
+    "How CSS Overlay Controls Top-Layer Dismiss Transitions",
+    "The CSS overlay property enables smooth exit transitions for elements moving in and out of the browser's top layer, such as native HTML <dialog> elements and popovers. Historically, elements leaving the top layer were immediately removed from that render",
+    false
+  ],
+  [
+    217,
+    "CSS transition-behavior: allow-discrete for Dialogs",
+    "The CSS transition-behavior: allow-discrete property enables animations and transitions on discrete CSS properties—such as display and overlay—that traditionally could not be transitioned. In HTML <dialog> animations, this property ensures that a dia",
+    false
+  ],
+  [
+    216,
+    "CSS @starting-style: Animate Elements Entering the DOM",
+    "The CSS @starting-style rule provides a native mechanism to animate elements as they are newly inserted into the Document Object Model (DOM) or toggled from display: none. Historically, CSS transitions required an already-rendered starting state to inter",
+    false
+  ],
+  [
+    215,
+    "How to Animate to height: auto with interpolate-size",
+    "The CSS interpolate-size property solves one of web development's oldest challenges: smoothly animating an element's size to and from intrinsic keywords like height: auto. Historically, CSS transitions required explicit numerical measurements (like pixel",
+    false
+  ],
+  [
+    214,
+    "Auto-Expand Inputs with CSS field-sizing: content",
+    "The CSS field-sizing property provides a native, JavaScript-free way to make form controls automatically adjust their dimensions based on their content. By setting field-sizing: content, elements like text inputs, textareas, and select dropdowns dynamica",
+    false
+  ],
+  [
+    213,
+    "Understanding CSS System Colors",
+    "CSS system colors are standardized keywords that correspond directly to the active colors of the user's operating system and browser interface. Instead of defining static hex or RGB values, these keywords dynamically match the user's preferences, includi",
+    false
+  ],
+  [
+    212,
+    "How to Use CSS light-dark() for Easy Theme Switching",
+    "The CSS light-dark() function is a native styling utility that allows developers to define two distinct color values—one for light mode and one for dark mode—within a single declaration. By reacting automatically to the active color-scheme value of a",
+    false
+  ],
+  [
+    211,
+    "Using CSS color() for Display-P3 and Rec2020",
+    "Modern displays are capable of rendering colors far beyond the traditional sRGB color space, yet web design has historically been confined to standard-gamut boundaries. The CSS Color Module Level 4 introduces the color() function, a standardized method t",
+    false
+  ],
+  [
+    210,
+    "What Happens When You Omit the Ampersand in CSS Nesting",
+    "In native CSS nesting, omitting the ampersand (&) causes the browser to treat the nested rule as an implicit descendant selector by automatically prepending an ampersand followed by a space (& ). While this makes nesting straightforward for child element",
+    false
+  ],
+  [
+    209,
+    "CSS Nesting: How the Ampersand Selector Works",
+    "Native CSS nesting introduces the ampersand (&) symbol as a dedicated nesting selector to explicitly reference the parent selector within a rule block. This article explains how the browser resolves the & selector, how to apply pseudo-classes, compound s",
+    false
+  ],
+  [
+    208,
+    "CSS :has() Selector Browser Performance Guide",
+    "The CSS :has() pseudo-class transforms front-end development by enabling parent and previous-sibling selection without JavaScript, but it fundamentally changes how browsers handle style calculations. This article examines the computational costs of compl",
+    false
+  ],
+  [
+    207,
+    "How to Select Parent Elements with CSS :has()",
+    "The CSS :has() pseudo-class functions as a relational selector that allows developers to style an element based on its descendants or subsequent siblings. Historically referred to as the \"parent selector,\" :has() checks whether an element contains or is",
+    false
+  ],
+  [
+    206,
+    "Understanding CSS container-name and container-type",
+    "CSS Container Queries allow elements to adapt their styles based on the dimensions of a parent container rather than the overall browser viewport. The container-type property turns an element into a queryable container, while the container-name property",
+    false
+  ],
+  [
+    205,
+    "Target Specific Ancestors with Named CSS Containers",
+    "CSS container queries allow components to adapt based on the size of a parent element rather than the entire viewport. By default, a @container query evaluates against the nearest ancestor defined as a container. However, in complex, nested interfaces, c",
+    false
+  ],
+  [
+    204,
+    "CSS container-type: inline-size Explained",
+    "The CSS declaration container-type: inline-size is a foundational property of CSS Container Queries that establishes an element as a query container scoped specifically to its inline dimension. This article explains what the declaration does, how it work",
+    false
+  ],
+  [
+    203,
+    "Scaling Nested Components with CSS Container Query Units",
+    "CSS container query units—specifically cqw, cqh, cqi, and cqb—allow developers to build deeply nested components that dynamically scale typography, padding, and layout based on their immediate container rather than the entire browser viewport. By dec",
+    false
+  ],
+  [
+    202,
+    "What Are CSS Anonymous Cascade Layers?",
+    "CSS cascade layers organize styles into explicit priority tiers, and anonymous cascade layers allow developers to create these layers without declaring a name. This article explains the purpose of anonymous cascade layers, how they behave within the CSS",
+    false
+  ],
+  [
+    201,
+    "How Unlayered Styles Interact With CSS @layer",
+    "In modern CSS, unlayered styles automatically take precedence over styles declared inside a @layer block when dealing with normal declarations, regardless of selector specificity. However, when the !important flag is introduced, this hierarchy inverts co",
+    false
+  ],
+  [
+    200,
+    "CSS Cascade Layer Priority Order",
+    "CSS cascade layers, introduced via the @layer at-rule, allow developers to structure how styles interact by creating explicit boundaries within the CSS cascade. This article breaks down the exact priority order of cascade layers when multiple layers are",
+    false
+  ],
+  [
+    199,
+    "How Tailwind CSS JIT Generates On-Demand Classes",
+    "The Tailwind CSS Just-In-Time (JIT) compiler fundamentally changed utility-first styling by replacing massive, pre-generated stylesheets with an on-demand compilation engine. Instead of compiling thousands of unused utility classes upfront and purging th",
+    false
+  ],
+  [
+    198,
+    "What Is Zero-Runtime CSS-in-JS?",
+    "Zero-runtime CSS-in-JS libraries combine the developer ergonomics of writing styles within JavaScript or TypeScript with the performance advantages of traditional, static CSS stylesheets. This article explains how zero-runtime libraries operate, why they",
+    false
+  ],
+  [
+    197,
+    "How CSS-in-JS Handles Server-Side Rendering",
+    "CSS-in-JS libraries like Styled-Components handle server-side rendering (SSR) by extracting critical styles during the initial HTML generation, injecting them into the document <head>, and synchronizing them during client-side hydration. This process pre",
+    false
+  ],
+  [
+    196,
+    "CSS Linting with Stylelint: Catching Syntax Errors",
+    "CSS linting with Stylelint is an essential quality assurance process that analyzes stylesheets to detect syntax errors, enforce consistent coding standards, and eliminate invalid rules before code reaches production. This article explains what Stylelint",
+    false
+  ],
+  [
+    195,
+    "How ITCSS Organizes Stylesheets by Specificity",
+    "Inverted Triangle CSS (ITCSS) is a scalable CSS methodology that manages specificity and inheritance by ordering stylesheets in a hierarchical, tiered structure shaped like an inverted triangle. This article explains how ITCSS functions, breaking down it",
+    false
+  ],
+  [
+    194,
+    "What Is SMACSS: Modular CSS Architecture Guide",
+    "SMACSS, which stands for Scalable and Modular Architecture for CSS, is a flexible design methodology created to bring structure, consistency, and maintainability to front-end codebases. Rather than acting as a rigid framework or library, SMACSS provides",
+    false
+  ],
+  [
+    193,
+    "How OOCSS Separates Structure from Skin",
+    "Object-Oriented CSS (OOCSS) is a development methodology designed to make stylesheets modular, maintainable, and lightweight. One of its two central principles is the strict separation of structure from skin. This article explores how this separation wor",
+    false
+  ],
+  [
+    192,
+    "Atomic CSS in Large Enterprise Applications",
+    "Atomic CSS architecture serves as a scalable styling methodology designed to solve the performance bottlenecks, specificity conflicts, and maintenance overhead inherent in large enterprise codebases. By breaking visual styles down into single-purpose, im",
+    false
+  ],
+  [
+    191,
+    "Inline CSS Specificity in the Cascade Hierarchy",
+    "This article provides an overview of where inline CSS styling sits within the CSS specificity calculation hierarchy. Inline styles hold the highest specificity among standard CSS declarations, overriding IDs, classes, and element selectors defined in int",
+    false
+  ],
+  [
+    190,
+    "How to Calculate CSS Specificity Score",
+    "CSS specificity is the algorithm web browsers use to determine which style rules apply to an element when multiple conflicting declarations exist. This article breaks down the calculation formula for IDs, classes, and element tags, explaining how to tall",
+    false
+  ],
+  [
+    189,
+    "How CSS Resolves Specificity Conflicts with Source Order",
+    "When multiple CSS rules target the same element and carry identical specificity scores, the browser resolves the conflict using the principle of source order. In the CSS cascade algorithm, source order acts as the final tiebreaker: the rule defined last",
+    false
+  ],
+  [
+    188,
+    "Normal vs Important Transitions in the CSS Cascade",
+    "This article examines how the CSS cascade algorithm handles transitions alongside normal and important declarations. While standard CSS cascade rules assign different priorities to normal and !important declarations across various origins, active transit",
+    false
+  ],
+  [
+    187,
+    "CSS Cascade Order: User Agent, User, and Author",
+    "The CSS Cascade is the core algorithm browsers use to resolve conflicting property declarations, primarily sorting them by declaration origin and importance before evaluating specificity or source order. This article breaks down how the cascade processes",
+    false
+  ],
+  [
+    186,
+    "CSS Dead-Code Elimination: PurgeCSS and Tree Shaking",
+    "CSS dead-code elimination is an automated build-time optimization technique that scans project files to identify and remove unused style rules from final stylesheets. This article explores what CSS dead-code elimination is, clarifies the distinction betw",
+    false
+  ],
+  [
+    185,
+    "How CSS Minification Reduces Production File Sizes",
+    "CSS minification reduces file sizes in web production builds by stripping out unnecessary characters, shortening syntax, and consolidating rules without changing how the browser renders the design. By systematically eliminating code meant solely for huma",
+    false
+  ],
+  [
+    184,
+    "What Is the CSS @charset Rule and Where to Use It",
+    "The CSS @charset at-rule is used by developers to specify the character encoding of an external stylesheet. This rule ensures that browsers correctly interpret characters outside the basic ASCII range, such as accented letters, non-Latin scripts, or symb",
+    false
+  ],
+  [
+    183,
+    "CSS @import vs Link Tag: Network Performance",
+    "While both the CSS @import rule and the HTML <link> tag load external stylesheets, their impact on network performance is vastly different. The HTML <link> tag enables browsers to download stylesheets in parallel, maximizing network efficiency. In contra",
+    false
+  ],
+  [
+    182,
+    "CSS @counter-style: Custom List Bullet Markers",
+    "The CSS @counter-style at-rule allows developers to define custom counter styles for ordered and unordered lists, moving beyond the default browser markers like numbers, discs, and roman numerals. This article provides a straightforward guide to understa",
+    false
+  ],
+  [
+    181,
+    "CSS hyphenate-character Property Explained",
+    "The CSS hyphenate-character property allows developers to define the specific character or string displayed at the end of a line when a word breaks due to hyphenation. By default, browsers use a standard hyphen, but this property provides fine-grained ty",
+    false
+  ],
+  [
+    180,
+    "CSS image-rendering: pixelated for Retro Graphics",
+    "The image-rendering: pixelated property in CSS is designed to scale low-resolution images while preserving their sharp, distinct pixel borders. By default, web browsers apply smoothing algorithms to scaled-up images, which makes retro pixel art appear bl",
+    false
+  ],
+  [
+    179,
+    "How CSS paint-order Controls Text Stroke and Fill",
+    "The CSS paint-order property allows developers to control the sequence in which the fill, stroke, and markers of a graphical element or text are drawn. By default, browsers paint text fill first and then apply the stroke on top of it, which often obscure",
+    false
+  ],
+  [
+    178,
+    "CSS isolation isolate and Stacking Contexts Explained",
+    "The CSS isolation: isolate property is primarily used to explicitly create a new stacking context on an element without requiring side effects like positioning or opacity changes. By establishing a scoped stacking context, it prevents child elements with",
+    false
+  ],
+  [
+    177,
+    "How CSS Containment Isolates Subtree Rendering",
+    "CSS containment allows developers to isolate specific subtrees of the Document Object Model (DOM) from the rest of the page to boost rendering performance. By declaring properties like contain: layout or contain: strict, you inform the browser that an el",
+    false
+  ],
+  [
+    176,
+    "Optimizing CSS will-change to Prevent Memory Bloat",
+    "The CSS will-change property is a performance optimization tool that alerts the browser to expected changes on an element, allowing it to prepare ahead of time by setting up dedicated rendering layers. However, when applied improperly, it can lead to sev",
+    false
+  ],
+  [
+    175,
+    "Using CSS caret-color to Style Text Cursors",
+    "This article provides an overview of the CSS caret-color property, explaining how it works to style text input indicators across web pages. You will learn the syntax, acceptable values, elements it applies to, and practical scenarios for using it to impr",
+    false
+  ],
+  [
+    174,
+    "CSS touch-action Property for Mobile Gestures",
+    "The CSS touch-action property allows web developers to control how touch-screen devices respond to user gestures such as scrolling, pinching, and swiping. By specifying which touch interactions are handled natively by the browser and which are delegated",
+    false
+  ],
+  [
+    173,
+    "CSS user-select: none: How to Prevent Text Selection",
+    "The CSS user-select: none property prevents users from highlighting and selecting text within an interface by disabling the browser's default text selection behavior on targeted elements. This article explains how the property functions at the browser le",
+    false
+  ],
+  [
+    172,
+    "CSS Pointer-Events None: How to Disable Interaction",
+    "This article provides a practical overview of the CSS declaration pointer-events: none, explaining its function, mechanical behavior in web browsers, and common implementation scenarios. You will learn how this property bypasses mouse and touch interacti",
+    false
+  ],
+  [
+    171,
+    "How CSS Cursor Communicates UI Affordances",
+    "This article examines how the CSS cursor property serves as a vital visual affordance in web design, bridging user intent and system response. Readers will learn the relationship between cursor styles and human perception, discover key cursor values that",
+    false
+  ],
+  [
+    170,
+    "CSS Quotes Property for Multi-Language Quotations",
+    "The CSS quotes property defines the specific typographic quotation marks used by the browser when rendering quotation-based elements like <q> or pseudo-elements using open-quote and close-quote. In internationalization and multi-language styling, this pr",
+    false
+  ],
+  [
+    169,
+    "How to Use CSS Counters for Automated Numbering",
+    "CSS counters provide a native way to generate and control automated numbering directly within style sheets, eliminating the need to hardcode numbers in HTML or rely on JavaScript. By utilizing the counter-reset, counter-increment, and content properties",
+    false
+  ],
+  [
+    168,
+    "What is the CSS ::target-text Pseudo-Element?",
+    "The ::target-text pseudo-element in CSS allows developers to style text directly linked and scrolled to via URL text fragments. When a user navigates to a webpage using a scroll-to-text fragment, the browser automatically scrolls to the specified passage",
+    false
+  ],
+  [
+    167,
+    "How to Style File Inputs with ::file-selector-button",
+    "Styling native file upload buttons has historically required complex hacks involving hidden inputs and custom labels. The CSS ::file-selector-button pseudo-element solves this by allowing developers to style the button inside an <input type=\"file\"> direc",
+    false
+  ],
+  [
+    166,
+    "How to Style Placeholders with CSS ::placeholder",
+    "The CSS ::placeholder pseudo-element provides web developers with direct control over the appearance of placeholder text inside form inputs and textareas. This article explains what the ::placeholder pseudo-element is, how it works to format and style in",
+    false
+  ],
+  [
+    165,
+    "CSS ::selection: Customize Text Selection Colors",
+    "The CSS ::selection pseudo-element allows web developers to override the browser's default highlight styling when a user selects text on a webpage. By defining custom text and background colors, you can align text highlights with your website’s brand p",
+    false
+  ],
+  [
+    164,
+    "CSS ::marker: Styling Ordered and Unordered Lists",
+    "The CSS ::marker pseudo-element targets the marker box of a list item, allowing developers to directly customize the appearance of bullets in unordered lists and numbers in ordered lists. Traditionally, styling these native indicators required cumbersome",
+    false
+  ],
+  [
+    163,
+    "CSS ::backdrop: Styling Native Dialog Overlays",
+    "The CSS ::backdrop pseudo-element provides a native way to style the background overlay rendered behind elements in the browser's top layer, such as the HTML <dialog> element. When a dialog is opened modally using JavaScript, the browser automatically ge",
+    false
+  ],
+  [
+    162,
+    "How to Style Dialogs with the CSS :modal Pseudo-Class",
+    "The CSS :modal pseudo-class allows developers to target and style elements that enter a modal state, during which interaction with the rest of the document is blocked. When applied to HTML <dialog> elements, :modal differentiates a dialog opened as an in",
+    false
+  ],
+  [
+    161,
+    "How CSS Scoped Styles Prevent Style Leakage",
+    "CSS scoped styles prevent style leakage in large web applications by isolating component rules so they apply exclusively to specific DOM elements, eliminating unwanted cascading side effects. In large codebases maintained by multiple teams, standard glob",
+    false
+  ],
+  [
+    160,
+    "CSS @scope Rule: Creating Scoped Style Blocks",
+    "The CSS @scope rule is a native styling feature designed to isolate CSS rules to specific subtrees of the Document Object Model (DOM). This article explains the fundamental purpose of @scope, how it eliminates the need for strict naming methodologies or",
+    false
+  ],
+  [
+    159,
+    "How CSS :scope Identifies the Evaluation Root",
+    "The CSS :scope pseudo-class provides a direct reference to the element that serves as the contextual evaluation root for a selector query. While typical selectors evaluate elements against the entire document tree, :scope dynamically isolates and points",
+    false
+  ],
+  [
+    158,
+    "What Is CSS :root and Why Use It for Variables?",
+    "This article provides a straightforward guide to the CSS :root pseudo-class and explains why it has become the standard location for declaring global CSS variables. You will learn what the :root selector represents in the Document Object Model (DOM), how",
+    false
+  ],
+  [
+    157,
+    "How the CSS :only-child Pseudo-Class Works",
+    "The CSS :only-child pseudo-class allows developers to apply styles to an element only when it has no sibling elements inside its parent container. This article explains how the :only-child selector functions, how it evaluates the Document Object Model (D",
+    false
+  ],
+  [
+    156,
+    "CSS :first-child vs :first-of-type Explained",
+    "CSS pseudo-classes allow developers to style elements based on their structural position within a parent container. While both :first-child and :first-of-type target initial elements, they behave differently when evaluating an element's position versus i",
+    false
+  ],
+  [
+    155,
+    "How to Style Autofilled Inputs with CSS :autofill",
+    "The CSS :autofill pseudo-class allows developers to target and customize form inputs that have been automatically populated by a browser's autofill feature. By default, browsers like Chrome, Safari, and Edge apply their own distinct styling—typically a",
+    false
+  ],
+  [
+    154,
+    "Understanding the CSS :read-only Pseudo-Class",
+    "The CSS :read-only pseudo-class represents any element that cannot be edited by the user, such as an input field with the HTML readonly attribute applied. This guide explains what the :read-only pseudo-class is, how it identifies non-editable form contro",
+    false
+  ],
+  [
+    153,
+    "Using CSS :placeholder-shown for Floating Labels",
+    "The CSS :placeholder-shown pseudo-class provides a pure-CSS method for implementing floating label patterns by detecting whether an input field currently contains text. Historically, floating labels required JavaScript to track user input and toggle CSS",
+    false
+  ],
+  [
+    152,
+    "Using CSS :valid and :invalid for Form Validation",
+    "The CSS :valid and :invalid pseudo-classes provide a native, browser-driven way to style HTML form elements based on whether their contents meet specific validation requirements. This guide covers how these pseudo-classes integrate with HTML5 constraint",
+    false
+  ],
+  [
+    151,
+    "Using CSS :checked for Pure-CSS Accordions and Toggles",
+    "The CSS :checked pseudo-class enables developers to create interactive, state-driven user interface components—such as toggle switches, collapsible panels, and multi-item accordions—entirely without JavaScript. By pairing native HTML <input type=\"che",
+    false
+  ],
+  [
+    150,
+    "CSS :disabled Pseudo-Class for Form Styling",
+    "The CSS :disabled pseudo-class is a powerful selector used to apply distinct visual styles to HTML form elements that are currently inactive and cannot be interacted with by the user. This article covers the functional purpose of :disabled, the specific",
+    false
+  ],
+  [
+    149,
+    "Why CSS outline: none Needs Custom Focus Styles",
+    "Using the CSS declaration outline: none without an alternative visual indicator strips away the native visual cues essential for keyboard navigation, rendering websites inaccessible to millions of users. This article explains why the browser's default fo",
+    false
+  ],
+  [
+    148,
+    "CSS Outline vs Border: Key Differences Explained",
+    "While both the CSS border and outline properties render lines around an HTML element, they fundamentally differ in how they interact with the document layout, how they are styled, and how they function for accessibility. A border is an integral component",
+    false
+  ],
+  [
+    147,
+    "CSS border-image and Slicing Explained",
+    "The CSS border-image property allows developers to use custom graphics or gradients as element borders instead of conventional solid, dashed, or dotted lines. This article explains what the border-image property is, breaks down its core shorthand compone",
+    false
+  ],
+  [
+    146,
+    "Using Multiple Background Images in CSS",
+    "Cascading Style Sheets (CSS) allows developers to apply multiple background images to a single HTML element by listing comma-separated image URLs within the background-image property. CSS renders these images as a visual stack, placing the first declared",
+    false
+  ],
+  [
+    145,
+    "CSS Background-Attachment Fixed Parallax Guide",
+    "The CSS background-attachment: fixed parallax technique creates an illusion of depth on web pages by locking a background image to the viewport while foreground content scrolls normally. This article explains the functional purpose of this pure CSS effec",
+    false
+  ],
+  [
+    144,
+    "How CSS background-size: cover Scales Images",
+    "The background-size: cover property in CSS is a responsive design standard used to scale background images proportionally so they completely fill their target container. This article explains the underlying mechanics of how cover calculates image dimensi",
+    false
+  ],
+  [
+    143,
+    "CSS background-clip: text for Web Typography",
+    "This article provides an overview of the CSS background-clip: text property, explaining its role in modern web typography. It covers how the property works, the visual effects it enables—such as gradient lettering and image-filled text—and the necess",
+    false
+  ],
+  [
+    142,
+    "CSS Radial vs Conic Gradients: Angle and Center",
+    "CSS gradients offer powerful ways to create smooth color transitions, but radial-gradient() and conic-gradient() process geometric coordinates differently. While both functions rely on a defined center point, they diverge fundamentally in how they handle",
+    false
+  ],
+  [
+    141,
+    "CSS Linear Gradient with Color Stops Syntax",
+    "This guide explains how to define CSS linear gradients using color stops, covering the fundamental linear-gradient() syntax, directional controls, and color-stop placement techniques. You will learn how to transition smoothly between multiple colors, man",
+    false
+  ],
+  [
+    140,
+    "How CSS background-blend-mode Works",
+    "The CSS background-blend-mode property dictates how an element's multiple background layers—such as background images, gradients, and a background color—blend with one another visually. By applying standard digital imaging blend modes directly in the",
+    false
+  ],
+  [
+    139,
+    "Understanding the CSS mix-blend-mode Property",
+    "The CSS mix-blend-mode property defines how an HTML element's content should visually blend with the content of the elements positioned directly behind it. This guide explains how mix-blend-mode works, how the browser composites overlapping visual layers",
+    false
+  ],
+  [
+    138,
+    "CSS drop-shadow vs box-shadow: Key Differences",
+    "While both properties add shadow effects to web elements, the primary difference lies in how they handle transparency and element boundaries. The box-shadow property creates a shadow based strictly on an element's rectangular bounding box, regardless of",
+    false
+  ],
+  [
+    137,
+    "How to Use CSS text-decoration-thickness",
+    "This article provides a comprehensive overview of the CSS text-decoration-thickness property, explaining its core function, supported values, and practical implementation in modern web design. Readers will learn how this property controls the stroke widt",
+    false
+  ],
+  [
+    136,
+    "How CSS text-underline-offset Controls Underlines",
+    "The CSS text-underline-offset property provides precise control over typography by adjusting the vertical distance between text and its underline. Traditionally, browsers determined this spacing automatically, often placing underlines too close to the ba",
+    false
+  ],
+  [
+    135,
+    "How to Use CSS size-adjust to Reduce CLS",
+    "Web fonts often cause unexpected layout shifts when they swap with system fallback fonts, degrading the user experience and hurting Core Web Vitals scores. The CSS size-adjust descriptor solves this problem by scaling fallback font glyphs to match the pr",
+    false
+  ],
+  [
+    134,
+    "CSS Fallback Fonts and the font-family Stack",
+    "The CSS font-family property allows developers to define a prioritized list of fonts—known as a font stack—to ensure text renders reliably across different devices, operating systems, and network conditions. When a user's browser renders text, it tra",
+    false
+  ],
+  [
+    133,
+    "CSS font-variation-settings and Custom Axes Guide",
+    "The font-variation-settings property in CSS provides low-level control over variable font features by directly manipulating the font's underlying OpenType axes. While modern CSS includes dedicated, high-level properties for standard axes—such as font-w",
+    false
+  ],
+  [
+    132,
+    "How CSS Variable Fonts Alter Typography Dynamically",
+    "CSS variable fonts streamline digital typography by storing an entire range of design variations within a single font file rather than requiring separate files for each style. This architectural shift enables developers and designers to dynamically inter",
+    false
+  ],
+  [
+    131,
+    "How to Control Faux Italics with CSS font-synthesis",
+    "The CSS font-synthesis property gives developers precise control over whether web browsers are allowed to synthetically generate missing font styles, most notably faux italics. When a custom web font lacks a dedicated italic typeface, browsers default to",
+    false
+  ],
+  [
+    130,
+    "Align Numbers in Financial Tables with CSS tabular-nums",
+    "Displaying financial data accurately requires strict visual alignment across columns so users can easily scan, compare, and calculate values. The CSS property font-variant-numeric: tabular-nums solves column misalignment by forcing numeric glyphs to shar",
+    false
+  ],
+  [
+    129,
+    "Understanding CSS Letter-Spacing in Web Typography",
+    "The CSS letter-spacing property is a fundamental styling tool used to adjust the horizontal space between text characters, replicating the traditional typographic technique known as tracking. This article explains the technical purpose of letter-spacing,",
+    false
+  ],
+  [
+    128,
+    "How CSS text-indent Formats Paragraph Typography",
+    "The CSS text-indent property controls the horizontal spacing applied to the beginning of text blocks, establishing a traditional typographic hierarchy on the web. This property primarily affects the very first line of a block container, allowing designer",
+    false
+  ],
+  [
+    127,
+    "CSS shape-outside: Guide to Text Wrapping",
+    "The CSS shape-outside property allows developers to wrap inline content around non-rectangular, geometric shapes instead of standard rectangular bounding boxes. This article explains the primary purpose of shape-outside, how it fundamentally changes text",
+    false
+  ],
+  [
+    126,
+    "CSS View Transitions API: Multi-Page Animations",
+    "The CSS View Transitions API enables native, seamless animated transitions between different HTML documents in multi-page applications (MPAs) without requiring complex client-side JavaScript routing. This article explains how the API bridges navigation s",
+    false
+  ],
+  [
+    125,
+    "Why Transform and Opacity Bypass Browser Layout",
+    "When animating elements on a web page, the browser must render visual updates across a multi-stage pipeline consisting of layout, paint, and compositing. While modifying geometry-dependent CSS properties forces the browser to recalculate the dimensions a",
+    false
+  ],
+  [
+    124,
+    "CSS Transform vs Top Left: Animation Performance",
+    "Animating CSS transform offers significantly better performance than animating top and left because it bypasses the browser's expensive layout and paint phases. While transform animations run entirely on the GPU via the compositor thread to deliver smoot",
+    false
+  ],
+  [
+    123,
+    "How to Pause and Resume CSS Animations",
+    "The CSS animation-play-state property provides native control over the playback of CSS keyframe animations, allowing them to be paused and resumed on demand without resetting their current progress. By switching between its two primary values, running an",
+    false
+  ],
+  [
+    122,
+    "How to Use animation-iteration-count: infinite in CSS",
+    "This article explains the purpose, functionality, and implementation of the CSS declaration animation-iteration-count: infinite. You will learn how this property controls animation cycles, why it is essential for creating continuous loops, how to apply i",
+    false
+  ],
+  [
+    121,
+    "Understanding CSS animation-fill-mode",
+    "The CSS animation-fill-mode property dictates how an element's styles are applied before an animation begins and after it finishes. By default, CSS animations do not affect an element's styling outside the active duration of the animation. By configuring",
+    false
+  ],
+  [
+    120,
+    "CSS Timing Functions and Cubic-Bezier Explained",
+    "This article provides an overview of CSS timing functions, explaining how they control the rate of change during transitions and animations. You will learn the mechanics behind the cubic-bezier() function, how its four coordinates govern acceleration and",
+    false
+  ],
+  [
+    119,
+    "How CSS Transitions Interpolate Property Changes",
+    "CSS transitions smoothly animate the shift between two states of an element rather than rendering an abrupt visual jump. When a style change is triggered—such as through a :hover state or an updated class—the browser determines intermediate values be",
+    false
+  ],
+  [
+    118,
+    "CSS Hover Media Queries for Touch vs Mouse",
+    "The CSS @media (hover: hover) media query detects whether the user's primary input mechanism can hover over elements, allowing developers to create distinct styles for touchscreens versus mouse-driven devices. By targeting devices that natively support h",
+    false
+  ],
+  [
+    117,
+    "How CSS Pointer Coarse Detects Touchscreens",
+    "The pointer: coarse CSS media query detects touch-screen devices by querying the precision of the user's primary pointing device. Part of the CSS Media Queries Level 4 specification, this feature allows developers to serve larger touch targets and optimi",
+    false
+  ],
+  [
+    116,
+    "CSS forced-colors in Windows High Contrast Mode",
+    "The CSS forced-colors media feature detects whether a user agent has enforced a restricted, user-chosen color palette across the interface, as seen in Windows High Contrast Mode (now called Contrast Themes in Windows 11). This article explains how the fo",
+    false
+  ],
+  [
+    115,
+    "Using CSS prefers-contrast for High-Contrast Needs",
+    "The CSS prefers-contrast media query detects whether a user has requested an interface with heightened or diminished contrast through their operating system settings. This article explains how the media feature functions, details its available values, an",
+    false
+  ],
+  [
+    114,
+    "CSS prefers-reduced-motion and Accessibility Guide",
+    "The prefers-reduced-motion CSS media query is a critical tool for web accessibility that detects whether a user has requested their operating system to minimize non-essential motion. This article explains what the media query is, explores why it is essen",
+    false
+  ],
+  [
+    113,
+    "How CSS prefers-color-scheme Detects OS Themes",
+    "The CSS prefers-color-scheme media query allows websites to automatically adapt their styles to a user's light or dark system theme. This detection relies on a coordinated bridge between the operating system, the web browser's underlying platform integra",
+    false
+  ],
+  [
+    112,
+    "CSS color-scheme Property and Dark Mode",
+    "The CSS color-scheme property allows developers to signal to the browser which color themes a website supports, enabling the browser to automatically optimize default interfaces—such as form controls, scrollbars, and system colors—for light or dark s",
+    false
+  ],
+  [
+    111,
+    "CSS @media Print: Style Web Pages for Printing",
+    "The CSS @media print rule enables developers to apply dedicated styles to web pages specifically when they are sent to a printer or exported as a PDF. By modifying layouts, typography, and visibility, this feature transforms interactive, screen-optimized",
+    false
+  ],
+  [
+    110,
+    "CSS @page Rule: Guide to Print Layout Configuration",
+    "The CSS @page at-rule is a core component of the CSS Paged Media module, designed specifically to control the formatting, dimensions, orientation, and margins of pages when printing web documents. This article explores the purpose of the @page rule, how",
+    false
+  ],
+  [
+    109,
+    "How to Use CSS break-inside: avoid for Print",
+    "The CSS properties break-inside: avoid and its legacy equivalent page-break-inside: avoid dictate how elements split across printed pages or multi-column layouts. When generating a printout or saving a web page as a PDF, browsers often split HTML element",
+    false
+  ],
+  [
+    108,
+    "CSS column-count and column-gap Explained",
+    "The CSS column-count and column-gap properties are fundamental parts of the CSS Multi-column Layout Module, designed to split text and block content into magazine- or newspaper-style vertical columns. This article explains how column-count determines the",
+    false
+  ],
+  [
+    107,
+    "How CSS text-overflow: ellipsis Handles Truncated Text",
+    "The CSS text-overflow: ellipsis property provides a visual cue that text has exceeded its allocated container space by replacing the clipped content with a typographical ellipsis character (…). Rather than altering the underlying DOM string, it dictate",
+    false
+  ],
+  [
+    106,
+    "CSS white-space: nowrap vs text-wrap: balance",
+    "While both CSS properties influence how text breaks across lines, they serve entirely different typographic purposes. white-space: nowrap strictly prevents text from wrapping at all, forcing it to remain on a single horizontal line regardless of containe",
+    false
+  ],
+  [
+    105,
+    "How CSS Margin Inline Adapts to RTL Languages",
+    "CSS logical properties like margin-inline-start and margin-inline-end provide a direction-agnostic way to space elements by linking margins to the flow of content rather than physical screen coordinates. Instead of hardcoding spacing to the left or right",
+    false
+  ],
+  [
+    104,
+    "CSS Logical Properties and Internationalization",
+    "CSS logical properties provide a modern way to control page layout based on writing direction rather than fixed physical screen dimensions. This article explains the mechanics of CSS logical properties, contrasts them with traditional physical properties",
+    false
+  ],
+  [
+    103,
+    "CSS writing-mode for Vertical and Multi-Direction Text",
+    "The CSS writing-mode property controls whether text lines are laid out horizontally or vertically, as well as the direction in which new blocks progress across the screen. By default, web typography relies on horizontal top-to-bottom text, but writing-mo",
+    false
+  ],
+  [
+    102,
+    "CSS inline-block Display and Whitespace Explained",
+    "The CSS inline-block display value combines the flow characteristics of inline elements with the box-model controls of block-level elements. While it provides a simple way to arrange elements horizontally while respecting width, height, and vertical spac",
+    false
+  ],
+  [
+    101,
+    "CSS Display Table vs HTML Table Differences",
+    "While both CSS table layouts (display: table) and native HTML <table> elements utilize the same underlying tabular layout algorithm, they serve fundamentally different purposes in web development. Native HTML tables provide explicit structural semantics",
+    false
+  ],
+  [
+    100,
+    "What Are CSS place-items and place-content?",
+    "CSS layout modules like Flexbox and Grid provide powerful alignment tools, and place-items and place-content serve as shorthand properties designed to streamline how elements and tracks are positioned. Instead of declaring separate rules for vertical and",
+    false
+  ],
+  [
+    99,
+    "How Does CSS align-self Override Container Alignment?",
+    "The CSS align-self property allows individual flex or grid items to break away from the default alignment defined by their parent container. While properties like align-items set a uniform alignment rule for every child element along the cross axis (in F",
+    false
+  ],
+  [
+    98,
+    "What Is the Implicit Grid in CSS and How Is It Generated?",
+    "In CSS Grid Layout, the implicit grid is the system of rows and columns automatically created by the browser when grid items are placed outside the explicitly defined grid tracks. While developers explicitly declare tracks using properties like grid-temp",
+    false
+  ],
+  [
+    97,
+    "How Do Named Grid Areas Simplify Responsive Layouts?",
+    "CSS named grid areas simplify responsive template reconfiguration by decoupling HTML source order from visual positioning and allowing developers to redefine entire page layouts using ASCII-like declarations inside media queries. Instead of calculating n",
+    false
+  ],
+  [
+    96,
+    "What Is CSS repeat(auto-fit, minmax()) Used For?",
+    "The CSS repeat(auto-fit, minmax(...)) pattern is a responsive design technique that automatically calculates and adjusts grid columns based on available container space without requiring CSS media queries. By combining track repetition with dynamic minim",
+    false
+  ],
+  [
+    95,
+    "How Does CSS minmax() Create Dynamic Grid Tracks?",
+    "The CSS minmax() function provides a flexible mechanism for defining lower and upper sizing boundaries for grid tracks, allowing columns and rows to adapt fluidly within precise functional limits. By accepting two arguments—a minimum value and a maximu",
+    false
+  ],
+  [
+    94,
+    "What Is the CSS fr Unit in Grid Layout?",
+    "The CSS fr unit represents a fractional share of the available free space within a CSS Grid container. Introduced specifically with the CSS Grid specification, it allows developers to create flexible, responsive grid tracks without manually calculating p",
+    false
+  ],
+  [
+    93,
+    "How Does CSS Grid Define Explicit Column Tracks?",
+    "The grid-template-columns property defines the explicit column tracks of a CSS Grid container by specifying the number, order, and dimensions of each vertical track. By declaring fixed measurements, flexible fraction units, or dynamic functions on the pa",
+    false
+  ],
+  [
+    92,
+    "What Is the CSS Order Property and Its A11y Risks?",
+    "The CSS order property allows developers to rearrange flexbox and grid child elements visually without changing the underlying HTML document structure. While useful for responsive design adjustments, manipulating display order creates a disconnect betwee",
+    false
+  ],
+  [
+    91,
+    "How Does CSS Gap Work in Flexbox and Grid?",
+    "The CSS gap property defines the spacing, or gutters, between child elements in Flexbox, CSS Grid, and multi-column layouts without adding unwanted space to the outer edges. By establishing whitespace directly on the parent container, gap replaces comple",
+    false
+  ],
+  [
+    90,
+    "How Do Flex-Grow, Flex-Shrink, and Flex-Basis Work in CSS?",
+    "Understanding the CSS Flexbox properties flex-grow, flex-shrink, and flex-basis is essential for creating fluid, responsive layouts without relying on rigid pixel calculations. This article explains the exact role of each property, how they interact to d",
+    false
+  ],
+  [
+    89,
+    "How Do Justify-Content and Align-Items Work in Flexbox?",
+    "In CSS Flexbox, justify-content and align-items are the primary container properties used to align elements and distribute unused space. The fundamental distinction between them depends on the flex container's direction: justify-content controls alignmen",
+    false
+  ],
+  [
+    88,
+    "How Does CSS flex-direction Define Layout Axes?",
+    "The CSS flex-direction property establishes the main axis along which flex items are placed inside a flex container, directly determining whether content flows horizontally or vertically, forwards or backwards. By setting the primary direction of layout",
+    false
+  ],
+  [
+    87,
+    "How Does the CSS Clearfix Hack Prevent Container Collapse?",
+    "The CSS clearfix hack resolves parent container collapse by forcing a parent element to recognize the height of its floated children without requiring extra structural HTML markup. When child elements are floated, they are removed from the normal documen",
+    false
+  ],
+  [
+    86,
+    "What Is the CSS Clear Property Used For?",
+    "The CSS clear property controls how elements interact with preceding floated content in a web layout. When elements are floated, surrounding content naturally wraps around them, which often leads to misaligned sections or collapsed parent containers. App",
+    false
+  ],
+  [
+    85,
+    "How to Prevent CSS Margin Collapsing?",
+    "Margin collapsing occurs when the vertical margins of adjacent block elements combine into a single margin, often causing unexpected layout behavior. While this is standard CSS specification behavior for block-level elements in normal flow, it can be del",
+    false
+  ],
+  [
+    84,
+    "Why Do CSS Margins Collapse in Block Contexts?",
+    "Margin collapsing in CSS occurs when the vertical margins of two adjacent block-level boxes combine into a single margin instead of adding together. This core layout behavior happens exclusively in normal flow within a Block Formatting Context (BFC) acro",
+    false
+  ],
+  [
+    83,
+    "How Does CSS Position Sticky Combine Relative and Fixed?",
+    "The CSS position: sticky declaration creates a hybrid positioning model that switches dynamically between relative and fixed behavior based on the user's scroll position. Within the normal document layout, a sticky element behaves like a standard relativ",
+    false
+  ],
+  [
+    82,
+    "How Do CSS Position Properties Differ?",
+    "CSS positioning determines where an HTML element renders on the page and how it interacts with the surrounding document layout. The position property primarily relies on four foundational values: static, relative, absolute, and fixed. While static serves",
+    false
+  ],
+  [
+    81,
+    "How Do CSS Sprites Reduce HTTP Requests?",
+    "CSS sprite sheets optimize web performance by combining multiple small graphical assets—such as icons, UI buttons, and decorative badges—into a single composite image file. Instead of forcing a web browser to initiate separate network calls for every",
+    false
+  ],
+  [
+    80,
+    "How Does Critical CSS Improve First Contentful Paint?",
+    "Critical CSS is the minimal set of styles required to render the above-the-fold content of a webpage immediately upon loading. By extracting these essential rules and inlining them directly into the HTML <head>, browsers can skip the network roundtrips t",
+    false
+  ],
+  [
+    79,
+    "How Does Autoprefixer Add Vendor Prefixes?",
+    "Autoprefixer is a widely used PostCSS plugin that automates cross-browser CSS compatibility by parsing standard stylesheet declarations, comparing required properties against target browser datasets, and injecting vendor prefixes directly into the code.",
+    false
+  ],
+  [
+    78,
+    "What Is PostCSS in Modern CSS Pipelines?",
+    "PostCSS acts as a modular, JavaScript-based tool that transforms styling rules through an Abstract Syntax Tree (AST), serving as the backbone for automated styling workflows in modern web development. Rather than acting as a static preprocessor, it provi",
+    false
+  ],
+  [
+    77,
+    "How Does CSS Typed OM Replace CSS String Parsing?",
+    "The CSS Typed Object Model (Typed OM) API transforms how JavaScript interacts with CSS values by converting string-based representations into strongly typed JavaScript objects. Historically, developers had to parse strings and append units manually using",
+    false
+  ],
+  [
+    76,
+    "What Is the CSS Layout API in Houdini?",
+    "The CSS Layout API is a core specification within the CSS Houdini initiative designed to give developers the power to define their own custom layout algorithms. By exposing the browser's native layout engine through JavaScript worklets, the API allows fo",
+    false
+  ],
+  [
+    75,
+    "How Does the CSS Paint API Work?",
+    "The CSS Paint API, a foundational component of the CSS Houdini suite, allows developers to write custom 2D rendering routines using JavaScript that execute directly inside the browser's native rendering pipeline. Instead of relying on static raster image",
+    false
+  ],
+  [
+    74,
+    "What Is the CSS @property Rule in CSS Houdini?",
+    "The CSS @property rule is an at-rule defined in the CSS Houdini Properties and Values API that allows developers to register custom properties (CSS variables) with explicit data types, inheritance behavior, and initial default values. By giving custom pr",
+    false
+  ],
+  [
+    73,
+    "How Does the CSS :empty Pseudo-Class Work?",
+    "The CSS :empty pseudo-class targets and styles elements that contain no children whatsoever, making it a reliable tool for hiding or styling placeholder containers, alert boxes, and dynamic UI wrappers. This guide explains how browsers evaluate DOM nodes",
+    false
+  ],
+  [
+    72,
+    "What Is the Difference Between nth-child and nth-of-type?",
+    "The primary difference between CSS :nth-child() and :nth-of-type() lies in how they count sibling elements: :nth-child() counts every sibling regardless of its tag or type, whereas :nth-of-type() filters siblings by their specific element tag before calc",
+    false
+  ],
+  [
+    71,
+    "How Does the CSS nth-child Formula Work?",
+    "The CSS :nth-child() pseudo-class targets elements based on their index position among a group of siblings using the functional algebraic formula an + b. This article breaks down how variables a and b operate, demonstrates how the browser evaluates cycle",
+    false
+  ],
+  [
+    70,
+    "How Does the CSS :target Pseudo-Class Work?",
+    "The CSS :target pseudo-class selects and styles a unique element on a webpage whose id attribute matches the fragment identifier (hash) in the current URL. In document navigation, it allows developers to create reactive visual states—such as highlighti",
+    false
+  ],
+  [
+    69,
+    "How Does CSS :focus-within Detect Active Elements?",
+    "The :focus-within CSS pseudo-class enables a parent element to detect and respond when either itself or any of its nested child elements gain focus. By tapping into the browser's native DOM focus events, this selector removes the need for complex JavaScr",
+    false
+  ],
+  [
+    68,
+    "What Is CSS :focus-visible and How Does It Work?",
+    "The :focus-visible CSS pseudo-class is a modern styling tool that selectively applies focus indicators only when the browser determines they are helpful to the user, such as during keyboard navigation. By differentiating between keyboard tabs, mouse clic",
+    false
+  ],
+  [
+    67,
+    "How Does the CSS :not() Pseudo-Class Work?",
+    "The CSS :not() pseudo-class, often called the negation pseudo-class, allows developers to apply styles to elements that do not match a specific selector or list of selectors. By accepting one or more arguments, it inverts the matching logic, preventing s",
+    false
+  ],
+  [
+    66,
+    "What Is the Difference Between CSS :is() and :where()?",
+    "Both the :is() and :where() pseudo-class functions allow developers to group multiple selectors into a single, compact rule and benefit from forgiving selector lists. While their syntax, browser support, and grouping mechanisms are identical, their singl",
+    false
+  ],
+  [
+    65,
+    "How Does the CSS :is() Pseudo-Class Work?",
+    "The CSS :is() pseudo-class reduces code repetition and simplifies complex selector patterns by grouping multiple selectors into a single, clean declaration. By accepting a forgiving selector list and adopting the specificity of its most specific argument",
+    false
+  ],
+  [
+    64,
+    "What Is the Role of CSS Source Maps in Debugging?",
+    "CSS source maps serve as an essential translation layer between the compiled, minified, or preprocessed CSS code executed by the browser and the original source files authored by developers. Modern frontend workflows rely heavily on tools like Sass, Less",
+    false
+  ],
+  [
+    63,
+    "What Is Utility-First CSS and Tailwind CSS?",
+    "This article provides an overview of utility-first CSS, examining how it shifts web design away from traditional semantic stylesheets toward composable, single-purpose classes. It explores the architectural philosophy behind this approach, details how Ta",
+    false
+  ],
+  [
+    62,
+    "How Does BEM Structure CSS Class Names?",
+    "The Block Element Modifier (BEM) methodology is a front-end naming convention developed to make CSS scalable, modular, and maintainable across complex web applications. By establishing a clear relationship between components, their internal parts, and th",
+    false
+  ],
+  [
+    61,
+    "What Are the Differences Between Sass, Less, and Stylus?",
+    "CSS preprocessors extend standard styling capabilities with programmatic features like variables, nesting, mixins, and functions, compiling everything down to browser-readable CSS. While Sass, Less, and Stylus address the same fundamental limitations of",
+    false
+  ],
+  [
+    60,
+    "How Do CSS Modules Enable Scoped Styling in Apps?",
+    "CSS Modules solve the long-standing issue of global scope in CSS by automatically transforming class names and selectors into unique identifiers during the build step. In modern component-based architectures, this approach guarantees style encapsulation,",
+    false
+  ],
+  [
+    59,
+    "What Is CSS-in-JS and How Does It Work?",
+    "CSS-in-JS is a modern styling methodology where styles are authored, encapsulated, and managed directly within JavaScript code rather than in external stylesheets. By abstracting CSS into modular components, it tightly couples visual styles with applicat",
+    false
+  ],
+  [
+    58,
+    "How Does content-visibility: auto Optimize Rendering?",
+    "The CSS content-visibility: auto property dramatically accelerates initial page rendering by instructing the browser to skip the layout and painting phases for off-screen elements until the user scrolls near them. By treating below-the-fold content as is",
+    false
+  ],
+  [
+    57,
+    "How Does CSS Contain Affect Paint Performance?",
+    "The CSS contain property improves browser rendering efficiency by isolating specific DOM subtrees from the rest of the document. When an element updates, the browser typically recalculates styles, reflows layout, and repaints pixels across broad portions",
+    false
+  ],
+  [
+    56,
+    "How Does CSS overscroll-behavior Stop Scroll Chaining?",
+    "The CSS overscroll-behavior property gives developers precise control over what happens when a user scrolls past the boundary of a scrollable element. By default, browsers pass unhandled scroll delta up to parent containers—a phenomenon known as scroll",
+    false
+  ],
+  [
+    55,
+    "How Does CSS scroll-snap-type Work in Carousels?",
+    "The CSS scroll-snap-type property defines how strictly a scroll container forces scroll positions to latch onto specific child elements, making it the core building block for native, high-performance carousels. By delegating pagination and alignment mech",
+    false
+  ],
+  [
+    54,
+    "How Do CSS Scroll-Driven Animations Work?",
+    "CSS Scroll-Driven Animations connect the progression of keyframe animations directly to scroll progress rather than elapsed clock time. By introducing native scroll and view timeline controls via CSS properties like animation-timeline and animation-range",
+    false
+  ],
+  [
+    53,
+    "What Is CSS scroll-behavior: smooth in Navigation?",
+    "The CSS scroll-behavior: smooth property enables an animated, fluid scrolling transition instead of an abrupt jump when navigating between anchor links on a webpage. In modern web navigation—such as single-page applications, sticky menus, table-of-cont",
+    false
+  ],
+  [
+    52,
+    "How Does CSS mask-image Create Complex Masks?",
+    "The CSS mask-image property allows developers to control the visibility of an HTML element by applying an image or gradient as a cutout layer. Rather than clipping an element to basic geometric paths, mask-image reads the transparency or luminance levels",
+    false
+  ],
+  [
+    51,
+    "How Does CSS clip-path Create Custom Shapes?",
+    "The CSS clip-path property enables web developers to define specific visible regions of an HTML element, effectively masking out unwanted areas to create geometric and organic custom shapes. By setting boundaries using predefined functions or external ve",
+    false
+  ],
+  [
+    50,
+    "How Does the CSS backdrop-filter Property Work?",
+    "The CSS backdrop-filter property applies graphical effects, such as blurring or color shifting, to the area directly behind an element rather than to the element itself or its child content. Unlike the standard filter property, which modifies the rendere",
+    false
+  ],
+  [
+    49,
+    "What Is the CSS accent-color Property for Form Inputs?",
+    "The CSS accent-color property provides a simple, native way to re-theme standard HTML form controls to match a brand's visual identity using a single line of code. Instead of replacing native elements with complex custom markup or heavy JavaScript librar",
+    false
+  ],
+  [
+    48,
+    "How Does CSS color-mix() Blend Colors?",
+    "The CSS color-mix() function enables developers to take two distinct color values and combine them into a single resultant color directly within standard stylesheets. By specifying a color space alongside optional percentage weights for each input, brows",
+    false
+  ],
+  [
+    47,
+    "What Are Modern CSS Color Models?",
+    "Modern CSS color models, such as lch(), oklch(), and color(display-p3), allow web developers to access wider color gamuts, generate perceptually uniform palettes, and achieve richer color fidelity on contemporary screens. Unlike legacy formats like rgb()",
+    false
+  ],
+  [
+    46,
+    "How Does CSS Line-Height Affect Vertical Rhythm?",
+    "The CSS line-height property serves as the foundational unit for establishing vertical typographic rhythm, determining the vertical space occupied by inline elements and standardizing baseline alignment across a layout. By controlling the distribution of",
+    false
+  ],
+  [
+    45,
+    "Word-Break vs Overflow-Wrap vs Hyphens in CSS?",
+    "Handling text overflow in CSS often comes down to choosing among word-break, overflow-wrap, and hyphens. While all three properties prevent long strings of text from breaking outside their container boundaries, they do so with different logic: overflow-w",
+    false
+  ],
+  [
+    44,
+    "How Does CSS font-display Optimize Font Loading?",
+    "The CSS font-display descriptor optimizes web font loading by controlling how browsers render text while a custom web font file is being fetched. By managing the visual timeline—specifically the balance between invisible fallback periods and fallback f",
+    false
+  ],
+  [
+    43,
+    "How Does CSS @font-face Impact Web Typography?",
+    "The CSS @font-face at-rule is the foundational technology that allows web developers and designers to load custom downloadable fonts on web pages. Prior to its widespread adoption, websites were limited to standard system-installed fonts, severely restri",
+    false
+  ],
+  [
+    42,
+    "How Does the CSS General Sibling Combinator Work?",
+    "The CSS general sibling combinator (~) targets elements that share the same parent and appear anywhere after a specified reference element in the HTML structure. Unlike the adjacent sibling combinator (+), which requires elements to sit directly next to",
+    false
+  ],
+  [
+    41,
+    "What Is the CSS Adjacent Sibling Combinator?",
+    "The CSS adjacent sibling combinator (+) is a selector tool used to target an element that directly follows another specified element within the same parent container. This article explains how the adjacent sibling selector works, its syntax, how it diffe",
+    false
+  ],
+  [
+    40,
+    "CSS Descendant vs Child Combinator: What Is the Difference?",
+    "The primary difference between the CSS descendant combinator and the child combinator lies in the depth of elements they target within the Document Object Model (DOM). While the descendant combinator (represented by a space) selects all matching elements",
+    false
+  ],
+  [
+    39,
+    "What Is the CSS Universal Selector and Its Impact?",
+    "The CSS universal selector () matches any element within a document, providing a straightforward way to apply global styles across an entire webpage. While historically scrutinized for causing browser rendering bottlenecks, modern browser optimizations h",
+    false
+  ],
+  [
+    38,
+    "How Do CSS Attribute Selectors Target HTML Elements?",
+    "CSS attribute selectors allow developers to target HTML elements based on the presence, exact match, or pattern match of their attributes and values. By matching elements through attributes such as href, type, data-, or target, these selectors provide gr",
+    false
+  ],
+  [
+    37,
+    "What Is a CSS Block Formatting Context?",
+    "A Block Formatting Context (BFC) is an isolated rendering region in CSS where block-level boxes are laid out according to specific visual formatting rules. This guide explains what a BFC is, the layout issues it solves—such as containing internal float",
+    false
+  ],
+  [
+    36,
+    "How Does CSS Overflow: Auto Work?",
+    "The overflow: auto CSS property manages how an element handles content that exceeds its specified dimensions by dynamically introducing scrollbars only when clipping is required. Unlike static overflow behaviors that either conceal excess content or disp",
+    false
+  ],
+  [
+    35,
+    "How Do CSS Opacity, RGBA, and Filters Differ?",
+    "Controlling transparency in modern web development typically involves three CSS approaches: the opacity property, alpha-channel color functions like rgba(), and the filter: opacity() function. While all three create see-through visual effects, they opera",
+    false
+  ],
+  [
+    34,
+    "How Does CSS transform-style preserve-3d Work?",
+    "The transform-style: preserve-3d CSS property establishes a shared three-dimensional rendering context, allowing nested elements to retain their individual 3D positions rather than flattening into a single 2D plane. By default, browsers collapse transfor",
+    false
+  ],
+  [
+    33,
+    "How Does CSS will-change Impact Hardware Acceleration?",
+    "The CSS will-change property serves as an explicit optimization hint that informs the browser of impending element modifications before they occur. By signaling anticipated changes to properties such as transform, opacity, or scroll-position, it enables",
+    false
+  ],
+  [
+    32,
+    "How Does Native CSS Nesting Replace Preprocessors?",
+    "Native CSS nesting allows developers to write nested style rules directly in the browser without relying on build tools like Sass or Less. By bringing hierarchy, pseudo-class grouping, and parent referencing natively to standard CSS, it simplifies build",
+    false
+  ],
+  [
+    31,
+    "What Is the CSS @supports Feature Query?",
+    "The CSS @supports feature query is a conditional rule that allows developers to test whether a web browser supports specific CSS property-value pairs or selectors before applying corresponding styles. By enabling native feature detection directly within",
+    false
+  ],
+  [
+    30,
+    "How Do dvh, svh, and lvh Adapt to Mobile Toolbars?",
+    "Mobile browser interface elements like the address bar and navigation controls dynamically expand and collapse as users scroll, traditionally causing layout shifts when using standard vh units. To solve this, CSS introduced specialized viewport units—S",
+    false
+  ],
+  [
+    29,
+    "What Is the CSS Object-Fit Property for Images?",
+    "The CSS object-fit property defines how an embedded element, such as an <img> or <video>, adjusts its dimensions to fit into its designated container box. By default, applying explicit width and height values to an image can distort its native aspect rat",
+    false
+  ],
+  [
+    28,
+    "How Does CSS aspect-ratio Maintain Element Dimensions?",
+    "The CSS aspect-ratio property allows developers to define a preferred ratio between an element's width and height, enabling browsers to calculate and adjust the missing dimension automatically when only one axis is explicitly set. This native CSS feature",
+    false
+  ],
+  [
+    27,
+    "What Are CSS min, max, and clamp Functions?",
+    "CSS comparison functions—min(), max(), and clamp()—allow developers to create fluid, dynamic, and responsive designs without relying heavily on media queries. While min() selects the smallest value from a list of arguments and max() selects the large",
+    false
+  ],
+  [
+    26,
+    "How Do CSS Cascade Layers Control Specificity?",
+    "CSS cascade layers (@layer) provide structured control over stylesheet architecture by introducing a dedicated precedence tier within the CSS cascade that evaluates before selector specificity. Instead of relying on artificially complex selectors, high-s",
+    false
+  ],
+  [
+    25,
+    "How Does the CSS :has Pseudo-Class Work?",
+    "The :has() pseudo-class is a relational selector that enables developers to style an element based on its descendants, child elements, or following siblings. Often referred to as the long-awaited \"parent selector,\" :has() checks whether an element contai",
+    false
+  ],
+  [
+    24,
+    "How Does CSS Subgrid Improve Nested Grid Alignment?",
+    "CSS Subgrid solves a long-standing limitation in web layout by allowing nested grid items to adopt and align directly with the track sizing of their parent grid. In standard CSS Grid, any child element creating its own inner grid operates in complete iso",
+    false
+  ],
+  [
+    23,
+    "What Are CSS Container Queries and How Do They Work?",
+    "CSS container queries allow developers to apply styles to an element based on the size or styling of its direct parent container rather than the overall browser viewport. While traditional viewport media queries respond strictly to the dimensions of the",
+    false
+  ],
+  [
+    22,
+    "How Does the CSS calc() Function Work?",
+    "The CSS calc() function enables web developers to perform native mathematical calculations directly within stylesheets to determine property values dynamically. By allowing the combination of different unit types—such as percentages, pixels, viewport u",
+    false
+  ],
+  [
+    21,
+    "What Is the CSS @keyframes Rule and Syntax?",
+    "The CSS @keyframes at-rule controls intermediate steps in a CSS animation sequence by defining styles at specific milestones along a timeline. By establishing keyframes, developers gain precise control over CSS property shifts without relying on JavaScri",
+    false
+  ],
+  [
+    20,
+    "CSS Transitions vs Keyframe Animations: What Is the Difference?",
+    "CSS transitions smoothly interpolate property values between an explicit starting state and an ending state triggered by an event, whereas keyframe animations execute complex, multi-step sequences independently along a timeline with precise control over",
+    false
+  ],
+  [
+    19,
+    "What Creates a New Stacking Context in CSS?",
+    "A stacking context is a three-dimensional conceptualization of HTML elements along the imaginary z-axis relative to the user. Understanding what triggers a new stacking context is essential for mastering CSS layering, as child elements within a stacking",
+    false
+  ],
+  [
+    18,
+    "How Does CSS Position Absolute Work with Ancestors?",
+    "CSS absolute positioning removes an element from the normal document flow and positions it precisely in relation to a specific ancestor element rather than its default location. This article explains the rules browsers follow to identify the correct cont",
+    false
+  ],
+  [
+    17,
+    "What Is CSS box-sizing: border-box?",
+    "The box-sizing: border-box CSS declaration fundamentally changes how a browser calculates the total width and height of an HTML element. By default, browsers use the standard box model where padding and borders are added outside the specified dimensions,",
+    false
+  ],
+  [
+    16,
+    "How Do CSS ::before and ::after Generate Layout Content?",
+    "CSS pseudo-elements ::before and ::after generate visual content by creating virtual child elements directly inside the target element's formatting box. Rather than mutating the HTML Document Object Model (DOM), the browser's layout engine injects these",
+    false
+  ],
+  [
+    15,
+    "What Are CSS Pseudo-Classes and Dynamic States?",
+    "CSS pseudo-classes are specialized keywords added to selectors that allow developers to style HTML elements based on dynamic user interactions, historical browsing data, structural position, and real-time element states without relying on JavaScript. By",
+    false
+  ],
+  [
+    14,
+    "How Does CSS Inheritance Affect Nested Typography?",
+    "CSS inheritance determines how typographic styling applied to an ancestor element flows down to its child elements automatically. While most typography properties—such as font-family, color, and font-size—are inherited by default, their computed valu",
+    false
+  ],
+  [
+    13,
+    "What Is the Purpose of CSS Reset Stylesheets?",
+    "CSS reset stylesheets establish a uniform baseline across web browsers by smoothing out or removing built-in default styling inconsistencies. Every browser ships with its own default stylesheet (known as user-agent stylesheets), which causes unstyled HTM",
+    false
+  ],
+  [
+    12,
+    "How Do Relative CSS Units rem and em Differ in Calculation?",
+    "Understanding the difference between rem and em is essential for building scalable, accessible, and responsive web layouts. While both are relative CSS units derived from font size rather than fixed pixels, their fundamental difference lies in their refe",
+    false
+  ],
+  [
+    11,
+    "How Does z-index Work in Stacking Contexts?",
+    "The CSS z-index property determines the three-dimensional rendering order of overlapping elements along the virtual z-axis, perpendicular to the screen surface. However, z-index does not operate across an entire page as a single global priority list; ins",
+    false
+  ],
+  [
+    10,
+    "How Does display: none Differ From visibility: hidden?",
+    "While both display: none and visibility: hidden hide elements on a webpage, they handle document layout, performance, user interaction, and accessibility in fundamentally different ways. The primary distinction lies in space allocation: display: none rem",
+    false
+  ],
+  [
+    9,
+    "CSS Grid vs Flexbox: What Are the Key Differences?",
+    "CSS Grid and CSS Flexbox are modern layout modules designed to solve distinct styling challenges in web design. While Flexbox is built for one-dimensional layouts focusing on content distribution along a single row or column, CSS Grid provides a two-dime",
+    false
+  ],
+  [
+    8,
+    "How Does CSS Flexbox Handle Alignment?",
+    "CSS Flexbox manages one-dimensional layout alignment through a system of two intersecting axes: the main axis and the cross axis. By defining a container as a flex formatting context, developers can distribute space, align items dynamically, and control",
+    false
+  ],
+  [
+    7,
+    "What Is the Purpose of the CSS @media Rule?",
+    "The CSS @media rule enables web developers to apply specific styling rules conditionally based on the characteristics and capabilities of a user's device. By evaluating parameters such as viewport width, screen resolution, device orientation, and user sy",
+    false
+  ],
+  [
+    6,
+    "CSS Variables vs Preprocessor Variables: How Do They Differ?",
+    "CSS custom properties (native CSS variables) and preprocessor variables (such as those in Sass or Less) both enable reusable values across stylesheets, but they operate at fundamentally different stages of web delivery. Preprocessor variables are static",
+    false
+  ],
+  [
+    5,
+    "How Does CSS !important Resolve Cascade Conflicts?",
+    "The !important rule in CSS is a declaration-level modifier designed to override standard cascade resolution mechanisms, including specificity, inheritance, and source order. When appended to a property declaration, it elevates that specific rule above no",
+    false
+  ],
+  [
+    4,
+    "How Does the CSS Box Model Calculate Width and Height?",
+    "The CSS box model is the foundational layout engine of the web, dictating how every HTML element is sized, spaced, and rendered on a page. To determine the total physical space an element occupies, the browser computes the dimensions across four concentr",
+    false
+  ],
+  [
+    3,
+    "What Is the Difference Between Inline, Internal, and External CSS?",
+    "Cascading Style Sheets (CSS) control the visual presentation of HTML elements, and they can be implemented using inline, internal, or external methods. Inline CSS applies styles directly to individual HTML tags via the style attribute, internal CSS embed",
+    false
+  ],
+  [
+    2,
+    "How Does CSS Specificity Work?",
+    "CSS specificity is the browser’s algorithm for resolving styling conflicts when multiple CSS rules target the same HTML element. It calculates a weight for each selector based on its components, ensuring that the most specific rule takes precedence ove",
+    false
+  ],
+  [
+    1,
+    "What Is the Primary Function of CSS in Web Development?",
+    "Cascading Style Sheets (CSS) serves as the presentation layer of the web, responsible for transforming raw structured content into visually engaging, accessible, and responsive user interfaces. This article examines the core role of CSS in modern web dev",
+    false
+  ]
+]

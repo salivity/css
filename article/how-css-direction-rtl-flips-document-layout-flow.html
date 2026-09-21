@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS direction: rtl Flips Document Layout Flow - css</title>
+    <meta name="description" content="The CSS direction: rtl property alters the inline base direction and layout flow of an HTML document or element from the standard left-to-right orientation to right-to-left. This property is vital for supporting right-to-left languages such as Arabic, He">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-direction-rtl-flips-document-layout-flow">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS direction: rtl Flips Document Layout Flow - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-direction-rtl-flips-document-layout-flow" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS direction: rtl property alters the inline base direction and layout flow of an HTML document or element from the standard left-to-right orientation to right-to-left. This property is vital for supporting right-to-left languages such as Arabic, He" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-direction-rtl-flips-document-layout-flow">How CSS
+direction: rtl Flips Document Layout Flow</h1>
+<p>The CSS <code>direction: rtl</code> property alters the inline base
+direction and layout flow of an HTML document or element from the
+standard left-to-right orientation to right-to-left. This property is
+vital for supporting right-to-left languages such as Arabic, Hebrew,
+Persian, and Urdu. Beyond simply aligning text to the right,
+<code>direction: rtl</code> structurally reverses how content flows
+across the screen, including text progression, flexbox ordering, grid
+placements, table column sequencing, and horizontal scroll origin.</p>
+<h3 id="what-is-the-direction-property">What Is the
+<code>direction</code> Property?</h3>
+<p>The <code>direction</code> property in CSS dictates the reading and
+layout direction of block-level elements and determines the
+bidirectional (Bidi) text algorithm behavior.</p>
+<p>Its two primary values are:</p>
+<ul>
+<li><code>ltr</code> (default): Text and layout progress from left to
+right.</li>
+<li><code>rtl</code>: Text and layout progress from right to left.</li>
+</ul>
+<p>When applied to the <code>&lt;html&gt;</code> or
+<code>&lt;body&gt;</code> tag, it sets the writing direction for the
+entire document tree, though it can also be isolated to specific
+components or containers.</p>
+<h3 id="how-direction-rtl-flips-document-flow">How
+<code>direction: rtl</code> Flips Document Flow</h3>
+<p>Applying <code>direction: rtl</code> impacts several distinct
+rendering mechanisms across a web page:</p>
+<h4 id="1-text-progression-and-inline-flow">1. Text Progression and
+Inline Flow</h4>
+<p>Under <code>rtl</code>, inline elements start on the right boundary
+of their container and advance toward the left. Line breaks wrap text
+from right to left, and trailing punctuation (such as periods and
+question marks) properly anchors to the left edge of the sentence,
+aligning with right-to-left language rules.</p>
+<h4 id="2-flexbox-and-css-grid">2. Flexbox and CSS Grid</h4>
+<p>Modern CSS layout modules respond dynamically to writing modes:</p>
+<ul>
+<li><strong>Flexbox:</strong> A flex container with
+<code>flex-direction: row</code> starts its main axis on the right
+instead of the left. The first flex child appears on the far right, and
+subsequent items append to the left.</li>
+<li><strong>CSS Grid:</strong> Grid tracks fill horizontally from right
+to left. Column <code>1</code> begins at the right edge of the grid
+container, reversing the default placement of auto-placed grid
+items.</li>
+</ul>
+<h4 id="3-table-column-ordering">3. Table Column Ordering</h4>
+<p>In HTML tables styled with <code>direction: rtl</code>, the
+structural order of columns is inverted. The first
+<code>&lt;th&gt;</code> or <code>&lt;td&gt;</code> in each row renders
+on the right side of the screen, while subsequent cells follow to its
+left.</p>
+<h4 id="4-overflow-and-horizontal-scrolling">4. Overflow and Horizontal
+Scrolling</h4>
+<p>When an element set to <code>direction: rtl</code> overflows
+horizontally, the browser places the initial scroll position at the far
+right. The horizontal scrollbar starts at 100% scroll width, requiring
+the user to scroll leftward to view hidden content.</p>
+<h3 id="interaction-with-css-logical-properties">Interaction with CSS
+Logical Properties</h3>
+<p>While <code>direction: rtl</code> reverses content flow, legacy
+physical CSS properties do not adapt automatically. A property like
+<code>margin-left: 20px</code> remains on the physical left, which can
+break layouts in RTL modes.</p>
+<p>To build adaptable interfaces, pair <code>direction: rtl</code> with
+CSS logical properties:</p>
+<ul>
+<li>Use <code>margin-inline-start</code> instead of
+<code>margin-left</code> (maps to physical right in RTL).</li>
+<li>Use <code>margin-inline-end</code> instead of
+<code>margin-right</code> (maps to physical left in RTL).</li>
+<li>Use <code>text-align: start</code> instead of
+<code>text-align: left</code> to ensure text aligns to the natural
+beginning of the line.</li>
+</ul>
+<h3 id="css-direction-rtl-vs-html-dirrtl">CSS
+<code>direction: rtl</code> vs. HTML <code>dir="rtl"</code></h3>
+<p>While the CSS property <code>direction: rtl</code> flips
+presentation, web standards recommend declaring directionality using the
+HTML attribute <code>&lt;html dir="rtl"&gt;</code>. Setting the
+direction in HTML ensures that accessibility APIs, screen readers, and
+plain text parsers recognize the correct reading order even if CSS fails
+to load. The CSS <code>direction</code> property can then be used for
+presentation-specific overrides within the styling layer.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

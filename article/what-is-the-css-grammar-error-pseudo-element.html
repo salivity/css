@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is the CSS ::grammar-error Pseudo-Element? - css</title>
+    <meta name="description" content="The CSS ::grammar-error pseudo-element allows web developers to customize the visual appearance of text that the user agent flags as grammatically incorrect. While browsers traditionally render grammar warnings using default visual markers—such as a wa">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-is-the-css-grammar-error-pseudo-element">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Is the CSS ::grammar-error Pseudo-Element? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-is-the-css-grammar-error-pseudo-element" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS ::grammar-error pseudo-element allows web developers to customize the visual appearance of text that the user agent flags as grammatically incorrect. While browsers traditionally render grammar warnings using default visual markers—such as a wa" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-is-the-css-grammar-error-pseudo-element">What Is the CSS
+::grammar-error Pseudo-Element?</h1>
+<p>The CSS <code>::grammar-error</code> pseudo-element allows web
+developers to customize the visual appearance of text that the user
+agent flags as grammatically incorrect. While browsers traditionally
+render grammar warnings using default visual markers—such as a wavy
+green or blue underline—this pseudo-element gives developers the ability
+to override those defaults so grammar highlights match an application's
+specific design language.</p>
+<h2 id="purpose-and-functionality">Purpose and Functionality</h2>
+<p>Modern browsers often include built-in linguistic tools to identify
+writing mistakes inside editable regions, such as
+<code>&lt;textarea&gt;</code>, <code>&lt;input&gt;</code>, or any
+element with <code>contenteditable="true"</code>. While the related
+<code>::spelling-error</code> pseudo-element targets misspelled words,
+<code>::grammar-error</code> specifically targets phrases or sentence
+structures flagged by the browser's grammar engine.</p>
+<p>When a browser identifies a grammatical issue, it wraps that portion
+of the document tree with a styling hook accessible via
+<code>::grammar-error</code>.</p>
+<h2 id="permitted-css-properties">Permitted CSS Properties</h2>
+<p>To maintain page layout stability and prevent performance
+degradation, the CSS specification restricts which properties can be
+used inside <code>::grammar-error</code>. You cannot modify
+layout-affecting properties such as <code>margin</code>,
+<code>padding</code>, or <code>font-size</code>.</p>
+<p>Only a specific subset of text-styling properties is supported:</p>
+<ul>
+<li><strong>Text Decoration:</strong> <code>text-decoration</code>,
+<code>text-decoration-line</code>, <code>text-decoration-style</code>,
+<code>text-decoration-color</code>, and
+<code>text-decoration-thickness</code>.</li>
+<li><strong>Colors:</strong> <code>color</code> and
+<code>background-color</code>.</li>
+<li><strong>Text Shadows:</strong> <code>text-shadow</code>.</li>
+<li><strong>SVG Properties:</strong> <code>stroke-color</code>,
+<code>fill-color</code>, and related styling where supported.</li>
+</ul>
+<h2 id="syntax-and-implementation">Syntax and Implementation</h2>
+<p>You can define grammar error styles globally across the document or
+target specific editable containers:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Apply globally to all grammar errors */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">::grammar-error</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration</span><span class="ch">:</span> <span class="dv">underline</span> <span class="dv">wavy </span><span class="cn">#10b981</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">rgba(</span><span class="dv">16</span><span class="op">,</span> <span class="dv">185</span><span class="op">,</span> <span class="dv">129</span><span class="op">,</span> <span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Apply only inside a specific editor */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.rich-text-editor</span><span class="in">::grammar-error</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-color</span><span class="ch">:</span> <span class="cn">#059669</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-decoration-style</span><span class="ch">:</span> <span class="dv">dotted</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="requirements-and-browser-behavior">Requirements and Browser
+Behavior</h2>
+<p>For <code>::grammar-error</code> to take effect, two conditions must
+be met:</p>
+<ol type="1">
+<li><strong>Active Spellchecking:</strong> The element must permit text
+checking, typically ensured by including the
+<code>spellcheck="true"</code> attribute on the element or relying on
+default browser behavior for text fields.</li>
+<li><strong>Platform Support:</strong> The underlying browser and
+operating system must support and have an enabled grammar checker. If
+the user disables grammar checking in their browser settings, or if the
+operating system lacks grammar-checking capabilities for the active
+language, the pseudo-element will not trigger.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

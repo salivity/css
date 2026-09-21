@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS align-self Override Container Alignment? - css</title>
+    <meta name="description" content="The CSS align-self property allows individual flex or grid items to break away from the default alignment defined by their parent container. While properties like align-items set a uniform alignment rule for every child element along the cross axis (in F">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-align-self-override-container-alignment">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS align-self Override Container Alignment? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-align-self-override-container-alignment" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS align-self property allows individual flex or grid items to break away from the default alignment defined by their parent container. While properties like align-items set a uniform alignment rule for every child element along the cross axis (in F" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-align-self-override-container-alignment">How Does
+CSS align-self Override Container Alignment?</h1>
+<p>The CSS <code>align-self</code> property allows individual flex or
+grid items to break away from the default alignment defined by their
+parent container. While properties like <code>align-items</code> set a
+uniform alignment rule for every child element along the cross axis (in
+Flexbox) or block axis (in Grid), <code>align-self</code> provides
+per-item control by directly overriding the container-level declaration
+for specific elements.</p>
+<h2
+id="understanding-container-alignment-vs-item-alignment">Understanding
+Container Alignment vs. Item Alignment</h2>
+<p>In CSS layout models like Flexbox and CSS Grid, alignment along the
+perpendicular axis (the cross axis in flexbox or the block axis in grid)
+is managed at two distinct levels: the container level and the item
+level.</p>
+<p>When you apply <code>align-items</code> to a parent container, you
+establish a baseline rule for all direct children. For instance, setting
+<code>align-items: stretch</code> causes all flex items to expand to
+fill the container's cross-axis dimension by default.</p>
+<p>However, individual layout requirements often demand exceptions.
+Applying <code>align-self</code> directly to a child element tells the
+browser engine to ignore the parent's <code>align-items</code> rule for
+that single node, positioning it independently without modifying the
+layout of sibling elements.</p>
+<h2 id="how-the-override-mechanism-works">How the Override Mechanism
+Works</h2>
+<p>By default, every flex and grid item inherits an
+<code>align-self</code> value of <code>auto</code>. When set to
+<code>auto</code>, the element computes its alignment directly from the
+parent container's <code>align-items</code> property.</p>
+<p>When you assign any explicit keyword value to a child's
+<code>align-self</code> property, the computed value shifts from the
+inherited container property to the explicit item property. The CSS
+layout engine resolves item positioning along the cross axis in the
+following order of precedence:</p>
+<ol type="1">
+<li>Auto margins (e.g., <code>margin-top: auto</code> or
+<code>margin-bottom: auto</code>) consume available space first and
+override alignment properties.</li>
+<li>An explicit <code>align-self</code> declaration on the child
+element.</li>
+<li>The parent container's <code>align-items</code> declaration (when
+<code>align-self</code> is <code>auto</code>).</li>
+<li>The default initial value (<code>stretch</code> in Flexbox,
+<code>normal</code>/<code>stretch</code> in Grid).</li>
+</ol>
+<h2 id="available-values-for-align-self">Available Values for
+<code>align-self</code></h2>
+<p>The <code>align-self</code> property accepts several keyword values
+that control positioning along the cross axis:</p>
+<ul>
+<li><strong><code>auto</code></strong>: Computes to the parent's
+<code>align-items</code> value, or <code>stretch</code> if the element
+has no parent.</li>
+<li>**<code>flex-start</code> / <code>start**</code>: Aligns the item
+flush against the start edge of the cross axis.</li>
+<li>**<code>flex-end</code> / <code>end**</code>: Aligns the item flush
+against the end edge of the cross axis.</li>
+<li><strong><code>center</code></strong>: Centers the item within the
+cross-axis track, maintaining its intrinsic dimensions.</li>
+<li><strong><code>baseline</code></strong>: Aligns the item so that its
+text baseline matches the baselines of other baseline-aligned
+siblings.</li>
+<li><strong><code>stretch</code></strong>: Stretches the item to fill
+the cross axis, provided no explicit height (or width in vertical
+layouts) prevents expansion.</li>
+</ul>
+<h2 id="practical-code-example">Practical Code Example</h2>
+<p>Consider a flex container where all elements are vertically centered,
+but a specific call-to-action button or status badge needs to align to
+the bottom:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span> <span class="co">/* All children center vertically by default */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.item</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">50</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">/* Overriding the container alignment for a specific element */</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">.item-bottom</span> {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">align-self</span><span class="ch">:</span> <span class="dv">flex-end</span><span class="op">;</span> <span class="co">/* This item anchors to the bottom */</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this layout, all <code>.item</code> elements rest in the vertical
+center of the container, while <code>.item-bottom</code> independently
+aligns along the bottom edge without altering the container's global
+alignment logic.</p>
+<h2 id="key-considerations-and-troubleshooting">Key Considerations and
+Troubleshooting</h2>
+<ul>
+<li><strong>Axis Direction</strong>: In Flexbox, <code>align-self</code>
+only controls the cross axis. If <code>flex-direction</code> is set to
+<code>column</code>, the cross axis runs horizontally, meaning
+<code>align-self</code> controls horizontal alignment instead of
+vertical alignment.</li>
+<li><strong>Auto Margins</strong>: If an element has an automatic margin
+applied along the cross axis (such as <code>margin: auto</code>),
+<code>align-self</code> will have no visual effect because the auto
+margin absorbs all remaining free space before alignment properties are
+applied.</li>
+<li><strong>Grid vs. Flexbox</strong>: In CSS Grid,
+<code>align-self</code> works similarly along the block axis, but Grid
+also provides <code>justify-self</code> for the inline axis. Flexbox
+does not support <code>justify-self</code> along the main axis.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

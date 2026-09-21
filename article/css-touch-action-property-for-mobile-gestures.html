@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS touch-action Property for Mobile Gestures - css</title>
+    <meta name="description" content="The CSS touch-action property allows web developers to control how touch-screen devices respond to user gestures such as scrolling, pinching, and swiping. By specifying which touch interactions are handled natively by the browser and which are delegated">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-touch-action-property-for-mobile-gestures">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS touch-action Property for Mobile Gestures - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-touch-action-property-for-mobile-gestures" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS touch-action property allows web developers to control how touch-screen devices respond to user gestures such as scrolling, pinching, and swiping. By specifying which touch interactions are handled natively by the browser and which are delegated" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-touch-action-property-for-mobile-gestures">CSS touch-action
+Property for Mobile Gestures</h1>
+<p>The CSS <code>touch-action</code> property allows web developers to
+control how touch-screen devices respond to user gestures such as
+scrolling, pinching, and swiping. By specifying which touch interactions
+are handled natively by the browser and which are delegated to custom
+JavaScript pointer events, this property prevents unwanted default
+behaviors and significantly improves mobile interface
+responsiveness.</p>
+<h3 id="what-is-touch-action">What is <code>touch-action</code>?</h3>
+<p>When a user touches a screen, the mobile browser typically intercepts
+the gesture to execute standard viewport actions like scrolling
+(panning) or zooming. The <code>touch-action</code> property overrides
+or filters this default behavior directly within CSS. It tells the
+browser's compositor thread whether to handle a gesture immediately or
+to wait and allow JavaScript pointer events to take control.</p>
+<h3 id="key-values-and-their-behaviors">Key Values and Their
+Behaviors</h3>
+<p>The <code>touch-action</code> property accepts several keyword values
+that dictate gesture regulation:</p>
+<ul>
+<li><strong><code>auto</code> (Default):</strong> The browser retains
+full control over all gesture handling, including smooth scrolling,
+pinch-to-zoom, and double-tap zoom.</li>
+<li><strong><code>none</code>:</strong> Disables all native gesture
+handling. The browser will not scroll or zoom when the user touches the
+element. This is essential for interactive elements like signature pads,
+drawing canvases, interactive maps, or custom drag-and-drop
+components.</li>
+<li><strong><code>pan-x</code> and <code>pan-y</code>:</strong>
+Restricts native scrolling to a single axis.
+<ul>
+<li><code>pan-x</code> allows horizontal panning while disabling
+vertical scrolling and zooming.</li>
+<li><code>pan-y</code> allows vertical panning while disabling
+horizontal scrolling and zooming. This is ideal for carousels or
+swipeable list items where horizontal gestures are reserved for
+JavaScript logic while normal page scrolling remains intact.</li>
+</ul></li>
+<li><strong><code>manipulation</code>:</strong> Enables panning and
+pinch-to-zoom while disabling non-standard gestures, primarily
+double-tap to zoom. This eliminates the historical 300-millisecond click
+delay on mobile browsers, making buttons and links feel
+instantaneous.</li>
+<li><strong><code>pinch-zoom</code>:</strong> Specifically permits
+multi-finger zooming and panning gestures while combined with
+directional controls (for example,
+<code>touch-action: pan-y pinch-zoom</code>).</li>
+</ul>
+<h3 id="how-it-regulates-mobile-gestures">How It Regulates Mobile
+Gestures</h3>
+<p>Mobile gesture regulation through <code>touch-action</code> operates
+primarily at the rendering engine level, offering two major
+advantages:</p>
+<h4 id="1-performance-optimization-and-thread-decoupling">1. Performance
+Optimization and Thread Decoupling</h4>
+<p>Traditionally, developers relied on JavaScript's
+<code>event.preventDefault()</code> inside <code>touchstart</code> or
+<code>touchmove</code> listeners to cancel default scrolling. Because
+the browser must wait for the JavaScript thread to execute the listener
+to check for <code>preventDefault()</code>, mobile scrolling often
+stuttered.</p>
+<p>With <code>touch-action</code>, the regulation happens declaratively
+on the browser’s compositor thread. If an element has
+<code>touch-action: pan-y</code>, the browser immediately knows it can
+handle vertical scrolling on the compositor thread without waiting for
+the main thread, resulting in 60 frames-per-second scrolling
+performance.</p>
+<h4 id="2-pointer-event-integration">2. Pointer Event Integration</h4>
+<p>Modern web applications use Pointer Events (<code>pointerdown</code>,
+<code>pointermove</code>, <code>pointerup</code>) to unify mouse, pen,
+and touch inputs. When a user begins a gesture on an element with
+<code>touch-action: auto</code>, the browser generates a
+<code>pointercancel</code> event as soon as it determines the user is
+scrolling, cutting off the JavaScript event stream. Setting
+<code>touch-action: none</code> ensures that the browser never fires
+<code>pointercancel</code>, allowing your custom gesture scripts to
+maintain continuous tracking of the user's touch.</p>
+<h3 id="practical-implementation">Practical Implementation</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Disable native gestures for a drawing application */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.drawing-canvas</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">touch-action</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Allow normal vertical page scrolling, but handle horizontal swipes with JS */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.image-carousel</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">touch-action</span><span class="ch">:</span> <span class="dv">pan-y</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">/* Remove the 300ms tap delay on interactive controls */</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">.interactive-button</span> {</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">touch-action</span><span class="ch">:</span> <span class="dv">manipulation</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By applying <code>touch-action</code> strategically, developers can
+create native-feeling touch experiences that seamlessly balance default
+browser navigation with custom mobile interactions.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

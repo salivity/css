@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS :is() Pseudo-Class Specificity Explained - css</title>
+    <meta name="description" content="This article explains how the CSS :is() pseudo-class determines selector specificity by dynamically inheriting the weight of its most specific argument. You will learn the mechanics behind specificity calculation in CSS selectors, why matching an element">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-is-pseudo-class-specificity-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS :is() Pseudo-Class Specificity Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-is-pseudo-class-specificity-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how the CSS :is() pseudo-class determines selector specificity by dynamically inheriting the weight of its most specific argument. You will learn the mechanics behind specificity calculation in CSS selectors, why matching an element" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-is-pseudo-class-specificity-explained">CSS :is()
+Pseudo-Class Specificity Explained</h1>
+<p>This article explains how the CSS <code>:is()</code> pseudo-class
+determines selector specificity by dynamically inheriting the weight of
+its most specific argument. You will learn the mechanics behind
+specificity calculation in CSS selectors, why matching an element via
+<code>:is(.a, #b)</code> behaves with the specificity of an ID selector
+regardless of which selector matches, and how this behavior affects the
+cascade in real-world stylesheets.</p>
+<h2 id="how-the-specificity-of-is-works">How the Specificity of
+<code>:is()</code> Works</h2>
+<p>The <code>:is()</code> pseudo-class simplifies complex selectors by
+allowing you to group multiple targets into a single rule. However,
+unlike traditional grouping separated by commas, the browser treats the
+specificity of the entire <code>:is()</code> expression as equal to the
+selector inside its argument list that possesses the highest
+specificity.</p>
+<p>Specificity in CSS is calculated using three categories:</p>
+<ol type="1">
+<li><strong>A (ID selectors):</strong> e.g., <code>#b</code> has a score
+of <code>(1, 0, 0)</code>.</li>
+<li><strong>B (Class, attribute, and pseudo-class selectors):</strong>
+e.g., <code>.a</code> has a score of <code>(0, 1, 0)</code>.</li>
+<li><strong>C (Type selectors and pseudo-elements):</strong> e.g.,
+<code>div</code> has a score of <code>(0, 0, 1)</code>.</li>
+</ol>
+<p>The <code>:is()</code> pseudo-class itself contributes zero
+specificity (<code>0, 0, 0</code>) to the calculation. Instead, the CSS
+parser scans the comma-separated arguments provided inside the
+parentheses, evaluates the specificity of each, and assigns the maximum
+value found to the entire <code>:is()</code> block.</p>
+<h2 id="analyzing-isa-b">Analyzing <code>:is(.a, #b)</code></h2>
+<p>When you declare a selector such as:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">:is(</span><span class="fu">.a</span><span class="op">,</span> <span class="pp">#b</span><span class="in">)</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">red</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The browser evaluates the two arguments:</p>
+<ul>
+<li><code>.a</code> has a specificity of <code>(0, 1, 0)</code>.</li>
+<li><code>#b</code> has a specificity of <code>(1, 0, 0)</code>.</li>
+</ul>
+<p>Because <code>(1, 0, 0)</code> is higher than <code>(0, 1, 0)</code>,
+the browser sets the specificity of <code>:is(.a, #b)</code> to
+<code>(1, 0, 0)</code>.</p>
+<p>Crucially, this score applies statically to all matching elements,
+regardless of which individual selector matches the element in the DOM.
+Even if an element only matches the <code>.a</code> class and has no
+relation to <code>#b</code>, it is evaluated with the specificity of an
+ID selector.</p>
+<h2 id="practical-example-the-specificity-trap">Practical Example: The
+Specificity Trap</h2>
+<p>Consider the following HTML:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;a&quot;</span><span class="dt">&gt;</span>This text will be red.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>And the following CSS:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">:is(</span><span class="fu">.a</span><span class="op">,</span> <span class="pp">#b</span><span class="in">)</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">red</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>p<span class="fu">.a</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Intuitively, you might expect <code>p.a</code> (specificity:
+<code>0, 1, 1</code>) to override <code>.a</code> inside
+<code>:is()</code> because <code>p.a</code> includes both an element and
+a class selector.</p>
+<p>However, the text renders as <strong>red</strong>. Because
+<code>#b</code> is included in the <code>:is()</code> arguments,
+<code>:is(.a, #b)</code> has a specificity of <code>(1, 0, 0)</code>.
+Since <code>(1, 0, 0)</code> outranks <code>(0, 1, 1)</code>, the
+<code>:is()</code> rule wins. To override this rule without an ID, you
+would need another selector with at least one ID or an
+<code>!important</code> declaration.</p>
+<h2 id="alternative-when-to-use-where">Alternative: When to Use
+<code>:where()</code></h2>
+<p>If you need the grouping capabilities of <code>:is()</code> without
+adopting the highest specificity of the argument list, use the
+<code>:where()</code> pseudo-class instead:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">:where(</span><span class="fu">.a</span><span class="op">,</span> <span class="pp">#b</span><span class="in">)</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">red</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The <code>:where()</code> pseudo-class always sets its total
+specificity to <code>(0, 0, 0)</code>, making it easy to override
+anywhere else in your stylesheet. Use <code>:is()</code> when you want
+the group to maintain a high priority in the cascade, and use
+<code>:where()</code> when you want low-specificity defaults.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

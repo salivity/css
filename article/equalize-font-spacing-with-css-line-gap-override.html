@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equalize Font Spacing with CSS line-gap-override - css</title>
+    <meta name="description" content="When web fonts load asynchronously, differences in intrinsic font metrics between the custom font and the local fallback font cause text to shift vertically, leading to Cumulative Layout Shift (CLS). The CSS line-gap-override property solves this issue b">
+    <link rel="canonical" href="https://salivity.github.io/css/article/equalize-font-spacing-with-css-line-gap-override">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Equalize Font Spacing with CSS line-gap-override - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/equalize-font-spacing-with-css-line-gap-override" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="When web fonts load asynchronously, differences in intrinsic font metrics between the custom font and the local fallback font cause text to shift vertically, leading to Cumulative Layout Shift (CLS). The CSS line-gap-override property solves this issue b" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="equalize-font-spacing-with-css-line-gap-override">Equalize Font
+Spacing with CSS line-gap-override</h1>
+<p>When web fonts load asynchronously, differences in intrinsic font
+metrics between the custom font and the local fallback font cause text
+to shift vertically, leading to Cumulative Layout Shift (CLS). The CSS
+<code>line-gap-override</code> property solves this issue by allowing
+developers to redefine the line-gap metric of a fallback font directly
+within an <code>@font-face</code> rule. By adjusting this value to
+mirror the vertical spacing of the custom web font, browsers can render
+the fallback text with the exact vertical footprint of the incoming
+custom font, preventing sudden jumps in line height and page layout.</p>
+<h2 id="the-font-metric-mismatch-problem">The Font Metric Mismatch
+Problem</h2>
+<p>Every font file contains built-in typography metrics determined by
+the type designer, including:</p>
+<ul>
+<li><strong>Ascent:</strong> The distance from the baseline to the top
+of the tallest glyphs.</li>
+<li><strong>Descent:</strong> The distance from the baseline to the
+lowest point of descending glyphs.</li>
+<li><strong>Line Gap:</strong> The recommended extra leading (vertical
+spacing) between successive lines of text.</li>
+</ul>
+<p>When using <code>font-display: swap</code>, browsers instantly
+display a system fallback (such as Arial, Times New Roman, or Roboto)
+until the custom web font downloads. Even if both fonts share identical
+<code>font-size</code> and <code>line-height</code> declarations,
+variations in their internal line-gap metrics cause lines of text to
+occupy different amounts of vertical space. When the custom font swaps
+in, paragraphs expand or contract, causing content below to jump.</p>
+<h2 id="how-line-gap-override-works">How <code>line-gap-override</code>
+Works</h2>
+<p>The <code>line-gap-override</code> property defines the font's
+internal line-gap metric as a percentage of the font's standard 1em size
+(or as <code>normal</code>, which uses the font's embedded default).</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>line-gap-override<span class="in">:</span> &lt;percentage<span class="op">&gt;</span> <span class="op">|</span> normal;</span></code></pre></div>
+<p>A value of <code>0%</code> removes the font's built-in internal line
+gap entirely, while a positive percentage adds extra spacing. When
+applied within a fallback <code>@font-face</code> declaration, it alters
+the distance between lines of text specifically for that fallback,
+without changing global CSS <code>line-height</code> rules.</p>
+<h2 id="equalizing-spacing-between-custom-and-system-fonts">Equalizing
+Spacing Between Custom and System Fonts</h2>
+<p>To equalize spacing, you create an aliased system fallback font and
+adjust its metrics to match the incoming web font:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* 1. Define the web font */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;CustomSans&#39;</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;/fonts/custom-sans.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-display</span><span class="ch">:</span> <span class="dv">swap</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">/* 2. Create a modified fallback font */</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;AdjustedFallback&#39;</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">local(</span><span class="st">&#39;Arial&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">line-gap-override</span><span class="ch">:</span> <span class="dv">0</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">ascent-override</span><span class="ch">:</span> <span class="dv">90</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">descent-override</span><span class="ch">:</span> <span class="dv">22</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">/* 3. Apply the font stack */</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;CustomSans&#39;</span><span class="op">,</span> <span class="st">&#39;AdjustedFallback&#39;</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">line-height</span><span class="ch">:</span> <span class="dv">1.5</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="steps-to-match-metrics">Steps to Match Metrics</h3>
+<ol type="1">
+<li><strong>Inspect Custom Font Metrics:</strong> Tools such as font
+inspection utilities or online font-metric generators extract the exact
+ascent, descent, and line-gap values from the primary custom font.</li>
+<li><strong>Calculate the Ratio:</strong> Determine the line-gap ratio
+relative to the custom font's units per em (UPM). For example, if a font
+has a UPM of 1000 and an external line gap of 100, its line gap is
+10%.</li>
+<li><strong>Override the Fallback:</strong> Set
+<code>line-gap-override</code> on the fallback font so that its total
+line height matches the web font. If the web font has a line gap of
+<code>0%</code>, setting the fallback's
+<code>line-gap-override: 0%</code> eliminates the fallback font's
+default internal padding.</li>
+</ol>
+<h2 id="achieving-perfect-vertical-alignment">Achieving Perfect Vertical
+Alignment</h2>
+<p>While <code>line-gap-override</code> specifically normalizes the
+spacing between consecutive lines, it is usually combined with
+<code>ascent-override</code> and <code>descent-override</code>.
+Together, these three properties define the exact vertical boundaries of
+the font box:</p>
+<ul>
+<li><code>ascent-override</code> sets the baseline-to-top boundary.</li>
+<li><code>descent-override</code> sets the baseline-to-bottom
+boundary.</li>
+<li><code>line-gap-override</code> handles the residual inter-line
+spacing.</li>
+</ul>
+<p>By matching all three metrics to the custom font, the browser renders
+the fallback font within the identical vertical dimensions required by
+the web font, completely eliminating layout shifts when the font swap
+occurs.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

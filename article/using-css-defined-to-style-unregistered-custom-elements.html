@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using CSS :defined to Style Unregistered Custom Elements - css</title>
+    <meta name="description" content="This article explains how the CSS :defined pseudo-class targets custom elements based on their registration status in the browser. You will learn how to use the :not(:defined) selector to style custom elements before their JavaScript definitions load, ef">
+    <link rel="canonical" href="https://salivity.github.io/css/article/using-css-defined-to-style-unregistered-custom-elements">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using CSS :defined to Style Unregistered Custom Elements - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/using-css-defined-to-style-unregistered-custom-elements" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how the CSS :defined pseudo-class targets custom elements based on their registration status in the browser. You will learn how to use the :not(:defined) selector to style custom elements before their JavaScript definitions load, ef" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="using-css-defined-to-style-unregistered-custom-elements">Using
+CSS :defined to Style Unregistered Custom Elements</h1>
+<p>This article explains how the CSS <code>:defined</code> pseudo-class
+targets custom elements based on their registration status in the
+browser. You will learn how to use the <code>:not(:defined)</code>
+selector to style custom elements before their JavaScript definitions
+load, effectively preventing Flash of Unstyled Content (FOUC) and
+Cumulative Layout Shift (CLS) through placeholders, skeleton screens,
+and smooth transitions.</p>
+<hr />
+<h3 id="what-is-the-defined-pseudo-class">What Is the
+<code>:defined</code> Pseudo-Class?</h3>
+<p>The <code>:defined</code> pseudo-class targets any element that has
+been officially registered with the browser. Standard HTML elements
+(like <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, or
+<code>&lt;button&gt;</code>) are defined by default.</p>
+<p>For Custom Elements (Web Components), an element remains
+<strong>undefined</strong> until its underlying class is registered
+using the <code>customElements.define()</code> JavaScript API. Once
+registered, the browser automatically applies the <code>:defined</code>
+state to all matching tags in the DOM.</p>
+<h3 id="the-problem-flash-of-unstyled-content-fouc">The Problem: Flash
+of Unstyled Content (FOUC)</h3>
+<p>Modern web applications often defer, asynchronously load, or
+code-split the JavaScript bundles that contain Custom Element
+definitions. While the browser waits to download and execute this
+JavaScript, it parses the HTML tags as generic inline elements with no
+styling.</p>
+<p>This delay causes two major user experience issues:</p>
+<ol type="1">
+<li><strong>Flash of Unstyled Content (FOUC):</strong> Raw text or
+unstyled child nodes render momentarily before snapping into their
+intended component layout.</li>
+<li><strong>Cumulative Layout Shift (CLS):</strong> When the component
+finally renders, it suddenly expands or shifts, disrupting the page
+layout.</li>
+</ol>
+<h3
+id="targeting-elements-before-registration-with-notdefined">Targeting
+Elements Before Registration with <code>:not(:defined)</code></h3>
+<p>To target an element before its JavaScript executes, negate the
+pseudo-class using <code>:not(:defined)</code>.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Target the unregistered custom element */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>user-card<span class="in">:not(:defined)</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This selector applies styling exclusively during the loading window.
+As soon as <code>customElements.define('user-card', UserCard)</code>
+runs, the <code>:not(:defined)</code> selector no longer matches, and
+the browser switches to the component's normal styles.</p>
+<h3 id="common-implementation-patterns">Common Implementation
+Patterns</h3>
+<h4 id="1-reserving-layout-space-preventing-cls">1. Reserving Layout
+Space (Preventing CLS)</h4>
+<p>Instead of hiding the component completely, you can reserve layout
+dimensions to stop the page from jumping when the element
+initializes:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>media-player<span class="in">:not(:defined)</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">block</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">min-height</span><span class="ch">:</span> <span class="dv">300</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="2-displaying-skeleton-loaders">2. Displaying Skeleton
+Loaders</h4>
+<p>You can present a placeholder animation to signal to users that the
+component is loading:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>user-profile<span class="in">:not(:defined)</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">block</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">120</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="fu">linear-gradient(</span><span class="dv">90</span><span class="dt">deg</span><span class="op">,</span> <span class="cn">#e0e0e0</span> <span class="dv">25</span><span class="dt">%</span><span class="op">,</span> <span class="cn">#f5f5f5</span> <span class="dv">50</span><span class="dt">%</span><span class="op">,</span> <span class="cn">#e0e0e0</span> <span class="dv">75</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-size</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">%</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">animation</span><span class="ch">:</span> <span class="dv">shimmer 1.5</span><span class="dt">s</span> <span class="dv">infinite</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="im">@keyframes</span> shimmer {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0%</span> { <span class="kw">background-position</span><span class="ch">:</span> <span class="dv">200</span><span class="dt">%</span> <span class="dv">0</span><span class="op">;</span> }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100%</span> { <span class="kw">background-position</span><span class="ch">:</span> <span class="dv">-200</span><span class="dt">%</span> <span class="dv">0</span><span class="op">;</span> }</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="3-smooth-fade-in-transitions">3. Smooth Fade-In Transitions</h4>
+<p>To avoid an abrupt visual pop when the component activates, combine
+opacity with a transition:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Before registration: transparent */</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>custom-modal<span class="in">:not(:defined)</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* After registration: fade in smoothly */</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>custom-modal<span class="in">:defined</span> {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">opacity 0.3</span><span class="dt">s</span> <span class="dv">ease-in</span><span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li><strong>Always provide fallback dimensions:</strong> Setting a
+<code>min-height</code> or <code>aspect-ratio</code> on
+<code>:not(:defined)</code> elements preserves layout stability while
+scripts load.</li>
+<li><strong>Avoid permanently hiding content:</strong> If you use
+<code>display: none</code> on <code>:not(:defined)</code>, ensure that a
+script failure will not leave critical page content permanently
+invisible.</li>
+<li><strong>Ensure proper display types:</strong> Custom elements
+default to <code>display: inline</code>. If your component acts as a
+block-level container, set <code>display: block</code> on both
+<code>:not(:defined)</code> and <code>:defined</code> states to prevent
+formatting discrepancies.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

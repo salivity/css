@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does the CSS :has Pseudo-Class Work? - css</title>
+    <meta name="description" content="The :has() pseudo-class is a relational selector that enables developers to style an element based on its descendants, child elements, or following siblings. Often referred to as the long-awaited "parent selector," :has() checks whether an element contai">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-the-css-has-pseudo-class-work">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does the CSS :has Pseudo-Class Work? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-the-css-has-pseudo-class-work" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The :has() pseudo-class is a relational selector that enables developers to style an element based on its descendants, child elements, or following siblings. Often referred to as the long-awaited "parent selector," :has() checks whether an element contai" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-the-css-has-pseudo-class-work">How Does the CSS :has
+Pseudo-Class Work?</h1>
+<p>The <code>:has()</code> pseudo-class is a relational selector that
+enables developers to style an element based on its descendants, child
+elements, or following siblings. Often referred to as the long-awaited
+"parent selector," <code>:has()</code> checks whether an element
+contains or is adjacent to specific targets before applying styles. This
+article explores how <code>:has()</code> functions, breaks down its
+syntax and specificity rules, and highlights practical design patterns
+that previously required JavaScript.</p>
+<h2 id="understanding-relational-selection">Understanding Relational
+Selection</h2>
+<p>Traditionally, CSS cascade logic flows in one direction: top-down and
+left-to-right. Standard selectors let you target an element's children
+(<code>parent &gt; child</code>) or subsequent siblings
+(<code>item + item</code>), but selecting a container based on what it
+contains was impossible using pure CSS.</p>
+<p>The <code>:has()</code> pseudo-class fundamentally alters this
+dynamic. It accepts a relative selector list as an argument and matches
+the subject element if any of the selectors in the argument match
+relative to that subject.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Styles the &lt;article&gt; ONLY if it contains an &lt;img&gt; */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>article<span class="in">:has(</span>img<span class="in">)</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">grid</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-template-columns</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">fr</span> <span class="dv">2</span><span class="dt">fr</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In the example above, <code>article</code> is the target being
+styled, not the <code>img</code>. The browser evaluates the argument
+<code>img</code> relative to <code>article</code>. If true, the grid
+layout applies to the article container.</p>
+<h2 id="key-syntax-patterns">Key Syntax Patterns</h2>
+<p>The <code>:has()</code> selector supports complex combinators,
+multiple conditions, and logical chains.</p>
+<h3 id="1-direct-child-matching">1. Direct Child Matching</h3>
+<p>Using the child combinator (<code>&gt;</code>) inside
+<code>:has()</code> ensures styles only apply when the target is an
+immediate child rather than a deeply nested descendant.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Targets a card only if a header is its direct child */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span><span class="in">:has(</span><span class="op">&gt;</span> h2<span class="in">)</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">solid</span> <span class="fu">var(</span><span class="va">--accent-color</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="2-sibling-relationships">2. Sibling Relationships</h3>
+<p>Because <code>:has()</code> accepts relative combinators, you can
+evaluate adjacent siblings (<code>+</code>) and general siblings
+(<code>~</code>).</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Styles a label when its immediately preceding checkbox is checked */</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>label<span class="in">:has(</span><span class="op">+</span> input<span class="in">:checked)</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">700</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--primary</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Styles an H2 only if it is immediately followed by a subtitle paragraph */</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>h2<span class="in">:has(</span><span class="op">+</span> p<span class="fu">.subtitle</span><span class="in">)</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">0.25</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="3-logical-operations-and-inversion">3. Logical Operations and
+Inversion</h3>
+<p><code>:has()</code> can be combined with <code>:not()</code> and
+<code>:is()</code> to construct sophisticated state-based styling
+logic.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Matches a form group that has an invalid input but is NOT focused */</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.form-group</span><span class="in">:has(</span>input<span class="in">:invalid):not(:focus-within)</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--error-red</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Matches a container that contains either a video or an audio player */</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.media-wrapper</span><span class="in">:has(</span>video<span class="op">,</span> audio<span class="in">)</span> {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--dark-bg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="practical-use-cases">Practical Use Cases</h2>
+<h3 id="dynamic-component-layouts">Dynamic Component Layouts</h3>
+<p>Components often require different visual treatments depending on
+their internal contents. Without <code>:has()</code>, developers
+typically toggle modifier classes like <code>.card--has-image</code>
+using client-side scripts. With <code>:has()</code>, CSS handles this
+declaratively:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Remove top padding if the hero image sits at the top */</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span><span class="in">:has(</span><span class="op">&gt;</span> img<span class="in">:first-child)</span> {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="real-time-form-state-feedback">Real-Time Form State
+Feedback</h3>
+<p>You can apply global layout adaptations when specific form controls
+change state.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Highlight a submit button when all required inputs inside the form are valid */</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>form<span class="in">:has(</span>input<span class="in">:required:valid)</span> button<span class="ex">[</span><span class="ss">type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="ex">]</span> {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--success-green</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">cursor</span><span class="ch">:</span> <span class="dv">pointer</span><span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="specificity-and-performance-considerations">Specificity and
+Performance Considerations</h2>
+<p>Understanding how <code>:has()</code> interacts with the CSS cascade
+ensures predictable style sheets.</p>
+<ul>
+<li><strong>Specificity Calculation:</strong> The specificity of
+<code>:has()</code> is determined by the most specific selector inside
+its argument list, not the <code>:has()</code> keyword itself. For
+instance, <code>section:has(#main-title)</code> carries the specificity
+of one element (<code>section</code>) plus one ID
+(<code>#main-title</code>).</li>
+<li><strong>Nesting Restrictions:</strong> An <code>:has()</code>
+pseudo-class cannot be nested inside another <code>:has()</code>
+pseudo-class (e.g., <code>:has(:has(p))</code> is invalid).</li>
+<li><strong>Browser Performance:</strong> Modern rendering engines
+optimize <code>:has()</code> by evaluating selectors against localized
+DOM subtrees. To maintain optimal rendering speeds, keep the relative
+selector list focused and avoid attaching overly broad arguments like
+<code>body:has(*)</code> across large DOM structures.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

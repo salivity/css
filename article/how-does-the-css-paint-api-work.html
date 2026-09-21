@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does the CSS Paint API Work? - css</title>
+    <meta name="description" content="The CSS Paint API, a foundational component of the CSS Houdini suite, allows developers to write custom 2D rendering routines using JavaScript that execute directly inside the browser's native rendering pipeline. Instead of relying on static raster image">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-the-css-paint-api-work">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does the CSS Paint API Work? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-the-css-paint-api-work" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS Paint API, a foundational component of the CSS Houdini suite, allows developers to write custom 2D rendering routines using JavaScript that execute directly inside the browser's native rendering pipeline. Instead of relying on static raster image" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-the-css-paint-api-work">How Does the CSS Paint API
+Work?</h1>
+<p>The CSS Paint API, a foundational component of the CSS Houdini suite,
+allows developers to write custom 2D rendering routines using JavaScript
+that execute directly inside the browser's native rendering pipeline.
+Instead of relying on static raster images, heavy SVGs, or extra DOM
+nodes for complex visual effects, the API exposes a low-level
+Canvas-like drawing context within a dedicated Paint Worklet. This
+article explores how the CSS Paint API functions under the hood, how
+custom paint worklets interact with CSS custom properties, and why this
+architecture enables high-performance, dynamic visual styling.</p>
+<h2 id="understanding-the-css-houdini-ecosystem">Understanding the CSS
+Houdini Ecosystem</h2>
+<p>CSS Houdini is a set of low-level APIs designed to give developers
+direct access to the browser's CSS Object Model (CSSOM) and rendering
+engine. Traditionally, browser rendering follows a strict pipeline:
+parsing HTML/CSS, computing styles, calculating layout, painting pixels,
+and compositing layers. Developers historically had to wait for browser
+vendors to standardize and implement new CSS properties to alter the
+paint phase.</p>
+<p>The CSS Paint API opens up the paint phase of this pipeline. By
+exposing a specialized JavaScript interface, it allows developers to
+programmatically generate an image anywhere a standard CSS
+<code>&lt;image&gt;</code> is accepted, such as
+<code>background-image</code>, <code>border-image</code>,
+<code>mask-image</code>, or <code>list-style-image</code>.</p>
+<h2 id="the-architecture-of-a-paint-worklet">The Architecture of a Paint
+Worklet</h2>
+<p>At the center of custom rendering routines is the <strong>Paint
+Worklet</strong>. Worklets are lightweight execution threads that run
+off the main JavaScript thread, separate from the primary window scope.
+Because painting happens frequently during scrolling, resizing, and
+animating, running paint logic inside worklets prevents intensive
+rendering scripts from blocking user interactions or degrading frame
+rates.</p>
+<p>A typical Paint Worklet contains three essential components:</p>
+<ol type="1">
+<li><strong>Input Properties Definition:</strong> A static getter
+(<code>inputProperties</code>) that declares which CSS custom properties
+(variables) or standard CSS properties the worklet needs to track.</li>
+<li><strong>Input Arguments (Optional):</strong> A static getter
+(<code>inputArguments</code>) defining function-style arguments passed
+inside CSS.</li>
+<li><strong>The <code>paint()</code> Method:</strong> The execution
+callback invoked by the browser whenever the element requires
+repainting.</li>
+</ol>
+<h2 id="the-paint-callback-and-context">The <code>paint()</code>
+Callback and Context</h2>
+<p>When the browser paints an element using a custom routine, it
+executes the <code>paint(ctx, geometry, properties)</code> function.
+This method provides direct access to three core parameters:</p>
+<ul>
+<li><strong><code>ctx</code> (Rendering Context):</strong> A
+<code>PaintRenderingContext2D</code> object, which provides a simplified
+subset of the HTML5 2D Canvas API. It includes methods for drawing
+paths, rectangles, circles, gradients, and arcs (<code>fillRect</code>,
+<code>arc</code>, <code>stroke</code>, <code>beginPath</code>, etc.). To
+maintain thread safety and performance, read-back methods (such as
+<code>getImageData</code>) are excluded.</li>
+<li><strong><code>geometry</code> (PaintSize):</strong> An object
+containing the dimensions of the paint target
+(<code>geometry.width</code> and <code>geometry.height</code>). This
+enables fully responsive vector rendering that scales to the exact pixel
+box of the host element without raster distortion.</li>
+<li><strong><code>properties</code> (StylePropertyMapReadOnly):</strong>
+A typed CSS property map that allows the script to read the values of
+the declared <code>inputProperties</code> dynamically.</li>
+</ul>
+<h2 id="connecting-javascript-routines-to-css-styles">Connecting
+JavaScript Routines to CSS Styles</h2>
+<p>Integrating a custom paint routine into a stylesheet involves two
+primary steps: registering the worklet module and invoking it within
+standard CSS rules.</p>
+<h3 id="1-registering-the-worklet-module">1. Registering the Worklet
+Module</h3>
+<p>The JavaScript file defining the class is registered inside the
+worklet global scope using <code>registerPaint</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RippleBackground {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">static</span> <span class="kw">get</span> <span class="fu">inputProperties</span>() {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="st">&#39;--ripple-color&#39;</span><span class="op">,</span> <span class="st">&#39;--ripple-radius&#39;</span>]<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paint</span>(ctx<span class="op">,</span> geometry<span class="op">,</span> properties) {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> color <span class="op">=</span> properties<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;--ripple-color&#39;</span>)<span class="op">.</span><span class="fu">toString</span>()<span class="op">.</span><span class="fu">trim</span>() <span class="op">||</span> <span class="st">&#39;#3498db&#39;</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> radius <span class="op">=</span> <span class="pp">parseFloat</span>(properties<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;--ripple-radius&#39;</span>)) <span class="op">||</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> color<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">arc</span>(geometry<span class="op">.</span><span class="at">width</span> <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> geometry<span class="op">.</span><span class="at">height</span> <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> radius<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span>)<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">fill</span>()<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">registerPaint</span>(<span class="st">&#39;ripple-background&#39;</span><span class="op">,</span> RippleBackground)<span class="op">;</span></span></code></pre></div>
+<h3 id="2-loading-and-applying-in-css">2. Loading and Applying in
+CSS</h3>
+<p>On the main thread, the worklet script is loaded via
+<code>CSS.paintWorklet.addModule()</code>. In CSS, the element applies
+the routine using the <code>paint()</code> functional notation:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.interactive-card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--ripple-color</span><span class="ch">:</span> <span class="cn">#e74c3c</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--ripple-radius</span><span class="ch">:</span> <span class="dv">50</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-image</span><span class="ch">:</span> <span class="fu">paint(</span><span class="dv">ripple-background</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">--ripple-radius 0.3</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Whenever <code>--ripple-radius</code> or <code>--ripple-color</code>
+changes—via hover states, CSS transitions, CSS animations, or
+main-thread JavaScript manipulation—the browser marks the paint layer as
+dirty and automatically invokes the worklet's <code>paint()</code>
+method to re-render the updated frame.</p>
+<h2 id="key-performance-advantages">Key Performance Advantages</h2>
+<p>The CSS Paint API provides significant performance improvements over
+conventional dynamic styling techniques:</p>
+<ul>
+<li><strong>Zero DOM Bloat:</strong> Procedural visuals, complex
+borders, and decorative patterns are drawn directly into the styling
+layer rather than requiring nested <code>&lt;span&gt;</code> or
+<code>&lt;canvas&gt;</code> wrapper elements.</li>
+<li><strong>Resolution Independence:</strong> Because vector drawing
+commands use the target element's computed <code>geometry</code>, the
+rendering output adapts seamlessly to high-DPI displays without multiple
+asset exports.</li>
+<li><strong>Efficient Memory Usage:</strong> Static asset requests (such
+as PNG or SVG network roundtrips) are eliminated, and procedural
+graphics generate pixels on demand rather than caching large bitmap
+textures in memory.</li>
+<li><strong>Hardware Acceleration:</strong> By integrating directly with
+browser render trees and running inside worklet threads, paint routines
+run synchronously within the browser's own compositor pipeline.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

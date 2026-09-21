@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS aspect-ratio Maintain Element Dimensions? - css</title>
+    <meta name="description" content="The CSS aspect-ratio property allows developers to define a preferred ratio between an element's width and height, enabling browsers to calculate and adjust the missing dimension automatically when only one axis is explicitly set. This native CSS feature">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-aspect-ratio-maintain-element-dimensions">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS aspect-ratio Maintain Element Dimensions? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-aspect-ratio-maintain-element-dimensions" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS aspect-ratio property allows developers to define a preferred ratio between an element's width and height, enabling browsers to calculate and adjust the missing dimension automatically when only one axis is explicitly set. This native CSS feature" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-aspect-ratio-maintain-element-dimensions">How Does
+CSS aspect-ratio Maintain Element Dimensions?</h1>
+<p>The CSS <code>aspect-ratio</code> property allows developers to
+define a preferred ratio between an element's width and height, enabling
+browsers to calculate and adjust the missing dimension automatically
+when only one axis is explicitly set. This native CSS feature
+streamlines responsive web design, eliminates reliance on older layout
+workarounds like the padding-bottom hack, and significantly reduces
+Cumulative Layout Shift (CLS) by reserving the exact layout space
+required for media and containers before their content fully loads.</p>
+<h2 id="the-core-calculation-mechanics">The Core Calculation
+Mechanics</h2>
+<p>The <code>aspect-ratio</code> property accepts a ratio defined as
+<code>width / height</code> or a single float value representing that
+ratio. When applied to an element, the browser treats this ratio as an
+intrinsic constraint during the layout phase.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">aspect-ratio</span><span class="ch">:</span> <span class="dv">16</span> / <span class="dv">9</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When a layout engine encounters an element with an
+<code>aspect-ratio</code>:</p>
+<ol type="1">
+<li><strong>One Defined Dimension:</strong> If the width is defined
+(such as <code>width: 300px</code> or <code>width: 100%</code>) and the
+height is set to <code>auto</code> (the default for block-level
+elements), the browser calculates the height using the formula
+<code>height = width / ratio</code>. Conversely, if the height is fixed
+and width is <code>auto</code>, the browser calculates
+<code>width = height * ratio</code>.</li>
+<li><strong>Two Defined Dimensions:</strong> If both <code>width</code>
+and <code>height</code> are explicitly defined with fixed lengths (for
+example, <code>width: 300px; height: 200px;</code>), the explicit
+dimension rules override the <code>aspect-ratio</code> declaration, and
+the ratio is ignored.</li>
+<li><strong>Box Sizing Context:</strong> By default,
+<code>aspect-ratio</code> applies to the box defined by the
+<code>box-sizing</code> property. If <code>box-sizing: border-box</code>
+is active, the ratio is calculated based on the dimensions including
+padding and borders, avoiding box overflow or unexpected sizing
+mismatches.</li>
+</ol>
+<h2 id="how-aspect-ratio-replaced-legacy-hacks">How aspect-ratio
+Replaced Legacy Hacks</h2>
+<p>Prior to the introduction of <code>aspect-ratio</code>, creating
+responsive elements with consistent proportions required the "padding
+hack." This technique relied on the quirk that vertical percentage
+padding on a container is calculated relative to its parent container's
+inline size (width).</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* The Legacy Padding Hack */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.aspect-container</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">relative</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">56.25</span><span class="dt">%</span><span class="op">;</span> <span class="co">/* (9 / 16) * 100% */</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.aspect-container</span> <span class="op">&gt;</span> <span class="fu">.content</span> {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">top</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">left</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>While functional, this approach required redundant wrapper elements,
+absolute positioning, and extra CSS rules to manage content placement.
+The <code>aspect-ratio</code> property replaces this multi-element
+structure with a single property declaration on the target container
+itself, simplifying HTML markup and CSS maintenance.</p>
+<h2 id="managing-content-overflow-and-intrinsic-sizes">Managing Content
+Overflow and Intrinsic Sizes</h2>
+<p>An element's aspect ratio interacts directly with its child content.
+For non-replaced elements (like a <code>div</code> or
+<code>section</code>), <code>aspect-ratio</code> functions as a
+preferred ratio rather than a strict, unbreakable rule:</p>
+<ul>
+<li><strong>Expanding for Content:</strong> If an element contains text
+or children that exceed the computed height, the container expands
+vertically by default to prevent text clipping, breaking the preferred
+ratio unless <code>overflow: hidden</code> or
+<code>overflow: auto</code> is explicitly assigned.</li>
+<li><strong>Minimum Size Constraints:</strong> In Flexbox and CSS Grid
+layouts, elements default to <code>min-width: auto</code> and
+<code>min-height: auto</code>. This means an element will prioritize
+fitting its content over preserving its aspect ratio if space becomes
+overly constrained. Setting <code>min-height: 0</code> or
+<code>min-width: 0</code> ensures the aspect ratio is strictly respected
+within flexible layout algorithms.</li>
+</ul>
+<h2 id="native-media-integration-and-cls-prevention">Native Media
+Integration and CLS Prevention</h2>
+<p>Replaced elements—such as <code>&lt;img&gt;</code>,
+<code>&lt;video&gt;</code>, and <code>&lt;iframe&gt;</code>—have
+intrinsic dimensions provided by their file metadata or HTML
+attributes.</p>
+<p>Modern browsers automatically apply a default
+<code>aspect-ratio</code> stylesheet rule derived from the HTML
+<code>width</code> and <code>height</code> attributes:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;photo.jpg&quot;</span><span class="ot"> width</span><span class="op">=</span><span class="st">&quot;800&quot;</span><span class="ot"> height</span><span class="op">=</span><span class="st">&quot;600&quot;</span><span class="ot"> alt</span><span class="op">=</span><span class="st">&quot;Landscape&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;responsive-img&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.responsive-img</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Because the browser reads the <code>width="800"</code> and
+<code>height="600"</code> attributes before the image file downloads
+over the network, it calculates an intrinsic aspect ratio of
+<code>4 / 3</code>. The layout engine computes the rendered height
+instantaneously while the page renders, preventing the layout from
+jumping once the image finishes downloading.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

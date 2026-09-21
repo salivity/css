@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline CSS Specificity in the Cascade Hierarchy - css</title>
+    <meta name="description" content="This article provides an overview of where inline CSS styling sits within the CSS specificity calculation hierarchy. Inline styles hold the highest specificity among standard CSS declarations, overriding IDs, classes, and element selectors defined in int">
+    <link rel="canonical" href="https://salivity.github.io/css/article/inline-css-specificity-in-the-cascade-hierarchy">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Inline CSS Specificity in the Cascade Hierarchy - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/inline-css-specificity-in-the-cascade-hierarchy" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of where inline CSS styling sits within the CSS specificity calculation hierarchy. Inline styles hold the highest specificity among standard CSS declarations, overriding IDs, classes, and element selectors defined in int" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="inline-css-specificity-in-the-cascade-hierarchy">Inline CSS
+Specificity in the Cascade Hierarchy</h1>
+<p>This article provides an overview of where inline CSS styling sits
+within the CSS specificity calculation hierarchy. Inline styles hold the
+highest specificity among standard CSS declarations, overriding IDs,
+classes, and element selectors defined in internal or external
+stylesheets. Understanding this ranking helps developers manage cascade
+conflicts, debug styling issues, and decide when to use inline
+declarations versus standard stylesheets.</p>
+<h2 id="understanding-the-specificity-hierarchy">Understanding the
+Specificity Hierarchy</h2>
+<p>CSS specificity is an algorithm browsers use to determine which
+property values are applied to an element when multiple rules target the
+same element. It is typically represented as a four-part value or tuple:
+<code>(inline, IDs, classes, elements)</code>.</p>
+<ol type="1">
+<li><strong>Inline Styles:</strong> Styles applied directly to an HTML
+element using the <code>style</code> attribute.</li>
+<li><strong>ID Selectors:</strong> Selectors referencing an element by
+<code>#id</code>.</li>
+<li><strong>Class, Attribute, and Pseudo-Class Selectors:</strong>
+Selectors targeting <code>.class</code>, <code>[type="text"]</code>, or
+<code>:hover</code>.</li>
+<li><strong>Element and Pseudo-Element Selectors:</strong> Selectors
+targeting standard HTML tags like <code>div</code>, <code>p</code>, or
+<code>::before</code>.</li>
+</ol>
+<h2 id="where-inline-styles-rank">Where Inline Styles Rank</h2>
+<p>Inline styles occupy the highest tier of the standard specificity
+hierarchy. In the four-part specificity tuple, an inline style is
+represented as <code>(1, 0, 0, 0)</code>.</p>
+<p>Because the inline position sits to the far left of the hierarchy, no
+combination of external or embedded selectors can outweigh it in
+standard specificity. For example:</p>
+<ul>
+<li>An element with 10 ID selectors chained together evaluates to
+<code>(0, 10, 0, 0)</code>.</li>
+<li>An inline style evaluates to <code>(1, 0, 0, 0)</code>.</li>
+</ul>
+<p>Even with an extreme chain of IDs, the inline style wins because
+specificity values do not carry over to higher tiers. The browser
+compares values from left to right, meaning a <code>1</code> in the
+inline column immediately takes precedence over a <code>0</code>,
+regardless of the values in the subsequent columns.</p>
+<h2 id="overriding-inline-styles">Overriding Inline Styles</h2>
+<p>Because inline styles rank so high, they bypass the regular cascade
+of linked stylesheets. There are only two ways to override a standard
+inline style:</p>
+<ol type="1">
+<li><strong>Another Inline Style (Source Order):</strong> If multiple
+properties are declared within the same <code>style</code> attribute,
+the last one written takes precedence.</li>
+<li><strong>The <code>!important</code> Declaration:</strong> A CSS rule
+in an external or internal stylesheet using the <code>!important</code>
+flag creates an entirely different tier of the cascade. An external rule
+with <code>!important</code> overrides an inline style that lacks
+<code>!important</code>.</li>
+</ol>
+<p>If an inline style itself includes an <code>!important</code> flag
+(e.g., <code>style="color: red !important;"</code>), it can only be
+overridden by another inline declaration marked <code>!important</code>
+that appears later in the document.</p>
+<h2 id="practical-implications">Practical Implications</h2>
+<p>Due to their high ranking, inline styles make long-term maintenance
+difficult by breaking the separation of structure and design. They are
+best reserved for dynamic, JavaScript-driven styling (such as
+coordinates, dimensions, or animations calculated at runtime) or rapid
+prototyping, while standard selectors should handle reusable UI
+design.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

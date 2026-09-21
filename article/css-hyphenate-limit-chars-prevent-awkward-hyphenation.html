@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS hyphenate-limit-chars: Prevent Awkward Hyphenation - css</title>
+    <meta name="description" content="The CSS hyphenate-limit-chars property provides fine-grained control over how text breaks across lines by defining character count thresholds for hyphenation. When using automatic hyphenation, web browsers often break short words or leave tiny fragments">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-hyphenate-limit-chars-prevent-awkward-hyphenation">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS hyphenate-limit-chars: Prevent Awkward Hyphenation - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-hyphenate-limit-chars-prevent-awkward-hyphenation" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS hyphenate-limit-chars property provides fine-grained control over how text breaks across lines by defining character count thresholds for hyphenation. When using automatic hyphenation, web browsers often break short words or leave tiny fragments" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-hyphenate-limit-chars-prevent-awkward-hyphenation">CSS
+hyphenate-limit-chars: Prevent Awkward Hyphenation</h1>
+<p>The CSS <code>hyphenate-limit-chars</code> property provides
+fine-grained control over how text breaks across lines by defining
+character count thresholds for hyphenation. When using automatic
+hyphenation, web browsers often break short words or leave tiny
+fragments of words dangling at line boundaries, creating visually
+jarring and hard-to-read text. This guide explains how
+<code>hyphenate-limit-chars</code> works, its syntax, and how it
+eliminates awkward word breaks to improve readability and typography on
+the web.</p>
+<h2 id="the-problem-with-default-automatic-hyphenation">The Problem with
+Default Automatic Hyphenation</h2>
+<p>Enabling automatic hyphenation with <code>hyphens: auto</code> allows
+browsers to break words across lines based on language-specific
+dictionaries. While this technique prevents large gaps in justified text
+and controls uneven line lengths, default browser behavior can lead to
+undesirable results.</p>
+<p>Without limits, browsers may hyphenate short words (breaking a
+five-letter word into two- and three-letter fragments) or leave as few
+as one or two letters before or after a break. These tiny text
+fragments—such as leaving "a-" on one line and "bout" on the
+next—distract readers and degrade layout aesthetics.</p>
+<h2 id="what-is-hyphenate-limit-chars">What is
+<code>hyphenate-limit-chars</code>?</h2>
+<p>The <code>hyphenate-limit-chars</code> property specifies the minimum
+character counts required for a word to be hyphenated. It allows
+developers to specify constraints across three distinct dimensions:</p>
+<ol type="1">
+<li><strong>Total word length:</strong> The minimum length a word must
+be before it is eligible for hyphenation.</li>
+<li><strong>Pre-break characters:</strong> The minimum number of
+characters that must remain on the line before the hyphen.</li>
+<li><strong>Post-break characters:</strong> The minimum number of
+characters that must be carried over to the following line after the
+hyphen.</li>
+</ol>
+<h2 id="syntax-and-values">Syntax and Values</h2>
+<p>The property accepts up to three space-separated integer values, or
+the keyword <code>auto</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Single value: sets minimum word length */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>hyphenate-limit-chars<span class="in">:</span> 6;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* Two values: minimum word length, and minimum chars before &amp; after */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>hyphenate-limit-chars<span class="in">:</span> 6 3;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Three values: word length, minimum before, minimum after */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>hyphenate-limit-chars<span class="in">:</span> 8 3 4;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* Using auto to fall back to browser defaults */</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>hyphenate-limit-chars<span class="in">:</span> 7 auto 3;</span></code></pre></div>
+<p>When fewer than three values are provided, the values cascade
+according to CSS specification rules:</p>
+<ul>
+<li><strong>One value:</strong> Sets the minimum word length. The
+characters before and after default to <code>auto</code> (often resolved
+as 2 by most user agents).</li>
+<li><strong>Two values:</strong> The first value sets the minimum total
+word length, and the second sets both the minimum before and after
+character limits.</li>
+<li><strong>Three values:</strong> The first sets total length, the
+second sets characters before the hyphen, and the third sets characters
+after the hyphen.</li>
+</ul>
+<h2 id="preventing-awkward-short-word-hyphenation">Preventing Awkward
+Short-Word Hyphenation</h2>
+<p>To illustrate how <code>hyphenate-limit-chars</code> solves
+typographical issues, consider the word "policy":</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">hyphens</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">hyphenate-limit-chars</span><span class="ch">:</span> <span class="dv">8</span> <span class="dv">3</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>With <code>hyphenate-limit-chars: 8 3 3</code>, the browser will not
+hyphenate "policy" because it contains only six letters, falling below
+the eight-character threshold.</p>
+<p>For longer words like "internationalization", the browser evaluates
+the secondary rules:</p>
+<ul>
+<li>A break such as <code>in-ternationalization</code> would be
+permitted because <code>in</code> has 2 letters, but under the rule
+<code>8 3 3</code>, it will be suppressed because at least 3 letters
+must precede the hyphen. The browser will instead look for a break like
+<code>inter-nationalization</code>.</li>
+<li>A break at the end leaving only two characters (such as
+<code>internationaliza-on</code>) is similarly rejected, forcing the
+engine to retain at least three characters on the subsequent line.</li>
+</ul>
+<h2 id="implementation-example">Implementation Example</h2>
+<p>For <code>hyphenate-limit-chars</code> to function properly, the HTML
+document or target element must declare a valid <code>lang</code>
+attribute so the browser can reference the correct hyphenation
+dictionary.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.refined-text</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="kw">width</span><span class="ch">:</span> <span class="dv">280</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">justify</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="kw">hyphens</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="kw">-webkit-hyphenate-limit-chars</span><span class="ch">:</span> <span class="dv">6</span> <span class="dv">3</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="kw">hyphenate-limit-chars</span><span class="ch">:</span> <span class="dv">6</span> <span class="dv">3</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;refined-text&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    Typography requires consistent management of line lengths and balanced word breaks to preserve readability.</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>A configuration of <code>6 3 3</code> or <code>8 3 3</code> is
+standard for digital editorial design. It prevents small two-letter
+prefixes or suffixes from isolating themselves on separate lines,
+maintaining a balanced typographic rhythm across responsive
+containers.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

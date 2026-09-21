@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS image-rendering: pixelated for Retro Graphics - css</title>
+    <meta name="description" content="The image-rendering: pixelated property in CSS is designed to scale low-resolution images while preserving their sharp, distinct pixel borders. By default, web browsers apply smoothing algorithms to scaled-up images, which makes retro pixel art appear bl">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-image-rendering-pixelated-for-retro-graphics">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS image-rendering: pixelated for Retro Graphics - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-image-rendering-pixelated-for-retro-graphics" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The image-rendering: pixelated property in CSS is designed to scale low-resolution images while preserving their sharp, distinct pixel borders. By default, web browsers apply smoothing algorithms to scaled-up images, which makes retro pixel art appear bl" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-image-rendering-pixelated-for-retro-graphics">CSS
+image-rendering: pixelated for Retro Graphics</h1>
+<p>The <code>image-rendering: pixelated</code> property in CSS is
+designed to scale low-resolution images while preserving their sharp,
+distinct pixel borders. By default, web browsers apply smoothing
+algorithms to scaled-up images, which makes retro pixel art appear
+blurry and washed out. This article explains how the
+<code>pixelated</code> property solves this issue, how it works behind
+the scenes using nearest-neighbor interpolation, and how to implement it
+to keep retro visuals crisp on modern displays.</p>
+<h2 id="the-problem-with-default-browser-scaling">The Problem with
+Default Browser Scaling</h2>
+<p>When a small image is enlarged in a web browser using standard CSS
+width and height properties, the browser attempts to optimize the image
+quality for typical photography. To achieve this, it uses algorithms
+like bilinear or bicubic interpolation.</p>
+<p>These algorithms calculate the average color values between adjacent
+pixels to create a smooth gradient, reducing jagged edges. While this
+works well for standard photographs, it destroys the intentional
+aesthetic of pixel art, 8-bit sprites, and retro game graphics, turning
+sharp pixel boundaries into a smeared, out-of-focus blur.</p>
+<h2 id="how-image-rendering-pixelated-works">How
+<code>image-rendering: pixelated</code> Works</h2>
+<p>The <code>image-rendering: pixelated</code> property overrides the
+browser's default smoothing behavior. When applied to an enlarged image,
+it instructs the browser to use a technique called
+<strong>nearest-neighbor interpolation</strong>.</p>
+<p>Instead of blending adjacent pixels to soften transitions,
+nearest-neighbor scaling looks at the original pixel grid and simply
+duplicates the existing pixels across the larger area. Each pixel
+remains a solid, well-defined square of color. This preserves:</p>
+<ul>
+<li><strong>Hard Edges:</strong> Clean lines between contrasting
+elements remain perfectly sharp.</li>
+<li><strong>Color Purity:</strong> No interpolated "in-between" colors
+are introduced.</li>
+<li><strong>Original Aesthetic:</strong> The graphics retain the
+authentic look of classic console or computer systems (such as the NES,
+Game Boy, or Commodore 64).</li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<p>Applying the property is straightforward. It can be targeted directly
+to specific image classes or canvas elements:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.retro-graphic</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">image-rendering</span><span class="ch">:</span> <span class="dv">pixelated</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>For broader cross-browser support, especially in older versions of
+Firefox, you can include vendor-prefixed alternatives:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.retro-graphic</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">image-rendering</span><span class="ch">:</span> <span class="dv">-moz-crisp-edges</span><span class="op">;</span> <span class="co">/* Older Firefox */</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">image-rendering</span><span class="ch">:</span> <span class="dv">pixelated</span><span class="op">;</span>         <span class="co">/* Modern standard */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="common-use-cases">Common Use Cases</h2>
+<ol type="1">
+<li><strong>HTML5 Canvas Games:</strong> Scaling up retro 2D games
+running on a low native resolution (e.g., 320x240) to fit full-screen
+modern 1080p or 4K monitors.</li>
+<li><strong>Iconography and Avatars:</strong> Displaying 16x16 or 32x32
+pixel badges, avatars, and favicons at larger sizes without losing
+detail.</li>
+<li><strong>Sprite Sheets:</strong> Showing individual frames of sprite
+sheets within UI elements or interactive web demos.</li>
+<li><strong>Retro-Themed Web Design:</strong> Incorporating nostalgic
+visual assets, borders, or backgrounds that require sharp, grid-aligned
+artwork.</li>
+</ol>
+<p>By ensuring that the rendering engine relies on nearest-neighbor
+scaling, <code>image-rendering: pixelated</code> guarantees that
+low-resolution art forms are presented exactly as the artist intended,
+regardless of how much they are enlarged.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

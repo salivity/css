@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS video-dynamic-range Media Feature Explained - css</title>
+    <meta name="description" content="This article provides an overview of the CSS video-dynamic-range media feature, a capability introduced in Media Queries Level 5. It covers what the feature does, the values it accepts, how it distinguishes between standard and high dynamic range video h">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-video-dynamic-range-media-feature-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS video-dynamic-range Media Feature Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-video-dynamic-range-media-feature-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the CSS video-dynamic-range media feature, a capability introduced in Media Queries Level 5. It covers what the feature does, the values it accepts, how it distinguishes between standard and high dynamic range video h" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-video-dynamic-range-media-feature-explained">CSS
+video-dynamic-range Media Feature Explained</h1>
+<p>This article provides an overview of the CSS
+<code>video-dynamic-range</code> media feature, a capability introduced
+in Media Queries Level 5. It covers what the feature does, the values it
+accepts, how it distinguishes between standard and high dynamic range
+video hardware capabilities, and how web developers can use it to
+conditionally style video containers and surrounding user
+interfaces.</p>
+<h2 id="what-is-video-dynamic-range">What is
+<code>video-dynamic-range</code>?</h2>
+<p>The <code>video-dynamic-range</code> media feature tests whether the
+user agent and the output display support video playback with high
+dynamic range (HDR) or standard dynamic range (SDR).</p>
+<p>While modern devices increasingly feature HDR-capable displays, video
+processing often involves separate hardware decoders and rendering
+planes compared to standard page content. The
+<code>video-dynamic-range</code> feature specifically probes the
+hardware's ability to display high-peak brightness, deep contrast, and
+wide color gamuts specifically for video playback.</p>
+<h2 id="syntax-and-values">Syntax and Values</h2>
+<p>The media query accepts two keyword values:</p>
+<ul>
+<li><strong><code>standard</code></strong>: The combination of the
+display device and the user agent only supports standard dynamic range
+(SDR) video. Peak brightness, contrast, and color depth are limited to
+traditional sRGB/Rec. 709 standards.</li>
+<li><strong><code>high</code></strong>: The combination of the display
+device and the user agent supports high dynamic range (HDR) video. This
+implies support for higher peak luminance, wide color gamuts (such as
+DCI-P3 or Rec. 2020), and higher bit depths.</li>
+</ul>
+<h3 id="basic-syntax">Basic Syntax</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">video-dynamic-range</span><span class="ch">:</span> <span class="dv">high</span><span class="fu">)</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Styles applied when HDR video is supported */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">video-dynamic-range</span><span class="ch">:</span> <span class="dv">standard</span><span class="fu">)</span> {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Styles applied when only SDR video is supported */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="styling-video-containers-with-video-dynamic-range">Styling Video
+Containers with <code>video-dynamic-range</code></h2>
+<p>When displaying HDR video, the video content can appear significantly
+brighter than surrounding HTML elements. If a video player uses bright,
+pure-white UI overlays on top of or next to an HDR video, the visual
+contrast can be jarring or uncomfortable for the viewer. Conversely,
+placing an HDR video inside a pure-black container might wash out nearby
+subtle UI gradients.</p>
+<p>Using <code>video-dynamic-range</code>, you can adapt the video
+player's wrapper, ambient lighting effects, control bars, and borders
+based on display capabilities.</p>
+<h3 id="example-ambient-lighting-and-player-ui">Example: Ambient
+Lighting and Player UI</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Default baseline styles for standard SDR video displays */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.video-container</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#1a1a1a</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">20</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.5</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.player-controls</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.9</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#000</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">/* Enhancements for HDR-capable video displays */</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">video-dynamic-range</span><span class="ch">:</span> <span class="dv">high</span><span class="fu">)</span> {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.video-container</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Deeper container tone to prevent edge-bleeding against vivid HDR highlights */</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#000000</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Increase ambient glow to complement high luminance */</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span><span class="ch">:</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">35</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.15</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.player-controls</span> {</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Dim the interface overlays so they do not overpower or wash out the HDR stream */</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background</span><span class="ch">:</span> <span class="fu">rgba(</span><span class="dv">30</span><span class="op">,</span> <span class="dv">30</span><span class="op">,</span> <span class="dv">30</span><span class="op">,</span> <span class="dv">0.75</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#f0f0f0</span><span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">backdrop-filter</span><span class="ch">:</span> <span class="fu">blur(</span><span class="dv">10</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2
+id="video-dynamic-range-vs-dynamic-range"><code>video-dynamic-range</code>
+vs. <code>dynamic-range</code></h2>
+<p>CSS Media Queries Level 5 includes two closely related features:</p>
+<ul>
+<li><strong><code>dynamic-range</code></strong>: Queries the dynamic
+range of the display for general page content (CSS layout, images, and
+text).</li>
+<li><strong><code>video-dynamic-range</code></strong>: Queries the
+dynamic range specifically for video rendering.</li>
+</ul>
+<p>A device might support HDR video decoding via hardware acceleration,
+yet render the rest of the web page in standard dynamic range to
+conserve battery or match the operating system's desktop composition
+mode. Using <code>video-dynamic-range</code> ensures that container
+styling intended specifically for video streams does not rely on whether
+general CSS graphics support HDR.</p>
+<h2 id="implementation-best-practices">Implementation Best
+Practices</h2>
+<ol type="1">
+<li><strong>Mobile-First / SDR-First Design</strong>: Always provide
+baseline styles suited for <code>standard</code> dynamic range displays
+before enhancing for <code>high</code>.</li>
+<li><strong>Combine with Fallback Classes</strong>: Because browser
+support is modern and evolving, pair this media query with progressive
+enhancement patterns so that unsupported browsers receive stable
+standard styles.</li>
+<li><strong>UI Glare Reduction</strong>: When writing styles inside
+<code>@media (video-dynamic-range: high)</code>, avoid high-luminance
+full-screen backgrounds that could cause visual fatigue next to HDR
+video content.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

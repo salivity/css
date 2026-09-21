@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS list-style-position inside Wraps Text - css</title>
+    <meta name="description" content="This article explains the CSS list-style-position: inside property, detailing how it alters marker placement within list items and directly affects the wrapping behavior of multi-line text compared to the default outside setting. The list-style-position">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-list-style-position-inside-wraps-text">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS list-style-position inside Wraps Text - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-list-style-position-inside-wraps-text" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the CSS list-style-position: inside property, detailing how it alters marker placement within list items and directly affects the wrapping behavior of multi-line text compared to the default outside setting. The list-style-position" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-list-style-position-inside-wraps-text">How CSS
+list-style-position inside Wraps Text</h1>
+<p>This article explains the CSS
+<code>list-style-position: inside</code> property, detailing how it
+alters marker placement within list items and directly affects the
+wrapping behavior of multi-line text compared to the default
+<code>outside</code> setting.</p>
+<p>The <code>list-style-position</code> property in CSS determines
+whether a list marker (such as a bullet point or a number) appears
+inside or outside the principal block box of a list item
+(<code>&lt;li&gt;</code>). By default, browsers apply
+<code>list-style-position: outside</code>.</p>
+<h3 id="the-default-behavior-outside">The Default Behavior:
+<code>outside</code></h3>
+<p>When <code>list-style-position</code> is set to <code>outside</code>,
+the marker sits outside the content flow, placed in the margin or
+padding area of the list item. In this configuration, multi-line text
+naturally creates a hanging indent. When the text wraps to a second
+line, it aligns vertically with the start of the text on the first line,
+keeping the marker isolated to the left.</p>
+<h3 id="how-inside-works">How <code>inside</code> Works</h3>
+<p>When you set <code>list-style-position: inside</code>, the marker
+moves directly into the content box of the list item. The browser treats
+the marker as the first inline element preceding the text.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ul {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">list-style-position</span><span class="ch">:</span> <span class="dv">inside</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="text-wrapping-mechanics-with-inside">Text Wrapping Mechanics
+with <code>inside</code></h3>
+<p>Because the marker becomes part of the inline formatting context, the
+wrapping behavior changes significantly:</p>
+<ol type="1">
+<li><strong>No Hanging Indent:</strong> The first line of text begins
+immediately after the marker. When the text exceeds the width of the
+container and wraps to the next line, the wrapped text does not align
+with the first character of the text. Instead, it wraps completely under
+the bullet marker, aligning flush with the left boundary of the list
+item's content box.</li>
+<li><strong>Flow Continuity:</strong> The text behaves as a single
+continuous paragraph where the bullet is simply the first character in
+the line.</li>
+<li><strong>Spacing and Padding:</strong> Any padding or background
+color applied to the <code>&lt;li&gt;</code> element will enclose both
+the bullet marker and the text together, whereas <code>outside</code>
+leaves the marker outside the background area unless extra margin is
+handled by the parent container.</li>
+</ol>
+<h3 id="practical-use-cases">Practical Use Cases</h3>
+<p>Using <code>list-style-position: inside</code> is common in compact
+layouts, mobile interfaces, or card designs where horizontal space is
+limited and maintaining a wide indentation margin is undesirable.
+However, if readable list alignment with a distinct hanging indent is
+required, leaving the property as <code>outside</code> (or using custom
+flexbox or grid layouts) is the preferred choice.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

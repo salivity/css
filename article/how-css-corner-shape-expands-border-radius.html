@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS corner-shape Expands Border-Radius - css</title>
+    <meta name="description" content="The CSS corner-shape property proposal introduces advanced geometric control to web design, expanding styling capabilities far beyond standard circular curves. While the traditional border-radius property is limited to circular and elliptical arcs, corne">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-corner-shape-expands-border-radius">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS corner-shape Expands Border-Radius - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-corner-shape-expands-border-radius" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS corner-shape property proposal introduces advanced geometric control to web design, expanding styling capabilities far beyond standard circular curves. While the traditional border-radius property is limited to circular and elliptical arcs, corne" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-corner-shape-expands-border-radius">How CSS corner-shape
+Expands Border-Radius</h1>
+<p>The CSS <code>corner-shape</code> property proposal introduces
+advanced geometric control to web design, expanding styling capabilities
+far beyond standard circular curves. While the traditional
+<code>border-radius</code> property is limited to circular and
+elliptical arcs, <code>corner-shape</code> works alongside it to define
+alternative corner geometries, including chamfers, scoops, and notches.
+This article explores the core differences between these properties, how
+they interact, the proposed shape values, and how
+<code>corner-shape</code> simplifies modern UI development without
+requiring complex workarounds like SVGs or clip paths.</p>
+<h3 id="the-limitation-of-border-radius">The Limitation of
+border-radius</h3>
+<p>For years, <code>border-radius</code> has been the primary tool for
+softening element edges. However, its mathematical foundation is
+strictly limited to quarter-ellipses. When a developer applies a
+<code>border-radius</code>, the browser calculates a curve based on
+horizontal and vertical radii, always resulting in a convex arc.</p>
+<p>Achieving non-rounded corners—such as beveled edges for futuristic
+interfaces, inverted curves for tickets, or rectangular cutouts for
+decorative tags—previously required fragile solutions. Developers relied
+on CSS <code>clip-path</code>, linear-gradient masks, or pre-rendered
+SVG assets, all of which complicate border rendering, box-shadow
+application, and responsive behavior.</p>
+<h3 id="how-corner-shape-works-with-border-radius">How corner-shape
+Works with border-radius</h3>
+<p>The <code>corner-shape</code> property, proposed in the CSS
+Backgrounds and Borders Module Level 4, does not replace
+<code>border-radius</code>. Instead, it separates corner
+<em>dimension</em> from corner <em>contour</em>.</p>
+<ul>
+<li><strong><code>border-radius</code> defines the size:</strong> It
+determines the bounding box or the horizontal and vertical reach of the
+corner effect.</li>
+<li><strong><code>corner-shape</code> defines the path:</strong> It
+dictates the geometric curve or line drawn inside that defined corner
+boundary.</li>
+</ul>
+<p>By decoupling the size of the corner from its geometric profile, CSS
+allows developers to apply different styles to corners while maintaining
+consistent sizing logic.</p>
+<h3 id="proposed-values-for-corner-shape">Proposed Values for
+corner-shape</h3>
+<p>The specification introduces several key values that transform how a
+corner transitions between two edges:</p>
+<ul>
+<li><strong><code>round</code></strong>: The default value. It preserves
+the classic behavior of <code>border-radius</code>, rendering standard
+convex circular or elliptical arcs.</li>
+<li><strong><code>angle</code></strong>: Creates a straight, diagonal
+cut (chamfer or bevel) connecting the boundary points established by
+<code>border-radius</code>.</li>
+<li><strong><code>scoop</code></strong>: Draws an inward, concave arc,
+creating a carved-out or notched circle aesthetic.</li>
+<li><strong><code>notch</code></strong>: Generates a stepped,
+rectangular cutout within the defined corner area.</li>
+<li><strong><code>squircle</code> (or superellipse)</strong>: Generates
+smooth, continuous curvature that eliminates the abrupt transition
+between straight edges and circular curves, often seen in modern mobile
+operating systems.</li>
+</ul>
+<p>The property can also accept multiple values to style individual
+corners independently (top-left, top-right, bottom-right, bottom-left),
+mirroring the shorthand syntax of <code>border-radius</code>.</p>
+<h3 id="key-advantages-over-previous-workarounds">Key Advantages Over
+Previous Workarounds</h3>
+<ol type="1">
+<li><strong>Native Border and Shadow Integration:</strong> Unlike
+<code>clip-path: polygon(...)</code>, which cuts off standard CSS
+<code>border</code> and <code>box-shadow</code> effects,
+<code>corner-shape</code> natively integrates with the box model.
+Borders trace the new shape correctly, and drop shadows project
+accurately from the modified perimeter.</li>
+<li><strong>Simplified Syntax:</strong> Creating a chamfered button
+requires only defining the corner depth with
+<code>border-radius: 12px;</code> and the shape with
+<code>corner-shape: angle;</code>, replacing verbose coordinate mapping
+in <code>polygon()</code> functions.</li>
+<li><strong>Smooth Transitions and Animations:</strong> Because
+<code>corner-shape</code> operates within the standard CSS geometry
+engine, morphing between shapes (such as an angled corner transitioning
+to a scoop on <code>:hover</code>) becomes straightforward and
+performant.</li>
+</ol>
+<p>The <code>corner-shape</code> property represents an evolution from
+basic rounded containers toward a comprehensive geometric styling
+system, giving developers full creative control over element silhouettes
+using clean, declarative CSS.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

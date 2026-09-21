@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Do CSS ::before and ::after Generate Layout Content? - css</title>
+    <meta name="description" content="CSS pseudo-elements ::before and ::after generate visual content by creating virtual child elements directly inside the target element's formatting box. Rather than mutating the HTML Document Object Model (DOM), the browser's layout engine injects these">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-do-css-before-and-after-generate-layout-content">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Do CSS ::before and ::after Generate Layout Content? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-do-css-before-and-after-generate-layout-content" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS pseudo-elements ::before and ::after generate visual content by creating virtual child elements directly inside the target element's formatting box. Rather than mutating the HTML Document Object Model (DOM), the browser's layout engine injects these" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-do-css-before-and-after-generate-layout-content">How Do CSS
+::before and ::after Generate Layout Content?</h1>
+<p>CSS pseudo-elements <code>::before</code> and <code>::after</code>
+generate visual content by creating virtual child elements directly
+inside the target element's formatting box. Rather than mutating the
+HTML Document Object Model (DOM), the browser's layout engine injects
+these pseudo-elements into the render tree whenever a valid
+<code>content</code> property is declared. Once generated, they
+participate in the layout pipeline identically to standard HTML
+elements, following normal CSS box-model rules, formatting contexts, and
+positioning schemes.</p>
+<h2 id="the-render-tree-vs-the-dom-tree">The Render Tree vs. The DOM
+Tree</h2>
+<p>To understand how pseudo-elements generate layout, it is necessary to
+distinguish between the DOM tree and the render (or formatting) tree.
+The DOM represents the parsed HTML document structure. When the browser
+constructs the render tree to compute layout geometry and paint pixels,
+it combines the DOM nodes with their computed CSS styles.</p>
+<p>Pseudo-elements do not exist in the DOM, meaning JavaScript methods
+like <code>document.querySelector('::before')</code> cannot access them
+directly. Instead, the CSS engine constructs them exclusively within the
+render tree. They act as the target element's first child
+(<code>::before</code>) or last child (<code>::after</code>), nested
+inside the element's container box.</p>
+<h2 id="the-critical-role-of-the-content-property">The Critical Role of
+the <code>content</code> Property</h2>
+<p>A pseudo-element generates a box in the layout tree if and only if
+its <code>content</code> property is defined with a valid value other
+than <code>none</code> or <code>normal</code>.</p>
+<p>If <code>content</code> is missing, set to <code>none</code>, or
+invalid, the browser suppresses box generation entirely. Setting
+<code>content: ""</code> generates an empty box that can be sized,
+colored, and positioned purely for visual layout.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span><span class="in">::before</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">content</span><span class="ch">:</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">block</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#007acc</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The <code>content</code> property accepts several types of
+values:</p>
+<ul>
+<li><strong>String literals:</strong> Text strings rendered as anonymous
+text boxes.</li>
+<li><strong>Attribute functions:</strong> <code>attr(data-label)</code>
+extracts attribute values directly from the parent DOM element.</li>
+<li><strong>Counters:</strong> <code>counter(section-counter)</code>
+renders numerical counters for ordered lists and sections.</li>
+<li><strong>Asset resources:</strong> <code>url('icon.svg')</code>
+embeds external visual assets.</li>
+<li><strong>Quotes:</strong> <code>open-quote</code> and
+<code>close-quote</code> apply language-appropriate typography
+quotes.</li>
+</ul>
+<h2 id="box-generation-and-flow-behavior">Box Generation and Flow
+Behavior</h2>
+<p>By default, the initial computed value of <code>display</code> for
+pseudo-elements is <code>inline</code>. This means they flow naturally
+with adjacent inline content and text runs. However, you can explicitly
+reassign the <code>display</code> property to any valid layout
+model.</p>
+<h3 id="inline-and-block-formatting">Inline and Block Formatting</h3>
+<p>When styled with <code>display: block</code>, a pseudo-element breaks
+onto its own line and expands across the available inline axis of the
+parent container. When left as <code>inline</code>, it respects line
+heights, baseline alignment, and horizontal margins/padding, wrapping
+with the surrounding text.</p>
+<h3 id="flex-and-grid-containers">Flex and Grid Containers</h3>
+<p>If the parent element uses <code>display: flex</code> or
+<code>display: grid</code>, its <code>::before</code> and
+<code>::after</code> pseudo-elements become direct flex items or grid
+items.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.badge-container</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">align-items</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">gap</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.badge-container</span><span class="in">::before</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">content</span><span class="ch">:</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">50</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="cn">#28a745</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this flexbox layout, the browser treats the <code>::before</code>
+pseudo-element as the first flex item, automatically applying flex
+alignment, gap calculations, and ordering rules.</p>
+<h3 id="positioning-contexts">Positioning Contexts</h3>
+<p>Setting <code>position: absolute</code> or
+<code>position: fixed</code> removes the pseudo-element from the normal
+document flow. An absolutely positioned pseudo-element will position
+itself relative to the nearest positioned ancestor (an ancestor with
+<code>position: relative</code>, <code>absolute</code>,
+<code>fixed</code>, or <code>sticky</code>). This pattern is commonly
+used for decorative backgrounds, overlays, or custom interactive
+markers.</p>
+<h2 id="sizing-and-the-css-box-model">Sizing and the CSS Box Model</h2>
+<p>Once generated, pseudo-element boxes adhere to all standard CSS
+box-model specifications:</p>
+<ul>
+<li><strong>Box Sizing:</strong> Controlled by
+<code>box-sizing: border-box</code> or <code>content-box</code>.</li>
+<li><strong>Dimensions:</strong> Width, height, min/max dimensions
+compute according to standard layout rules.</li>
+<li><strong>Margins, Borders, and Padding:</strong> Applied identically
+to native HTML elements.</li>
+<li><strong>Stacking Contexts:</strong> Managed by <code>z-index</code>,
+<code>opacity</code>, <code>transform</code>, and blending modes.</li>
+</ul>
+<p>Because <code>::before</code> and <code>::after</code> generate fully
+compliant render boxes without cluttering the HTML markup with
+presentational <code>&lt;span&gt;</code> or <code>&lt;div&gt;</code>
+tags, they serve as a core tool for cleanly separating structure from
+design in modern web development.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

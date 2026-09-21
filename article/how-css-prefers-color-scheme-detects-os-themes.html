@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS prefers-color-scheme Detects OS Themes - css</title>
+    <meta name="description" content="The CSS prefers-color-scheme media query allows websites to automatically adapt their styles to a user's light or dark system theme. This detection relies on a coordinated bridge between the operating system, the web browser's underlying platform integra">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-prefers-color-scheme-detects-os-themes">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS prefers-color-scheme Detects OS Themes - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-prefers-color-scheme-detects-os-themes" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS prefers-color-scheme media query allows websites to automatically adapt their styles to a user's light or dark system theme. This detection relies on a coordinated bridge between the operating system, the web browser's underlying platform integra" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-prefers-color-scheme-detects-os-themes">How CSS
+prefers-color-scheme Detects OS Themes</h1>
+<p>The CSS <code>prefers-color-scheme</code> media query allows websites
+to automatically adapt their styles to a user's light or dark system
+theme. This detection relies on a coordinated bridge between the
+operating system, the web browser's underlying platform integration
+layer, and the browser's rendering engine. When a user toggles their
+appearance preferences at the OS level, native system APIs broadcast
+this change, which the browser listens for, interprets, and exposes to
+the web page through standard CSS media evaluation without granting the
+site direct access to native system settings.</p>
+<h3 id="the-role-of-operating-system-apis">The Role of Operating System
+APIs</h3>
+<p>Every major operating system provides native APIs to manage and query
+system-wide appearance settings. The browser acts as an intermediary,
+tapping into these platform-specific interfaces:</p>
+<ul>
+<li><strong>macOS:</strong> The browser checks the
+<code>NSAppearance</code> API, specifically observing
+<code>effectiveAppearance</code> on <code>NSApplication</code> to
+determine if the system is utilizing a dark or light appearance.</li>
+<li><strong>Windows:</strong> The browser reads values from the Windows
+Registry (specifically <code>AppsUseLightTheme</code> under
+<code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize</code>)
+or queries the <code>Windows.UI.ViewManagement.UISettings</code> API via
+the Windows Runtime.</li>
+<li><strong>Linux (GNOME/KDE):</strong> Browsers communicate over D-Bus
+with the FreeDesktop <code>org.freedesktop.portal.Settings</code>
+interface, querying the <code>color-scheme</code> key to identify
+preferences.</li>
+<li><strong>Android and iOS:</strong> Browsers rely on native
+environment configurations, such as checking
+<code>UIUserInterfaceStyle</code> on iOS or the <code>uiMode</code>
+configuration manager on Android.</li>
+</ul>
+<h3 id="browser-level-event-listening">Browser-Level Event
+Listening</h3>
+<p>Operating systems do not just provide static values; they notify
+running applications when preferences change. Browsers register event
+listeners for these system-wide broadcasts:</p>
+<ul>
+<li>On Windows, browsers listen for the <code>WM_SETTINGCHANGE</code>
+window message.</li>
+<li>On macOS, the browser observes notifications posted by
+<code>NSDistributedNotificationCenter</code>.</li>
+<li>On Linux, the browser subscribes to property change signals over the
+D-Bus system.</li>
+</ul>
+<p>When a user switches themes—manually or via automated sunrise/sunset
+schedules—the OS dispatches an event. The browser captures this event,
+updates its internal representation of the active theme, and flags the
+document for a style recalculation.</p>
+<h3 id="rendering-engine-evaluation">Rendering Engine Evaluation</h3>
+<p>Modern browser rendering engines (such as Blink in Chrome/Edge, Gecko
+in Firefox, and WebKit in Safari) maintain an internal state machine for
+CSS media features.</p>
+<p>Once the browser receives the system value, it maps the native state
+to one of the defined CSS values: <code>light</code> or
+<code>dark</code> (the deprecated <code>no-preference</code> value is
+now treated as <code>light</code> in modern specifications). The engine
+then triggers a media query re-evaluation. Any CSS rules defined within
+<code>@media (prefers-color-scheme: dark)</code> or
+<code>@media (prefers-color-scheme: light)</code> are selectively parsed
+and applied to the DOM tree during the next rendering pipeline
+cycle.</p>
+<h3 id="browser-overrides-and-security">Browser Overrides and
+Security</h3>
+<p>The browser serves as a security boundary between the OS and the
+website. Web pages cannot query the host operating system directly; they
+only observe the final evaluation of the media query.</p>
+<p>Furthermore, the browser can override OS signals. If a user forces
+light or dark mode within their browser settings, or if a developer
+overrides the preference using browser developer tools, the browser
+deliberately intercepts the OS signal and reports the user's chosen
+browser override to the CSS engine instead.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

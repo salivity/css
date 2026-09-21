@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grayscale Filter Calculation and Child Elements - css</title>
+    <meta name="description" content="The CSS filter: grayscale(100%) function transforms an element's visual appearance by converting all of its colors into shades of gray. This conversion relies on a standardized luminance algorithm based on human visual perception rather than a simple ave">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-grayscale-filter-calculation-and-child-elements">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Grayscale Filter Calculation and Child Elements - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-grayscale-filter-calculation-and-child-elements" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS filter: grayscale(100%) function transforms an element's visual appearance by converting all of its colors into shades of gray. This conversion relies on a standardized luminance algorithm based on human visual perception rather than a simple ave" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-grayscale-filter-calculation-and-child-elements">CSS
+Grayscale Filter Calculation and Child Elements</h1>
+<p>The CSS <code>filter: grayscale(100%)</code> function transforms an
+element's visual appearance by converting all of its colors into shades
+of gray. This conversion relies on a standardized luminance algorithm
+based on human visual perception rather than a simple average of RGB
+values. Furthermore, applying this filter affects not just the target
+element itself, but alters the rendering pipeline for all nested child
+elements, creating specific structural side effects such as new stacking
+contexts and irreversible inherited visual styles.</p>
+<h3 id="the-grayscale-calculation">The Grayscale Calculation</h3>
+<p>Under the W3C Filter Effects Module Level 1 specification,
+<code>filter: grayscale()</code> uses a linear color matrix
+transformation to determine luminance. Human eyes do not perceive all
+wavelengths of light equally; green appears substantially brighter than
+red, which in turn appears brighter than blue.</p>
+<p>To account for human perception, the browser applies the ITU-R BT.709
+color space coefficients to the color channels:</p>
+<ul>
+<li><strong>Red:</strong> 0.2126 (21.26%)</li>
+<li><strong>Green:</strong> 0.7152 (71.52%)</li>
+<li><strong>Blue:</strong> 0.0722 (7.22%)</li>
+</ul>
+<p>When <code>grayscale(100%)</code> (or a factor of <code>1</code>) is
+applied, the browser calculates the gray intensity value (<span
+class="math inline">\(Y\)</span>) for every pixel:</p>
+<p><span class="math display">\[Y = (0.2126 \times R) + (0.7152 \times
+G) + (0.0722 \times B)\]</span></p>
+<p>The resulting intensity value <span class="math inline">\(Y\)</span>
+is then assigned equally to the red, green, and blue channels of the
+output pixel:</p>
+<ul>
+<li><span class="math inline">\(R_{out} = Y\)</span></li>
+<li><span class="math inline">\(G_{out} = Y\)</span></li>
+<li><span class="math inline">\(B_{out} = Y\)</span></li>
+</ul>
+<p>Alpha (opacity) values are left unaffected during this
+transformation.</p>
+<p>For partial values (such as <code>grayscale(50%)</code>), the browser
+uses an interpolation matrix where the identity matrix blends
+proportionally into the luminance matrix:</p>
+<p><span class="math display">\[\begin{bmatrix}
+0.2126 + 0.7874(1 - d) &amp; 0.7152 - 0.7152(1 - d) &amp; 0.0722 -
+0.0722(1 - d) \\
+0.2126 - 0.2126(1 - d) &amp; 0.7152 + 0.2848(1 - d) &amp; 0.0722 -
+0.0722(1 - d) \\
+0.2126 - 0.2126(1 - d) &amp; 0.7152 - 0.7152(1 - d) &amp; 0.0722 +
+0.9278(1 - d)
+\end{bmatrix}\]</span></p>
+<p>When <span class="math inline">\(d = 1\)</span> (100%), all rows
+collapse identically to <span class="math inline">\([0.2126, 0.7152,
+0.0722]\)</span>.</p>
+<hr />
+<h3 id="how-it-affects-child-elements">How It Affects Child
+Elements</h3>
+<p>Applying <code>filter: grayscale(100%)</code> affects descendant
+elements in two critical ways: visual flattening and structural layout
+behavior.</p>
+<h4 id="1-visual-composition-and-non-reversibility">1. Visual
+Composition and Non-Reversibility</h4>
+<p>The <code>filter</code> property is technically not inherited through
+CSS cascade rules—child elements do not automatically receive
+<code>filter: grayscale(100%)</code> on their own computed styles.
+Instead, the filter is applied post-composition.</p>
+<p>The browser first renders the parent element along with all of its
+child elements off-screen as a single graphical buffer (bitmap). Once
+this combined layer is rasterized, the grayscale algorithm runs on the
+entire output.</p>
+<p>Because the filter applies to the flattened result of the parent
+container:</p>
+<ul>
+<li><strong>Children cannot opt out:</strong> Setting
+<code>filter: none</code> or <code>filter: grayscale(0%)</code> on a
+child element will not restore its color. The child's colors are already
+converted during the final rendering pass of the parent.</li>
+<li><strong>Child filters chain additively:</strong> Applying another
+filter (like <code>filter: sepia(100%)</code>) to a child element will
+apply <em>before</em> the parent's grayscale filter, meaning the child
+will be converted to sepia first and then stripped of all color by the
+parent's grayscale pass.</li>
+</ul>
+<h4 id="2-stacking-context-and-containing-block-behavior">2. Stacking
+Context and Containing Block Behavior</h4>
+<p>Any non-default value on the <code>filter</code> property alters the
+DOM element's behavior in the layout engine:</p>
+<ul>
+<li><strong>Creates a New Stacking Context:</strong> The filtered
+element behaves like an element with an explicit <code>z-index</code>,
+isolating its children's layering relative to outside elements.</li>
+<li><strong>Becomes a Containing Block:</strong> The filtered element
+becomes the containing block for all absolute
+(<code>position: absolute</code>) and fixed
+(<code>position: fixed</code>) descendant elements. As a result,
+fixed-position children will anchor to the filtered ancestor rather than
+the viewport.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

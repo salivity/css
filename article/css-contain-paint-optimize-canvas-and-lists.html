@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS contain paint: Optimize Canvas and Lists - css</title>
+    <meta name="description" content="The CSS contain: paint property is a powerful optimization tool that informs the browser engine that an element's visual contents will never display outside its defined bounding box. This article breaks down how contain: paint works under the hood and de">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-contain-paint-optimize-canvas-and-lists">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS contain paint: Optimize Canvas and Lists - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-contain-paint-optimize-canvas-and-lists" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS contain: paint property is a powerful optimization tool that informs the browser engine that an element's visual contents will never display outside its defined bounding box. This article breaks down how contain: paint works under the hood and de" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-contain-paint-optimize-canvas-and-lists">CSS contain paint:
+Optimize Canvas and Lists</h1>
+<p>The CSS <code>contain: paint</code> property is a powerful
+optimization tool that informs the browser engine that an element's
+visual contents will never display outside its defined bounding box.
+This article breaks down how <code>contain: paint</code> works under the
+hood and demonstrates how it eliminates unnecessary draw calls, isolates
+paint invalidations, and significantly improves frame rates when
+rendering complex, off-screen HTML5 canvases and extensive scrolling
+lists.</p>
+<h3 id="understanding-contain-paint">Understanding
+<code>contain: paint</code></h3>
+<p>The <code>contain: paint</code> declaration establishes a containment
+boundary on an element. By applying it, you guarantee to the rendering
+engine that none of the element's child nodes will overflow its padding
+box. As a result, the browser applies two major behavioral changes:</p>
+<ol type="1">
+<li><strong>Implicit Clipping:</strong> The element acts as a clipping
+container (similar to <code>overflow: hidden</code>, though distinct in
+architectural purpose).</li>
+<li><strong>Context Creation:</strong> The element automatically creates
+a new stacking context and a new containing block for absolutely
+positioned descendants.</li>
+</ol>
+<p>Because the browser knows child elements cannot spill outside these
+bounds, it can make aggressive performance optimizations during the
+layout, paint, and composite stages.</p>
+<h3 id="optimizing-off-screen-canvas-elements">Optimizing Off-Screen
+Canvas Elements</h3>
+<p>HTML5 <code>&lt;canvas&gt;</code> elements are often computationally
+expensive to render, especially in data visualization dashboards,
+interactive graphics, or games where frame updates occur rapidly via
+<code>requestAnimationFrame</code>.</p>
+<p>When an active canvas moves off-screen—whether via user scrolling or
+dynamic layout updates—the browser may still evaluate its paint steps if
+it cannot easily deduce whether its contents bleed into the visible
+viewport. Applying <code>contain: paint</code> directly to the canvas or
+its wrapping container allows the browser's display list builder to
+perform early visibility culling:</p>
+<ul>
+<li><strong>Skipping Rasterization:</strong> During the paint phase, the
+browser traverses the display list. If an element with
+<code>contain: paint</code> has a bounding box that does not intersect
+with the visible viewport, the browser discards the paint commands for
+that entire subtree without evaluating the contents.</li>
+<li><strong>Reducing GPU Overhead:</strong> By pruning the off-screen
+canvas from the compositor layer tree, the GPU avoids unnecessary
+texture uploads and memory bandwidth consumption for pixels that are not
+visible to the user.</li>
+</ul>
+<h3 id="optimizing-list-rendering-and-virtualized-views">Optimizing List
+Rendering and Virtualized Views</h3>
+<p>In data-heavy applications, rendering long lists—such as social media
+feeds, data tables, or search results—often introduces scroll hitching
+and high main-thread latency. <code>contain: paint</code> mitigates this
+in two primary ways:</p>
+<h4 id="1-paint-invalidation-isolation">1. Paint Invalidation
+Isolation</h4>
+<p>Normally, a visual change within a single list item (such as a hover
+state, active class, or dynamic timestamp update) risks invalidating a
+larger portion of the render tree, prompting the browser to recalculate
+paints for sibling elements.</p>
+<p>With <code>contain: paint</code> applied to each list item, the
+invalidation is strictly local. The browser knows the update cannot
+affect anything outside that item's box, restricting the repainting
+process to that single element rather than invalidating the entire list
+container.</p>
+<h4 id="2-viewport-culling-during-rapid-scrolling">2. Viewport Culling
+During Rapid Scrolling</h4>
+<p>When a user scrolls quickly through a long list, the browser must
+rapidly determine which items need to be drawn. Without paint
+containment, the engine must inspect children, margins, and potential
+overflow boundaries to verify visibility.</p>
+<p>With <code>contain: paint</code>, the browser only needs to check the
+parent bounding box of each item against the viewport rect. If an item
+is outside the viewport, it is culled instantly. This dramatically
+lowers the cost of generating paint display lists and reduces CPU spikes
+during high-velocity scrolling.</p>
+<h3 id="implementation-considerations">Implementation
+Considerations</h3>
+<p>To maximize the benefits of <code>contain: paint</code>, ensure
+that:</p>
+<ul>
+<li>The target element has an explicitly defined width and height, or is
+sized by its parent layout (such as a grid or flex container).</li>
+<li>No intentional visual overflows (such as tooltips or drop-down menus
+anchored to a list item) are expected to render outside the container,
+as they will be clipped.</li>
+<li>For canvas wrappers, pair <code>contain: paint</code> with
+<code>contain: layout</code> (or use the shorthand
+<code>contain: content</code>) if the canvas dimensions do not change
+based on its external DOM siblings.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

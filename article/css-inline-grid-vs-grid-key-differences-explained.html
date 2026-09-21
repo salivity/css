@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS inline-grid vs grid: Key Differences Explained - css</title>
+    <meta name="description" content="CSS Grid provides two primary display values to establish a grid formatting context: display: grid and display: inline-grid. While both produce an identical internal grid layout for their child elements, they differ fundamentally in how the parent contai">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-inline-grid-vs-grid-key-differences-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS inline-grid vs grid: Key Differences Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-inline-grid-vs-grid-key-differences-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS Grid provides two primary display values to establish a grid formatting context: display: grid and display: inline-grid. While both produce an identical internal grid layout for their child elements, they differ fundamentally in how the parent contai" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-inline-grid-vs-grid-key-differences-explained">CSS
+inline-grid vs grid: Key Differences Explained</h1>
+<p>CSS Grid provides two primary display values to establish a grid
+formatting context: <code>display: grid</code> and
+<code>display: inline-grid</code>. While both produce an identical
+internal grid layout for their child elements, they differ fundamentally
+in how the parent container interacts with adjacent elements and behaves
+within the document flow. Understanding the distinction between these
+two values comes down to the difference between block-level and
+inline-level formatting contexts.</p>
+<h3 id="container-flow-and-document-interaction">Container Flow and
+Document Interaction</h3>
+<p>The primary difference between <code>grid</code> and
+<code>inline-grid</code> lies in how the grid container itself is
+rendered relative to surrounding content:</p>
+<ul>
+<li><strong><code>display: grid</code> (Block-Level):</strong> Creates a
+block-level container. By default, it takes up the full width of its
+parent container and breaks onto a new line, pushing following elements
+below it, similar to a standard <code>&lt;div&gt;</code>.</li>
+<li><strong><code>display: inline-grid</code> (Inline-Level):</strong>
+Creates an inline-level container. It only occupies as much width as its
+content requires (shrink-to-fit) and allows other inline or inline-block
+elements to sit on the same line alongside it, similar to an
+<code>&lt;span&gt;</code> or <code>inline-block</code> element.</li>
+</ul>
+<h3 id="internal-vs-external-behavior">Internal vs. External
+Behavior</h3>
+<p>The children of both <code>grid</code> and <code>inline-grid</code>
+containers behave identically. Once inside the container:</p>
+<ul>
+<li>Direct children become grid items.</li>
+<li>All grid-specific properties work the same way, including
+<code>grid-template-columns</code>, <code>grid-template-rows</code>,
+<code>gap</code>, <code>justify-items</code>, and
+<code>align-items</code>.</li>
+<li>Grid items do not behave like inline elements; they always follow
+grid layout rules regardless of whether the parent container is
+<code>grid</code> or <code>inline-grid</code>.</li>
+</ul>
+<p>The difference is strictly external: <code>display: grid</code>
+affects the page layout as a block, whereas
+<code>display: inline-grid</code> integrates into the inline flow.</p>
+<h3 id="width-handling-and-fractional-units">Width Handling and
+Fractional Units</h3>
+<p>Because <code>display: grid</code> defaults to 100% width of its
+parent, fractional units (<code>fr</code>) have a defined space to
+divide immediately.</p>
+<p>With <code>display: inline-grid</code>, width is determined by
+content:</p>
+<ul>
+<li>If an <code>inline-grid</code> container has no explicitly declared
+width and uses <code>fr</code> units (such as
+<code>grid-template-columns: 1fr 1fr</code>), the container collapses to
+the minimum content width of the items rather than expanding to fill the
+viewport or parent.</li>
+<li>To make <code>fr</code> units expand dynamically inside an
+<code>inline-grid</code>, a fixed width, <code>min-width</code>, or
+<code>max-width</code> must generally be defined on the container.</li>
+</ul>
+<h3 id="vertical-alignment">Vertical Alignment</h3>
+<p>Because an <code>inline-grid</code> container participates in an
+inline formatting context, it responds to the CSS
+<code>vertical-align</code> property. You can use properties like
+<code>vertical-align: middle</code>, <code>top</code>, or
+<code>baseline</code> to align the entire grid container relative to
+adjacent text or inline components. A standard
+<code>display: grid</code> container ignores <code>vertical-align</code>
+entirely because it is a block-level element.</p>
+<h3 id="when-to-use-each">When to Use Each</h3>
+<ul>
+<li><strong>Use <code>display: grid</code></strong> for full-page
+structures, primary layout sections (such as headers, sidebars, and main
+content areas), and any standalone component designed to take up full
+horizontal space.</li>
+<li><strong>Use <code>display: inline-grid</code></strong> for
+micro-layouts that need to sit alongside text or other inline
+components, such as complex interactive buttons with multiple text lines
+and icons, inline badges, status indicators, and form field
+groupings.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

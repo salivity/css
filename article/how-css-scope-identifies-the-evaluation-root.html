@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS :scope Identifies the Evaluation Root - css</title>
+    <meta name="description" content="The CSS :scope pseudo-class provides a direct reference to the element that serves as the contextual evaluation root for a selector query. While typical selectors evaluate elements against the entire document tree, :scope dynamically isolates and points">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-scope-identifies-the-evaluation-root">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS :scope Identifies the Evaluation Root - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-scope-identifies-the-evaluation-root" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS :scope pseudo-class provides a direct reference to the element that serves as the contextual evaluation root for a selector query. While typical selectors evaluate elements against the entire document tree, :scope dynamically isolates and points" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-scope-identifies-the-evaluation-root">How CSS :scope
+Identifies the Evaluation Root</h1>
+<p>The CSS <code>:scope</code> pseudo-class provides a direct reference
+to the element that serves as the contextual evaluation root for a
+selector query. While typical selectors evaluate elements against the
+entire document tree, <code>:scope</code> dynamically isolates and
+points to the specific boundary element defined by the execution
+environment. This article explains how the browser identifies this
+evaluation root across DOM querying methods, standard stylesheets, and
+modern scoped styling rules.</p>
+<h2 id="the-default-evaluation-root-standard-stylesheets">The Default
+Evaluation Root: Standard Stylesheets</h2>
+<p>In standard document-level stylesheets, there is no localized
+contextual boundary explicitly established for selector evaluation.
+Under these default conditions, the browser assigns the document's
+top-level root element as the evaluation root.</p>
+<p>In HTML documents, <code>:scope</code> matches the
+<code>&lt;html&gt;</code> element, behaving identically to the
+<code>:root</code> pseudo-class. When a selector such as
+<code>:scope { background-color: #f4f4f4; }</code> is parsed inside a
+global stylesheet, the evaluation engine traverses to the document root
+because no subordinate scoping context has been declared.</p>
+<h2 id="javascript-dom-querying-apis">JavaScript DOM Querying APIs</h2>
+<p>The identity of the contextual evaluation root shifts fundamentally
+when using DOM querying methods such as
+<code>element.querySelector()</code>,
+<code>element.querySelectorAll()</code>, <code>element.matches()</code>,
+or <code>element.closest()</code>.</p>
+<p>When invoked on an <code>Element</code> node in JavaScript, that
+specific node instantly becomes the scoping root for the selector
+engine:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> container <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;.card-container&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Selects only direct children of the container</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> directChildren <span class="op">=</span> container<span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">&#39;:scope &gt; div&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<p>Normally, <code>querySelector</code> and
+<code>querySelectorAll</code> evaluate selectors relative to the entire
+document, meaning child-combinator queries without an anchor would fail
+or match unintended ancestors outside the target node. Using
+<code>:scope</code> explicitly anchors the selector engine to the
+calling element, preventing the query from traversing upwards or
+matching sibling branches outside the immediate target context.</p>
+<h2 id="scoped-styles-via-the-scope-at-rule">Scoped Styles via the
+<code>@scope</code> At-Rule</h2>
+<p>Modern CSS introduces native scoping through the <code>@scope</code>
+at-rule, which programmatically defines an evaluation boundary within
+the stylesheet. When an author defines a scope root selector in the
+<code>@scope</code> prelude, the browser designates matched elements as
+the contextual evaluation roots for all rules declared within that
+block.</p>
+<p>Inside the block, <code>:scope</code> explicitly references the scope
+root itself:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@scope</span> <span class="fu">(</span>.<span class="dv">media-card</span><span class="fu">)</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Targets the .media-card element directly */</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="in">:scope</span> {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Targets .title elements only within the .media-card context */</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.title</span> {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">1.25</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If a scoping limit is defined using the <code>to</code> syntax (e.g.,
+<code>@scope (.media-card) to (.content)</code>), <code>:scope</code>
+remains bound to the initiating boundary element, while the selector
+engine restricts descendant matching to the region between the
+evaluation root and the specified boundary limit.</p>
+<h2 id="context-resolution-mechanics">Context Resolution Mechanics</h2>
+<p>The browser identifies the evaluation root through an internal
+pointer set during selector matching:</p>
+<ol type="1">
+<li><strong>Host-Provided Roots:</strong> If the selector is initiated
+through an API call on a node (such as
+<code>Element.prototype.querySelectorAll</code>) or within a Shadow DOM
+boundary, the engine sets the evaluation root pointer to that specific
+node.</li>
+<li><strong>Explicit Rule Roots:</strong> When resolving declarations
+inside a <code>@scope</code> block, the engine assigns the root pointer
+to whichever element matched the scoping prelude selector for that
+evaluation cycle.</li>
+<li><strong>Implicit Global Fallback:</strong> In the absence of an
+explicit API target or scoping rule, the engine defaults the pointer to
+the document's root node (<code>&lt;html&gt;</code>).</li>
+</ol>
+<p>Through this resolution sequence, the <code>:scope</code>
+pseudo-class enables flexible, reusable, and encapsulated CSS rules
+without hardcoding specific class names or IDs to reference containing
+boundaries.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

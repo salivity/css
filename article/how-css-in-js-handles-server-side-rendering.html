@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS-in-JS Handles Server-Side Rendering - css</title>
+    <meta name="description" content="CSS-in-JS libraries like Styled-Components handle server-side rendering (SSR) by extracting critical styles during the initial HTML generation, injecting them into the document <head>, and synchronizing them during client-side hydration. This process pre">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-in-js-handles-server-side-rendering">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS-in-JS Handles Server-Side Rendering - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-in-js-handles-server-side-rendering" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS-in-JS libraries like Styled-Components handle server-side rendering (SSR) by extracting critical styles during the initial HTML generation, injecting them into the document <head>, and synchronizing them during client-side hydration. This process pre" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-in-js-handles-server-side-rendering">How CSS-in-JS
+Handles Server-Side Rendering</h1>
+<p>CSS-in-JS libraries like Styled-Components handle server-side
+rendering (SSR) by extracting critical styles during the initial HTML
+generation, injecting them into the document <code>&lt;head&gt;</code>,
+and synchronizing them during client-side hydration. This process
+prevents a Flash of Unstyled Content (FOUC) and ensures that the browser
+receives a fully styled HTML document before any client-side JavaScript
+executes.</p>
+<h3 id="the-challenge-of-css-in-js-on-the-server">The Challenge of
+CSS-in-JS on the Server</h3>
+<p>In a standard client-side Single Page Application (SPA), CSS-in-JS
+libraries evaluate styles dynamically in the browser. When a component
+mounts, the library parses its CSS rules, generates a unique hashed
+class name, and injects the rules directly into the DOM via
+<code>&lt;style&gt;</code> tags.</p>
+<p>On the server, there is no active DOM tree. If a server renders React
+components to static markup using methods like
+<code>renderToString</code>, the JavaScript-driven styling mechanism
+does not automatically produce a stylesheet. Without explicit
+server-side handling, the browser renders raw, unstyled HTML until the
+JavaScript bundle downloads, parses, and injects the styles on the
+client.</p>
+<h3 id="the-extraction-and-injection-workflow">The Extraction and
+Injection Workflow</h3>
+<p>Libraries like Styled-Components, Emotion, and others solve this
+problem using a dedicated server-side registry. In Styled-Components,
+this is handled through the <code>ServerStyleSheet</code> API. The
+process operates in five primary steps:</p>
+<ol type="1">
+<li><strong>Creating the Style Registry:</strong> Before rendering the
+component tree on the server, a new stylesheet collector instance is
+initialized. This instance acts as a temporary in-memory store for all
+CSS rules generated during the render pass.</li>
+<li><strong>Collecting Styles During Render:</strong> The application
+root is wrapped with the stylesheet collector's provider component. When
+<code>ReactDOMServer.renderToString()</code> traverses the component
+tree, every styled component registers its generated CSS rules and
+unique class names with the in-memory stylesheet.</li>
+<li><strong>Extracting the CSS:</strong> Once the HTML string generation
+completes, the stylesheet instance exposes methods—such as
+<code>getStyleTags()</code> or <code>getStyleElement()</code>—to
+retrieve all registered rules formatted as inline HTML
+<code>&lt;style&gt;</code> tags.</li>
+<li><strong>HTML Document Assembly:</strong> The extracted style tags
+are placed directly into the <code>&lt;head&gt;</code> section of the
+server-rendered HTML template, while the component markup is placed
+inside the root container. The complete document is then sent to the
+client.</li>
+<li><strong>Rehydration on the Client:</strong> When the client-side
+JavaScript loads, the CSS-in-JS runtime detects the existing
+server-rendered <code>&lt;style&gt;</code> tags. Instead of regenerating
+or duplicating these styles, the library rehydrates its internal style
+map, attaches event listeners, and resumes dynamic styling operations
+seamlessly.</li>
+</ol>
+<h3 id="critical-css-by-default">Critical CSS by Default</h3>
+<p>Because styles are only registered when a component actually renders,
+the server-side extraction process automatically performs critical CSS
+extraction. Unused styles for components not present in the current view
+are excluded from the initial payload, keeping page weight low and
+improving First Contentful Paint (FCP) metrics.</p>
+<h3 id="zero-runtime-alternative-approaches">Zero-Runtime Alternative
+Approaches</h3>
+<p>While runtime libraries like Styled-Components rely on server-side
+registry collectors, newer CSS-in-JS solutions (such as Vanilla Extract,
+StyleX, or Linaria) handle SSR at build time. These libraries compile
+styles into static <code>.css</code> files during the build step,
+eliminating the need for dynamic server-side extraction collectors and
+relying instead on standard <code>&lt;link rel="stylesheet"&gt;</code>
+tags.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

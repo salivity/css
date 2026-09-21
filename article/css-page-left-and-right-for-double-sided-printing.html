@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Page Left and Right for Double-Sided Printing - css</title>
+    <meta name="description" content="CSS Paged Media module provides the @page :left and @page :right pseudo-class selectors to target alternating pages in a printed document. This setup facilitates professional double-sided (duplex) book printing by allowing developers and typesetters to d">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-page-left-and-right-for-double-sided-printing">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Page Left and Right for Double-Sided Printing - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-page-left-and-right-for-double-sided-printing" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS Paged Media module provides the @page :left and @page :right pseudo-class selectors to target alternating pages in a printed document. This setup facilitates professional double-sided (duplex) book printing by allowing developers and typesetters to d" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-page-left-and-right-for-double-sided-printing">CSS Page Left
+and Right for Double-Sided Printing</h1>
+<p>CSS Paged Media module provides the <code>@page :left</code> and
+<code>@page :right</code> pseudo-class selectors to target alternating
+pages in a printed document. This setup facilitates professional
+double-sided (duplex) book printing by allowing developers and
+typesetters to define distinct margins, headers, footers, and page
+numbers for left-facing (verso) and right-facing (recto) pages, ensuring
+content remains readable and properly aligned once bound.</p>
+<h3 id="the-mechanics-of-recto-and-verso-pages">The Mechanics of Recto
+and Verso Pages</h3>
+<p>In physical book publishing, pages are viewed as two-page spreads.
+Right-hand pages (recto) are odd-numbered, while left-hand pages (verso)
+are even-numbered. Because the two pages mirror each other across the
+book's center spine, applying uniform styles to all pages leads to
+layout issues when bound.</p>
+<p>The <code>@page :left</code> selector targets all even-numbered
+pages, and <code>@page :right</code> targets all odd-numbered pages.
+Using these selectors allows you to treat each side of a spread as an
+individual design canvas.</p>
+<h3 id="accommodating-the-binding-gutter">Accommodating the Binding
+Gutter</h3>
+<p>The most critical function of <code>@page :left</code> and
+<code>@page :right</code> is managing the binding margin, known as the
+gutter. When pages are bound together into a spine, a portion of the
+inner margin is hidden or curved inward.</p>
+<p>To compensate, the inner margin must be wider than the outer
+margin:</p>
+<ul>
+<li><strong>For <code>@page :left</code> (verso):</strong> The spine is
+on the right side of the page, meaning <code>margin-right</code> must be
+larger.</li>
+<li><strong>For <code>@page :right</code> (recto):</strong> The spine is
+on the left side of the page, meaning <code>margin-left</code> must be
+larger.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:left</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-left</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">mm</span><span class="op">;</span>  <span class="co">/* Outer edge */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-right</span><span class="ch">:</span> <span class="dv">25</span><span class="dt">mm</span><span class="op">;</span> <span class="co">/* Inside gutter edge */</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:right</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-left</span><span class="ch">:</span> <span class="dv">25</span><span class="dt">mm</span><span class="op">;</span>  <span class="co">/* Inside gutter edge */</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-right</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">mm</span><span class="op">;</span> <span class="co">/* Outer edge */</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="dynamic-running-headers-and-page-numbers">Dynamic Running
+Headers and Page Numbers</h3>
+<p>Standard book design dictates that page numbers appear on the outer
+edges of a spread so readers can easily flip through the book.
+Similarly, running headers typically alternate—often displaying the book
+title on the left page and the current chapter title on the right
+page.</p>
+<p>Using CSS margin boxes inside <code>@page :left</code> and
+<code>@page :right</code>, elements can be placed symmetrically:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:left</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">@top-left</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    content<span class="in">:</span> counter<span class="in">(</span>page<span class="in">)</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="im">@top-right</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    content<span class="in">:</span> &quot;Book Title&quot;;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    font-style<span class="in">:</span> italic;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:right</span> {</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="im">@top-left</span> {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    content<span class="in">:</span> string<span class="in">(</span>chapter-title<span class="in">)</span>;</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    font-style<span class="in">:</span> italic;</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="im">@top-right</span> {</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    content<span class="in">:</span> counter<span class="in">(</span>page<span class="in">)</span>;</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="enforcing-chapter-start-alignment">Enforcing Chapter Start
+Alignment</h3>
+<p>In traditional publishing, major sections or chapters almost always
+begin on a right-hand page. Pairing the <code>:left</code> and
+<code>:right</code> configuration with page break controls ensures this
+layout rule is followed.</p>
+<p>By applying <code>break-before: right;</code> (or
+<code>page-break-before: right;</code>) to a chapter heading, the
+printing engine automatically inserts a blank left page if the previous
+chapter finishes on a right page:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>h1<span class="fu">.chapter-title</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">break-before</span><span class="ch">:</span> <span class="dv">right</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Through symmetrical margin handling, mirrored running headers, and
+coordinated page breaks, <code>@page :left</code> and
+<code>@page :right</code> transform standard web content into
+press-ready layouts suitable for professional book manufacturing.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

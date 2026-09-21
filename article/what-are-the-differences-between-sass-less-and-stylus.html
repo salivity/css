@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Are the Differences Between Sass, Less, and Stylus? - css</title>
+    <meta name="description" content="CSS preprocessors extend standard styling capabilities with programmatic features like variables, nesting, mixins, and functions, compiling everything down to browser-readable CSS. While Sass, Less, and Stylus address the same fundamental limitations of">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-are-the-differences-between-sass-less-and-stylus">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Are the Differences Between Sass, Less, and Stylus? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-are-the-differences-between-sass-less-and-stylus" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS preprocessors extend standard styling capabilities with programmatic features like variables, nesting, mixins, and functions, compiling everything down to browser-readable CSS. While Sass, Less, and Stylus address the same fundamental limitations of" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-are-the-differences-between-sass-less-and-stylus">What Are
+the Differences Between Sass, Less, and Stylus?</h1>
+<p>CSS preprocessors extend standard styling capabilities with
+programmatic features like variables, nesting, mixins, and functions,
+compiling everything down to browser-readable CSS. While Sass, Less, and
+Stylus address the same fundamental limitations of traditional CSS, they
+diverge significantly in their underlying ecosystems, syntax
+flexibility, logic handling, and community adoption. Understanding these
+architectural and functional differences helps development teams choose
+the right tool for their workflow.</p>
+<h2 id="ecosystem-and-core-runtime">Ecosystem and Core Runtime</h2>
+<p>The underlying engine of each preprocessor impacts installation
+requirements, build times, and tooling integration across different web
+frameworks:</p>
+<ul>
+<li><strong>Sass:</strong> Originally written in Ruby, Sass is now
+standardized around Dart Sass, which compiles directly to fast,
+standalone JavaScript and native binaries. It is supported across all
+major frontend build systems (Vite, Webpack, Turbopack).</li>
+<li><strong>Less:</strong> Built natively on JavaScript, Less runs
+directly via Node.js or even inside the browser runtime for rapid
+prototyping (though in-browser compilation is rarely used in
+production). It integrates smoothly into Node-centric build
+pipelines.</li>
+<li><strong>Stylus:</strong> Also built on Node.js, Stylus offers deep
+integration with JavaScript workflows. However, it experiences slower
+active maintenance compared to Sass and Less.</li>
+</ul>
+<h2 id="syntax-comparison-and-flexibility">Syntax Comparison and
+Flexibility</h2>
+<p>Each preprocessor takes a distinct approach to how code is written,
+from strict CSS compatibility to minimal, bracket-free syntax.</p>
+<table>
+<thead>
+<tr>
+<th>Preprocessor</th>
+<th>Syntax Styles</th>
+<th>Key Formatting Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sass</strong></td>
+<td>SCSS (<code>.scss</code>) and Indented (<code>.sass</code>)</td>
+<td>SCSS uses strict CSS brackets/semicolons; Sass uses strict
+indentation and newlines.</td>
+</tr>
+<tr>
+<td><strong>Less</strong></td>
+<td>Less (<code>.less</code>)</td>
+<td>Strict superset of standard CSS syntax; requires curly braces and
+semicolons.</td>
+</tr>
+<tr>
+<td><strong>Stylus</strong></td>
+<td>Stylus (<code>.styl</code>)</td>
+<td>Completely fluid syntax; braces, colons, and semicolons are entirely
+optional.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="variables-and-scoping">Variables and Scoping</h2>
+<p>While all three tools introduce variable storage, their syntax and
+scoping behavior differ:</p>
+<ul>
+<li><strong>Sass uses the <code>$</code> prefix</strong> (e.g.,
+<code>$primary-color: #007bff;</code>). It implements strict lexical
+scoping, allowing local variable overrides without polluting global
+scopes unless the <code>!global</code> flag is applied. Modern Sass also
+relies on the <code>@use</code> and <code>@forward</code> module system
+to avoid global namespace collisions.</li>
+<li><strong>Less uses the <code>@</code> prefix</strong> (e.g.,
+<code>@primary-color: #007bff;</code>). Because <code>@</code> is also
+used for native CSS at-rules (like <code>@media</code> or
+<code>@keyframes</code>), this can occasionally cause visual confusion.
+Less variables are "lazy-loaded," meaning they do not need to be
+declared before being used and can be overridden anywhere in the scope
+block.</li>
+<li><strong>Stylus uses identifier-based variables</strong> without
+mandatory prefixes (e.g., <code>primary-color = #007bff</code>), though
+variables can optionally use <code>$</code> to avoid naming conflicts
+with standard CSS properties.</li>
+</ul>
+<h2 id="mixins-and-logic-handling">Mixins and Logic Handling</h2>
+<p>Handling reusable code patterns, mathematical operations, and
+conditional logic varies across the tools:</p>
+<ul>
+<li><strong>Sass:</strong> Uses dedicated directives such as
+<code>@mixin</code> and <code>@include</code>. It provides robust
+programming structures including <code>@if</code>/<code>@else</code>
+conditions, <code>@each</code> loops, <code>@for</code> counters, and
+custom user-defined functions via <code>@function</code>.</li>
+<li><strong>Less:</strong> Treats standard CSS classes as mixins
+directly (e.g., <code>.my-mixin()</code>). Less lacks traditional
+imperative loop directives, instead using recursive pattern-matching and
+mixin guards (e.g., <code>when (@value &gt; 10)</code>) to simulate
+conditional statements and iteration.</li>
+<li><strong>Stylus:</strong> Allows "transparent mixins," where a mixin
+call looks identical to a native CSS property declaration. It contains
+powerful built-in control structures such as <code>for...in</code>
+loops, conditional <code>if</code>/<code>else</code> operators, and
+native color-manipulation functions.</li>
+</ul>
+<h2 id="module-systems-and-modern-relevance">Module Systems and Modern
+Relevance</h2>
+<p>Modern Sass uses <code>@use</code> and <code>@forward</code> to
+manage stylesheets in encapsulated namespaces, completely phasing out
+legacy <code>@import</code> rules that cause global variable leakage.
+Less and Stylus rely primarily on traditional file imports to merge
+stylesheets into a unified build output.</p>
+<p>For modern web applications, Sass (specifically SCSS) remains the
+standard across major UI frameworks and enterprise boilerplates. Less is
+commonly encountered in legacy systems or specific ecosystems like Ant
+Design. Stylus appeals to developers seeking concise syntax, but Sass
+remains the most widely maintained and broadly adopted solution.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

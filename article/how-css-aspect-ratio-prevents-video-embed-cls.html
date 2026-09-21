@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS aspect-ratio Prevents Video Embed CLS - css</title>
+    <meta name="description" content="The CSS aspect-ratio property eliminates Cumulative Layout Shift (CLS) on responsive video embeds by allowing browsers to calculate and reserve the required layout space before the external video asset downloads. By defining a fixed proportional relation">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-aspect-ratio-prevents-video-embed-cls">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS aspect-ratio Prevents Video Embed CLS - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-aspect-ratio-prevents-video-embed-cls" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS aspect-ratio property eliminates Cumulative Layout Shift (CLS) on responsive video embeds by allowing browsers to calculate and reserve the required layout space before the external video asset downloads. By defining a fixed proportional relation" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-aspect-ratio-prevents-video-embed-cls">How CSS
+aspect-ratio Prevents Video Embed CLS</h1>
+<p>The CSS <code>aspect-ratio</code> property eliminates Cumulative
+Layout Shift (CLS) on responsive video embeds by allowing browsers to
+calculate and reserve the required layout space before the external
+video asset downloads. By defining a fixed proportional relationship
+between an element’s width and height, developers ensure that fluid
+containers do not collapse to zero height during the initial document
+render. This article explains the underlying mechanics of video-induced
+layout shifts, compares modern solutions with legacy techniques, and
+demonstrates how to implement <code>aspect-ratio</code> to stabilize
+page rendering and improve Core Web Vitals.</p>
+<h2 id="the-cause-of-layout-shifts-in-responsive-video-embeds">The Cause
+of Layout Shifts in Responsive Video Embeds</h2>
+<p>Embedded videos, typically delivered via <code>&lt;iframe&gt;</code>
+elements from platforms like YouTube or Vimeo, present a challenge for
+responsive web design. When developers make an embed responsive, they
+generally set its width to <code>100%</code> so it fills the parent
+container.</p>
+<p>However, HTML elements without an explicit height collapse or default
+to standard fallback dimensions until the external resource loads.
+During this period, the browser renders the page with the video element
+occupying little to no vertical space. Once the external network request
+completes and the video player mounts, the browser updates the element's
+height to match the video's actual proportions. This delayed expansion
+abruptly pushes surrounding content down the page, triggering a
+measurable Cumulative Layout Shift (CLS) penalty that degrades user
+experience and search performance metrics.</p>
+<h2 id="the-limitation-of-legacy-solutions">The Limitation of Legacy
+Solutions</h2>
+<p>Historically, web developers solved this issue using the "padding
+hack" (or intrinsic ratio technique). This approach required wrapping
+the video <code>&lt;iframe&gt;</code> in a dedicated parent container
+and applying relative positioning, absolute positioning to the child,
+and a percentage-based <code>padding-top</code> or
+<code>padding-bottom</code> (such as <code>56.25%</code> for a standard
+16:9 ratio).</p>
+<p>While effective at reserving space, the padding hack introduced
+several drawbacks:</p>
+<ul>
+<li>It required redundant non-semantic wrapper elements in the HTML
+structure.</li>
+<li>It relied on complex, less intuitive CSS positioning rules.</li>
+<li>It complicated maintenance and dynamic aspect ratio adjustments
+across responsive breakpoints.</li>
+</ul>
+<h2 id="how-the-aspect-ratio-property-eliminates-cls">How the
+<code>aspect-ratio</code> Property Eliminates CLS</h2>
+<p>The modern CSS <code>aspect-ratio</code> property natively defines a
+preferred aspect ratio for any box element, fundamentally altering how
+the browser performs layout calculations.</p>
+<p>When you assign an aspect ratio alongside a single fluid dimension,
+the browser instantly computes the missing dimension during the initial
+layout pass—before any network assets download.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>iframe<span class="fu">.video-embed</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">aspect-ratio</span><span class="ch">:</span> <span class="dv">16</span> / <span class="dv">9</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When the browser parses this rule:</p>
+<ol type="1">
+<li><strong>Immediate Dimension Calculation:</strong> The browser
+evaluates the available container width (e.g., <code>800px</code>).</li>
+<li><strong>Deterministic Height Allocation:</strong> Using the
+specified <code>16 / 9</code> ratio, the browser immediately calculates
+the height as <code>450px</code> (<code>800 * (9 / 16)</code>).</li>
+<li><strong>Space Reservation:</strong> The browser allocates an exact
+<code>800px</code> by <code>450px</code> box in the render tree.</li>
+<li><strong>Stable Page Flow:</strong> Subsequent DOM elements are
+positioned directly below this reserved area from the first render
+frame.</li>
+</ol>
+<p>Because the space reserved matches the dimensions of the fully loaded
+video, no reflow occurs when the video content finishes loading. The
+layout shift score for that element drops to zero.</p>
+<h2 id="implementation-best-practices">Implementation Best
+Practices</h2>
+<p>To achieve optimal performance and prevent rendering bugs across
+different browsers, apply the following practices:</p>
+<ul>
+<li><strong>Target the Embed Directly:</strong> Apply
+<code>aspect-ratio</code> directly to the <code>&lt;iframe&gt;</code>,
+<code>&lt;video&gt;</code>, or <code>&lt;embed&gt;</code> element to
+eliminate the need for wrapper <code>&lt;div&gt;</code> tags.</li>
+<li><strong>Specify Fallback Dimensions in HTML:</strong> Include
+standard <code>width</code> and <code>height</code> attributes directly
+in the HTML markup (e.g.,
+<code>&lt;iframe width="1600" height="900" ...&gt;</code>). Modern
+browsers automatically map these attributes to an internal
+<code>aspect-ratio</code>, providing baseline protection even if
+external stylesheets encounter network latency.</li>
+<li><strong>Include Border Resets:</strong> Always set
+<code>border: 0;</code> on iframes to prevent default border dimensions
+from altering the final calculated pixel box.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

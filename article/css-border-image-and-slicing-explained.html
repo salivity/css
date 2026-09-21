@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS border-image and Slicing Explained - css</title>
+    <meta name="description" content="The CSS border-image property allows developers to use custom graphics or gradients as element borders instead of conventional solid, dashed, or dotted lines. This article explains what the border-image property is, breaks down its core shorthand compone">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-border-image-and-slicing-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS border-image and Slicing Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-border-image-and-slicing-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS border-image property allows developers to use custom graphics or gradients as element borders instead of conventional solid, dashed, or dotted lines. This article explains what the border-image property is, breaks down its core shorthand compone" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-border-image-and-slicing-explained">CSS border-image and
+Slicing Explained</h1>
+<p>The CSS <code>border-image</code> property allows developers to use
+custom graphics or gradients as element borders instead of conventional
+solid, dashed, or dotted lines. This article explains what the
+<code>border-image</code> property is, breaks down its core shorthand
+components, and details the 9-slice grid system used to divide and scale
+source images dynamically to fit any container.</p>
+<hr />
+<h3 id="what-is-the-border-image-property">What is the
+<code>border-image</code> Property?</h3>
+<p>The <code>border-image</code> property is a CSS shorthand that draws
+an image over an element's border area. Instead of repeating an entire
+image along an outline or stretching it uniformly, it applies a 9-slice
+scaling algorithm that keeps decorative corners crisp while adapting the
+edges to boxes of varying dimensions.</p>
+<p>To display a border image, an element must have a defined border
+style or border width. If <code>border-image</code> fails to load or is
+unsupported, the standard CSS <code>border</code> properties act as a
+fallback.</p>
+<p>The shorthand brings together five individual properties:</p>
+<ul>
+<li><code>border-image-source</code>: The image file path or CSS
+gradient.</li>
+<li><code>border-image-slice</code>: The dimensions defining how the
+image is sliced into regions.</li>
+<li><code>border-image-width</code>: The rendered thickness of the
+border image.</li>
+<li><code>border-image-outset</code>: The distance the border extends
+beyond the element's border box.</li>
+<li><code>border-image-repeat</code>: The behavior used to fill the
+edges (stretch, repeat, round, or space).</li>
+</ul>
+<hr />
+<h3 id="the-9-slice-grid-mechanism">The 9-Slice Grid Mechanism</h3>
+<p>The core mechanism behind <code>border-image</code> is the 9-slice
+scaling concept. When you provide an image, the browser divides it into
+a 3×3 grid comprising nine specific regions:</p>
+<ol type="1">
+<li><strong>Four Corners (Top-Left, Top-Right, Bottom-Right,
+Bottom-Left):</strong> These sections remain fixed in their aspect
+ratio. They are placed directly onto the four corners of the HTML
+element and do not stretch or repeat along the edges.</li>
+<li><strong>Four Edges (Top, Right, Bottom, Left):</strong> These
+sections scale, stretch, or tile along the element's sides to bridge the
+distance between the fixed corners.</li>
+<li><strong>One Center:</strong> The middle section can either be
+discarded completely (making the center transparent) or preserved to act
+as a background fill for the content area.</li>
+</ol>
+<hr />
+<h3 id="how-border-image-slice-slices-the-image">How
+<code>border-image-slice</code> Slices the Image</h3>
+<p>The <code>border-image-slice</code> property creates the cut lines
+that form the 9-slice grid. It accepts up to four values representing
+inward offsets from the edges of the source graphic, following the
+standard CSS order: <strong>top, right, bottom, left</strong>.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>border-image-slice<span class="in">:</span> 30; <span class="co">/* Applies a 30-unit offset to all four sides */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>border-image-slice<span class="in">:</span> 20 35 20 35; <span class="co">/* top right bottom left */</span></span></code></pre></div>
+<h4 id="units-for-slicing">Units for Slicing</h4>
+<ul>
+<li><strong>Raw Numbers:</strong> For raster graphics (PNG, JPG, WebP),
+numbers without units represent raw pixels in the source image (e.g.,
+<code>30</code> means 30 source pixels).</li>
+<li><strong>Percentages:</strong> Percentages refer to the relative size
+of the image (e.g., <code>25%</code> slices one-quarter inward from each
+side), which is standard for vector graphics like SVG.</li>
+<li><strong>The <code>fill</code> Keyword:</strong> By default, the
+central region of the source image is discarded. Adding the
+<code>fill</code> keyword preserves the middle area and paints it behind
+the element's content.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>border-image-slice<span class="in">:</span> 40 fill;</span></code></pre></div>
+<hr />
+<h3 id="controlling-the-sliced-border-layout">Controlling the Sliced
+Border Layout</h3>
+<p>Once sliced, the graphics are rendered using the remaining
+sub-properties:</p>
+<h4 id="1-sizing-with-border-image-width">1. Sizing with
+<code>border-image-width</code></h4>
+<p><code>border-image-width</code> controls the physical display
+thickness of the border on the page, completely independent of the slice
+size. It accepts standard CSS length units (<code>px</code>,
+<code>em</code>), percentages, or unitless multipliers that multiply the
+element's <code>border-width</code>.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>border-image-width<span class="in">:</span> 15px;</span></code></pre></div>
+<h4 id="2-position-with-border-image-outset">2. Position with
+<code>border-image-outset</code></h4>
+<p>By default, the border image sits within the element's designated
+border area. <code>border-image-outset</code> shifts the border image
+outward, past the element's padding box and border box, without
+affecting the surrounding layout flow.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>border-image-outset<span class="in">:</span> 5px;</span></code></pre></div>
+<h4 id="3-edge-filling-with-border-image-repeat">3. Edge Filling with
+<code>border-image-repeat</code></h4>
+<p><code>border-image-repeat</code> dictates how the four edge slices
+expand across the perimeter of the box:</p>
+<ul>
+<li><code>stretch</code>: Stretches the sliced edge graphic to fill the
+entire side.</li>
+<li><code>repeat</code>: Tiles the edge graphic continuously until the
+space is covered, clipping the graphic if the space is not an exact
+multiple.</li>
+<li><code>round</code>: Tiles the graphic, but dynamically scales the
+pattern up or down so only whole slices appear without clipping.</li>
+<li><code>space</code>: Tiles the graphic, distributing extra space
+evenly between repeating slices if they do not fit perfectly.</li>
+</ul>
+<hr />
+<h3 id="complete-shorthand-syntax">Complete Shorthand Syntax</h3>
+<p>The full shorthand syntax combines these controls using forward
+slashes (<code>/</code>) to separate slices, widths, and outsets:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>border-image<span class="in">:</span> source slice / width / outset repeat;</span></code></pre></div>
+<h4 id="practical-example">Practical Example</h4>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.decorative-card</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">px</span> <span class="dv">solid</span> <span class="dv">transparent</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-image</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&quot;frame-pattern.png&quot;</span><span class="fu">)</span> <span class="dv">36</span> / <span class="dv">12</span><span class="dt">px</span> / <span class="dv">0</span> <span class="dv">round</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this implementation, the browser loads
+<code>frame-pattern.png</code>, measures 36 pixels inward from every
+edge to isolate the corners and edge patterns, draws the border at 12
+pixels wide, and tiles the side segments smoothly using the
+<code>round</code> algorithm.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Do CSS Cascade Layers Control Specificity? - css</title>
+    <meta name="description" content="CSS cascade layers (@layer) provide structured control over stylesheet architecture by introducing a dedicated precedence tier within the CSS cascade that evaluates before selector specificity. Instead of relying on artificially complex selectors, high-s">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-do-css-cascade-layers-control-specificity">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Do CSS Cascade Layers Control Specificity? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-do-css-cascade-layers-control-specificity" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS cascade layers (@layer) provide structured control over stylesheet architecture by introducing a dedicated precedence tier within the CSS cascade that evaluates before selector specificity. Instead of relying on artificially complex selectors, high-s" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-do-css-cascade-layers-control-specificity">How Do CSS
+Cascade Layers Control Specificity?</h1>
+<p>CSS cascade layers (<code>@layer</code>) provide structured control
+over stylesheet architecture by introducing a dedicated precedence tier
+within the CSS cascade that evaluates before selector specificity.
+Instead of relying on artificially complex selectors, high-specificity
+ID hacks, or defensive <code>!important</code> declarations to resolve
+styling conflicts, developers can explicitly declare the priority order
+of different stylesheet modules. This ensures that styles in
+higher-priority layers automatically override those in lower-priority
+layers regardless of individual selector weights, creating predictable
+and maintainable style hierarchies across codebases.</p>
+<h2 id="the-problem-with-traditional-specificity">The Problem with
+Traditional Specificity</h2>
+<p>In standard CSS, conflicts between rules targeting the same element
+are resolved through origin, specificity, and source order. Specificity
+is calculated based on the number of IDs, classes, attributes,
+pseudo-classes, and elements in a selector.</p>
+<p>This model often leads to "specificity wars," especially when
+integrating third-party UI libraries, utility frameworks, or large
+design systems with bespoke application styles:</p>
+<ul>
+<li><strong>Component Overrides:</strong> Overriding a deeply nested
+component selector often requires crafting an equally or more specific
+selector, adding unnecessary complexity.</li>
+<li><strong>Overuse of <code>!important</code>:</strong> Developers
+frequently resort to <code>!important</code> as a blunt tool to force
+overrides, breaking the cascade and making future updates brittle.</li>
+<li><strong>Fragile Source Order:</strong> Code splitting and dynamic
+imports can alter the order in which stylesheets load, leading to
+inconsistent render states.</li>
+</ul>
+<p>Cascade layers eliminate these issues by shifting the primary
+battleground from individual selectors to defined architectural
+strata.</p>
+<h2 id="how-cascade-layers-alter-the-cascade-hierarchy">How Cascade
+Layers Alter the Cascade Hierarchy</h2>
+<p>The CSS cascade evaluates declarations in a strict sequence:</p>
+<ol type="1">
+<li>Origin and Importance (e.g., User Agent, User, Author styles, and
+<code>!important</code> flags)</li>
+<li>Context (e.g., Shadow DOM boundaries)</li>
+<li>Element-Attached Styles (Inline <code>style</code> attributes)</li>
+<li><strong>Cascade Layers</strong></li>
+<li><strong>Selector Specificity</strong></li>
+<li><strong>Order of Appearance (Source Order)</strong></li>
+</ol>
+<p>Because layer order is evaluated at step 4, it takes precedence over
+selector specificity (step 5). A selector with low specificity in a
+higher-priority layer will consistently win against a high-specificity
+selector in a lower-priority layer.</p>
+<h2 id="defining-and-ordering-layers">Defining and Ordering Layers</h2>
+<p>Layer order can be established explicitly at the very top of a
+stylesheet using a single <code>@layer</code> statement:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> reset<span class="op">,</span> base<span class="op">,</span> components<span class="op">,</span> utilities<span class="op">;</span></span></code></pre></div>
+<p>In this definition:</p>
+<ul>
+<li><code>reset</code> has the lowest priority.</li>
+<li><code>utilities</code> has the highest priority.</li>
+</ul>
+<p>Rules assigned to these layers will follow this hierarchy regardless
+of where their detailed rules appear later in the code or across
+different files.</p>
+<h3 id="layer-assignment-syntax">Layer Assignment Syntax</h3>
+<p>Styles can be assigned to layers in several ways:</p>
+<p><strong>Block Syntax:</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> components {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.card</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Import Syntax:</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;theme.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">base</span><span class="fu">)</span><span class="op">;</span></span></code></pre></div>
+<p><strong>Linked Stylesheets:</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;framework.css&quot;</span><span class="ot"> layer</span><span class="op">=</span><span class="st">&quot;base&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<h2 id="specificity-within-and-between-layers">Specificity Within and
+Between Layers</h2>
+<p>To see how <code>@layer</code> manages specificity, consider the
+following conflict:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> base<span class="op">,</span> overrides<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> base {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="pp">#main-content</span> <span class="fu">.nav-item</span> a<span class="fu">.active</span> {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span> <span class="co">/* High specificity: (1, 1, 2) */</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> overrides {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  a {</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">red</span><span class="op">;</span> <span class="co">/* Low specificity: (0, 0, 1) */</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In standard CSS without layers, the link text would be blue due to
+the high selector specificity of the first rule. With cascade layers,
+the text renders red because the <code>overrides</code> layer sits
+higher in the layer order than the <code>base</code> layer.</p>
+<p>Selector specificity is not eliminated; rather, its scope is
+contained. Specificity is only evaluated to resolve conflicts
+<strong>within the same layer</strong>.</p>
+<h2 id="unlayered-styles-vs-layered-styles">Unlayered Styles vs. Layered
+Styles</h2>
+<p>Styles declared outside of any explicit <code>@layer</code> are
+treated as belonging to an implicit "unlayered" category. Unlayered
+regular styles always take precedence over layered regular styles:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> reset<span class="op">,</span> framework<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> framework {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  button {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">blue</span><span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* Unlayered style */</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>button {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">green</span><span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The button will be green. This design decision ensures backward
+compatibility, allowing legacy styles to override layered framework
+defaults without modification.</p>
+<h2 id="the-inversion-rule-for-important">The Inversion Rule for
+<code>!important</code></h2>
+<p>When <code>!important</code> is used inside cascade layers, the
+priority order is inverted to preserve the defensive nature of base
+constraints.</p>
+<p>For standard declarations: <code>reset</code> &lt; <code>base</code>
+&lt; <code>components</code> &lt; <code>unlayered</code></p>
+<p>For declarations marked <code>!important</code>:
+<code>unlayered !important</code> &lt;
+<code>components !important</code> &lt; <code>base !important</code>
+&lt; <code>reset !important</code></p>
+<p>This inversion guarantees that an <code>!important</code> reset rule
+(such as forcing accessibility constraints or hidden visibility) cannot
+be overridden by an <code>!important</code> component rule.</p>
+<h2 id="practical-applications">Practical Applications</h2>
+<p>Cascade layers provide practical architectural advantages:</p>
+<ul>
+<li><strong>Third-Party Framework Isolation:</strong> Load entire
+libraries into a <code>framework</code> or <code>vendor</code> layer so
+internal styles can override vendor defaults without specificity
+escalations.</li>
+<li><strong>Component-Based Architectures:</strong> Separate
+foundational styles (resets, typography, layout tokens) from scoped
+component rules cleanly.</li>
+<li><strong>Utility Classes:</strong> Place utility classes into a
+top-level layer to guarantee they apply their designated styling
+regardless of the component context they are placed in.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

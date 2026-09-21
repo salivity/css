@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is CSS :focus-visible and How Does It Work? - css</title>
+    <meta name="description" content="The :focus-visible CSS pseudo-class is a modern styling tool that selectively applies focus indicators only when the browser determines they are helpful to the user, such as during keyboard navigation. By differentiating between keyboard tabs, mouse clic">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-is-css-focus-visible-and-how-does-it-work">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Is CSS :focus-visible and How Does It Work? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-is-css-focus-visible-and-how-does-it-work" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The :focus-visible CSS pseudo-class is a modern styling tool that selectively applies focus indicators only when the browser determines they are helpful to the user, such as during keyboard navigation. By differentiating between keyboard tabs, mouse clic" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-is-css-focus-visible-and-how-does-it-work">What Is CSS
+:focus-visible and How Does It Work?</h1>
+<p>The <code>:focus-visible</code> CSS pseudo-class is a modern styling
+tool that selectively applies focus indicators only when the browser
+determines they are helpful to the user, such as during keyboard
+navigation. By differentiating between keyboard tabs, mouse clicks, and
+touchscreen taps, <code>:focus-visible</code> solves the long-standing
+conflict between clean visual design and web accessibility standards,
+ensuring critical navigation outlines remain visible to those who need
+them without cluttering the interface for mouse users.</p>
+<h2 id="the-problem-with-the-classic-focus-selector">The Problem with
+the Classic <code>:focus</code> Selector</h2>
+<p>For years, developers relied on the standard <code>:focus</code>
+pseudo-class to style focused interactive elements like buttons, links,
+and form fields. However, <code>:focus</code> triggers regardless of
+input modality. When a user clicks a button with a mouse, the browser
+applies the focus outline just as it would if the user navigated to that
+button using the Tab key.</p>
+<p>Because these outlines often clashed with visual mockups, designers
+and developers frequently removed them using <code>outline: none</code>
+or <code>outline: 0</code>. This practice created severe accessibility
+barriers:</p>
+<ul>
+<li>Keyboard-only users could no longer see which element currently had
+focus.</li>
+<li>Screen-magnifier users lost visual tracking cues across the
+page.</li>
+<li>Navigating complex forms or menus became an exercise in
+guesswork.</li>
+</ul>
+<h2 id="how-focus-visible-solves-the-issue">How
+<code>:focus-visible</code> Solves the Issue</h2>
+<p>The <code>:focus-visible</code> pseudo-class uses browser heuristics
+to detect how the user is interacting with the page.</p>
+<ol type="1">
+<li><strong>Keyboard Interaction:</strong> When a user presses
+<code>Tab</code> or uses arrow keys to traverse interactive elements,
+<code>:focus-visible</code> activates and applies the custom focus
+styles.</li>
+<li><strong>Pointer Interaction:</strong> When a user clicks a button or
+interactive element with a mouse, trackpad, or stylus, the browser
+suppresses the focus ring.</li>
+<li><strong>Form Inputs:</strong> Text fields, textareas, and other
+editable inputs generally trigger <code>:focus-visible</code> even on
+mouse click, because text entry always requires clear visual
+confirmation of the active cursor state.</li>
+</ol>
+<h2 id="implementation-and-best-practices">Implementation and Best
+Practices</h2>
+<p>Implementing <code>:focus-visible</code> allows teams to provide
+clear, high-contrast outlines for keyboard navigation while keeping
+pointer interactions clean.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Remove default focus outline only when focus is not visible */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>button<span class="in">:focus:not(:focus-visible)</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">outline</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Provide a prominent, accessible indicator when visible focus is needed */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>button<span class="in">:focus-visible</span><span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>a<span class="in">:focus-visible</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">outline</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#005fcc</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">outline-offset</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Adopting <code>:focus-visible</code> guarantees compliance with WCAG
+2.1 and 2.2 guidelines (specifically Success Criterion 2.4.7: Focus
+Visible) without compromising visual aesthetics across different devices
+and input methods.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

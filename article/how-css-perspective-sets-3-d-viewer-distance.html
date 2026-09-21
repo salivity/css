@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS Perspective Sets 3D Viewer Distance - css</title>
+    <meta name="description" content="The CSS perspective property establishes the distance between the viewer's eye and the screen's z-plane ($z = 0$), determining the intensity of the visual depth applied to 3D-transformed child elements. By defining this virtual distance along the z-axis,">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-perspective-sets-3-d-viewer-distance">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS Perspective Sets 3D Viewer Distance - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-perspective-sets-3-d-viewer-distance" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS perspective property establishes the distance between the viewer's eye and the screen's z-plane ($z = 0$), determining the intensity of the visual depth applied to 3D-transformed child elements. By defining this virtual distance along the z-axis," />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-perspective-sets-3d-viewer-distance">How CSS Perspective
+Sets 3D Viewer Distance</h1>
+<p>The CSS <code>perspective</code> property establishes the distance
+between the viewer's eye and the screen's z-plane (<span
+class="math inline">\(z = 0\)</span>), determining the intensity of the
+visual depth applied to 3D-transformed child elements. By defining this
+virtual distance along the z-axis, the browser can calculate
+foreshortening, scale elements realistically based on their position,
+and render realistic vanishing points. Smaller perspective values place
+the user closer to the scene for dramatic distortion, while larger
+values move the viewer farther away, resulting in a subtler, flatter 3D
+effect.</p>
+<h3 id="the-virtual-z-axis-and-viewer-position">The Virtual Z-Axis and
+Viewer Position</h3>
+<p>In standard 2D web rendering, elements exist strictly along the
+horizontal x-axis and vertical y-axis. The moment 3D transformations
+(such as <code>translateZ()</code>, <code>rotateX()</code>, or
+<code>rotateY()</code>) are introduced, elements move forward and
+backward along the perpendicular z-axis.</p>
+<p>Without a defined <code>perspective</code>, the browser uses an
+orthographic projection. Under orthographic projection, an element
+translated along the z-axis does not change in visual scale; it retains
+its exact dimensions regardless of how "close" or "far" it is moved.
+Setting the <code>perspective</code> property switches the rendering
+engine to a perspective projection, anchoring a virtual camera at a
+specific distance from the screen.</p>
+<h3 id="how-perspective-values-affect-visual-depth">How Perspective
+Values Affect Visual Depth</h3>
+<p>The value assigned to the <code>perspective</code> property
+(typically measured in pixels) determines how abruptly elements shrink
+as they move away or enlarge as they move closer:</p>
+<ul>
+<li><strong>Small Values (e.g., <code>100px</code> to
+<code>400px</code>):</strong> The viewer is positioned very close to the
+3D plane. Small translations or rotations along the z-axis cause extreme
+foreshortening, severe angles, and dramatic visual distortion.</li>
+<li><strong>Moderate Values (e.g., <code>500px</code> to
+<code>1000px</code>):</strong> This range mimics natural human vision
+for desktop screens, providing noticeable depth without causing
+excessive geometric distortion.</li>
+<li><strong>Large Values (e.g., <code>2000px</code> and above):</strong>
+The viewer is positioned far away. Elements moving along the z-axis
+experience minimal scaling differences, resulting in an almost flat,
+subtle appearance.</li>
+<li><strong><code>none</code> (Default):</strong> No perspective is
+applied, leaving the rendering completely orthographic.</li>
+</ul>
+<h3 id="the-math-behind-the-scale-factor">The Math Behind the Scale
+Factor</h3>
+<p>When perspective is active, the browser calculates the visual scaling
+factor (<span class="math inline">\(S\)</span>) of an element translated
+along the z-axis using the following ratio:</p>
+<p><span class="math display">\[S = \frac{d}{d - z}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(d\)</span> is the value of the
+<code>perspective</code> property (viewer distance).</li>
+<li><span class="math inline">\(z\)</span> is the element's translation
+along the z-axis (<code>translateZ</code>).</li>
+</ul>
+<p>If <code>perspective</code> is set to <code>800px</code> and an
+element is moved <code>translateZ(400px)</code> forward: <span
+class="math display">\[S = \frac{800}{800 - 400} = 2\]</span> The
+element appears twice as large. If the element moves backward with
+<code>translateZ(-800px)</code>: <span class="math display">\[S =
+\frac{800}{800 - (-800)} = 0.5\]</span> The element appears half its
+original size. If <span class="math inline">\(z\)</span> reaches or
+exceeds <span class="math inline">\(d\)</span>, the element passes
+behind the viewer's eye and disappears from view.</p>
+<h3 id="the-parent-property-vs-the-transform-function">The Parent
+Property vs. the Transform Function</h3>
+<p>There are two distinct ways to apply perspective in CSS:</p>
+<ol type="1">
+<li><p><strong>The <code>perspective</code> property on a parent
+container:</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.scene</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">perspective</span><span class="ch">:</span> <span class="dv">800</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">rotateY(</span><span class="dv">45</span><span class="dt">deg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Applying the property to a parent container creates a shared 3D
+space. Multiple child elements share a single, unified vanishing point,
+reacting consistently as a cohesive 3D scene.</p></li>
+<li><p><strong>The <code>perspective()</code> function on individual
+elements:</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">perspective(</span><span class="dv">800</span><span class="dt">px</span><span class="fu">)</span> <span class="fu">rotateY(</span><span class="dv">45</span><span class="dt">deg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Applying the function directly within the <code>transform</code>
+property gives that specific element its own independent vanishing point
+centered on itself. If multiple adjacent elements use this method, their
+perspectives will not align naturally.</p></li>
+</ol>
+<h3 id="setting-the-vanishing-point-with-perspective-origin">Setting the
+Vanishing Point with <code>perspective-origin</code></h3>
+<p>While <code>perspective</code> controls the distance along the
+z-axis, the <code>perspective-origin</code> property dictates where the
+viewer is positioned along the x and y axes. By default, it is set to
+<code>50% 50%</code> (the center of the container). Shifting this
+property allows you to look at the 3D elements from above, below, or
+from either side, altering the direction lines converge without changing
+the viewer's distance.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

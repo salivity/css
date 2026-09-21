@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Style Placeholders with CSS ::placeholder - css</title>
+    <meta name="description" content="The CSS ::placeholder pseudo-element provides web developers with direct control over the appearance of placeholder text inside form inputs and textareas. This article explains what the ::placeholder pseudo-element is, how it works to format and style in">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-style-placeholders-with-css-placeholder">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Style Placeholders with CSS ::placeholder - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-style-placeholders-with-css-placeholder" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS ::placeholder pseudo-element provides web developers with direct control over the appearance of placeholder text inside form inputs and textareas. This article explains what the ::placeholder pseudo-element is, how it works to format and style in" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-style-placeholders-with-css-placeholder">How to Style
+Placeholders with CSS ::placeholder</h1>
+<p>The CSS <code>::placeholder</code> pseudo-element provides web
+developers with direct control over the appearance of placeholder text
+inside form inputs and textareas. This article explains what the
+<code>::placeholder</code> pseudo-element is, how it works to format and
+style input cues, which CSS properties are supported, and essential
+accessibility practices to consider when styling form hints.</p>
+<h2 id="what-is-the-placeholder-pseudo-element">What is the
+::placeholder Pseudo-Element?</h2>
+<p>The <code>::placeholder</code> pseudo-element targets the temporary
+hint text defined by the <code>placeholder</code> attribute on
+<code>&lt;input&gt;</code> and <code>&lt;textarea&gt;</code> elements.
+This text serves as a short cue or instruction to guide the user on what
+data to enter. By default, browsers display placeholder text in a muted
+light gray. The <code>::placeholder</code> selector allows you to
+override these native browser defaults to match your website's design
+system.</p>
+<h2 id="basic-syntax-and-implementation">Basic Syntax and
+Implementation</h2>
+<p>To format placeholder cues, target the input element followed by the
+double-colon pseudo-element selector:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Standard syntax */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>input<span class="in">::placeholder</span><span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>textarea<span class="in">::placeholder</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#6c757d</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-style</span><span class="ch">:</span> <span class="dv">italic</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span> <span class="co">/* Overrides default browser opacity */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>You can also target specific input types or custom classes:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.custom-input</span><span class="in">::placeholder</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#2b6cb0</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">300</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">letter-spacing</span><span class="ch">:</span> <span class="dv">0.5</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="supported-css-properties">Supported CSS Properties</h2>
+<p>Only a specific subset of CSS properties can be applied to the
+<code>::placeholder</code> pseudo-element:</p>
+<ul>
+<li><strong>Color and Text Styling:</strong> <code>color</code>,
+<code>font-family</code>, <code>font-size</code>,
+<code>font-weight</code>, <code>font-style</code>, and
+<code>line-height</code>.</li>
+<li><strong>Text Decoration and Spacing:</strong>
+<code>text-decoration</code>, <code>text-transform</code>, and
+<code>letter-spacing</code>.</li>
+<li><strong>Alignment:</strong> <code>text-align</code> to align cues to
+the left, right, or center.</li>
+<li><strong>Transparency:</strong> <code>opacity</code> to adjust hint
+visibility.</li>
+<li><strong>Backgrounds:</strong> <code>background-color</code> (rarely
+used for text, but supported).</li>
+</ul>
+<p>Layout-altering properties like <code>margin</code>,
+<code>padding</code>, <code>width</code>, and <code>display</code> do
+not affect placeholder text directly; these must be styled on the parent
+input element itself.</p>
+<h2 id="browser-quirks-and-vendor-prefixes">Browser Quirks and Vendor
+Prefixes</h2>
+<p>Modern browsers broadly support the standard
+<code>::placeholder</code> syntax. However, some older versions require
+vendor prefixes. When supporting legacy environments, separate each
+selector into its own rule block because browsers will drop an entire
+CSS rule if they encounter an unrecognized selector:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Modern browsers */</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>input<span class="in">::placeholder</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#718096</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Legacy WebKit (Chrome, Safari, Edge) */</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>input<span class="in">::-webkit-input-placeholder</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#718096</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">/* Legacy Firefox */</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>input<span class="in">::-moz-placeholder</span> {</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#718096</span><span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">/* Legacy Internet Explorer and Edge */</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>input<span class="in">:-ms-input-placeholder</span> {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#718096</span><span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Firefox natively applies an <code>opacity</code> lower than
+<code>1</code> to placeholders. Always declare <code>opacity: 1;</code>
+alongside your custom <code>color</code> property to ensure consistent
+color rendering across all browsers.</p>
+<h2 id="accessibility-considerations">Accessibility Considerations</h2>
+<p>Formatting placeholder cues requires a balance between visibility and
+distinction:</p>
+<ul>
+<li><strong>Color Contrast:</strong> Ensure the placeholder color
+maintains sufficient contrast against the input field background without
+looking like pre-filled text. High contrast prevents users with low
+vision from missing the cue.</li>
+<li><strong>Distinct from Real Input:</strong> The styled placeholder
+should visually differ from actual user-submitted text—often achieved
+through a slightly lighter shade or an italicized font style—so users do
+not mistake a hint for completed input.</li>
+<li><strong>Placeholders Are Not Labels:</strong> A placeholder cue
+vanishes once the user starts typing. Form fields must always include a
+proper <code>&lt;label&gt;</code> tag for assistive technologies, using
+the placeholder only as supplementary formatting guidance.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

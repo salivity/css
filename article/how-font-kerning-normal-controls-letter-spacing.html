@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How font-kerning: normal Controls Letter Spacing - css</title>
+    <meta name="description" content="The CSS font-kerning: normal property ensures that text renders with the typographer’s intended spacing between specific character pairs. By explicitly activating the kerning metrics embedded within a font file, this property resolves awkward visual ga">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-font-kerning-normal-controls-letter-spacing">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How font-kerning: normal Controls Letter Spacing - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-font-kerning-normal-controls-letter-spacing" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS font-kerning: normal property ensures that text renders with the typographer’s intended spacing between specific character pairs. By explicitly activating the kerning metrics embedded within a font file, this property resolves awkward visual ga" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-font-kerning-normal-controls-letter-spacing">How
+font-kerning: normal Controls Letter Spacing</h1>
+<p>The CSS <code>font-kerning: normal</code> property ensures that text
+renders with the typographer’s intended spacing between specific
+character pairs. By explicitly activating the kerning metrics embedded
+within a font file, this property resolves awkward visual gaps and
+collisions between adjacent glyphs. This article explains how the
+property functions, how it accesses font data, and why it provides
+consistent typographic balance across web browsers.</p>
+<h2 id="how-typographic-kerning-operates">How Typographic Kerning
+Operates</h2>
+<p>Typographic kerning is the process of adjusting the horizontal space
+between specific pairs of glyphs to achieve a visually harmonious
+result. Standard proportional fonts assign a default advance width to
+every character, which dictates where the next character should sit.
+However, characters with asymmetrical or diagonal contours—such as "A",
+"V", "W", "T", and "Y"—leave noticeable empty spaces or collide when
+placed next to certain letters.</p>
+<p>For example, without kerning, the pair "AV" appears with an excessive
+gap because the bounding boxes of the letters keep them too far apart.
+Typographers resolve this by assigning specific offset values to pairs
+like "AV", "To", or "Wa" within the font file. When kerning is applied,
+the second letter shifts closer to or further from the first to balance
+the negative space.</p>
+<h2 id="accessing-embedded-font-tables">Accessing Embedded Font
+Tables</h2>
+<p>Fonts store their kerning rules inside internal data tables, most
+commonly the <code>kern</code> table or the advanced OpenType
+<code>GPOS</code> (Glyph Positioning) table. When a browser renders text
+on a webpage, it must read these tables to position each glyph
+properly.</p>
+<p>Applying <code>font-kerning: normal</code> explicitly instructs the
+browser’s text-shaping engine to read these embedded kerning tables and
+apply the offset values to every matching character pair in the selected
+text. If the font file contains kerning definitions, the browser honors
+them without exception.</p>
+<h2 id="the-difference-between-normal-none-and-auto">The Difference
+Between <code>normal</code>, <code>none</code>, and
+<code>auto</code></h2>
+<p>The <code>font-kerning</code> property accepts three primary values
+that dictate how the browser treats these tables:</p>
+<ul>
+<li><code>normal</code>: Kerning information stored in the font is
+strictly applied. This guarantees that all defined letter pairs are
+visually corrected.</li>
+<li><code>none</code>: Kerning data is completely ignored. Characters
+are positioned strictly based on their default advance widths, which
+often results in uneven spacing, especially in headings.</li>
+<li><code>auto</code>: The browser decides whether to apply kerning.
+While modern desktop browsers typically default to enabling kerning,
+some mobile browsers or low-power rendering engines may disable it to
+save CPU resources, particularly for small text or large DOM trees.</li>
+</ul>
+<p>Using <code>font-kerning: normal</code> removes browser discretion,
+ensuring predictable and uniform typographic rendering across all
+supported platforms.</p>
+<h2 id="kerning-vs-letter-spacing">Kerning vs. Letter-Spacing</h2>
+<p>It is important to distinguish <code>font-kerning</code> from the CSS
+<code>letter-spacing</code> property:</p>
+<ul>
+<li><code>font-kerning</code> is contextual. It selectively alters
+spacing only between predetermined pairs defined by the type designer
+(such as "Ta" or "Vo"), preserving proportional harmony.</li>
+<li><code>letter-spacing</code> (tracking) is uniform. It adds or
+subtracts a fixed amount of space between every single character,
+regardless of their shapes.</li>
+</ul>
+<p>Even when <code>letter-spacing</code> is modified,
+<code>font-kerning: normal</code> should remain active so that the
+relative, proportional relationships between problematic character pairs
+are maintained within the expanded or condensed text.</p>
+<h2 id="font-dependency">Font Dependency</h2>
+<p><code>font-kerning: normal</code> does not generate kerning
+algorithms on its own. It relies entirely on the metrics embedded within
+the font file being rendered. If a low-quality or incomplete font lacks
+kerning tables, setting <code>font-kerning: normal</code> will have no
+visible effect, as there is no data for the browser to apply.
+High-quality web fonts provide comprehensive kerning pairs that, when
+activated with this property, produce sharp, legible, and visually
+balanced typography.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

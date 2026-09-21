@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Linting with Stylelint: Catching Syntax Errors - css</title>
+    <meta name="description" content="CSS linting with Stylelint is an essential quality assurance process that analyzes stylesheets to detect syntax errors, enforce consistent coding standards, and eliminate invalid rules before code reaches production. This article explains what Stylelint">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-linting-with-stylelint-catching-syntax-errors">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Linting with Stylelint: Catching Syntax Errors - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-linting-with-stylelint-catching-syntax-errors" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS linting with Stylelint is an essential quality assurance process that analyzes stylesheets to detect syntax errors, enforce consistent coding standards, and eliminate invalid rules before code reaches production. This article explains what Stylelint" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-linting-with-stylelint-catching-syntax-errors">CSS Linting
+with Stylelint: Catching Syntax Errors</h1>
+<p>CSS linting with Stylelint is an essential quality assurance process
+that analyzes stylesheets to detect syntax errors, enforce consistent
+coding standards, and eliminate invalid rules before code reaches
+production. This article explains what Stylelint is, how it operates
+within modern web development workflows, and the specific categories of
+syntax mistakes and invalid CSS declarations it catches to prevent
+silent rendering failures in browsers.</p>
+<h2 id="what-is-stylelint">What is Stylelint?</h2>
+<p>Stylelint is a robust, open-source linter designed specifically for
+modern CSS and CSS preprocessors such as SCSS, Less, and SugarSS, as
+well as CSS-in-JS implementations. Similar to how ESLint functions for
+JavaScript, Stylelint performs static analysis on your stylesheets
+without executing them. It parses your code into an Abstract Syntax Tree
+(AST), checks it against configured rules, and alerts you to typos,
+deprecated features, structural mistakes, and styling violations.</p>
+<p>Browsers are designed to be forgiving with CSS; when they encounter
+an unknown rule or broken syntax, they silently ignore it rather than
+throwing a fatal error. This permissive behavior often leads to
+hard-to-diagnose layout bugs. Stylelint solves this issue by exposing
+these errors directly inside code editors and Continuous Integration
+(CI) pipelines.</p>
+<h2 id="syntax-errors-caught-by-stylelint">Syntax Errors Caught by
+Stylelint</h2>
+<p>Stylelint detects a wide array of syntax problems, ranging from
+simple typographic mistakes to complex structural flaws.</p>
+<h3 id="1-unknown-or-misspelled-css-properties">1. Unknown or Misspelled
+CSS Properties</h3>
+<p>Stylelint validates every property name against official web
+standards. If a developer mistypes a property name, browsers discard the
+line completely.</p>
+<ul>
+<li><strong>Caught Error:</strong> Writing <code>colr: #333;</code> or
+<code>pading-top: 10px;</code> instead of <code>color</code> or
+<code>padding-top</code>.</li>
+</ul>
+<h3 id="2-invalid-units-and-dimensions">2. Invalid Units and
+Dimensions</h3>
+<p>CSS values frequently require valid units of measurement. Stylelint
+checks whether the units attached to numerical values are recognized by
+current CSS specifications.</p>
+<ul>
+<li><strong>Caught Error:</strong> Specifying
+<code>width: 200pix;</code>, <code>margin: 12pxx;</code>, or
+<code>font-size: 1.2rems;</code>.</li>
+</ul>
+<h3 id="3-unknown-selectors-pseudo-classes-and-pseudo-elements">3.
+Unknown Selectors, Pseudo-Classes, and Pseudo-Elements</h3>
+<p>Stylelint verifies that all pseudo-classes and pseudo-elements
+conform to valid web specifications.</p>
+<ul>
+<li><strong>Caught Error:</strong> Writing <code>:hoverr</code>,
+<code>:nth-child(foo)</code>, or <code>::afterr</code>. It also catches
+malformed attribute selectors, such as missing brackets or invalid
+operators.</li>
+</ul>
+<h3 id="4-malformed-functions-and-calculations">4. Malformed Functions
+and Calculations</h3>
+<p>CSS functions like <code>calc()</code>, <code>rgb()</code>,
+<code>var()</code>, and <code>minmax()</code> require precise syntax.
+Stylelint ensures arguments and operators follow correct mathematical
+and formatting rules.</p>
+<ul>
+<li><strong>Caught Error:</strong> Writing
+<code>calc(100% - 20px)</code> without spaces around the minus sign
+(which breaks in standard CSS) or supplying incorrect argument counts to
+color functions, such as <code>rgb(255, 0)</code>.</li>
+</ul>
+<h3 id="5-unclosed-strings-brackets-and-blocks">5. Unclosed Strings,
+Brackets, and Blocks</h3>
+<p>Structural issues break stylesheet parsing and cause cascading
+failures that affect unrelated elements lower in the file. Stylelint
+immediately catches:</p>
+<ul>
+<li>Unclosed curly braces (<code>{}</code>)</li>
+<li>Missing or unclosed quotation marks in strings or URLs (e.g.,
+<code>background-image: url('image.png);</code>)</li>
+<li>Unclosed parentheses in function calls.</li>
+</ul>
+<h3 id="6-invalid-at-rules-and-media-queries">6. Invalid at-Rules and
+Media Queries</h3>
+<p>At-rules like <code>@media</code>, <code>@supports</code>, and
+<code>@keyframes</code> require specific structures. Stylelint validates
+both the identifier and the conditions within them.</p>
+<ul>
+<li><strong>Caught Error:</strong> Misspelling queries like
+<code>@media scren and (max-widh: 768px)</code> or declaring
+<code>@keyframe</code> instead of <code>@keyframes</code>.</li>
+</ul>
+<h3 id="7-duplicate-properties-and-selectors">7. Duplicate Properties
+and Selectors</h3>
+<p>While technically parseable by browsers, duplicate declarations
+within the same rule block often indicate copy-paste mistakes or
+unintended overrides. Stylelint flags identical properties declared
+twice within the same selector block unless specifically configured to
+allow standard fallback patterns.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

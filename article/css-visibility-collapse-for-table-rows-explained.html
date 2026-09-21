@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Visibility Collapse for Table Rows Explained - css</title>
+    <meta name="description" content="The CSS property visibility: collapse is a specialized styling value designed primarily for internal table elements such as rows (<tr>), row groups (<tbody>), and columns (<col>). It allows developers to completely hide table elements without disrupting">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-visibility-collapse-for-table-rows-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Visibility Collapse for Table Rows Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-visibility-collapse-for-table-rows-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS property visibility: collapse is a specialized styling value designed primarily for internal table elements such as rows (<tr>), row groups (<tbody>), and columns (<col>). It allows developers to completely hide table elements without disrupting" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-visibility-collapse-for-table-rows-explained">CSS Visibility
+Collapse for Table Rows Explained</h1>
+<p>The CSS property <code>visibility: collapse</code> is a specialized
+styling value designed primarily for internal table elements such as
+rows (<code>&lt;tr&gt;</code>), row groups (<code>&lt;tbody&gt;</code>),
+and columns (<code>&lt;col&gt;</code>). It allows developers to
+completely hide table elements without disrupting the overall layout
+geometry of the table. By removing the visible row while preserving the
+column width calculations, <code>visibility: collapse</code> enables
+dynamic row removal without triggering a heavy layout reflow, offering a
+distinct performance and visual advantage over
+<code>display: none</code> and <code>visibility: hidden</code>.</p>
+<h3 id="the-problem-with-traditional-hiding-methods">The Problem with
+Traditional Hiding Methods</h3>
+<p>When managing dynamic data in HTML tables, standard CSS hiding
+techniques present distinct trade-offs:</p>
+<ul>
+<li><strong><code>display: none</code></strong>: This removes the
+element entirely from the document rendering tree. When applied to a
+<code>&lt;tr&gt;</code>, the browser must recalculate the width of every
+column in the table because the contents of the hidden row no longer
+contribute to the table's sizing algorithm. This recalculation causes an
+expensive layout reflow and can make columns visibly jump or shift in
+width.</li>
+<li><strong><code>visibility: hidden</code></strong>: This keeps the row
+invisible, but the element still occupies its original visual space. The
+row's height remains intact, resulting in an awkward, empty gap inside
+the table structure.</li>
+</ul>
+<h3 id="how-visibility-collapse-solves-layout-reflow">How
+<code>visibility: collapse</code> Solves Layout Reflow</h3>
+<p>When applied to table rows, <code>visibility: collapse</code>
+combines the visual benefits of <code>display: none</code> with the
+layout stability of <code>visibility: hidden</code>:</p>
+<ol type="1">
+<li><strong>Space Collapsing</strong>: The targeted table row has its
+height reduced to zero, visually removing it from view just like
+<code>display: none</code>. No empty vertical gap is left behind.</li>
+<li><strong>Sizing Preservation</strong>: The browser still includes the
+contents of the collapsed row when calculating column widths. Because
+the column dimensions remain locked to the widest cells across the
+entire dataset, removing or restoring rows does not cause columns to
+dynamically stretch or shrink.</li>
+<li><strong>Reflow Prevention</strong>: Because column widths do not
+need to be recomputed, the browser avoids a full table reflow. It only
+needs to perform a localized repaint and adjust the vertical position of
+following rows, resulting in smoother performance during intensive
+operations like live filtering or sorting.</li>
+</ol>
+<h3 id="syntax-and-implementation">Syntax and Implementation</h3>
+<p>To collapse a table row, apply the property directly to the row or a
+specific class:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.hidden-row</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">visibility</span><span class="ch">:</span> <span class="dv">collapse</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">thead</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Product<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Price<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">thead</span><span class="dt">&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">tbody</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Widget A<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>$10.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;hidden-row&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Widget B (Hidden without column reflow)<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>$25.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>Widget C<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>$15.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">tbody</span><span class="dt">&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="behavior-on-non-table-elements">Behavior on Non-Table
+Elements</h3>
+<p>The W3C specification dictates that when
+<code>visibility: collapse</code> is applied to non-table elements (such
+as standard <code>&lt;div&gt;</code>, <code>&lt;section&gt;</code>, or
+<code>&lt;p&gt;</code> tags), it defaults to the exact same behavior as
+<code>visibility: hidden</code>. The element will become invisible, but
+its original width, height, and layout footprint will remain intact on
+the page. Therefore, its reflow-prevention properties should only be
+leveraged within structural HTML tables.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

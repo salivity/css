@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @starting-style: Animate Elements Entering the DOM - css</title>
+    <meta name="description" content="The CSS @starting-style rule provides a native mechanism to animate elements as they are newly inserted into the Document Object Model (DOM) or toggled from display: none. Historically, CSS transitions required an already-rendered starting state to inter">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-starting-style-animate-elements-entering-the-dom">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS @starting-style: Animate Elements Entering the DOM - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-starting-style-animate-elements-entering-the-dom" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS @starting-style rule provides a native mechanism to animate elements as they are newly inserted into the Document Object Model (DOM) or toggled from display: none. Historically, CSS transitions required an already-rendered starting state to inter" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-starting-style-animate-elements-entering-the-dom">CSS
+@starting-style: Animate Elements Entering the DOM</h1>
+<p>The CSS <code>@starting-style</code> rule provides a native mechanism
+to animate elements as they are newly inserted into the Document Object
+Model (DOM) or toggled from <code>display: none</code>. Historically,
+CSS transitions required an already-rendered starting state to
+interpolate values, forcing developers to rely on JavaScript reflow
+hacks or <code>@keyframes</code>. This article explains how
+<code>@starting-style</code> defines an initial pre-render style state,
+how the browser processes it during DOM entry, and how to configure
+transitions for smooth mount and unmount animations.</p>
+<h3 id="the-problem-with-initial-mount-transitions">The Problem with
+Initial Mount Transitions</h3>
+<p>CSS transitions are designed to animate property changes between two
+computed states over time. However, when an element is dynamically
+inserted into the DOM or changes from <code>display: none</code> to a
+visible display state (such as <code>block</code> or <code>flex</code>),
+the browser does not have a previous rendered frame to transition
+from.</p>
+<p>Without a baseline, the browser instantly computes the element's
+final styles on the first paint, causing the element to appear abruptly
+without executing any defined CSS transition. In the past, bypassing
+this limitation required forcing a browser reflow using JavaScript (such
+as accessing <code>element.offsetHeight</code>) or using CSS
+<code>@keyframes</code> animations, which are more rigid and harder to
+reverse cleanly.</p>
+<h3 id="how-starting-style-functions">How <code>@starting-style</code>
+Functions</h3>
+<p>The <code>@starting-style</code> at-rule establishes initial style
+values for an element before its first style resolution and paint
+cycle.</p>
+<p>When an element becomes visible, the browser checks if a
+<code>@starting-style</code> block applies to it. If present, the engine
+uses these properties as the starting point (from-values) and
+immediately transitions them to the element's standard styles
+(to-values) according to its <code>transition</code> properties.</p>
+<p>Under the hood, the process works in three steps:</p>
+<ol type="1">
+<li><strong>Instantiation:</strong> The element is appended to the DOM
+or changes from <code>display: none</code>.</li>
+<li><strong>Initial Resolution:</strong> The browser assigns the
+property values declared inside <code>@starting-style</code> as the
+initial computed styles before painting.</li>
+<li><strong>Transition Execution:</strong> The browser switches the
+element's styles to its regular rule set, triggering the standard CSS
+transition pipeline toward the final values.</li>
+</ol>
+<h3 id="basic-syntax-and-implementation">Basic Syntax and
+Implementation</h3>
+<p><code>@starting-style</code> can be written as a standalone rule
+targeting a selector or nested directly inside a CSS rule block.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateY(</span><span class="dv">0</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">opacity 0.4</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">,</span> <span class="dv">transform 0.4</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Define the entry state */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">@starting-style</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.card</span> {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transform</span><span class="ch">:</span> <span class="fu">translateY(</span><span class="dv">20</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When <code>.card</code> is injected into the DOM via JavaScript, it
+instantly initializes at <code>opacity: 0</code> and
+<code>translateY(20px)</code>, then smoothly animates to
+<code>opacity: 1</code> and <code>translateY(0)</code>.</p>
+<h3 id="animating-from-display-none">Animating from
+<code>display: none</code></h3>
+<p>When animating an element toggled via the <code>display</code>
+property, <code>@starting-style</code> must be paired with
+<code>transition-behavior: allow-discrete</code> (or the
+<code>allow-discrete</code> keyword in the <code>transition</code>
+shorthand). Because <code>display</code> is a discrete property, this
+flag ensures the element remains rendered as <code>display: block</code>
+for the duration of the transition rather than snapping immediately.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.modal</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">scale(</span><span class="dv">1</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">opacity 0.3</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">,</span> <span class="dv">transform 0.3</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">,</span> <span class="dv">display 0.3</span><span class="dt">s</span> <span class="dv">allow-discrete</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.modal.is-hidden</span> {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">scale(</span><span class="dv">0.95</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">@starting-style</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.modal</span> {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transform</span><span class="ch">:</span> <span class="fu">scale(</span><span class="dv">0.95</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="animating-native-top-layer-elements">Animating Native Top-Layer
+Elements</h3>
+<p><code>@starting-style</code> seamlessly handles native
+browser-managed UI, such as <code>&lt;dialog&gt;</code> elements and
+components utilizing the Popover API. Because these elements toggle
+between open and closed states, you can define their entry styles
+directly alongside their open states:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dialog {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">scale(</span><span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">opacity 0.3</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">,</span> <span class="dv">transform 0.3</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">,</span> <span class="dv">display 0.3</span><span class="dt">s</span> <span class="dv">allow-discrete</span><span class="op">,</span> <span class="dv">overlay</span> <span class="dv">0.3</span><span class="dt">s</span> <span class="dv">allow-discrete</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>dialog<span class="ex">[</span><span class="ss">open</span><span class="ex">]</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">scale(</span><span class="dv">1</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">/* Entry state when the dialog is opened */</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="im">@starting-style</span> {</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  dialog<span class="ex">[</span><span class="ss">open</span><span class="ex">]</span> {</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">opacity</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">transform</span><span class="ch">:</span> <span class="fu">scale(</span><span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this setup, the <code>dialog</code> element smoothly scales and
+fades in upon calling <code>dialog.showModal()</code>, while the
+<code>overlay</code> transition keyword ensures proper rendering timing
+within the browser's top-layer stack.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

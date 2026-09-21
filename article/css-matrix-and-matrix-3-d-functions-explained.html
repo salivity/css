@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS matrix and matrix3d Functions Explained - css</title>
+    <meta name="description" content="The CSS matrix() and matrix3d() functions provide a low-level method for applying affine transformations directly to HTML elements using mathematical matrices. Rather than chaining individual functions like rotate(), scale(), translate(), and skew(), the">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-matrix-and-matrix-3-d-functions-explained">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS matrix and matrix3d Functions Explained - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-matrix-and-matrix-3-d-functions-explained" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS matrix() and matrix3d() functions provide a low-level method for applying affine transformations directly to HTML elements using mathematical matrices. Rather than chaining individual functions like rotate(), scale(), translate(), and skew(), the" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-matrix-and-matrix3d-functions-explained">CSS matrix and
+matrix3d Functions Explained</h1>
+<p>The CSS <code>matrix()</code> and <code>matrix3d()</code> functions
+provide a low-level method for applying affine transformations directly
+to HTML elements using mathematical matrices. Rather than chaining
+individual functions like <code>rotate()</code>, <code>scale()</code>,
+<code>translate()</code>, and <code>skew()</code>, these functions
+combine all geometric alterations into a single set of values. This
+article covers how 2D and 3D transformation matrices work, the parameter
+structure for both functions, and how they translate to visual
+manipulations in web browsers.</p>
+<h2 id="understanding-affine-transformations">Understanding Affine
+Transformations</h2>
+<p>An affine transformation is a linear mapping method that preserves
+points, straight lines, and planes. In CSS, affine transformations alter
+an element’s position, size, orientation, and shear without curving
+parallel lines. Standard CSS transform utilities—such as
+<code>translateX(20px)</code> or <code>rotate(45deg)</code>—are simply
+human-readable abstractions. Under the hood, the browser translates all
+transform rules into an affine transformation matrix to render the
+element on the screen.</p>
+<h2 id="the-2d-matrix-function">The 2D <code>matrix()</code>
+Function</h2>
+<p>The <code>matrix()</code> function handles two-dimensional
+transformations using a 3×3 matrix. Because the bottom row of an affine
+matrix in 2D homogeneous coordinates is always <code>[0, 0, 1]</code>,
+CSS exposes only the six dynamic values:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>transform<span class="in">:</span> matrix<span class="in">(</span>a<span class="op">,</span> b<span class="op">,</span> c<span class="op">,</span> d<span class="op">,</span> tx<span class="op">,</span> ty<span class="in">)</span>;</span></code></pre></div>
+<p>The underlying mathematical representation corresponds to:</p>
+<pre class="text"><code>| a  c  tx |
+| b  d  ty |
+| 0  0   1 |</code></pre>
+<p>Each parameter governs specific spatial properties:</p>
+<ul>
+<li><strong><code>a</code> (Scale X):</strong> Stretches or shrinks the
+element horizontally. A value of <code>1</code> represents default
+size.</li>
+<li><strong><code>b</code> (Skew Y):</strong> Vertically shears the
+element based on the angle's tangent.</li>
+<li><strong><code>c</code> (Skew X):</strong> Horizontally shears the
+element based on the angle's tangent.</li>
+<li><strong><code>d</code> (Scale Y):</strong> Stretches or shrinks the
+element vertically. A value of <code>1</code> represents default
+size.</li>
+<li><strong><code>tx</code> (Translate X):</strong> Moves the element
+along the X-axis in pixels.</li>
+<li><strong><code>ty</code> (Translate Y):</strong> Moves the element
+along the Y-axis in pixels.</li>
+</ul>
+<p>For example, to translate an element by 50px horizontally and scale
+it by 1.5 times in both directions:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>transform<span class="in">:</span> matrix<span class="in">(</span>1<span class="fu">.5</span><span class="op">,</span> 0<span class="op">,</span> 0<span class="op">,</span> 1<span class="fu">.5</span><span class="op">,</span> 50<span class="op">,</span> 0<span class="in">)</span>;</span></code></pre></div>
+<h2 id="the-3d-matrix3d-function">The 3D <code>matrix3d()</code>
+Function</h2>
+<p>To manipulate elements in three-dimensional space, CSS uses
+<code>matrix3d()</code>. This function takes a 4×4 transformation matrix
+defined by 16 arguments listed in column-major order:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>transform<span class="in">:</span> matrix3d<span class="in">(</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  a1<span class="op">,</span> b1<span class="op">,</span> c1<span class="op">,</span> d1<span class="op">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  a2<span class="op">,</span> b2<span class="op">,</span> c2<span class="op">,</span> d2<span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  a3<span class="op">,</span> b3<span class="op">,</span> c3<span class="op">,</span> d3<span class="op">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  a4<span class="op">,</span> b4<span class="op">,</span> c4<span class="op">,</span> d4</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="in">)</span>;</span></code></pre></div>
+<p>In matrix form, this layout appears as follows:</p>
+<pre class="text"><code>| a1  a2  a3  a4 |
+| b1  b2  b3  b4 |
+| c1  c2  c3  c4 |
+| d1  d2  d3  d4 |</code></pre>
+<p>These values manage distinct components of 3D rendering:</p>
+<ul>
+<li><strong>Columns 1 to 3 (<code>a1</code> through
+<code>c3</code>):</strong> Manage linear transformations, including 3D
+rotations, non-uniform scaling across the X, Y, and Z axes, and
+multi-directional shearing.</li>
+<li><strong>Fourth Column (<code>a4</code>, <code>b4</code>,
+<code>c4</code>):</strong> Represents the translation components
+(<code>translateX</code>, <code>translateY</code>,
+<code>translateZ</code>).</li>
+<li><strong>Fourth Row (<code>d1</code>, <code>d2</code>,
+<code>d3</code>, <code>d4</code>):</strong> Controls perspective
+projection and homogeneous scaling. For standard affine transforms,
+<code>d1</code>, <code>d2</code>, and <code>d3</code> remain
+<code>0</code>, while <code>d4</code> acts as a global scale factor
+typically set to <code>1</code>.</li>
+</ul>
+<p>An identity matrix in 3D—which applies no visual changes—is written
+as:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transform<span class="in">:</span> matrix3d<span class="in">(</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  1<span class="op">,</span> 0<span class="op">,</span> 0<span class="op">,</span> 0<span class="op">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  0<span class="op">,</span> 1<span class="op">,</span> 0<span class="op">,</span> 0<span class="op">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  0<span class="op">,</span> 0<span class="op">,</span> 1<span class="op">,</span> 0<span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  0<span class="op">,</span> 0<span class="op">,</span> 0<span class="op">,</span> 1</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">)</span>;</span></code></pre></div>
+<h2 id="when-to-use-raw-matrix-functions">When to Use Raw Matrix
+Functions</h2>
+<p>While functions like <code>rotate()</code> and
+<code>translate()</code> are easier to read and maintain for simple
+layouts, <code>matrix()</code> and <code>matrix3d()</code> offer
+distinct advantages in specialized scenarios:</p>
+<ol type="1">
+<li><strong>Performance in Animation Engines:</strong> JavaScript
+animation and physics libraries (such as GSAP, Three.js, or custom
+canvas engines) compute compound transforms using matrix multiplication.
+Passing a single calculated matrix string to the CSS engine reduces the
+parsing overhead of resolving multiple chained functions.</li>
+<li><strong>Precision and Synchronization:</strong> Interpolating
+between complex orientations—especially in 3D—can introduce gimbal lock
+or unexpected visual artifacts when animating individual rotation axes.
+Matrix representation allows continuous, deterministic frame-by-frame
+updates.</li>
+<li><strong>Complex Deformations:</strong> Non-standard spatial
+mappings, such as combined perspective warps and directional skews, can
+be calculated programmatically and applied via a single declaration
+without relying on multiple nested wrapper elements.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

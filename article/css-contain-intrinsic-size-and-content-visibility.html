@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS contain-intrinsic-size and content-visibility - css</title>
+    <meta name="description" content="The CSS contain-intrinsic-size property acts as a placeholder sizing mechanism for elements that use size containment, most notably when paired with content-visibility: auto. By default, skipping the rendering of off-screen content causes layout collapse">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-contain-intrinsic-size-and-content-visibility">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS contain-intrinsic-size and content-visibility - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-contain-intrinsic-size-and-content-visibility" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS contain-intrinsic-size property acts as a placeholder sizing mechanism for elements that use size containment, most notably when paired with content-visibility: auto. By default, skipping the rendering of off-screen content causes layout collapse" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-contain-intrinsic-size-and-content-visibility">CSS
+contain-intrinsic-size and content-visibility</h1>
+<p>The CSS <code>contain-intrinsic-size</code> property acts as a
+placeholder sizing mechanism for elements that use size containment,
+most notably when paired with <code>content-visibility: auto</code>. By
+default, skipping the rendering of off-screen content causes layout
+collapse, which results in erratic scrollbars and layout shifts during
+scrolling. This article explains how <code>contain-intrinsic-size</code>
+works, why the scroll-jumping issue occurs, and how providing estimated
+dimensions preserves layout stability and ensures a smooth scrolling
+experience.</p>
+<h2 id="the-problem-scroll-jumping-with-content-visibility">The Problem:
+Scroll Jumping with content-visibility</h2>
+<p>The <code>content-visibility: auto</code> property is a powerful
+performance feature that instructs the browser to skip the layout,
+styling, and paint operations for elements until they are close to
+entering the viewport. This dramatically reduces initial page load times
+and memory consumption on content-heavy pages.</p>
+<p>However, when <code>content-visibility: auto</code> is applied,
+off-screen elements are treated as having size containment with no
+rendered contents. Consequently, their height effectively collapses to
+<code>0px</code> (or whatever minimal height their non-content
+properties dictate). As a user scrolls down the page:</p>
+<ol type="1">
+<li>Off-screen elements enter the viewport area.</li>
+<li>The browser renders the element, expanding its height to accommodate
+its contents.</li>
+<li>The total scroll height of the document suddenly increases.</li>
+<li>The scrollbar thumb shrinks, shifts unpredictably, or jumps,
+creating a jarring user experience where content unexpectedly moves
+under the cursor.</li>
+</ol>
+<h2 id="what-is-contain-intrinsic-size">What is
+contain-intrinsic-size?</h2>
+<p>The <code>contain-intrinsic-size</code> property provides an
+explicit, intrinsic fallback dimension (width and height) for elements
+affected by size containment. It tells the browser how much space to
+reserve for an element <em>before</em> its actual contents are
+rendered.</p>
+<p>Instead of collapsing to zero, an off-screen element assigned this
+property maintains a defined placeholder geometry.</p>
+<h3 id="syntax">Syntax</h3>
+<p>You can define both dimensions, a single value applied to both, or
+use the <code>auto</code> keyword:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Single value: sets both width and height */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>contain-intrinsic-size<span class="in">:</span> 500px;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* Two values: width and height */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>contain-intrinsic-size<span class="in">:</span> 100% 450px;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* With the auto keyword */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>contain-intrinsic-size<span class="in">:</span> auto 450px;</span></code></pre></div>
+<h2 id="how-contain-intrinsic-size-stabilizes-scrolling">How
+contain-intrinsic-size Stabilizes Scrolling</h2>
+<p>By assigning an estimated height via
+<code>contain-intrinsic-size</code>, the browser can calculate an
+accurate overall page height from the start, stabilizing the scroll
+mechanics.</p>
+<h3 id="1-accurate-document-height">1. Accurate Document Height</h3>
+<p>When every off-screen section reserves space roughly equal to its
+rendered height, the scrollbar thumb accurately reflects the true length
+of the document upon initial load.</p>
+<h3 id="2-elimination-of-scrollbar-thrashing">2. Elimination of
+Scrollbar Thrashing</h3>
+<p>Because the document height does not drastically change every time a
+new section enters the viewport, the scrollbar thumb maintains a
+consistent size and position. The user does not experience sudden jumps
+while dragging the scrollbar or scrolling quickly.</p>
+<h3 id="3-dynamic-precision-with-the-auto-keyword">3. Dynamic Precision
+with the <code>auto</code> Keyword</h3>
+<p>Estimating a fixed height (such as <code>500px</code>) helps, but
+real-world content often varies in height. The <code>auto</code> keyword
+solves this discrepancy:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  content-visibility<span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">contain-intrinsic-size</span><span class="ch">:</span> <span class="bu">auto</span> <span class="dv">500</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When using <code>auto [fallback-size]</code>:</p>
+<ul>
+<li><strong>Before rendering:</strong> The browser uses the fallback
+size (<code>500px</code>) to reserve space.</li>
+<li><strong>After rendering:</strong> Once the element enters the
+viewport and renders, the browser remembers its actual rendered
+size.</li>
+<li><strong>When scrolling past:</strong> If the element moves
+off-screen again and its rendering is unloaded, the browser uses the
+<em>remembered actual size</em> rather than the original fallback
+estimate.</li>
+</ul>
+<p>This creates a self-correcting layout that minimizes shifts to the
+initial pass only, achieving pixel-perfect scroll stability for any
+subsequent scrolling throughout the page.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

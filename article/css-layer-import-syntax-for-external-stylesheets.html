@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @layer Import Syntax for External Stylesheets - css</title>
+    <meta name="description" content="This article explains how to use the CSS @layer import syntax to load entire external stylesheets directly into designated cascade layers. By integrating the layer keyword or function into standard @import rules, developers can manage the cascade priorit">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-layer-import-syntax-for-external-stylesheets">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS @layer Import Syntax for External Stylesheets - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-layer-import-syntax-for-external-stylesheets" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how to use the CSS @layer import syntax to load entire external stylesheets directly into designated cascade layers. By integrating the layer keyword or function into standard @import rules, developers can manage the cascade priorit" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-layer-import-syntax-for-external-stylesheets">CSS @layer
+Import Syntax for External Stylesheets</h1>
+<p>This article explains how to use the CSS <code>@layer</code> import
+syntax to load entire external stylesheets directly into designated
+cascade layers. By integrating the <code>layer</code> keyword or
+function into standard <code>@import</code> rules, developers can manage
+the cascade priority of third-party frameworks, design systems, and
+modular styles without modifying the source code of the external
+files.</p>
+<h2 id="basic-syntax-for-named-layers">Basic Syntax for Named
+Layers</h2>
+<p>To import an external stylesheet into a specific named layer, add the
+<code>layer()</code> function directly after the file path or
+<code>url()</code> specification in your <code>@import</code> rule.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Using the url() notation */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;framework.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">framework</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* Using direct string notation */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="st">&quot;components.css&quot;</span> layer<span class="fu">(</span><span class="dv">components</span><span class="fu">)</span><span class="op">;</span></span></code></pre></div>
+<p>In this syntax, all CSS rules inside <code>framework.css</code> are
+assigned to the <code>framework</code> layer, and all rules in
+<code>components.css</code> are assigned to the <code>components</code>
+layer.</p>
+<h2 id="importing-into-anonymous-layers">Importing into Anonymous
+Layers</h2>
+<p>If you want to assign an external stylesheet to its own isolated
+layer without explicitly naming it, omit the parentheses and use the
+<code>layer</code> keyword by itself.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;normalize.css&quot;</span><span class="fu">)</span> layer<span class="op">;</span></span></code></pre></div>
+<p>This creates an anonymous layer for <code>normalize.css</code>.
+Anonymous layers cannot be referenced elsewhere in your styles to adjust
+their order, meaning their precedence is determined entirely by where
+this <code>@import</code> statement appears relative to other layer
+declarations.</p>
+<h2 id="targeting-nested-layers">Targeting Nested Layers</h2>
+<p>You can assign imported stylesheets directly into nested sub-layers
+using standard dot notation inside the <code>layer()</code>
+function.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;buttons.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">components</span>.<span class="dv">buttons</span><span class="fu">)</span><span class="op">;</span></span></code></pre></div>
+<p>This imports the styles into the <code>buttons</code> layer nested
+inside the <code>parent</code> <code>components</code> layer, preserving
+fine-grained cascade control across multi-tier styling
+architectures.</p>
+<h2 id="syntax-order-with-media-and-supports-queries">Syntax Order with
+Media and Supports Queries</h2>
+<p>When combining the <code>layer()</code> function with media queries
+or <code>@supports</code> feature conditions, the layer declaration must
+always precede them. The required order is the URL, followed by the
+layer, followed by any feature or media queries.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Layer with a media query */</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;dark-theme.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">themes</span><span class="fu">)</span> <span class="fu">(</span><span class="kw">prefers-color-scheme</span><span class="ch">:</span> <span class="dv">dark</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* Layer with supports condition and media query */</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;grid-layout.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">layouts</span><span class="fu">)</span> supports<span class="fu">(</span><span class="dv">display</span>: <span class="dv">grid</span><span class="fu">)</span> <span class="an">screen</span> <span class="kw">and</span> <span class="fu">(</span><span class="kw">min-width</span><span class="ch">:</span> <span class="dv">768</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span></code></pre></div>
+<p>Placing the <code>layer()</code> declaration after a media query or
+supports query will result in a syntax error, causing the browser to
+ignore the import statement.</p>
+<h2 id="cascade-behavior-of-imported-layers">Cascade Behavior of
+Imported Layers</h2>
+<p>The priority of imported layers follows standard CSS cascade layer
+rules: layers declared first have the lowest priority, while layers
+declared later have higher priority. To ensure complete control over
+precedence, define your intended layer order at the very top of your
+root stylesheet before executing your <code>@import</code>
+statements:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Explicitly establish layer order first */</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">@layer</span> reset<span class="op">,</span> framework<span class="op">,</span> components<span class="op">,</span> utilities<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* Import external files into the defined layers */</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;reset.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">reset</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;bootstrap.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">framework</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;custom-components.css&quot;</span><span class="fu">)</span> layer<span class="fu">(</span><span class="dv">components</span><span class="fu">)</span><span class="op">;</span></span></code></pre></div>
+<p>Regardless of the selector specificity inside
+<code>bootstrap.css</code>, styles defined within
+<code>custom-components.css</code> will consistently override them
+because the <code>components</code> layer is ordered after the
+<code>framework</code> layer.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

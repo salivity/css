@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does Critical CSS Improve First Contentful Paint? - css</title>
+    <meta name="description" content="Critical CSS is the minimal set of styles required to render the above-the-fold content of a webpage immediately upon loading. By extracting these essential rules and inlining them directly into the HTML <head>, browsers can skip the network roundtrips t">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-critical-css-improve-first-contentful-paint">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does Critical CSS Improve First Contentful Paint? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-critical-css-improve-first-contentful-paint" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Critical CSS is the minimal set of styles required to render the above-the-fold content of a webpage immediately upon loading. By extracting these essential rules and inlining them directly into the HTML <head>, browsers can skip the network roundtrips t" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-critical-css-improve-first-contentful-paint">How Does
+Critical CSS Improve First Contentful Paint?</h1>
+<p>Critical CSS is the minimal set of styles required to render the
+above-the-fold content of a webpage immediately upon loading. By
+extracting these essential rules and inlining them directly into the
+HTML <code>&lt;head&gt;</code>, browsers can skip the network roundtrips
+typically needed to download external stylesheets before painting
+pixels. This process drastically reduces render-blocking delays,
+accelerates First Contentful Paint (FCP), and delivers a perceived
+near-instantaneous load time for users.</p>
+<h2 id="understanding-render-blocking-css">Understanding Render-Blocking
+CSS</h2>
+<p>By default, web browsers treat external stylesheets
+(<code>&lt;link rel="stylesheet"&gt;</code>) as render-blocking
+resources. When a browser parses an HTML document and encounters an
+external CSS file, it halts the rendering of the DOM until the
+stylesheet is completely fetched, parsed, and combined with the DOM to
+construct the CSS Object Model (CSSOM).</p>
+<p>If a site relies on a large, monolithic CSS bundle containing rules
+for every page component, modal, and footer, the browser must wait for
+the entire file to arrive across the network. During this delay, users
+stare at a blank white screen, driving up metrics like First Contentful
+Paint (FCP) and Largest Contentful Paint (LCP).</p>
+<h2 id="what-is-critical-css">What Is Critical CSS?</h2>
+<p>Critical CSS refers strictly to the style declarations needed to
+render the visible viewport—the "above-the-fold" content—when a visitor
+first lands on a page. This typically includes:</p>
+<ul>
+<li>Typography and baseline reset rules for viewport text</li>
+<li>Header, navigation, and top layout grid definitions</li>
+<li>Hero section dimensions, text styling, and layout positioning</li>
+<li>Basic styling for visible calls-to-action (CTAs)</li>
+</ul>
+<p>Any rules targeting elements below the fold—such as footer styling,
+hidden accordion panels, comments sections, or secondary widgets—are
+classified as non-critical CSS.</p>
+<h2 id="the-mechanism-of-inlining-critical-css">The Mechanism of
+Inlining Critical CSS</h2>
+<p>To eliminate render-blocking latency, the extracted critical rules
+are embedded directly within a <code>&lt;style&gt;</code> block inside
+the document's <code>&lt;head&gt;</code>.</p>
+<p>Because the critical rules arrive inside the initial HTML
+payload:</p>
+<ol type="1">
+<li><strong>No External Network Latency:</strong> The browser receives
+the styling rules within the very first TCP packet transmissions
+alongside the HTML markup.</li>
+<li><strong>Immediate CSSOM Construction:</strong> The rendering engine
+builds the initial CSSOM synchronously as it parses the HTML head.</li>
+<li><strong>Faster First Contentful Paint:</strong> The browser can
+paint the hero section, text, and header elements as soon as the
+relevant DOM nodes are parsed, without waiting for external server
+responses.</li>
+</ol>
+<h2 id="loading-the-remaining-css-asynchronously">Loading the Remaining
+CSS Asynchronously</h2>
+<p>Inlining critical styles resolves only the above-the-fold
+requirements; the rest of the stylesheet must still load to style the
+remainder of the page as the user scrolls. To ensure the non-critical
+CSS does not block the initial render, it is deferred using asynchronous
+loading patterns.</p>
+<p>A standard implementation relies on the <code>rel="preload"</code>
+attribute with an inline switch to a standard stylesheet upon load:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- Inlined Critical CSS --&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Essential above-the-fold styles */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    body { <span class="kw">margin</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span> <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">sans-serif</span><span class="op">;</span> }</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.hero</span> { <span class="kw">display</span><span class="ch">:</span> <span class="dv">flex</span><span class="op">;</span> <span class="kw">min-height</span><span class="ch">:</span> <span class="dv">60</span><span class="dt">vh</span><span class="op">;</span> <span class="kw">background</span><span class="ch">:</span> <span class="cn">#f4f4f4</span><span class="op">;</span> }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.hero-title</span> { <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">rem</span><span class="op">;</span> <span class="kw">color</span><span class="ch">:</span> <span class="cn">#111</span><span class="op">;</span> }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- Asynchronous Non-Critical CSS --&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;preload&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;/styles/main.css&quot;</span><span class="ot"> as</span><span class="op">=</span><span class="st">&quot;style&quot;</span><span class="ot"> onload</span><span class="op">=</span><span class="st">&quot;this.onload=null;this.rel=&#39;stylesheet&#39;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">noscript</span><span class="dt">&gt;&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;/styles/main.css&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">noscript</span><span class="dt">&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>This configuration ensures the browser treats the main stylesheet as
+a low-priority background fetch while utilizing the inlined styles to
+paint the visible screen immediately.</p>
+<h2 id="key-performance-benefits">Key Performance Benefits</h2>
+<ul>
+<li><strong>Reduced FCP Times:</strong> By cutting out network
+roundtrips for stylesheet discovery and download, FCP often drops from
+multiple seconds to sub-second ranges on constrained mobile
+connections.</li>
+<li><strong>Minimized Layout Shifts:</strong> Styling the core layout
+skeleton immediately prevents Cumulative Layout Shift (CLS) that occurs
+when unstyled HTML snaps into place after external CSS loads.</li>
+<li><strong>Enhanced Perceived Speed:</strong> Users see meaningful
+content almost instantly, reducing bounce rates and improving engagement
+metrics across all device types.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

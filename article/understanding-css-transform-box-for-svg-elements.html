@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding CSS transform-box for SVG Elements - css</title>
+    <meta name="description" content="The CSS transform-box property defines the reference coordinate box used to compute transformations and transformation origins on elements, playing a critical role in Scalable Vector Graphics (SVG). By determining whether transforms are calculated relati">
+    <link rel="canonical" href="https://salivity.github.io/css/article/understanding-css-transform-box-for-svg-elements">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding CSS transform-box for SVG Elements - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/understanding-css-transform-box-for-svg-elements" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS transform-box property defines the reference coordinate box used to compute transformations and transformation origins on elements, playing a critical role in Scalable Vector Graphics (SVG). By determining whether transforms are calculated relati" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-css-transform-box-for-svg-elements">Understanding
+CSS transform-box for SVG Elements</h1>
+<p>The CSS <code>transform-box</code> property defines the reference
+coordinate box used to compute transformations and transformation
+origins on elements, playing a critical role in Scalable Vector Graphics
+(SVG). By determining whether transforms are calculated relative to an
+individual shape's geometry or the entire SVG canvas,
+<code>transform-box</code> solves the common problem of erratic
+rotations and scaling on nested SVG nodes.</p>
+<h2 id="the-svg-transform-origin-problem">The SVG Transform Origin
+Problem</h2>
+<p>In standard HTML, properties like
+<code>transform-origin: 50% 50%</code> resolve relative to an element’s
+own bounding box, centering transforms predictably. Historically, SVG
+child elements (such as <code>&lt;rect&gt;</code>,
+<code>&lt;circle&gt;</code>, or <code>&lt;path&gt;</code>) behave
+differently. In the original SVG specification, percentage-based
+transformation origins resolve relative to the entire SVG canvas—the
+viewport established by the parent <code>&lt;svg&gt;</code> element.</p>
+<p>Because of this, applying <code>transform: rotate(45deg)</code> and
+<code>transform-origin: center</code> to a shape inside an SVG often
+causes the shape to orbit the center of the entire canvas rather than
+spinning on its own axis. The <code>transform-box</code> property
+eliminates this issue by allowing developers to explicitly choose the
+reference frame.</p>
+<h2 id="values-of-the-transform-box-property">Values of the
+<code>transform-box</code> Property</h2>
+<p>The <code>transform-box</code> property accepts several values, the
+most critical of which alter how SVG nodes calculate their origin:</p>
+<ul>
+<li><strong><code>fill-box</code></strong>: Uses the tightest bounding
+box surrounding the object's geometry, ignoring strokes. When paired
+with <code>transform-origin: center</code> (or <code>50% 50%</code>),
+this forces the origin to the geometric center of the specific SVG node.
+This replicates standard HTML behavior inside vector graphics.</li>
+<li><strong><code>view-box</code></strong>: Uses the nearest SVG
+viewport as the reference box, which is defined by the SVG's
+<code>viewBox</code> attribute. If no <code>viewBox</code> is present,
+it defaults to the coordinate system of the <code>&lt;svg&gt;</code>
+element. This is the traditional default behavior for SVG nodes.</li>
+<li><strong><code>stroke-box</code></strong>: Uses the bounding box of
+the object including its stroke width. This is useful when strokes are
+heavy and an asymmetric stroke shift would otherwise skew the visual
+center.</li>
+<li><strong><code>content-box</code></strong>,
+<strong><code>border-box</code></strong>, and
+<strong><code>padding-box</code></strong>: These apply primarily to
+standard CSS box-model elements in HTML, though <code>border-box</code>
+serves as the initial fallback for HTML elements when transforms are
+applied.</li>
+</ul>
+<h2 id="practical-implementation">Practical Implementation</h2>
+<p>To rotate an individual SVG icon, gear, or component around its own
+center without calculating manual pixel offsets, apply
+<code>transform-box: fill-box</code>:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.gear-icon</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform-box</span><span class="ch">:</span> <span class="dv">fill-box</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform-origin</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transform</span><span class="ch">:</span> <span class="fu">rotate(</span><span class="dv">180</span><span class="dt">deg</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">transition</span><span class="ch">:</span> <span class="dv">transform 0.3</span><span class="dt">s</span> <span class="dv">ease</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Without <code>transform-box: fill-box</code>, the browser evaluates
+<code>center</code> as <code>50% 50%</code> of the parent
+<code>&lt;svg&gt;</code> view-box, moving the gear out of place. With
+<code>fill-box</code>, the browser calculates the bounding box of only
+the <code>.gear-icon</code> path, keeping the element in place while it
+rotates.</p>
+<h2 id="summary">Summary</h2>
+<p>The <code>transform-box</code> property bridges the gap between the
+CSS box model and SVG coordinate spaces. By assigning
+<code>fill-box</code> to SVG child nodes, transformation origins anchor
+to the individual element's geometry, enabling intuitive CSS animations,
+rotations, and scales without manual coordinate calculations.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

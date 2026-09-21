@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Style Radio Buttons with CSS accent-color - css</title>
+    <meta name="description" content="The CSS accent-color property provides a lightweight, native method for applying custom brand colors to user-interface elements without overwriting their underlying accessibility features. This article explains how the property styles HTML radio buttons,">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-style-radio-buttons-with-css-accent-color">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Style Radio Buttons with CSS accent-color - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-style-radio-buttons-with-css-accent-color" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS accent-color property provides a lightweight, native method for applying custom brand colors to user-interface elements without overwriting their underlying accessibility features. This article explains how the property styles HTML radio buttons," />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-style-radio-buttons-with-css-accent-color">How to Style
+Radio Buttons with CSS accent-color</h1>
+<p>The CSS <code>accent-color</code> property provides a lightweight,
+native method for applying custom brand colors to user-interface
+elements without overwriting their underlying accessibility features.
+This article explains how the property styles HTML radio buttons, how
+major web browsers handle its rendering and contrast adjustments, and
+where its practical limitations lie compared to fully custom form
+elements.</p>
+<h3 id="the-purpose-of-accent-color">The Purpose of
+<code>accent-color</code></h3>
+<p>Historically, styling native radio buttons required hiding the
+default element using <code>appearance: none</code> or
+<code>opacity: 0</code> and rebuilding the control from scratch using
+pseudo-elements (<code>::before</code> and <code>::after</code>). While
+this offered total visual control, it often introduced accessibility
+regressions, such as missing focus indicators or incorrect high-contrast
+mode behaviors.</p>
+<p>The <code>accent-color</code> property eliminates this complexity by
+allowing developers to define a custom color for the accent elements of
+native inputs with a single line of CSS:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>input<span class="ex">[</span><span class="ss">type</span><span class="op">=</span><span class="st">&quot;radio&quot;</span><span class="ex">]</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">accent-color</span><span class="ch">:</span> <span class="cn">#0066cc</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="visual-effect-on-radio-buttons">Visual Effect on Radio
+Buttons</h3>
+<p>When applied to a radio button, <code>accent-color</code> modifies
+the element in its active and checked states.</p>
+<ol type="1">
+<li><strong>Checked State:</strong> The inner dot and the active outer
+circle take on the specified accent color.</li>
+<li><strong>Unchecked State:</strong> Most browsers leave the unchecked
+border and background in their default neutral state to ensure the input
+remains recognizable and distinct.</li>
+<li><strong>Interactive States:</strong> Hover, active (pressed), and
+focus states automatically generate lighter or darker shades derived
+from the specified accent color.</li>
+</ol>
+<h3 id="cross-browser-rendering-and-behavior">Cross-Browser Rendering
+and Behavior</h3>
+<p>The <code>accent-color</code> property is universally supported in
+all modern browsers, including Google Chrome, Mozilla Firefox, Microsoft
+Edge, and Apple Safari. However, because each browser delegates native
+control rendering to its respective engine and underlying operating
+system, visual results can vary subtly:</p>
+<ul>
+<li><strong>Chromium (Chrome, Edge):</strong> Chromium applies the
+accent color directly to the outer ring and the centered dot when
+checked. It automatically computes a high-contrast inner dot if the
+chosen color is extremely light or dark, ensuring visibility against the
+background.</li>
+<li><strong>Gecko (Firefox):</strong> Firefox tightly integrates
+<code>accent-color</code> with the native desktop theme. It preserves
+standard OS-level transitions and applies a subtle gradient or highlight
+depending on the platform (macOS, Windows, or Linux).</li>
+<li><strong>WebKit (Safari):</strong> Safari applies the property
+cleanly across macOS and iOS. WebKit ensures that iOS tap highlights and
+native platform roundedness remain intact while tinting the selected
+state.</li>
+</ul>
+<h3 id="automatic-contrast-calculation">Automatic Contrast
+Calculation</h3>
+<p>A key benefit of <code>accent-color</code> is built-in accessibility.
+Browsers automatically evaluate the luminance of the chosen color. If
+you apply a very light color, such as
+<code>accent-color: #ffff00;</code> (yellow), the browser automatically
+renders the inner dot or surrounding outlines in a dark, contrasting
+color (typically black) to maintain the required contrast ratio for
+legibility. Conversely, darker accent colors yield white contrasting
+details.</p>
+<h3 id="functional-limitations">Functional Limitations</h3>
+<p>While <code>accent-color</code> makes basic branding simple, it is
+intentionally limited in scope:</p>
+<ul>
+<li><strong>No Unchecked Customization:</strong> You cannot use
+<code>accent-color</code> to change the border color, background color,
+or shadow of an unchecked radio button.</li>
+<li><strong>Size and Spacing:</strong> The property does not alter the
+dimensions of the input. Sizing must still be handled via
+<code>width</code>, <code>height</code>, or
+<code>transform: scale()</code>.</li>
+<li><strong>Shape and Iconography:</strong> It does not allow custom
+checkmarks, icons, or non-circular shapes.</li>
+</ul>
+<p>For applications requiring complete, pixel-perfect design divergence
+from platform defaults, traditional CSS techniques utilizing
+<code>appearance: none</code> remain necessary. However, for most design
+systems, <code>accent-color</code> offers the optimal balance between
+brand alignment and native browser performance.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

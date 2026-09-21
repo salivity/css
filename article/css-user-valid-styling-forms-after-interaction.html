@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS :user-valid: Styling Forms After Interaction - css</title>
+    <meta name="description" content="The CSS :user-valid pseudo-class provides a native solution for form validation by delaying positive styling until a user meaningfully interacts with a form field. Unlike the traditional :valid pseudo-class, which applies styles immediately upon page loa">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-user-valid-styling-forms-after-interaction">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS :user-valid: Styling Forms After Interaction - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-user-valid-styling-forms-after-interaction" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS :user-valid pseudo-class provides a native solution for form validation by delaying positive styling until a user meaningfully interacts with a form field. Unlike the traditional :valid pseudo-class, which applies styles immediately upon page loa" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-user-valid-styling-forms-after-interaction">CSS :user-valid:
+Styling Forms After Interaction</h1>
+<p>The CSS <code>:user-valid</code> pseudo-class provides a native
+solution for form validation by delaying positive styling until a user
+meaningfully interacts with a form field. Unlike the traditional
+<code>:valid</code> pseudo-class, which applies styles immediately upon
+page load, <code>:user-valid</code> waits for user commitment before
+applying success styles. This article explains the interaction
+heuristics browsers use to determine when a field qualifies for
+<code>:user-valid</code>, how it prevents premature feedback, and how to
+implement it in your stylesheets.</p>
+<h2 id="the-problem-with-valid">The Problem with
+<code>:valid</code></h2>
+<p>The traditional <code>:valid</code> pseudo-class evaluates the
+validity of an input purely based on its current state relative to its
+HTML attributes (such as <code>required</code>,
+<code>type="email"</code>, or <code>pattern</code>). Because this
+evaluation occurs as soon as the DOM renders, inputs that are optional
+or pre-filled can display success indicators—such as green borders or
+checkmarks—before the user has even focused on the field. This premature
+feedback clutters the UI and confuses users who have not yet started
+filling out the form.</p>
+<h2 id="how-user-valid-tracks-interaction">How <code>:user-valid</code>
+Tracks Interaction</h2>
+<p>The <code>:user-valid</code> pseudo-class introduces an internal
+browser flag often referred to as "user interaction." For an element to
+match <code>:user-valid</code>, two conditions must be satisfied
+simultaneously:</p>
+<ol type="1">
+<li>The input must satisfy all of its constraint validation rules.</li>
+<li>The user must have completed a distinct interaction with the
+control.</li>
+</ol>
+<p>Browsers do not trigger <code>:user-valid</code> simply because a
+user clicks into a field. Instead, the browser waits for specific user
+actions that signal the completion of data entry:</p>
+<ul>
+<li><strong>Focus and Blur:</strong> The user focuses on the field,
+modifies or enters a value, and moves focus away from the field (the
+<code>change</code> or <code>blur</code> event).</li>
+<li><strong>Form Submission:</strong> The user attempts to submit the
+form containing the input. Upon submission, all valid inputs that the
+user may have skipped (such as valid optional fields) transition to
+matching <code>:user-valid</code>.</li>
+<li><strong>Keystroke Correction:</strong> If an input was previously
+invalid and matching <code>:user-invalid</code>, modern browser
+heuristics allow <code>:user-valid</code> to match dynamically as soon
+as the user corrects the input to a valid state, providing immediate
+positive reinforcement.</li>
+</ul>
+<p>Programmatic changes made to an input's value using JavaScript do not
+inherently trigger the interaction flag, preventing script-driven data
+populations from accidentally triggering user-interaction styles.</p>
+<h2 id="implementation-example">Implementation Example</h2>
+<p>Using <code>:user-valid</code> is straightforward and requires no
+JavaScript listeners for <code>blur</code> or <code>input</code>
+events:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>input {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ccc</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">outline</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Styles applied only after the user interacts and leaves the input in a valid state */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>input<span class="in">:user-valid</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-color</span><span class="ch">:</span> <span class="cn">#2e7d32</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f1f8e9</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">/* Pair with :user-invalid for balanced UX */</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>input<span class="in">:user-invalid</span> {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-color</span><span class="ch">:</span> <span class="cn">#d32f2f</span><span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#fde8e8</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">form</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;username&quot;</span><span class="dt">&gt;</span>Username (minimum 4 characters):<span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;username&quot;</span><span class="ot"> name</span><span class="op">=</span><span class="st">&quot;username&quot;</span><span class="ot"> required minlength</span><span class="op">=</span><span class="st">&quot;4&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;submit&quot;</span><span class="dt">&gt;</span>Submit<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">form</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>In this example, the username input will remain neutrally styled when
+the page loads. When a user types a valid four-letter name and tabs to
+the next field, the green border and background will appear.</p>
+<h2 id="key-ux-advantages">Key UX Advantages</h2>
+<p>By waiting for interaction, <code>:user-valid</code> eliminates the
+need for custom JavaScript form-validation libraries that manually add
+and remove classes like <code>.is-touched</code> or
+<code>.is-dirty</code>. It respects the user's workflow by staying quiet
+while they are typing, alerting them only when they abandon a field or
+complete their input.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

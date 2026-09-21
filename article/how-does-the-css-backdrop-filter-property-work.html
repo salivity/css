@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does the CSS backdrop-filter Property Work? - css</title>
+    <meta name="description" content="The CSS backdrop-filter property applies graphical effects, such as blurring or color shifting, to the area directly behind an element rather than to the element itself or its child content. Unlike the standard filter property, which modifies the rendere">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-the-css-backdrop-filter-property-work">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does the CSS backdrop-filter Property Work? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-the-css-backdrop-filter-property-work" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS backdrop-filter property applies graphical effects, such as blurring or color shifting, to the area directly behind an element rather than to the element itself or its child content. Unlike the standard filter property, which modifies the rendere" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-the-css-backdrop-filter-property-work">How Does the CSS
+backdrop-filter Property Work?</h1>
+<p>The CSS <code>backdrop-filter</code> property applies graphical
+effects, such as blurring or color shifting, to the area directly behind
+an element rather than to the element itself or its child content.
+Unlike the standard <code>filter</code> property, which modifies the
+rendered output of the target element, <code>backdrop-filter</code>
+samples the already rendered pixels beneath the element's bounding box,
+applies the specified filter chain, and composites the element's own
+background and content on top. This mechanism enables modern user
+interface designs, such as the popular frosted-glass aesthetic, without
+requiring separate overlay elements or complex scripting.</p>
+<h2 id="the-underlying-mechanism-of-backdrop-filtering">The Underlying
+Mechanism of Backdrop Filtering</h2>
+<p>Browsers render web pages in distinct painting and compositing
+phases. To understand how <code>backdrop-filter</code> works, it helps
+to examine the sequence in which elements are drawn to the screen:</p>
+<ol type="1">
+<li><strong>Background Layer Painting:</strong> The browser paints the
+standard DOM tree beneath the target element, including background
+images, text, and other overlapping elements.</li>
+<li><strong>Backdrop Isolation:</strong> When the browser encounters an
+element with <code>backdrop-filter</code>, it captures the rendered
+pixel buffer from the area covered by that element's box model
+(including any border radius).</li>
+<li><strong>Filter Application:</strong> The designated filter functions
+(such as <code>blur()</code>, <code>brightness()</code>, or
+<code>contrast()</code>) process that captured background bitmap in a
+separate rendering pass.</li>
+<li><strong>Foreground Compositing:</strong> The element's own
+styling—such as semi-transparent background colors, borders, and nested
+text or icons—is rendered directly over the filtered pixel buffer.</li>
+</ol>
+<p>Because the property relies on pixels rendered behind the element,
+the element itself must have some level of transparency or translucency
+(such as an <code>rgba()</code> or <code>hsla()</code> background color)
+for the effect to be visible. If the element has a completely opaque
+background, the underlying filtered pixels are obscured entirely.</p>
+<h2 id="syntax-and-supported-filter-functions">Syntax and Supported
+Filter Functions</h2>
+<p>The syntax for <code>backdrop-filter</code> accepts one or more
+standard CSS filter functions separated by whitespace. If set to
+<code>none</code>, no filter is applied.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.glass-card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.2</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">backdrop-filter</span><span class="ch">:</span> <span class="fu">blur(</span><span class="dv">10</span><span class="dt">px</span><span class="fu">)</span> <span class="fu">saturate(</span><span class="dv">180</span><span class="dt">%</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.3</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Multiple filter functions can be chained together to achieve complex
+visual treatments:</p>
+<ul>
+<li><strong><code>blur()</code>:</strong> Applies a Gaussian blur to the
+backdrop, smoothing underlying details.</li>
+<li><strong><code>brightness()</code>:</strong> Adjusts the luminance of
+the sampled background.</li>
+<li><strong><code>contrast()</code>:</strong> Increases or decreases the
+difference between the darkest and lightest areas of the backdrop.</li>
+<li><strong><code>grayscale()</code> and <code>sepia()</code>:</strong>
+Alters the color balance by converting underlying pixels to
+monochromatic or warm tones.</li>
+<li><strong><code>hue-rotate()</code>:</strong> Shifts the color
+spectrum of the background.</li>
+<li><strong><code>saturate()</code>:</strong> Boosts or reduces the
+color intensity behind the element.</li>
+<li><strong><code>invert()</code>:</strong> Inverts the color values of
+the underlying scene.</li>
+</ul>
+<h2 id="key-differences-filter-vs-backdrop-filter">Key Differences:
+filter vs. backdrop-filter</h2>
+<p>While both properties share the same filter function syntax, their
+scope and target layers differ fundamentally:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Target of Effect</th>
+<th>Effect on Child Elements</th>
+<th>Opacity Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filter</code></td>
+<td>The element itself and all of its nested children</td>
+<td>Yes (children are blurred/altered)</td>
+<td>Works on opaque and transparent elements</td>
+</tr>
+<tr>
+<td><code>backdrop-filter</code></td>
+<td>The area of the canvas located behind the element</td>
+<td>No (children remain crisp and unaltered)</td>
+<td>Requires a semi-transparent background</td>
+</tr>
+</tbody>
+</table>
+<h2 id="performance-and-stacking-context-considerations">Performance and
+Stacking Context Considerations</h2>
+<p>Applying <code>backdrop-filter</code> requires the browser's
+compositing engine to perform non-trivial graphical processing during
+scroll and animation events.</p>
+<h3 id="stacking-contexts-and-containing-blocks">Stacking Contexts and
+Containing Blocks</h3>
+<p>Applying <code>backdrop-filter</code> (with any value other than
+<code>none</code>) causes the element to create a new stacking context.
+It also causes the element to act as a containing block for
+fixed-position descendant elements, similar to how CSS
+<code>transform</code> or <code>opacity</code> behave. Developers must
+account for this behavior when nesting fixed navigation bars or modal
+overlays.</p>
+<h3 id="rendering-overhead">Rendering Overhead</h3>
+<p>Because the browser must read the background pixels, process them via
+the GPU, and composite them in real time, excessive use of large blur
+radii or animating elements with <code>backdrop-filter</code> across
+large viewport areas can trigger performance degradation on lower-power
+devices. Limiting the surface area of filtered containers and avoiding
+frequent layout shifts directly beneath active backdrop filters ensures
+smooth frame rates.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

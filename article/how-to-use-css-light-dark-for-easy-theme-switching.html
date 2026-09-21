@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS light-dark() for Easy Theme Switching - css</title>
+    <meta name="description" content="The CSS light-dark() function is a native styling utility that allows developers to define two distinct color values—one for light mode and one for dark mode—within a single declaration. By reacting automatically to the active color-scheme value of a">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-light-dark-for-easy-theme-switching">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS light-dark() for Easy Theme Switching - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-light-dark-for-easy-theme-switching" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS light-dark() function is a native styling utility that allows developers to define two distinct color values—one for light mode and one for dark mode—within a single declaration. By reacting automatically to the active color-scheme value of a" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-light-dark-for-easy-theme-switching">How to Use
+CSS light-dark() for Easy Theme Switching</h1>
+<p>The CSS <code>light-dark()</code> function is a native styling
+utility that allows developers to define two distinct color values—one
+for light mode and one for dark mode—within a single declaration. By
+reacting automatically to the active <code>color-scheme</code> value of
+an element or the user's operating system preferences,
+<code>light-dark()</code> eliminates the need for repetitive media
+queries and complex class-based theming overrides. This article explains
+how the function works, its core syntax, and the practical ways it
+streamlines theme implementation in modern web development.</p>
+<h2 id="what-is-the-css-light-dark-function">What is the CSS
+light-dark() Function?</h2>
+<p>Part of the CSS Color Module Level 5 specification,
+<code>light-dark()</code> is a function that accepts two color
+arguments:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>color<span class="in">:</span> light-dark<span class="in">(</span>&lt;light-color<span class="op">&gt;,</span> &lt;dark-color<span class="op">&gt;</span><span class="in">)</span>;</span></code></pre></div>
+<p>The browser evaluates the element's computed
+<code>color-scheme</code> property to determine which value to
+apply:</p>
+<ul>
+<li>If the computed color scheme is <code>light</code>, the first color
+is used.</li>
+<li>If the computed color scheme is <code>dark</code>, the second color
+is used.</li>
+</ul>
+<h2 id="the-prerequisite-setting-the-color-scheme">The Prerequisite:
+Setting the color-scheme</h2>
+<p>The <code>light-dark()</code> function does not work on user system
+preferences alone; it depends directly on the CSS
+<code>color-scheme</code> property. To enable <code>light-dark()</code>
+across your entire project, declare support for both modes on the root
+element:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">light</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By defining <code>color-scheme: light dark;</code>, you signal to the
+browser that the page supports both themes and allows user agent
+preferences (such as system dark mode) to dictate which color value
+<code>light-dark()</code> renders.</p>
+<h2 id="traditional-theming-vs-light-dark">Traditional Theming vs.
+light-dark()</h2>
+<h3 id="the-traditional-approach">The Traditional Approach</h3>
+<p>Previously, building a dual-theme website required writing duplicated
+CSS variables or managing multiple media query blocks:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">--bg-color</span><span class="ch">:</span> <span class="cn">#ffffff</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--text-color</span><span class="ch">:</span> <span class="cn">#1a1a1a</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">@media</span> <span class="fu">(</span><span class="kw">prefers-color-scheme</span><span class="ch">:</span> <span class="dv">dark</span><span class="fu">)</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="in">:root</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">--bg-color</span><span class="ch">:</span> <span class="cn">#121212</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">--text-color</span><span class="ch">:</span> <span class="cn">#f5f5f5</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--bg-color</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="fu">var(</span><span class="va">--text-color</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="the-light-dark-approach">The light-dark() Approach</h3>
+<p>With <code>light-dark()</code>, the process is condensed into a
+single declaration without media queries:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">light</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> light-dark<span class="fu">(</span><span class="cn">#ffffff</span><span class="op">,</span> <span class="cn">#121212</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> light-dark<span class="fu">(</span><span class="cn">#1a1a1a</span><span class="op">,</span> <span class="cn">#f5f5f5</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>You can also assign <code>light-dark()</code> values to CSS custom
+properties to maintain a reusable design system:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">:root</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">light</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">--surface</span><span class="ch">:</span> light-dark<span class="fu">(</span><span class="cn">#ffffff</span><span class="op">,</span> <span class="cn">#1e1e1e</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">--text</span><span class="ch">:</span> light-dark<span class="fu">(</span><span class="cn">#212529</span><span class="op">,</span> <span class="cn">#f8f9fa</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">--border</span><span class="ch">:</span> light-dark<span class="fu">(</span><span class="cn">#dee2e6</span><span class="op">,</span> <span class="cn">#343a40</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-light-dark-simplifies-theme-switching">How light-dark()
+Simplifies Theme Switching</h2>
+<h3 id="1-granular-and-scoped-theming">1. Granular and Scoped
+Theming</h3>
+<p>Because <code>light-dark()</code> responds to the local
+<code>color-scheme</code> property, you can easily force a specific
+component into dark or light mode regardless of the global theme.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.force-dark-card</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> light-dark<span class="fu">(</span><span class="cn">#ffffff</span><span class="op">,</span> <span class="cn">#1e1e1e</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> light-dark<span class="fu">(</span><span class="cn">#212529</span><span class="op">,</span> <span class="cn">#f8f9fa</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Inside <code>.force-dark-card</code>, every nested element using
+<code>light-dark()</code> automatically renders its dark variant without
+requiring theme-specific utility classes.</p>
+<h3 id="2-streamlined-manual-toggles">2. Streamlined Manual Toggles</h3>
+<p>When implementing a manual theme toggle switch (via JavaScript), you
+only need to change the <code>color-scheme</code> property on the root
+or a wrapper element:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>html<span class="ex">[</span><span class="ss">data-theme</span><span class="op">=</span><span class="st">&quot;light&quot;</span><span class="ex">]</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">light</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>html<span class="ex">[</span><span class="ss">data-theme</span><span class="op">=</span><span class="st">&quot;dark&quot;</span><span class="ex">]</span> {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color-scheme</span><span class="ch">:</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Once the attribute updates, every CSS rule using
+<code>light-dark()</code> instantly recalculates without needing
+separate theme stylesheets or variable overrides.</p>
+<h3 id="3-cleaner-codebases">3. Cleaner Codebases</h3>
+<p>By pairing colors together in a single rule, developers can see both
+variants side by side. This improves readability, reduces stylesheet
+file sizes, and prevents mismatched color variables across different
+states.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

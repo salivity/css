@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using CSS caret-color to Style Text Cursors - css</title>
+    <meta name="description" content="This article provides an overview of the CSS caret-color property, explaining how it works to style text input indicators across web pages. You will learn the syntax, acceptable values, elements it applies to, and practical scenarios for using it to impr">
+    <link rel="canonical" href="https://salivity.github.io/css/article/using-css-caret-color-to-style-text-cursors">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Using CSS caret-color to Style Text Cursors - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/using-css-caret-color-to-style-text-cursors" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of the CSS caret-color property, explaining how it works to style text input indicators across web pages. You will learn the syntax, acceptable values, elements it applies to, and practical scenarios for using it to impr" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="using-css-caret-color-to-style-text-cursors">Using CSS
+caret-color to Style Text Cursors</h1>
+<p>This article provides an overview of the CSS <code>caret-color</code>
+property, explaining how it works to style text input indicators across
+web pages. You will learn the syntax, acceptable values, elements it
+applies to, and practical scenarios for using it to improve user
+interface design and accessibility.</p>
+<h2 id="what-is-the-caret">What is the Caret?</h2>
+<p>The text caret—often called the text cursor or insertion point
+indicator—is the blinking vertical bar that shows users where the next
+typed character will appear. By default, browsers render this caret
+using the same color as the text defined by the <code>color</code>
+property.</p>
+<h2 id="how-caret-color-works">How <code>caret-color</code> Works</h2>
+<p>The CSS <code>caret-color</code> property allows developers to
+decouple the caret's color from the text color. It directly targets the
+insertion cursor without changing the text, placeholder text, or borders
+of an input field.</p>
+<h3 id="syntax-and-supported-values">Syntax and Supported Values</h3>
+<p>The syntax for <code>caret-color</code> is straightforward:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>caret-color<span class="in">:</span> auto <span class="op">|</span> &lt;color<span class="op">&gt;</span>;</span></code></pre></div>
+<p>It accepts standard CSS color values:</p>
+<ul>
+<li><strong><code>auto</code></strong>: The default value. The browser
+determines the color, typically matching the element's computed
+<code>color</code> property.</li>
+<li><strong>Keywords and Named Colors</strong>: Values such as
+<code>red</code>, <code>blue</code>, or <code>hotpink</code>.</li>
+<li><strong>Hexadecimal, RGB, and HSL</strong>: Precise values like
+<code>#ff5733</code>, <code>rgb(34, 193, 195)</code>, or
+<code>hsl(217, 89%, 61%)</code>.</li>
+<li><strong><code>transparent</code></strong>: Hides the caret entirely,
+which can be useful when creating custom interactive text components or
+masked inputs.</li>
+<li><strong><code>currentColor</code></strong>: Explicitly synchronizes
+the caret color with the current text color.</li>
+</ul>
+<h3 id="applicable-elements">Applicable Elements</h3>
+<p>The <code>caret-color</code> property applies to any element that
+accepts text input. This includes:</p>
+<ul>
+<li>Standard text input elements:
+<code>&lt;input type="text"&gt;</code>,
+<code>&lt;input type="email"&gt;</code>,
+<code>&lt;input type="search"&gt;</code>, and related variants.</li>
+<li>Multi-line text boxes: <code>&lt;textarea&gt;</code>.</li>
+<li>Rich text or editable HTML containers using the
+<code>contenteditable</code> attribute.</li>
+</ul>
+<h3 id="example-implementation">Example Implementation</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Customizing standard inputs */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>input<span class="ex">[</span><span class="ss">type</span><span class="op">=</span><span class="st">&quot;text&quot;</span><span class="ex">]</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span><span class="ch">:</span> <span class="cn">#333333</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">caret-color</span><span class="ch">:</span> <span class="cn">#0066cc</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Creating an invisible caret in an editable area */</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.custom-editor</span><span class="ex">[</span><span class="ss">contenteditable</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="ex">]</span> {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">caret-color</span><span class="ch">:</span> <span class="dv">transparent</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="practical-applications">Practical Applications</h2>
+<ol type="1">
+<li><strong>Brand Alignment</strong>: Many design systems use
+<code>caret-color</code> to reflect primary brand accent colors within
+form fields, creating a cohesive visual experience.</li>
+<li><strong>Improving Contrast and Accessibility</strong>: In specific
+interface designs, text color may have sufficient contrast against a
+background, but a thin, 1-pixel caret might be difficult to see. Setting
+a distinct, high-contrast <code>caret-color</code> makes the active
+typing location more noticeable.</li>
+<li><strong>Dark Mode Adaptation</strong>: Form fields in dark mode
+often use muted or off-white text. A vibrant caret color can provide a
+distinct visual anchor without making the overall text jarring to
+read.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does z-index Work in Stacking Contexts? - css</title>
+    <meta name="description" content="The CSS z-index property determines the three-dimensional rendering order of overlapping elements along the virtual z-axis, perpendicular to the screen surface. However, z-index does not operate across an entire page as a single global priority list; ins">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-z-index-work-in-stacking-contexts">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does z-index Work in Stacking Contexts? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-z-index-work-in-stacking-contexts" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS z-index property determines the three-dimensional rendering order of overlapping elements along the virtual z-axis, perpendicular to the screen surface. However, z-index does not operate across an entire page as a single global priority list; ins" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-z-index-work-in-stacking-contexts">How Does z-index
+Work in Stacking Contexts?</h1>
+<p>The CSS <code>z-index</code> property determines the
+three-dimensional rendering order of overlapping elements along the
+virtual z-axis, perpendicular to the screen surface. However,
+<code>z-index</code> does not operate across an entire page as a single
+global priority list; instead, its rendering behavior is strictly scoped
+to the element's local stacking context. This article explains the
+relationship between <code>z-index</code> values and stacking contexts,
+outlines the triggers that generate new stacking environments, and
+details how the browser calculates final layer hierarchy.</p>
+<h2 id="understanding-the-z-axis-and-basic-layering">Understanding the
+Z-Axis and Basic Layering</h2>
+<p>In standard web layouts, elements flow along two primary axes:
+horizontal (x-axis) and vertical (y-axis). When visual elements overlap
+due to positioning, negative margins, or transforms, the browser must
+determine which layer sits in front of another. This depth calculation
+occurs along the z-axis.</p>
+<p>By default, in-flow elements stack based on source code order:
+elements declared later in the HTML document render on top of earlier
+ones. Applying a non-static <code>position</code> (such as
+<code>relative</code>, <code>absolute</code>, <code>fixed</code>, or
+<code>sticky</code>) paired with an integer <code>z-index</code>
+explicitly sets an element's depth relative to its peers. A higher
+numerical value pulls an element closer to the viewer, while a lower or
+negative value pushes it backward.</p>
+<h2 id="the-role-of-stacking-contexts">The Role of Stacking
+Contexts</h2>
+<p>The critical constraint of <code>z-index</code> is that it only
+compares elements within the same <strong>stacking context</strong>. A
+stacking context is a self-contained three-dimensional conceptual space
+formed by a specific HTML element.</p>
+<p>Stacking contexts operate in a strict tree hierarchy:</p>
+<ul>
+<li><strong>Parent Isolation:</strong> All child elements contained
+inside a stacking context are locked within that parent's layer
+tier.</li>
+<li><strong>Bounded Hierarchy:</strong> An element with
+<code>z-index: 9999</code> nested inside a lower-priority stacking
+context will always render behind an element with
+<code>z-index: 1</code> located inside a higher-priority stacking
+context.</li>
+<li><strong>Atomic Treatment:</strong> The browser renders the entire
+child hierarchy of a stacking context as a single visual unit when
+positioning it relative to sibling stacking contexts.</li>
+</ul>
+<h2 id="common-triggers-that-create-stacking-contexts">Common Triggers
+That Create Stacking Contexts</h2>
+<p>A stacking context is automatically initialized by the root
+<code>&lt;html&gt;</code> element. Additional local contexts are
+instantiated whenever an element matches any of several modern CSS
+rules, including:</p>
+<ul>
+<li>Positioned elements (<code>relative</code>, <code>absolute</code>,
+<code>fixed</code>, or <code>sticky</code>) with a <code>z-index</code>
+value other than <code>auto</code>.</li>
+<li>Direct children of a <code>display: flex</code> or
+<code>display: grid</code> container with a <code>z-index</code> value
+other than <code>auto</code>.</li>
+<li>Elements with an <code>opacity</code> value strictly less than
+<code>1</code>.</li>
+<li>Elements with CSS <code>transform</code>, <code>filter</code>,
+<code>perspective</code>, <code>clip-path</code>, or <code>mask</code>
+applied with values other than <code>none</code>.</li>
+<li>Elements using <code>isolation: isolate</code>, which explicitly
+creates a new context without requiring coordinate repositioning.</li>
+<li>Elements using <code>mix-blend-mode</code> values other than
+<code>normal</code>.</li>
+<li>Elements with <code>will-change</code> referencing properties that
+would trigger context creation upon mutation.</li>
+</ul>
+<h2 id="the-browser-painting-order-within-a-context">The Browser
+Painting Order Within a Context</h2>
+<p>Within a single stacking context, elements are painted from back to
+front in the following sequence:</p>
+<ol type="1">
+<li>The background and borders of the element establishing the
+context.</li>
+<li>Descendant stacking contexts with negative <code>z-index</code>
+values (ordered lowest to highest).</li>
+<li>Non-positioned, block-level descendants in the normal document
+flow.</li>
+<li>Non-positioned floating descendants.</li>
+<li>Non-positioned inline descendants (including text runs and inline
+elements).</li>
+<li>Positioned descendants with <code>z-index: auto</code> or
+<code>z-index: 0</code>.</li>
+<li>Descendant stacking contexts with positive <code>z-index</code>
+values (ordered lowest to highest).</li>
+</ol>
+<h2 id="managing-complex-layer-conflicts">Managing Complex Layer
+Conflicts</h2>
+<p>Unintended stacking conflicts typically occur when developers attempt
+to fix layering issues by assigning arbitrarily high numbers (such as
+<code>z-index: 999999</code>) to descendant nodes. If the target element
+is trapped inside an ancestor context that sits lower than a sibling
+component (such as a sticky navigation bar or modal overlay), increasing
+the descendant's <code>z-index</code> produces no visual change.</p>
+<p>Resolving these structural bottlenecks requires identifying the
+ancestor element establishing the conflicting context and adjusting the
+stacking order at that parent level, or using modern isolation rules
+like <code>isolation: isolate</code> to prevent styles from leaking into
+unintended child scopes.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

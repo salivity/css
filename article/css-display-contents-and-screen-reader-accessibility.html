@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS display: contents and Screen Reader Accessibility - css</title>
+    <meta name="description" content="The CSS display: contents property allows developers to remove a container element's visual box from the layout tree while keeping its child elements intact, which is especially useful for CSS Grid and Flexbox layouts. However, using this property freque">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-display-contents-and-screen-reader-accessibility">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS display: contents and Screen Reader Accessibility - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-display-contents-and-screen-reader-accessibility" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS display: contents property allows developers to remove a container element's visual box from the layout tree while keeping its child elements intact, which is especially useful for CSS Grid and Flexbox layouts. However, using this property freque" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-display-contents-and-screen-reader-accessibility">CSS
+display: contents and Screen Reader Accessibility</h1>
+<p>The CSS <code>display: contents</code> property allows developers to
+remove a container element's visual box from the layout tree while
+keeping its child elements intact, which is especially useful for CSS
+Grid and Flexbox layouts. However, using this property frequently causes
+the element—and sometimes its children—to be dropped from the browser's
+accessibility tree. This article explains how
+<code>display: contents</code> works, why it creates severe
+accessibility pitfalls for screen reader users, and best practices for
+avoiding layout-induced usability barriers.</p>
+<h3 id="what-is-display-contents">What is
+<code>display: contents</code>?</h3>
+<p>Under standard CSS box model rules, every HTML element generates a
+rectangular box that influences page layout, borders, backgrounds, and
+margins. When you assign <code>display: contents</code> to an element,
+the browser essentially ignores that container’s visual box.</p>
+<p>The element itself ceases to generate a render box, meaning its
+backgrounds, borders, padding, and margins are not rendered. Instead,
+its children are treated as if they were direct children of the
+element's parent.</p>
+<p>This property was primarily introduced to simplify layout
+implementations in CSS Grid and Flexbox. Developers often need wrapper
+elements in the HTML for markup structure, state management, or
+component boundaries, but these extra wrappers can disrupt the immediate
+parent-child relationship required for grid tracks or flex alignments.
+<code>display: contents</code> solves the layout issue without requiring
+developers to alter the HTML source structure.</p>
+<h3 id="the-screen-reader-accessibility-problem">The Screen Reader
+Accessibility Problem</h3>
+<p>While the CSS specification states that
+<code>display: contents</code> should only affect visual box generation
+and not the semantic structure of a document, real-world browser
+implementations have struggled to keep visual layout separate from
+accessibility APIs.</p>
+<p>Browsers construct an "accessibility tree" alongside the DOM and the
+render tree. Assistive technologies, including screen readers like NVDA,
+JAWS, and VoiceOver, rely entirely on this accessibility tree to convey
+context, element roles, and structural relationships to users.</p>
+<p>Historically, many major browser rendering engines tightly coupled
+their accessibility tree generation to the layout engine. Consequently,
+when an element’s visual box was destroyed via
+<code>display: contents</code>, the browser erroneously stripped the
+element’s semantic meaning and role from the accessibility tree as
+well.</p>
+<h3 id="common-breakages-caused-by-display-contents">Common Breakages
+Caused by <code>display: contents</code></h3>
+<ol type="1">
+<li><p><strong>Broken Lists:</strong> Applying
+<code>display: contents</code> to <code>&lt;ul&gt;</code> or
+<code>&lt;ol&gt;</code> elements often causes screen readers to lose
+list semantics. Instead of announcing "list, 4 items," the screen reader
+treats the inner <code>&lt;li&gt;</code> tags as plain text blocks,
+robbing users of vital navigation landmarks and item counting.</p></li>
+<li><p><strong>Destroyed Table Structure:</strong> Data tables are among
+the most fragile elements on the web. Applying
+<code>display: contents</code> to <code>&lt;table&gt;</code>,
+<code>&lt;tr&gt;</code>, <code>&lt;thead&gt;</code>,
+<code>&lt;tbody&gt;</code>, or <code>&lt;td&gt;</code> elements
+dismantles the tabular data model. Screen readers will no longer
+announce row/column numbers or header associations, rendering the data
+incomprehensible to non-sighted users.</p></li>
+<li><p><strong>Loss of Interactive Roles and Focus:</strong> When
+applied to interactive elements—such as <code>&lt;button&gt;</code>,
+<code>&lt;fieldset&gt;</code>, or custom components using ARIA
+attributes—the browser may cease to expose the element's accessible
+name, role, and states. In severe cases, keyboard focus rings may become
+misaligned, invisible, or untargetable.</p></li>
+<li><p><strong>Headings and Landmarks:</strong> Applying the property to
+semantic wrappers such as <code>&lt;nav&gt;</code>,
+<code>&lt;main&gt;</code>, <code>&lt;aside&gt;</code>, or heading tags
+(<code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code>) can strip landmark
+navigation shortcuts, isolating assistive technology users from
+essential structural orientation.</p></li>
+</ol>
+<h3 id="current-browser-status-and-best-practices">Current Browser
+Status and Best Practices</h3>
+<p>Browser vendors have implemented multiple fixes over recent years to
+decouple accessibility semantics from the layout engine. Modern versions
+of Chromium, Firefox, and Safari have resolved several of the most
+egregious bugs regarding list and generic element semantics. However,
+inconsistencies remain across platforms, particularly concerning tables,
+ARIA landmarks, and focus management.</p>
+<p>To maintain accessibility:</p>
+<ul>
+<li><strong>Never apply <code>display: contents</code> to semantic HTML
+elements:</strong> Avoid using it on <code>&lt;table&gt;</code>,
+<code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>,
+<code>&lt;button&gt;</code>, <code>&lt;select&gt;</code>,
+<code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>,
+<code>&lt;header&gt;</code>, or <code>&lt;footer&gt;</code>.</li>
+<li><strong>Restrict usage to non-semantic containers:</strong> Only use
+<code>display: contents</code> on neutral tags like
+<code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> that serve purely
+as visual styling wrappers and contain no inherent semantic roles or
+ARIA designations.</li>
+<li><strong>Test with real assistive technology:</strong> If you must
+use <code>display: contents</code>, verify the page in multiple screen
+readers (VoiceOver, NVDA, and Orca) to ensure the accessibility tree
+remains fully populated.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

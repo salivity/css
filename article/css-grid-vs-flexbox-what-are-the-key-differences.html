@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid vs Flexbox: What Are the Key Differences? - css</title>
+    <meta name="description" content="CSS Grid and CSS Flexbox are modern layout modules designed to solve distinct styling challenges in web design. While Flexbox is built for one-dimensional layouts focusing on content distribution along a single row or column, CSS Grid provides a two-dime">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-grid-vs-flexbox-what-are-the-key-differences">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Grid vs Flexbox: What Are the Key Differences? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-grid-vs-flexbox-what-are-the-key-differences" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS Grid and CSS Flexbox are modern layout modules designed to solve distinct styling challenges in web design. While Flexbox is built for one-dimensional layouts focusing on content distribution along a single row or column, CSS Grid provides a two-dime" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-grid-vs-flexbox-what-are-the-key-differences">CSS Grid vs
+Flexbox: What Are the Key Differences?</h1>
+<p>CSS Grid and CSS Flexbox are modern layout modules designed to solve
+distinct styling challenges in web design. While Flexbox is built for
+one-dimensional layouts focusing on content distribution along a single
+row or column, CSS Grid provides a two-dimensional system capable of
+controlling both rows and columns simultaneously. Understanding their
+structural models, alignment mechanics, and optimal use cases allows
+developers to build responsive interfaces with cleaner, more
+maintainable code.</p>
+<h2 id="dimensionality-and-structural-control">Dimensionality and
+Structural Control</h2>
+<p>The fundamental architectural distinction between the two modules is
+dimensionality. Flexbox operates on a single axis at a time—either
+horizontally (the main axis) or vertically (the cross axis). When flex
+items wrap onto multiple lines using <code>flex-wrap: wrap</code>, each
+line acts as an independent flex container. Items on one line cannot
+align with items on adjacent lines because there is no overarching
+coordinate system.</p>
+<p>CSS Grid operates on two axes simultaneously. A grid container
+defines a structured matrix of rows and columns using properties like
+<code>grid-template-columns</code> and <code>grid-template-rows</code>.
+Elements placed inside this system align strictly to defined grid
+tracks, lines, and areas, ensuring cross-axis alignment across the
+entire container regardless of how items wrap or grow.</p>
+<h2 id="content-first-vs-layout-first-workflow">Content-First vs.
+Layout-First Workflow</h2>
+<p>Flexbox utilizes a content-first design methodology. The size and
+distribution of flex items are typically determined by their inner
+content, with the container adapting dynamically. Properties like
+<code>flex-grow</code>, <code>flex-shrink</code>, and
+<code>flex-basis</code> dictate how individual elements expand or
+contract to fill available space along the axis.</p>
+<p>CSS Grid uses a layout-first approach. Developers define the rigid
+structural blueprint—the columns, rows, and gap intervals—at the parent
+container level before placing any child elements. While items can span
+multiple tracks or dynamically adjust through units like <code>fr</code>
+(fractional units) and functions like <code>minmax()</code>, the parent
+grid structure dictates the geometry rather than the children.</p>
+<h2 id="key-feature-comparison">Key Feature Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>CSS Flexbox</th>
+<th>CSS Grid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dimensional Axis</strong></td>
+<td>1D (Row OR Column)</td>
+<td>2D (Rows AND Columns)</td>
+</tr>
+<tr>
+<td><strong>Primary Approach</strong></td>
+<td>Content-driven sizing</td>
+<td>Container-driven layout structure</td>
+</tr>
+<tr>
+<td><strong>Multi-line Alignment</strong></td>
+<td>Lines are independent; no cross-line item alignment</td>
+<td>Items align across shared column/row tracks</td>
+</tr>
+<tr>
+<td><strong>Item Overlapping</strong></td>
+<td>Requires negative margins or absolute positioning</td>
+<td>Native overlapping via shared grid cells/lines</td>
+</tr>
+<tr>
+<td><strong>Best Used For</strong></td>
+<td>Navigation bars, button groups, linear components</td>
+<td>Full-page layouts, card dashboards, complex galleries</td>
+</tr>
+</tbody>
+</table>
+<h2 id="overlapping-and-layering-mechanics">Overlapping and Layering
+Mechanics</h2>
+<p>Layering elements in Flexbox requires pulling items out of normal
+document flow using <code>position: absolute</code> or applying negative
+margins. This often breaks accessibility trees and complicates
+responsive adjustments.</p>
+<p>Grid natively supports element overlap without removing items from
+the standard layout flow. By assigning multiple grid items to
+overlapping track coordinates using <code>grid-column</code> and
+<code>grid-row</code> values, elements can share spatial boundaries
+directly, with stacking order controlled via standard
+<code>z-index</code> properties.</p>
+<h2 id="when-to-choose-each-module">When to Choose Each Module</h2>
+<p>Flexbox is ideal for micro-layouts where elements need to align
+linearly, adapt to dynamic text lengths, or space evenly within a bar or
+component. Typical examples include navigation headers, input groups
+with attached buttons, and media object cards.</p>
+<p>CSS Grid is the standard choice for macro-layouts and structured data
+displays where alignment must persist across both axes. It excels at
+full-page scaffolding, image galleries with uniform gutters, and
+dashboards where widgets must align vertically and horizontally across
+varying viewport sizes. In modern front-end architectures, Grid and
+Flexbox are frequently nested together, using Grid for the macro
+framework and Flexbox for the components inside each grid area.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

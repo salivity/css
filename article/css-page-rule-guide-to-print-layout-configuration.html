@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @page Rule: Guide to Print Layout Configuration - css</title>
+    <meta name="description" content="The CSS @page at-rule is a core component of the CSS Paged Media module, designed specifically to control the formatting, dimensions, orientation, and margins of pages when printing web documents. This article explores the purpose of the @page rule, how">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-page-rule-guide-to-print-layout-configuration">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS @page Rule: Guide to Print Layout Configuration - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-page-rule-guide-to-print-layout-configuration" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS @page at-rule is a core component of the CSS Paged Media module, designed specifically to control the formatting, dimensions, orientation, and margins of pages when printing web documents. This article explores the purpose of the @page rule, how" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-page-rule-guide-to-print-layout-configuration">CSS @page
+Rule: Guide to Print Layout Configuration</h1>
+<p>The CSS <code>@page</code> at-rule is a core component of the CSS
+Paged Media module, designed specifically to control the formatting,
+dimensions, orientation, and margins of pages when printing web
+documents. This article explores the purpose of the <code>@page</code>
+rule, how it bridges the gap between fluid web viewports and fixed
+physical paper, and the practical properties used to create professional
+print layouts.</p>
+<h2 id="the-core-purpose-of-page">The Core Purpose of
+<code>@page</code></h2>
+<p>Standard CSS targets a continuous, scrollable screen canvas. When a
+user prints a web page or exports it to PDF, the document must be
+divided into discrete physical pages. The <code>@page</code> at-rule
+targets the "page box"—an abstract representation of the physical
+sheet—allowing developers to define layout constraints that apply
+exclusively to printed output rather than on-screen containers.</p>
+<p>Without <code>@page</code>, print output relies on browser defaults,
+which often include inconsistent margins, undesirable orientations, and
+poorly cropped content.</p>
+<h2 id="defining-page-dimensions-and-orientation">Defining Page
+Dimensions and Orientation</h2>
+<p>One of the primary functions of <code>@page</code> is the
+<code>size</code> property, which dictates the physical dimensions and
+orientation of the print medium:</p>
+<ul>
+<li><strong>Standard Paper Sizes:</strong> You can declare standard
+paper formats such as <code>A4</code>, <code>A3</code>,
+<code>letter</code>, or <code>legal</code>.</li>
+<li><strong>Orientation:</strong> You can specify <code>portrait</code>
+or <code>landscape</code> alongside paper sizes (e.g.,
+<code>size: A4 landscape;</code>).</li>
+<li><strong>Custom Dimensions:</strong> You can set explicit physical
+measurements (e.g., <code>size: 8.5in 11in;</code> or
+<code>size: 210mm 297mm;</code>).</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">size</span><span class="ch">:</span> <span class="dv">A4 portrait</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">20</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="managing-margins-and-page-padding">Managing Margins and Page
+Padding</h2>
+<p>On the web, margins push elements away from other elements. Under
+<code>@page</code>, the <code>margin</code> property controls the blank
+area between the outer edge of the physical sheet and the printable
+content area. This ensures text and graphics do not get cut off by
+printer hardware margins or binding constraints.</p>
+<p>Margins can be specified globally or independently using
+<code>margin-top</code>, <code>margin-right</code>,
+<code>margin-bottom</code>, and <code>margin-left</code>.</p>
+<h2 id="targeting-specific-pages-with-pseudo-classes">Targeting Specific
+Pages with Pseudo-Classes</h2>
+<p>Printed media often requires distinct layouts for different pages,
+such as omitting headers on a cover page or alternating margins for
+double-sided binding. The <code>@page</code> rule supports specific
+pseudo-classes to handle these scenarios:</p>
+<ul>
+<li><strong><code>:first</code></strong>: Targets the initial page of
+the printed document, useful for removing margins or custom headers on
+cover sheets.</li>
+<li><strong><code>:left</code> and <code>:right</code></strong>: Applies
+styles to even and odd pages respectively, enabling asymmetrical margins
+for bound books and booklets (often called "gutter" margins).</li>
+<li><strong><code>:blank</code></strong>: Applies styling to
+intentionally empty pages generated by forced page breaks.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Generates an offset margin for double-sided binding */</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:left</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-left</span><span class="ch">:</span> <span class="dv">30</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-right</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:right</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-left</span><span class="ch">:</span> <span class="dv">15</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-right</span><span class="ch">:</span> <span class="dv">30</span><span class="dt">mm</span><span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> <span class="in">:first</span> {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="named-pages-for-section-specific-layouts">Named Pages for
+Section-Specific Layouts</h2>
+<p>The <code>@page</code> rule can be assigned a custom identifier to
+create named page contexts. Elements in the document can then reference
+this context using the <code>page</code> property:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">@page</span> landscape-section {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">size</span><span class="ch">:</span> <span class="dv">landscape</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">.wide-data-table</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">page</span><span class="ch">:</span> <span class="dv">landscape-section</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When the browser encounters an element styled with
+<code>page: landscape-section;</code>, it triggers a page break and
+rotates that specific section into landscape orientation while leaving
+the rest of the document in portrait.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The CSS <code>@page</code> at-rule transforms standard web documents
+into structured, publication-ready physical documents. By controlling
+page dimensions, orientations, margins, and page-specific variations,
+developers can ensure that invoices, reports, and manuals render cleanly
+and predictably across printers and PDF generation tools.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

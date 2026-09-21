@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use CSS inset-inline for Logical Positioning - css</title>
+    <meta name="description" content="The CSS inset-inline property is a modern logical shorthand that defines the start and end offsets of a positioned element along its inline axis. Instead of binding element placement to rigid physical directions like left and right, inset-inline adapts d">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-to-use-css-inset-inline-for-logical-positioning">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How to Use CSS inset-inline for Logical Positioning - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-to-use-css-inset-inline-for-logical-positioning" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS inset-inline property is a modern logical shorthand that defines the start and end offsets of a positioned element along its inline axis. Instead of binding element placement to rigid physical directions like left and right, inset-inline adapts d" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-to-use-css-inset-inline-for-logical-positioning">How to Use
+CSS inset-inline for Logical Positioning</h1>
+<p>The CSS <code>inset-inline</code> property is a modern logical
+shorthand that defines the start and end offsets of a positioned element
+along its inline axis. Instead of binding element placement to rigid
+physical directions like left and right, <code>inset-inline</code>
+adapts dynamically to the document’s writing mode and text direction.
+This article explains how <code>inset-inline</code> works, breaks down
+its syntax, demonstrates its interaction with international layouts, and
+outlines why it is essential for modern web design.</p>
+<h3 id="what-is-inset-inline">What Is <code>inset-inline</code>?</h3>
+<p>The <code>inset-inline</code> property acts as a shorthand for two
+distinct logical properties: <code>inset-inline-start</code> and
+<code>inset-inline-end</code>. It functions identically to traditional
+offset properties—such as <code>left</code> and <code>right</code>—with
+the critical difference that it is aware of text flow rather than screen
+geometry.</p>
+<p>For <code>inset-inline</code> to take effect, the targeted element
+must have a defined <code>position</code> context other than
+<code>static</code> (such as <code>relative</code>,
+<code>absolute</code>, <code>fixed</code>, or <code>sticky</code>).</p>
+<h3 id="syntax-and-value-assignment">Syntax and Value Assignment</h3>
+<p>The property accepts standard CSS length units, percentages, or the
+<code>auto</code> keyword. It can be declared using either one or two
+values:</p>
+<ul>
+<li><strong>Single value:</strong> Applying one value sets both the
+inline-start and inline-end edges equally.
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.modal</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset-inline</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* Sets both start and end to 0 */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div></li>
+<li><strong>Two values:</strong> The first value defines
+<code>inset-inline-start</code>, while the second value defines
+<code>inset-inline-end</code>.
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.tooltip</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">absolute</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">inset-inline</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">rem</span> <span class="dv">2</span><span class="dt">rem</span><span class="op">;</span> <span class="co">/* start: 1rem, end: 2rem */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div></li>
+</ul>
+<h3 id="managing-horizontal-direction-ltr-vs-rtl">Managing Horizontal
+Direction: LTR vs. RTL</h3>
+<p>In standard horizontal layouts
+(<code>writing-mode: horizontal-tb</code>), the inline axis runs
+horizontally across the screen. The mapping of <code>inset-inline</code>
+changes automatically based on the <code>direction</code> property:</p>
+<ul>
+<li><strong>Left-to-Right (<code>direction: ltr</code>):</strong>
+<ul>
+<li><code>inset-inline-start</code> maps to the physical
+<code>left</code>.</li>
+<li><code>inset-inline-end</code> maps to the physical
+<code>right</code>.</li>
+</ul></li>
+<li><strong>Right-to-Left (<code>direction: rtl</code>):</strong>
+<ul>
+<li><code>inset-inline-start</code> flips to the physical
+<code>right</code>.</li>
+<li><code>inset-inline-end</code> flips to the physical
+<code>left</code>.</li>
+</ul></li>
+</ul>
+<p>Using physical properties like <code>left: 10px;</code> forces
+developers to manually override values using separate RTL stylesheets or
+conditional CSS selectors like <code>[dir="rtl"]</code>. With
+<code>inset-inline: 10px auto;</code>, the element sits at the beginning
+of the reading line regardless of whether the language is English,
+Arabic, or Hebrew, eliminating redundant code.</p>
+<h3 id="behavior-in-vertical-writing-modes">Behavior in Vertical Writing
+Modes</h3>
+<p>While commonly used for horizontal adjustments,
+<code>inset-inline</code> strictly tracks the inline axis—the direction
+in which text wraps within a single line.</p>
+<p>If a document or container uses a vertical writing mode (such as
+<code>writing-mode: vertical-rl</code> or
+<code>writing-mode: vertical-lr</code>), the inline axis rotates ninety
+degrees to run vertically from top to bottom. In these contexts:</p>
+<ul>
+<li><code>inset-inline-start</code> maps to <code>top</code>.</li>
+<li><code>inset-inline-end</code> maps to <code>bottom</code>.</li>
+</ul>
+<p>To manage the perpendicular axis (the block axis), CSS provides the
+companion shorthand <code>inset-block</code>, which governs the stack
+direction of lines.</p>
+<h3 id="practical-advantages">Practical Advantages</h3>
+<p>Using <code>inset-inline</code> streamlines stylesheet maintenance
+by:</p>
+<ol type="1">
+<li><strong>Simplifying Centering:</strong> Combining
+<code>inset-inline: 0;</code> with <code>margin-inline: auto;</code>
+creates a horizontally centered absolute element without requiring
+transform hacks or explicit left/right definitions.</li>
+<li><strong>Facilitating Internationalization (i18n):</strong> User
+interfaces can switch between multilingual layouts seamlessly without
+requiring direction-specific layout overrides.</li>
+<li><strong>Reducing Code Redundancy:</strong> Two physical declarations
+(<code>left: 0; right: 0;</code>) are condensed into a single logical
+declaration (<code>inset-inline: 0;</code>).</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS margin-block: Logical Top and Bottom Margins - css</title>
+    <meta name="description" content="The CSS margin-block shorthand is a logical property that sets the margins on an element's block dimension, which typically corresponds to the top and bottom margins in standard horizontal layouts. Instead of tying layout strictly to physical screen orie">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-margin-block-logical-top-and-bottom-margins">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS margin-block: Logical Top and Bottom Margins - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-margin-block-logical-top-and-bottom-margins" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS margin-block shorthand is a logical property that sets the margins on an element's block dimension, which typically corresponds to the top and bottom margins in standard horizontal layouts. Instead of tying layout strictly to physical screen orie" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-margin-block-logical-top-and-bottom-margins">CSS
+margin-block: Logical Top and Bottom Margins</h1>
+<p>The CSS <code>margin-block</code> shorthand is a logical property
+that sets the margins on an element's block dimension, which typically
+corresponds to the top and bottom margins in standard horizontal
+layouts. Instead of tying layout strictly to physical screen
+orientations, <code>margin-block</code> adapts dynamically based on the
+document's writing mode, text direction, and script flow. This guide
+explains how the shorthand functions, its syntax, and how it logically
+maps to physical properties.</p>
+<h3
+id="understanding-logical-properties-vs-physical-properties">Understanding
+Logical Properties vs. Physical Properties</h3>
+<p>Traditional CSS properties like <code>margin-top</code> and
+<code>margin-bottom</code> are physical. They always apply space to the
+physical top and bottom of the screen, regardless of whether the content
+is written horizontally (like English) or vertically (like traditional
+Chinese or Japanese).</p>
+<p>Logical properties, introduced to support modern internationalized
+layouts, operate relative to the flow of content:</p>
+<ul>
+<li><strong>Inline dimension:</strong> The direction along which text
+flows in a line (left-to-right or right-to-left in horizontal
+writing).</li>
+<li><strong>Block dimension:</strong> The direction in which new blocks
+or lines are stacked (top-to-bottom in horizontal writing, right-to-left
+or left-to-right in vertical writing).</li>
+</ul>
+<p>The <code>margin-block</code> property controls the margins at the
+start and end of this block axis, abstracting away the physical
+orientation.</p>
+<h3 id="syntax-and-usage">Syntax and Usage</h3>
+<p>The <code>margin-block</code> property is a shorthand for two
+individual logical properties:</p>
+<ul>
+<li><code>margin-block-start</code></li>
+<li><code>margin-block-end</code></li>
+</ul>
+<p>It accepts standard CSS length values, percentages, or the
+<code>auto</code> keyword, and can take either one or two values.</p>
+<h4 id="one-value-syntax">One Value Syntax</h4>
+<p>When you specify a single value, it applies equally to both the start
+and end of the block dimension:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-block</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In a standard horizontal layout
+(<code>writing-mode: horizontal-tb</code>), this is equivalent to:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.card</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h4 id="two-value-syntax">Two Value Syntax</h4>
+<p>When you specify two values, the first value applies to
+<code>margin-block-start</code> and the second value applies to
+<code>margin-block-end</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.article-header</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-block</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">rem</span> <span class="dv">3</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In standard horizontal layout, this is equivalent to:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.article-header</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="how-writing-modes-alter-the-mapping">How Writing Modes Alter the
+Mapping</h3>
+<p>The true advantage of <code>margin-block</code> becomes visible when
+writing modes change:</p>
+<ol type="1">
+<li><p><strong>Horizontal Writing
+(<code>writing-mode: horizontal-tb</code>):</strong></p>
+<ul>
+<li>Blocks stack from top to bottom.</li>
+<li><code>margin-block-start</code> maps to physical
+<code>margin-top</code>.</li>
+<li><code>margin-block-end</code> maps to physical
+<code>margin-bottom</code>.</li>
+</ul></li>
+<li><p><strong>Vertical Writing
+(<code>writing-mode: vertical-rl</code>):</strong></p>
+<ul>
+<li>Blocks stack from right to left.</li>
+<li><code>margin-block-start</code> maps to physical
+<code>margin-right</code>.</li>
+<li><code>margin-block-end</code> maps to physical
+<code>margin-left</code>.</li>
+</ul></li>
+<li><p><strong>Vertical Writing
+(<code>writing-mode: vertical-lr</code>):</strong></p>
+<ul>
+<li>Blocks stack from left to right.</li>
+<li><code>margin-block-start</code> maps to physical
+<code>margin-left</code>.</li>
+<li><code>margin-block-end</code> maps to physical
+<code>margin-right</code>.</li>
+</ul></li>
+</ol>
+<p>By utilizing <code>margin-block</code>, elements maintain consistent
+spatial relationships relative to the flow of text without needing
+separate CSS rules or media queries for localized layouts.</p>
+<h3 id="why-use-margin-block">Why Use <code>margin-block</code>?</h3>
+<ul>
+<li><strong>Concise Code:</strong> It eliminates the need to declare
+both <code>margin-top</code> and <code>margin-bottom</code> individually
+or use the physical four-value <code>margin: 20px 0;</code> shorthand,
+which risks unintentionally overwriting inline margins.</li>
+<li><strong>Internationalization (i18n):</strong> Sites intended for
+global audiences seamlessly switch between horizontal and vertical
+orientations without layout breakage.</li>
+<li><strong>Modern Best Practice:</strong> It aligns with the modern CSS
+component-driven design philosophy by keeping layout logic tied to
+content flow rather than viewport orientation.</li>
+</ul></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

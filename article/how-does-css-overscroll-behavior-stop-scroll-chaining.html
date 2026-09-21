@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Does CSS overscroll-behavior Stop Scroll Chaining? - css</title>
+    <meta name="description" content="The CSS overscroll-behavior property gives developers precise control over what happens when a user scrolls past the boundary of a scrollable element. By default, browsers pass unhandled scroll delta up to parent containers—a phenomenon known as scroll">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-does-css-overscroll-behavior-stop-scroll-chaining">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Does CSS overscroll-behavior Stop Scroll Chaining? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-does-css-overscroll-behavior-stop-scroll-chaining" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS overscroll-behavior property gives developers precise control over what happens when a user scrolls past the boundary of a scrollable element. By default, browsers pass unhandled scroll delta up to parent containers—a phenomenon known as scroll" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-does-css-overscroll-behavior-stop-scroll-chaining">How Does
+CSS overscroll-behavior Stop Scroll Chaining?</h1>
+<p>The CSS <code>overscroll-behavior</code> property gives developers
+precise control over what happens when a user scrolls past the boundary
+of a scrollable element. By default, browsers pass unhandled scroll
+delta up to parent containers—a phenomenon known as scroll
+chaining—which frequently causes entire web pages to shift when a user
+reaches the bottom of a modal or sidebar. Applying
+<code>overscroll-behavior</code> severs this connection at the container
+level, isolating scrolling actions without requiring complex JavaScript
+event listeners or disruptive layout hacks.</p>
+<h2 id="understanding-the-scroll-chaining-problem">Understanding the
+Scroll Chaining Problem</h2>
+<p>When an embedded container—such as a dropdown menu, modal overlay, or
+side drawer—reaches its maximum scroll position, modern browsers
+automatically transfer any continuing scroll gesture to the nearest
+scrollable ancestor, usually the <code>&lt;body&gt;</code> or
+<code>&lt;html&gt;</code> element.</p>
+<p>This behavior creates significant user experience issues:</p>
+<ul>
+<li><strong>Disorientation:</strong> A user attempting to read content
+inside a popup suddenly finds the background page moving
+underneath.</li>
+<li><strong>Accidental Navigation:</strong> On mobile devices,
+overscrolling often triggers native browser actions such as
+pull-to-refresh or swipe-to-navigate.</li>
+<li><strong>Loss of Reading Position:</strong> When the background
+scrolls unexpectedly, users lose their place on the main page after
+closing the overlay.</li>
+</ul>
+<p>Historically, solving this required JavaScript listeners on
+<code>wheel</code> or <code>touchmove</code> events using
+<code>e.preventDefault()</code>, or toggling
+<code>overflow: hidden</code> on the body element. Both techniques
+introduce performance overhead, break momentum scrolling on mobile
+devices, and risk layout shifting.</p>
+<h2 id="how-overscroll-behavior-solves-it">How overscroll-behavior
+Solves It</h2>
+<p>The <code>overscroll-behavior</code> property allows you to define
+the boundary behavior directly in CSS. It tells the browser engine to
+consume the scroll momentum entirely within the targeted element rather
+than letting it bubble up the DOM tree.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.modal-content</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-y</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overscroll-behavior</span><span class="ch">:</span> <span class="dv">contain</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>When applied, the element retains its native smooth scrolling and
+bounce effects, but once the boundary is reached, scrolling simply
+stops. The underlying page remains fixed.</p>
+<h2 id="available-values-and-syntax">Available Values and Syntax</h2>
+<p>The property accepts three primary values:</p>
+<ul>
+<li><strong><code>auto</code> (Default):</strong> Standard browser
+behavior. Scroll chaining occurs freely to parent containers, and
+standard overscroll affordances (such as rubber-banding or
+pull-to-refresh) remain active.</li>
+<li><strong><code>contain</code>:</strong> Prevents scroll chaining. The
+scroll gesture does not propagate to parent elements. However, local
+overscroll effects native to the platform (such as glow effects or
+boundary bouncing) are preserved inside the element.</li>
+<li><strong><code>none</code>:</strong> Prevents scroll chaining and
+simultaneously disables native overscroll affordances like
+rubber-banding, glow indicators, and pull-to-refresh triggers.</li>
+</ul>
+<h3 id="directional-control">Directional Control</h3>
+<p>You can isolate scroll containment along specific axes using
+sub-properties:</p>
+<ul>
+<li><strong><code>overscroll-behavior-x</code>:</strong> Controls
+horizontal scroll propagation.</li>
+<li><strong><code>overscroll-behavior-y</code>:</strong> Controls
+vertical scroll propagation.</li>
+<li><strong><code>overscroll-behavior</code>:</strong> Shorthand for
+setting both axes simultaneously (e.g.,
+<code>overscroll-behavior: contain none;</code> for horizontal and
+vertical respectively).</li>
+</ul>
+<h2 id="common-practical-use-cases">Common Practical Use Cases</h2>
+<h3 id="1-modal-windows-and-dialogs">1. Modal Windows and Dialogs</h3>
+<p>Applying <code>contain</code> to a modal container ensures that users
+can scroll through long terms of service or multi-step forms without
+moving the page beneath:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.dialog-body</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">max-height</span><span class="ch">:</span> <span class="dv">80</span><span class="dt">vh</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-y</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overscroll-behavior-y</span><span class="ch">:</span> <span class="dv">contain</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="2-slide-out-navigation-and-drawers">2. Slide-out Navigation and
+Drawers</h3>
+<p>Sidebars often fill the vertical screen height and contain nested
+navigation links. Preventing scroll bubbling preserves the main
+interface state while navigating the drawer:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.side-drawer</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">position</span><span class="ch">:</span> <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">top</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">left</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">320</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">height</span><span class="ch">:</span> <span class="dv">100</span><span class="dt">%</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-y</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overscroll-behavior-y</span><span class="ch">:</span> <span class="dv">contain</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="3-disabling-pull-to-refresh-on-custom-web-apps">3. Disabling
+Pull-to-Refresh on Custom Web Apps</h3>
+<p>Single-page applications (SPAs) and Progressive Web Apps (PWAs) with
+custom refresh mechanisms or fixed interfaces benefit from disabling the
+browser's default pull-to-refresh gesture:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>html<span class="op">,</span> body {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overscroll-behavior-y</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="browser-compatibility-and-performance">Browser Compatibility and
+Performance</h2>
+<p>The <code>overscroll-behavior</code> property is supported across all
+modern web browsers, including Chrome, Edge, Firefox, and Safari on both
+desktop and mobile platforms. Because it is handled directly by the
+browser's compositing thread rather than through JavaScript event loops,
+it prevents scroll chaining with zero impact on frame rates or input
+latency.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

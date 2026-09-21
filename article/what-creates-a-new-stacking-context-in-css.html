@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Creates a New Stacking Context in CSS? - css</title>
+    <meta name="description" content="A stacking context is a three-dimensional conceptualization of HTML elements along the imaginary z-axis relative to the user. Understanding what triggers a new stacking context is essential for mastering CSS layering, as child elements within a stacking">
+    <link rel="canonical" href="https://salivity.github.io/css/article/what-creates-a-new-stacking-context-in-css">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="What Creates a New Stacking Context in CSS? - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/what-creates-a-new-stacking-context-in-css" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="A stacking context is a three-dimensional conceptualization of HTML elements along the imaginary z-axis relative to the user. Understanding what triggers a new stacking context is essential for mastering CSS layering, as child elements within a stacking" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="what-creates-a-new-stacking-context-in-css">What Creates a New
+Stacking Context in CSS?</h1>
+<p>A stacking context is a three-dimensional conceptualization of HTML
+elements along the imaginary z-axis relative to the user. Understanding
+what triggers a new stacking context is essential for mastering CSS
+layering, as child elements within a stacking context cannot escape
+their parent’s stacking order, regardless of their own
+<code>z-index</code> values. This article covers the primary CSS
+properties and values that generate new stacking contexts, from classic
+positioning rules to modern CSS layout and compositing features.</p>
+<h2 id="the-root-stacking-context">The Root Stacking Context</h2>
+<p>The base stacking context is automatically established by the root
+element of the document, which is the <code>&lt;html&gt;</code> element
+in standard web pages. Every other element on the page exists within
+this initial context unless a distinct property creates a localized
+sub-context.</p>
+<h2 id="position-and-z-index">Position and z-index</h2>
+<p>The most traditional method for instantiating a new stacking context
+involves combining CSS positioning with the <code>z-index</code>
+property.</p>
+<ul>
+<li><strong>Positioned elements with an explicit
+<code>z-index</code>:</strong> Any element with a <code>position</code>
+value of <code>relative</code>, <code>absolute</code>, or
+<code>fixed</code> (in older browser specs) that also has a
+<code>z-index</code> value other than <code>auto</code> forms a stacking
+context.</li>
+<li><strong>Sticky and fixed positioning:</strong> An element with
+<code>position: fixed</code> or <code>position: sticky</code> always
+creates a stacking context in modern browsers, even if
+<code>z-index</code> is set to <code>auto</code>.</li>
+</ul>
+<h2 id="flexbox-and-grid-child-items">Flexbox and Grid Child Items</h2>
+<p>Direct children of flex containers (<code>display: flex</code> or
+<code>display: inline-flex</code>) and grid containers
+(<code>display: grid</code> or <code>display: inline-grid</code>)
+generate a stacking context when their <code>z-index</code> property is
+set to any value other than <code>auto</code>. Unlike standard
+block-level elements, flex and grid items do not require explicit
+<code>position</code> declarations to utilize <code>z-index</code> for
+stacking context creation.</p>
+<h2 id="visual-and-transform-properties">Visual and Transform
+Properties</h2>
+<p>Several visual rendering and compositing properties force the browser
+to composite an element separately, resulting in the creation of a new
+stacking context:</p>
+<ul>
+<li><strong>Opacity:</strong> An element with an <code>opacity</code>
+value strictly less than <code>1</code>.</li>
+<li><strong>Transform:</strong> An element with a <code>transform</code>
+property value other than <code>none</code> (such as
+<code>scale()</code>, <code>translate()</code>, or
+<code>rotate()</code>).</li>
+<li><strong>Filter:</strong> An element with a <code>filter</code>
+property value other than <code>none</code> (such as
+<code>blur()</code>, <code>drop-shadow()</code>, or
+<code>grayscale()</code>).</li>
+<li><strong>Perspective:</strong> An element with a
+<code>perspective</code> value other than <code>none</code>.</li>
+<li><strong>Clip-path and Masking:</strong> An element with
+<code>clip-path</code>, <code>mask</code>, <code>mask-image</code>, or
+<code>mask-border</code> applied with a value other than
+<code>none</code>.</li>
+</ul>
+<h2 id="isolation-and-containment">Isolation and Containment</h2>
+<p>Modern CSS provides explicit mechanisms for isolating components and
+managing rendering boundaries:</p>
+<ul>
+<li><strong>The <code>isolation</code> property:</strong> Setting
+<code>isolation: isolate</code> is the most explicit and semantic way to
+create a new stacking context without altering visual styles or layout
+behavior.</li>
+<li><strong>Containment:</strong> Elements with <code>contain</code>
+values of <code>layout</code>, <code>paint</code>, <code>strict</code>,
+or <code>content</code> form a new stacking context as part of browser
+rendering optimization.</li>
+<li><strong>Container queries:</strong> Setting
+<code>container-type</code> to <code>inline-size</code> or
+<code>size</code> can establish formatting contexts that encapsulate
+rendering layers.</li>
+</ul>
+<h2 id="compositing-and-performance-properties">Compositing and
+Performance Properties</h2>
+<ul>
+<li><strong>Mix-blend-mode:</strong> An element with
+<code>mix-blend-mode</code> set to any value other than
+<code>normal</code>.</li>
+<li><strong>Will-change:</strong> An element with a
+<code>will-change</code> property specifying any property that would
+create a stacking context on its own (for instance,
+<code>will-change: transform</code> or
+<code>will-change: opacity</code>).</li>
+</ul>
+<h2 id="stacking-context-containment">Stacking Context Containment</h2>
+<p>Once a stacking context is formed, all descendant elements are
+grouped and rendered within that single layer relative to elements
+outside of it. A child element with <code>z-index: 9999</code> inside a
+parent element with <code>z-index: 1</code> will never appear in front
+of an external sibling element with <code>z-index: 2</code>. Managing
+these boundary conditions ensures predictable layer stacking and
+prevents common layout conflicts.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

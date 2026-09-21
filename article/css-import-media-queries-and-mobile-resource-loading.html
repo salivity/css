@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS @import Media Queries and Mobile Resource Loading - css</title>
+    <meta name="description" content="This article examines how the CSS @import rule interacts with media queries on mobile devices, detailing the mechanics behind conditional resource fetching, its impact on browser network behavior, and the distinction between render-blocking execution and">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-import-media-queries-and-mobile-resource-loading">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS @import Media Queries and Mobile Resource Loading - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-import-media-queries-and-mobile-resource-loading" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines how the CSS @import rule interacts with media queries on mobile devices, detailing the mechanics behind conditional resource fetching, its impact on browser network behavior, and the distinction between render-blocking execution and" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-import-media-queries-and-mobile-resource-loading">CSS
+@import Media Queries and Mobile Resource Loading</h1>
+<p>This article examines how the CSS <code>@import</code> rule interacts
+with media queries on mobile devices, detailing the mechanics behind
+conditional resource fetching, its impact on browser network behavior,
+and the distinction between render-blocking execution and dynamic file
+downloading.</p>
+<h2 id="how-conditional-import-works">How Conditional
+<code>@import</code> Works</h2>
+<p>The <code>@import</code> at-rule accepts an optional media query list
+directly following the target stylesheet URL. The syntax defines the
+conditions under which the referenced styles should be applied:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">&quot;desktop.css&quot;</span><span class="fu">)</span> <span class="an">screen</span> <span class="kw">and</span> <span class="fu">(</span><span class="kw">min-width</span><span class="ch">:</span> <span class="dv">1024</span><span class="dt">px</span><span class="fu">)</span><span class="op">;</span></span></code></pre></div>
+<p>When a mobile browser encounters this rule, the CSS parser evaluates
+the attached media query against the device's current viewport and
+hardware characteristics. If the conditions are not satisfied (for
+instance, a mobile device with a viewport width of 390px reading a rule
+constrained to 1024px or wider), the rule evaluates to false.</p>
+<h2 id="network-downloads-vs-style-execution">Network Downloads vs.
+Style Execution</h2>
+<p>A common misconception is that a negative media query condition on an
+<code>@import</code> statement completely halts the network request on
+mobile devices. In standard browser implementations, this is not what
+occurs.</p>
+<ol type="1">
+<li><strong>Evaluation and Applicability</strong>: When the media
+condition evaluates to false, the browser restricts the stylesheet from
+being applied to the Document Object Model (DOM). The declarations
+inside <code>desktop.css</code> will not alter layout, painting, or
+cascade calculations on the mobile viewport.</li>
+<li><strong>Network Fetching</strong>: Despite the condition failing,
+the browser generally still issues an HTTP GET request for the
+stylesheet. The resource must be available in memory or disk cache
+should the environment change—such as a mobile user rotating their
+device from portrait to landscape mode, or an external display being
+connected.</li>
+</ol>
+<h2 id="dynamic-resource-prioritization">Dynamic Resource
+Prioritization</h2>
+<p>While the download is not eliminated, modern browser network engines
+use the media query evaluation to change how that download is
+scheduled:</p>
+<ul>
+<li><strong>Non-Render-Blocking</strong>: When a media query matches the
+current device state, the imported stylesheet becomes render-blocking,
+preventing the browser from displaying pixels until the file is fetched
+and parsed. When the media query evaluates to false, the browser strips
+the render-blocking status from the asset.</li>
+<li><strong>Low Network Priority</strong>: Mobile browsers assign
+mismatched <code>@import</code> assets the lowest download priority.
+Bandwidth is reserved for critical-path resources, such as the primary
+HTML, matched stylesheets, critical scripts, and above-the-fold fonts.
+The unneeded stylesheet is downloaded opportunistically in the
+background.</li>
+</ul>
+<h2 id="the-performance-cost-of-import-on-mobile">The Performance Cost
+of <code>@import</code> on Mobile</h2>
+<p>Even with media query conditions reducing download priority, using
+<code>@import</code> introduces architectural bottlenecks on mobile
+networks:</p>
+<ul>
+<li><strong>Request Serialization</strong>: The browser cannot discover
+an <code>@import</code> rule until it has downloaded, parsed, and
+evaluated the parent stylesheet. This creates a multi-hop sequential
+request waterfall that delays complete page stabilization.</li>
+<li><strong>Bandwidth Consumption</strong>: Users on metered or
+high-latency cellular connections still pay the data cost for downloaded
+assets, even if those assets contain rules that are never applied to the
+mobile interface.</li>
+</ul>
+<p>To control mobile resource allocation efficiently, conditional
+loading is typically shifted out of CSS files and placed into HTML using
+the <code>&lt;link&gt;</code> tag's <code>media</code> attribute, which
+enables preload scanners to recognize resource requirements immediately
+without waiting for CSS parsing stages.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

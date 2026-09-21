@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS text-transform: capitalize and Title Casing - css</title>
+    <meta name="description" content="The CSS text-transform: capitalize property is a styling declaration designed to alter the visual casing of text without modifying the underlying HTML content. While developers often reach for it to create headline styling, it does not achieve true, gram">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-text-transform-capitalize-and-title-casing">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS text-transform: capitalize and Title Casing - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-text-transform-capitalize-and-title-casing" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS text-transform: capitalize property is a styling declaration designed to alter the visual casing of text without modifying the underlying HTML content. While developers often reach for it to create headline styling, it does not achieve true, gram" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-text-transform-capitalize-and-title-casing">CSS
+text-transform: capitalize and Title Casing</h1>
+<p>The CSS <code>text-transform: capitalize</code> property is a styling
+declaration designed to alter the visual casing of text without
+modifying the underlying HTML content. While developers often reach for
+it to create headline styling, it does not achieve true, grammatically
+correct title-casing. This article covers the exact mechanics of
+<code>text-transform: capitalize</code>, its limitations when formatting
+titles, common edge cases, and the proper alternatives for achieving
+true title case on the web.</p>
+<h3 id="what-text-transform-capitalize-does">What
+<code>text-transform: capitalize</code> Does</h3>
+<p>The <code>text-transform: capitalize</code> property targets the
+first character of every word and forces it into uppercase. It relies
+purely on word boundaries (typically defined by spaces or specific
+punctuation) to determine which characters to modify.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.headline</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-transform</span><span class="ch">:</span> <span class="dv">capitalize</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If the original HTML source is:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;headline&quot;</span><span class="dt">&gt;</span>the quick brown fox jumps over the lazy dog<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>The browser visually renders:</p>
+<blockquote>
+<p>The Quick Brown Fox Jumps Over The Lazy Dog</p>
+</blockquote>
+<h3 id="how-it-handles-title-casing">How It Handles Title-Casing</h3>
+<p>In typography and editorial style guides (such as APA, Chicago, or
+MLA), "title case" requires capitalizing the principal words while
+keeping minor words—such as prepositions ("in", "on", "with"),
+coordinating conjunctions ("and", "but", "for"), and articles ("a",
+"an", "the")—in lowercase, unless they appear as the first or last word
+of the title.</p>
+<p>CSS is a presentation language without semantic awareness or
+language-processing capabilities. Consequently,
+<code>text-transform: capitalize</code> handles title-casing by treating
+every word equally. It cannot identify parts of speech or adhere to
+editorial rules. Applying this property to "the lord of the rings"
+renders as "The Lord Of The Rings" instead of the standard "The Lord of
+the Rings."</p>
+<h3 id="key-behaviors-and-edge-cases">Key Behaviors and Edge Cases</h3>
+<p>Understanding the limitations of
+<code>text-transform: capitalize</code> requires looking at how browsers
+parse specific character patterns:</p>
+<ul>
+<li><strong>Existing Uppercase Characters:</strong> The property only
+converts the first letter to uppercase; it does not force the remaining
+letters of a word into lowercase. If the original markup is
+<code>&lt;p&gt;CSS GRID LAYOUT&lt;/p&gt;</code>, applying
+<code>capitalize</code> leaves the text as "CSS GRID LAYOUT".</li>
+<li><strong>Hyphenated Words:</strong> According to the CSS Text Module
+Level 3 specification, punctuation creates word boundaries. Most modern
+browsers capitalize the first letter following a hyphen. For example,
+"state-of-the-art" will visually render as "State-Of-The-Art".</li>
+<li><strong>Leading Punctuation or Symbols:</strong> If a word begins
+with a symbol or number, such as <code>"$100"</code> or
+<code>"@username"</code>, the first alphabetical character is generally
+not capitalized because the boundary evaluation varies across rendering
+engines.</li>
+<li><strong>Internationalization:</strong> Capitalization rules vary
+across different languages and alphabets. CSS respects the
+<code>lang</code> attribute on the HTML element where possible (such as
+handling the dotted and dotless "I" in Turkish), but it still applies
+the brute-force first-letter rule.</li>
+</ul>
+<h3 id="better-alternatives-for-true-title-case">Better Alternatives for
+True Title Case</h3>
+<p>Because <code>text-transform: capitalize</code> cannot differentiate
+between major and minor words, alternative methods should be used when
+accurate title-casing is required:</p>
+<ol type="1">
+<li><strong>Content-Level Authoring:</strong> Write the correct title
+case directly in the HTML or markdown source. This ensures that screen
+readers, search engine scrapers, and copy-paste buffers receive the
+correct casing.</li>
+<li><strong>Server-Side Processing:</strong> Use backend libraries (such
+as <code>titlecase</code> in Python or similar packages in PHP, Ruby, or
+Go) to format strings using grammatical dictionaries before sending the
+markup to the browser.</li>
+<li><strong>Client-Side JavaScript:</strong> When working with dynamic
+user-generated content, use a JavaScript utility or library to apply
+linguistic title-casing algorithms before rendering the string into the
+DOM.</li>
+</ol></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

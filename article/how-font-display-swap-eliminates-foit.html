@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How font-display: swap Eliminates FOIT - css</title>
+    <meta name="description" content="Web fonts significantly enhance visual design, but their loading behavior can compromise user experience through the Flash of Invisible Text (FOIT). When a browser downloads a custom web font, it traditionally hides the text until the file is completely">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-font-display-swap-eliminates-foit">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How font-display: swap Eliminates FOIT - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-font-display-swap-eliminates-foit" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Web fonts significantly enhance visual design, but their loading behavior can compromise user experience through the Flash of Invisible Text (FOIT). When a browser downloads a custom web font, it traditionally hides the text until the file is completely" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-font-display-swap-eliminates-foit">How font-display: swap
+Eliminates FOIT</h1>
+<p>Web fonts significantly enhance visual design, but their loading
+behavior can compromise user experience through the Flash of Invisible
+Text (FOIT). When a browser downloads a custom web font, it
+traditionally hides the text until the file is completely retrieved. The
+CSS <code>font-display: swap</code> property solves this issue by
+altering the browser's font-rendering lifecycle, forcing it to
+immediately display a fallback system font and then swap in the custom
+web font as soon as it finishes downloading.</p>
+<h3 id="understanding-foit">Understanding FOIT</h3>
+<p>FOIT occurs when a browser detects that an element uses an external
+web font that is not yet downloaded and cached. By default, major
+browsers like Chrome, Firefox, and Safari hold back text
+rendering—displaying blank, invisible space—while waiting for the font
+file. This block period typically lasts up to three seconds. If a user
+is on a slow or unstable network connection, they are left staring at an
+empty page despite the text content already being present in the HTML.
+This delays readability, harms perceived performance, and negatively
+impacts Core Web Vitals, specifically Largest Contentful Paint
+(LCP).</p>
+<h3 id="the-font-display-timeline">The Font Display Timeline</h3>
+<p>To understand how <code>swap</code> fixes FOIT, it helps to examine
+how the browser handles custom fonts using three distinct time
+windows:</p>
+<ol type="1">
+<li><strong>Font Block Period:</strong> The time during which the
+browser waits for the font to load, rendering text invisibly.</li>
+<li><strong>Font Swap Period:</strong> The time during which the browser
+renders a fallback font but will replace it if the custom font finishes
+downloading.</li>
+<li><strong>Font Failure Period:</strong> If the font has not loaded by
+this point, the browser treats the load as failed and permanently uses
+the fallback font.</li>
+</ol>
+<h3 id="how-font-display-swap-works">How <code>font-display: swap</code>
+Works</h3>
+<p>Applying <code>font-display: swap</code> directly alters these time
+periods by setting the <strong>Font Block Period to 0ms</strong> and
+giving the <strong>Font Swap Period an infinite duration</strong>.</p>
+<p>Because the block period is eliminated entirely, the browser never
+hides the text. Instead, it follows this sequence:</p>
+<ol type="1">
+<li><strong>Immediate Rendering:</strong> The browser immediately
+renders the text using the first available system fallback font listed
+in your CSS <code>font-family</code> stack.</li>
+<li><strong>Background Loading:</strong> The external web font continues
+to download asynchronously in the background without holding up the rest
+of the page rendering.</li>
+<li><strong>The Swap:</strong> As soon as the custom font file becomes
+available, the browser re-renders the text using the newly loaded
+font.</li>
+</ol>
+<h3 id="implementation">Implementation</h3>
+<p>You can implement <code>font-display: swap</code> directly inside the
+<code>@font-face</code> rule in your stylesheet:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">@font-face</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;Open Sans&#39;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-style</span><span class="ch">:</span> <span class="dv">normal</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">400</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">src</span><span class="ch">:</span> <span class="fu">url(</span><span class="st">&#39;/fonts/open-sans.woff2&#39;</span><span class="fu">)</span> <span class="fu">format(</span><span class="st">&#39;woff2&#39;</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-display</span><span class="ch">:</span> <span class="dv">swap</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span><span class="ch">:</span> <span class="st">&#39;Open Sans&#39;</span><span class="op">,</span> <span class="dv">Arial</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>If you load fonts via a third-party service like Google Fonts, you
+can include <code>display=swap</code> as a query parameter in the
+stylesheet link URL:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;https://fonts.googleapis.com/css2?family=Open+Sans</span><span class="er">&amp;</span><span class="st">display=swap&quot;</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="trade-offs-foit-vs-fout">Trade-offs: FOIT vs. FOUT</h3>
+<p>While <code>font-display: swap</code> completely eliminates the Flash
+of Invisible Text, it introduces the Flash of Unstyled Text (FOUT). With
+FOUT, users briefly see content rendered in a basic fallback font (like
+Arial or Times New Roman) before it shifts to the custom web font.</p>
+<p>From a user experience and accessibility perspective, FOUT is almost
+universally preferred over FOIT. Readable content delivered instantly is
+far more valuable than an aesthetically complete layout that takes
+seconds to appear. To minimize visual disruption during the swap,
+developers can match the fallback font's metrics (using CSS properties
+like <code>size-adjust</code>, <code>ascent-override</code>, and
+<code>descent-override</code>) to ensure the transition does not cause
+noticeable layout shifts (CLS).</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

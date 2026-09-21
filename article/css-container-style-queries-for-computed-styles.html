@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Container Style Queries for Computed Styles - css</title>
+    <meta name="description" content="CSS container queries extend beyond viewport and dimensional constraints, allowing developers to query the computed styles of an ancestor element using the style() functional notation. This article explains the mechanics of CSS container style queries, h">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-container-style-queries-for-computed-styles">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Container Style Queries for Computed Styles - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-container-style-queries-for-computed-styles" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="CSS container queries extend beyond viewport and dimensional constraints, allowing developers to query the computed styles of an ancestor element using the style() functional notation. This article explains the mechanics of CSS container style queries, h" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-container-style-queries-for-computed-styles">CSS Container
+Style Queries for Computed Styles</h1>
+<p>CSS container queries extend beyond viewport and dimensional
+constraints, allowing developers to query the computed styles of an
+ancestor element using the <code>style()</code> functional notation.
+This article explains the mechanics of CSS container style queries, how
+they evaluate computed values such as custom properties without
+measuring layout dimensions, and how to implement them effectively in
+modern web development.</p>
+<h2 id="understanding-the-style-query-function">Understanding the
+<code>style()</code> Query Function</h2>
+<p>Standard container queries evaluate geometric dimensions like
+<code>width</code> or <code>inline-size</code> using
+<code>container-type: inline-size</code>. In contrast, style queries
+evaluate the computed CSS property values of a container element. They
+use the <code>@container style(...)</code> syntax to apply conditional
+styles to descendant elements.</p>
+<p>Because style queries inspect computed values rather than layout
+geometry, they do not require dimensional containment
+(<code>contain: size</code> or <code>container-type: size</code>).
+Consequently, any element can serve as a style container without causing
+the layout reflow constraints associated with size containment.</p>
+<h2 id="syntax-and-basic-usage">Syntax and Basic Usage</h2>
+<p>To query an element's style, you wrap the target property and value
+inside the <code>style()</code> function within an
+<code>@container</code> rule.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Container declaration */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.card-wrapper</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">container-name</span><span class="ch">:</span> <span class="dv">card</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">--theme</span><span class="ch">:</span> <span class="dv">dark</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* Querying computed styles */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">@container</span> card style<span class="fu">(</span><span class="dv">--theme</span>: <span class="dv">dark</span><span class="fu">)</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.card-content</span> {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#121212</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#ffffff</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In this example, whenever <code>.card-wrapper</code> computes
+<code>--theme</code> as <code>dark</code>, <code>.card-content</code>
+receives the dark mode rules. The query succeeds regardless of the
+container's physical pixel width or height.</p>
+<p>If a <code>container-name</code> is omitted, the query checks the
+nearest ancestor that matches the queried style condition:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">@container</span> style<span class="fu">(</span><span class="dv">--variant</span>: <span class="dv">highlighted</span><span class="fu">)</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  p {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="how-computed-values-are-evaluated">How Computed Values Are
+Evaluated</h2>
+<p>Container style queries evaluate computed values, not declared or
+author-specified syntax. This distinction is critical for how properties
+are matched:</p>
+<ol type="1">
+<li><strong>Relative Units are Resolved</strong>: If a container defines
+<code>font-size: 2rem</code>, and the browser resolves that to
+<code>32px</code>, a query targeting <code>style(font-size: 32px)</code>
+resolves to true.</li>
+<li><strong>Color Normalization</strong>: Colors are converted to their
+computed forms (such as <code>srgb</code> or <code>rgb()</code>),
+meaning queries match against the resolved color rather than the
+specific keyword or hex code used in the declaration.</li>
+<li><strong>Custom Properties (CSS Variables)</strong>: The primary
+implementation across modern browsers targets custom properties. Custom
+properties retain their exact string value once computed, making them
+reliable identifiers for state management (e.g.,
+<code>--status: active</code>, <code>--layout: compact</code>).</li>
+</ol>
+<h2 id="why-dimension-checks-are-bypassed">Why Dimension Checks Are
+Bypassed</h2>
+<p>Size queries require the browser to apply layout containment to
+prevent infinite layout loops—where a query modifies an element's size,
+triggering another query re-evaluation.</p>
+<p>Style queries do not alter the box model hierarchy in the same
+loop-prone manner when scoped to custom properties or
+non-layout-dependent styles. The browser evaluates the cascade, computes
+property values down the DOM tree, and resolves the
+<code>@container style()</code> rules during the standard style
+computation phase, well before the layout phase calculates pixel
+dimensions.</p>
+<h2 id="current-implementation-and-browser-support">Current
+Implementation and Browser Support</h2>
+<p>The CSS Cascading and Style Sheets Level 5 specification defines
+style queries for both standard CSS properties (e.g.,
+<code>style(color: blue)</code>) and custom properties (e.g.,
+<code>style(--variant: alert)</code>).</p>
+<p>Currently, browser support primarily focuses on custom properties.
+Querying custom properties provides a declarative alternative to
+managing numerous BEM modifier classes or data attributes, enabling
+components to adapt autonomously based on context passed down through
+CSS variables.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

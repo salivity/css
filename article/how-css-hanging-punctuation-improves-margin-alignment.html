@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CSS hanging-punctuation Improves Margin Alignment - css</title>
+    <meta name="description" content="The CSS hanging-punctuation property improves editorial margin alignment by allowing punctuation marks to sit outside the visual bounding box of a text block. In traditional print typography, placing punctuation outside the alignment edge creates a clean">
+    <link rel="canonical" href="https://salivity.github.io/css/article/how-css-hanging-punctuation-improves-margin-alignment">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CSS hanging-punctuation Improves Margin Alignment - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/how-css-hanging-punctuation-improves-margin-alignment" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The CSS hanging-punctuation property improves editorial margin alignment by allowing punctuation marks to sit outside the visual bounding box of a text block. In traditional print typography, placing punctuation outside the alignment edge creates a clean" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-css-hanging-punctuation-improves-margin-alignment">How CSS
+hanging-punctuation Improves Margin Alignment</h1>
+<p>The CSS <code>hanging-punctuation</code> property improves editorial
+margin alignment by allowing punctuation marks to sit outside the visual
+bounding box of a text block. In traditional print typography, placing
+punctuation outside the alignment edge creates a clean, continuous
+vertical line that prevents paragraphs from appearing visually indented.
+By bringing this technique to the web, <code>hanging-punctuation</code>
+enables designers and developers to achieve high-end editorial
+typography, eliminate optical misalignments caused by glyph shapes, and
+establish seamless reading margins.</p>
+<h2 id="the-optical-alignment-problem-in-digital-text">The Optical
+Alignment Problem in Digital Text</h2>
+<p>Standard web layout engines align text based on the geometric
+boundaries of glyph bounding boxes rather than visual weight. When a
+line starts with a quotation mark (<code>"</code>, <code>“</code>,
+<code>‘</code>) or ends with punctuation, the whitespace surrounding
+that glyph creates an optical illusion.</p>
+<p>To the human eye, an opening quotation mark makes the first word look
+indented compared to subsequent lines, breaking the flush edge of the
+text frame. Similarly, punctuation marks at the end of justified lines
+create visual gaps along the right margin. In classic editorial design,
+this disruption is corrected using "optical margin alignment"—shifting
+the punctuation outside the margin so the primary letterforms define the
+edge.</p>
+<h2 id="how-hanging-punctuation-solves-the-issue">How
+<code>hanging-punctuation</code> Solves the Issue</h2>
+<p>The <code>hanging-punctuation</code> property automates optical
+alignment by instructing the browser to push specific marks outside the
+content edge. When applied, the primary characters align squarely
+against the margin, while the punctuation "hangs" in the gutter or
+padding area.</p>
+<p>The property accepts several values to target different typographic
+scenarios:</p>
+<ul>
+<li><strong><code>first</code></strong>: Pushes an opening punctuation
+mark (such as an opening quote or bracket) before the start of the first
+line into the preceding margin space. This maintains a razor-sharp left
+edge for paragraphs.</li>
+<li><strong><code>last</code></strong>: Allows closing punctuation at
+the end of the last line of a block element to hang into the trailing
+margin.</li>
+<li><strong><code>allow-end</code></strong>: Enables terminal
+punctuation (like periods, commas, and hyphens) to hang past the
+inline-end margin if it avoids an awkward line break.</li>
+<li><strong><code>force-end</code></strong>: Explicitly forces terminal
+punctuation marks to hang beyond the edge at the end of lines.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>article p {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">hanging-punctuation</span><span class="ch">:</span> <span class="dv">first</span> <span class="dv">last</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="editorial-and-visual-benefits">Editorial and Visual
+Benefits</h2>
+<h3 id="1-preserves-visual-flow">1. Preserves Visual Flow</h3>
+<p>A straight vertical margin anchors the reader's eye as it sweeps down
+a page. When pull quotes, blockquotes, or body paragraphs use hanging
+punctuation, readers do not experience the subconscious visual stutter
+caused by indented letterforms.</p>
+<h3 id="2-mimics-professional-print-quality">2. Mimics Professional
+Print Quality</h3>
+<p>Editorial publishers hold print layouts to rigorous typographic
+standards. The <code>hanging-punctuation</code> property bridges the
+long-standing gap between desktop publishing software (such as Adobe
+InDesign, which has native optical margin alignment) and browser-based
+rendering.</p>
+<h3 id="3-progressive-enhancement">3. Progressive Enhancement</h3>
+<p>Because <code>hanging-punctuation</code> gracefully degrades,
+browsers that do not yet support the property simply render punctuation
+inline using standard geometric alignment. When supported, it silently
+upgrades the layout without breaking the layout structure or requiring
+fragile JavaScript-based text measurement hacks.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

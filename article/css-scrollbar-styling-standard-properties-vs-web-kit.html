@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Scrollbar Styling: Standard Properties vs WebKit - css</title>
+    <meta name="description" content="Customizing scrollbars in modern web design is split between two distinct approaches: the standard W3C properties (scrollbar-width and scrollbar-color) and the legacy, vendor-prefixed ::-webkit-scrollbar pseudo-elements. This article breaks down the fund">
+    <link rel="canonical" href="https://salivity.github.io/css/article/css-scrollbar-styling-standard-properties-vs-web-kit">
+    <link rel="search" type="application/opensearchdescription+xml" title="css" href="/css/opensearch.xml">
+    <link rel="icon" href="/css/favicon.ico">
+    <link rel="stylesheet" href="/css/css/style.css">
+    <link media="print" rel="stylesheet" href="/css/css/print.css">
+    <script src="/css/js/fuse.min.js"></script>
+    <script src="/css/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CSS Scrollbar Styling: Standard Properties vs WebKit - css" />
+    <meta property="og:url" content="https://salivity.github.io/css/article/css-scrollbar-styling-standard-properties-vs-web-kit" />
+    <meta property="og:image" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/css/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Customizing scrollbars in modern web design is split between two distinct approaches: the standard W3C properties (scrollbar-width and scrollbar-color) and the legacy, vendor-prefixed ::-webkit-scrollbar pseudo-elements. This article breaks down the fund" />
+    <link rel="manifest" href="/css/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/css/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>css</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/css/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="css-scrollbar-styling-standard-properties-vs-webkit">CSS
+Scrollbar Styling: Standard Properties vs WebKit</h1>
+<p>Customizing scrollbars in modern web design is split between two
+distinct approaches: the standard W3C properties
+(<code>scrollbar-width</code> and <code>scrollbar-color</code>) and the
+legacy, vendor-prefixed <code>::-webkit-scrollbar</code>
+pseudo-elements. This article breaks down the fundamental differences
+between these two methods, highlighting their syntax, level of
+customization, browser compatibility, and how to implement them
+effectively.</p>
+<h3 id="the-standard-properties-scrollbar-width-and-scrollbar-color">The
+Standard Properties: <code>scrollbar-width</code> and
+<code>scrollbar-color</code></h3>
+<p>The W3C CSS Scrollbars Module Level 1 introduced standardized
+properties to control scrollbar appearance without exposing complex
+internal browser components.</p>
+<ul>
+<li><strong><code>scrollbar-width</code></strong>: Controls the
+thickness of the scrollbar. It accepts three predefined keyword values:
+<ul>
+<li><code>auto</code>: The default platform scrollbar width.</li>
+<li><code>thin</code>: A narrower scrollbar variant provided by the
+platform.</li>
+<li><code>none</code>: Completely hides the scrollbar while keeping the
+element scrollable.</li>
+</ul></li>
+<li><strong><code>scrollbar-color</code></strong>: Controls the color
+palette of the scrollbar. It takes two color values: the first applies
+to the scrollbar thumb (the moving handle), and the second applies to
+the scrollbar track (the background).
+<ul>
+<li>Example: <code>scrollbar-color: #888 #f1f1f1;</code></li>
+</ul></li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Official web standard supported natively across modern browsers
+(Firefox, Chrome, Edge, Safari).</li>
+<li>Lightweight, minimal, and performance-friendly.</li>
+<li>Prevents developers from accidentally breaking platform
+accessibility affordances.</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>Extremely limited visual styling. You cannot adjust exact pixel
+widths, borders, border-radius, shadows, or pseudo-states like
+<code>:hover</code> on individual scrollbar sub-elements.</li>
+</ul>
+<h3 id="the-webkit-pseudo-elements">The WebKit Pseudo-Elements</h3>
+<p>Before standardization, WebKit introduced a set of pseudo-elements
+that expose the internal DOM tree of the scrollbar in Blink- and
+WebKit-based browsers (Chrome, Edge, Safari, Opera).</p>
+<p>Key pseudo-elements include:</p>
+<ul>
+<li><code>::-webkit-scrollbar</code>: The entire scrollbar container
+(controls width and height in pixels).</li>
+<li><code>::-webkit-scrollbar-track</code>: The background track where
+the thumb moves.</li>
+<li><code>::-webkit-scrollbar-thumb</code>: The draggable scrolling
+handle.</li>
+<li><code>::-webkit-scrollbar-button</code>: Up/down/left/right
+directional buttons.</li>
+<li><code>::-webkit-scrollbar-corner</code>: The bottom corner where
+horizontal and vertical scrollbars meet.</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Fine-grained control over layout and appearance using standard CSS
+box-model properties (e.g., <code>border-radius</code>,
+<code>box-shadow</code>, gradients, pixel dimensions).</li>
+<li>Supports interactive states such as
+<code>::-webkit-scrollbar-thumb:hover</code> and
+<code>::-webkit-scrollbar-thumb:active</code>.</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>Non-standard and proprietary.</li>
+<li>Never supported by Firefox.</li>
+<li>More verbose and prone to deprecation or inconsistency as rendering
+engines evolve.</li>
+</ul>
+<h3 id="key-differences-at-a-glance">Key Differences at a Glance</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Standard (<code>scrollbar-*</code>)</th>
+<th style="text-align: left;">WebKit
+(<code>::-webkit-scrollbar-*</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Specification</strong></td>
+<td style="text-align: left;">Official W3C Standard</td>
+<td style="text-align: left;">Proprietary / Non-standard</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Firefox Support</strong></td>
+<td style="text-align: left;">Full support</td>
+<td style="text-align: left;">No support</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Chrome/Safari/Edge</strong></td>
+<td style="text-align: left;">Supported in modern versions</td>
+<td style="text-align: left;">Supported (legacy compatibility)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Customization Depth</strong></td>
+<td style="text-align: left;">Colors and predefined widths only</td>
+<td style="text-align: left;">Pixel sizing, borders, shadows, hover
+states</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Syntax Complexity</strong></td>
+<td style="text-align: left;">Low (two CSS properties)</td>
+<td style="text-align: left;">High (multiple pseudo-elements)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-implementation-strategy">Recommended Implementation
+Strategy</h3>
+<p>For modern web development, the recommended pattern combines both
+approaches using progressive enhancement. Declare the standard
+properties first to ensure consistent, forward-compatible behavior
+across all engines, and supplement with WebKit pseudo-elements if
+advanced design requirements demand precise pixel control on Chromium
+and WebKit browsers:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Custom scrollable container */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.scroll-container</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-y</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Standard properties (Firefox, modern Chrome/Safari/Edge) */</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">scrollbar-width</span><span class="ch">:</span> <span class="dv">thin</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">scrollbar-color</span><span class="ch">:</span> <span class="cn">#555</span> <span class="cn">#e0e0e0</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* WebKit-specific enhancements for fine-grained styling */</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">.scroll-container</span><span class="in">::-webkit-scrollbar</span> {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">.scroll-container</span><span class="in">::-webkit-scrollbar-track</span> {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background</span><span class="ch">:</span> <span class="cn">#e0e0e0</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">.scroll-container</span><span class="in">::-webkit-scrollbar-thumb</span> {</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#555</span><span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-radius</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">.scroll-container</span><span class="in">::-webkit-scrollbar-thumb:hover</span> {</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#333</span><span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>By prioritizing the standard properties, your design remains
+maintainable and resilient against future browser engine updates while
+still looking polished.</p></article>
+        <div id="comments-container"></div>
+        <script>
+            const utterancesScript = document.createElement('script');
+            utterancesScript.setAttribute('src', 'https://utteranc.es/client.js');
+            utterancesScript.setAttribute('repo', 'salivity/css'); 
+            utterancesScript.setAttribute('issue-term', 'pathname'); 
+            utterancesScript.setAttribute('theme', localStorage.getItem('theme') === 'dark' ? 'github-dark' : 'github-light'); 
+            utterancesScript.setAttribute('crossorigin', 'anonymous');
+            utterancesScript.async = true;
+            document.getElementById('comments-container').appendChild(utterancesScript);
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="/css/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/css/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>
